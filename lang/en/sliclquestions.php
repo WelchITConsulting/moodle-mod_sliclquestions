@@ -20,15 +20,24 @@
  * Created  : 06 Jan 2015
  */
 
-$string['incorrectcourseid']          = 'Course ID is incorrect';
-$string['modulename']                 = 'SLiCL Questions';
-$string['modulename_help']            = 'The SLiCL Questions module allows you to construct surveys using a variety of question types, for the purpose of gathering data for the SLiCL Project.';
-$string['modulenameplural']           = 'SLiCL Questionnaires';
-$string['pluginadministration']       = 'SLiCL Questions Administration';
-$string['pluginname']                 = 'SLiCL Questions';
+$string['incorrectcourseid']            = 'Course ID is incorrect';
+$string['modulename']                   = 'SLiCL Questions';
+$string['modulename_help']              = 'The SLiCL Questions module allows you to construct surveys using a variety of question types, for the purpose of gathering data for the SLiCL Project.';
+$string['modulenameplural']             = 'SLiCL Questionnaires';
+$string['pluginadministration']         = 'SLiCL Questions Administration';
+$string['pluginname']                   = 'SLiCL Questions';
+$string['sliclquestions:addinstance']   = '';
+$string['sliclquestions:']                 = '';
+$string['sliclquestions:']                 = '';
+$string['sliclquestions:']                 = '';
+$string['sliclquestions:']                 = '';
+$string['sliclquestions:']                 = '';
+$string['sliclquestions:']                 = '';
+$string['sliclquestions:']                 = '';
+$string['sliclquestions:']                 = '';
+$string['sliclquestions:']                 = '';
+$string['sliclquestions:']                 = '';
 
-
-//$string['']                 = '';
 //$string['']                 = '';
 //$string['']                 = '';
 //$string['']                 = '';
