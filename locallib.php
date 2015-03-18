@@ -22,7 +22,7 @@
 
 require_once($CFG->libdir.'/eventslib.php');
 require_once($CFG->dirroot.'/calendar/lib.php');
-require_once($CFG->dirroot.'/mod/sliclquestions/questiontypes/questiontypes.class.php');
+require_once($CFG->dirroot.'/mod/sliclquestions/questiontypes.class.php');
 // Constants.
 
 define ('QUESTIONNAIREUNLIMITED', 0);
