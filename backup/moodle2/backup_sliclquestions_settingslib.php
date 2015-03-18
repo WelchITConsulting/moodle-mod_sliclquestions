@@ -15,22 +15,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Filename : upgrade
+ * Filename : backup_sliclquestions_settingslib
  * Author   : John Welch <jwelch@welchitconsulting.co.uk>
- * Created  : 06 Jan 2015
+ * Created  : 16 Mar 2015
  */
 
-function xmldb_sliclquestions_upgrade($oldversion=0)
-{
-    global $CFG, $DB;
-
-    $dbman = $DB->get_manager();
-
-//    if ($oldversion < 2015010600) {
-
-
-//        upgrade_mod_savepoint(true, '2015010600', 'sliclquestions');
-//    }
-
-    return true;
-}
+// This activity has no particular settings

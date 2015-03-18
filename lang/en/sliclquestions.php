@@ -27,6 +27,7 @@ $string['modulenameplural']             = 'SLiCL Questionnaires';
 $string['pluginadministration']         = 'SLiCL Questions Administration';
 $string['pluginname']                   = 'SLiCL Questions';
 $string['sliclquestions:addinstance']   = '';
+
 $string['sliclquestions:']                 = '';
 $string['sliclquestions:']                 = '';
 $string['sliclquestions:']                 = '';
