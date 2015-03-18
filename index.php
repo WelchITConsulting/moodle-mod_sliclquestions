@@ -44,15 +44,15 @@ $PAGE->set_heading(format_string($course->fullname));
 echo $OUTPUT->header();
 
 // Get all the appropriate data
-if (!($questionnaires = get_all_instances_in_course('sliclquestions', $course))) {
+if (!($sliclquestionnaires = get_all_instances_in_course('sliclquestions', $course))) {
     notice(get_string('therearenone', 'moodle', $str_questions), '../../course/view.php?id='.$course->id);
     die;
 }
 
 // Check if the closing date header is required
 $show_closing_header = false;
-foreach($questionnaires as $questionnaire) {
-    if ($questionnaire->closedate != 0) {
+foreach($sliclquestionnaires as $sliclquestions) {
+    if ($sliclquestions->closedate != 0) {
         $show_closing_header = true;
         break;
     }
@@ -62,7 +62,7 @@ foreach($questionnaires as $questionnaire) {
 $headings = array(get_string('name'));
 $align    = array('left');
 
-if ($showclosingheader) {
+if ($show_closing_header) {
     array_push($headings, get_string('questionnairecloses', 'sliclquestions'));
     array_push($align, 'left');
 }
@@ -89,37 +89,37 @@ $table->align = $align;
 
 // Populate the table with the instances
 $current_section = '';
-foreach($questionnaires as $questionnaire) {
-    $cmid = $questionnaire->coursemodule;
+foreach($sliclquestionnaires as $sliclquestions) {
+    $cmid = $sliclquestions->coursemodule;
     $data = array();
-    $realm = $DB->get_field('sliclquestions_survey', 'realm', array('id' => $questionnaire->$id));
+    $realm = $DB->get_field('sliclquestions_survey', 'realm', array('id' => $sliclquestions->$id));
     if (!(($realm == 'template') && !has_capability('mod/sliclquestions:manage', context_module::instance($cmid)))) {
 
         // Section number if necessary
         $str_section = '';
-        if ($questionnaire->section != $current_section) {
-            $str_section = get_section_name($course, $questionnaire->section);
-            $current_section = $questionnaire->section;
+        if ($sliclquestions->section != $current_section) {
+            $str_section = get_section_name($course, $sliclquestions->section);
+            $current_section = $sliclquestions->section;
         }
         $data[] = $str_section;
 
         // Show normal if the mod is visible
         $class = '';
-        if (!$questionnaire->visible) {
+        if (!$sliclquestions->visible) {
             $class = ' class="dimmed"';
         }
-        $data = '<a href="view.php?id='.$cmid.'"'.$class.'>'.$questionnaire->name.'</a>';
+        $data = '<a href="view.php?id='.$cmid.'"'.$class.'>'.$sliclquestions->name.'</a>';
 
         // Close date
-        if ($questionnaire->closedate) {
-            $data[] = userdate($questionnaire->closedate);
-        } else {
+        if ($sliclquestions->closedate) {
+            $data[] = userdate($sliclquestions->closedate);
+        } elseif ($show_closing_header) {
             $data[] = '';
         }
 
         if ($showing == 'responses') {
             $status = '';
-            if (($responses = sliclquestions_get_user_responses($questionnaire->id, $USER->id, $complete = false))) {
+            if (($responses = sliclquestions_get_user_responses($sliclquestions->id, $USER->id, $complete = false))) {
                 foreach($responses as $response) {
                     if ($response->complete == 'y') {
                         $status .= get_string('submitted', 'sliclquestions')
@@ -136,11 +136,66 @@ foreach($questionnaires as $questionnaire) {
             }
             $data[] = $status;
         } elseif ($showing == 'stats') {
-            $data[] = $DB->count_records('sliclquestions_response', array('surveyid' => $questionaire->sid, 'complete' => 'y'));
-            if (($survey = $DB->get_record('sliclquestions_survey', array('id' => $questionaire->id)))) {
+            $data[] = $DB->count_records('sliclquestions_response', array('surveyid' => $sliclquestions->sid, 'complete' => 'y'));
+            if (($survey = $DB->get_record('sliclquestions_survey', array('id' => $sliclquestions->id)))) {
                 // For a public questionnaire, look for the original public questionnaire
                 if ($survey->realm == 'public') {
-
+                    $strpreview = get_string('preview_questionnaire', 'sliclquestions');
+                    if ($survey->owner != $course->id) {
+                        $publicoriginal = '';
+                        $originalcourse = $DB->get_record('course', array('id' => $survey->owner));
+                        $originalcoursecontext = context_course::instance($survey->owner);
+                        $originalsliclquestions = $DB->get_record('sliclquestions',
+                                                                  array('sid'    => $survey->id,
+                                                                        'course' => $survey->owner));
+                        $cm = get_coursemodule_from_instance("sliclquestions", $originalsliclquestions->id, $survey->owner);
+                        $context = context_course::instance($survey->owner, MUST_EXIST);
+                        $canvieworiginal = has_capability('mod/sliclquestions:preview', $context, $USER->id, true);
+                        // If current user can view questionnaires in original course,
+                        // provide a link to the original public questionnaire.
+                        if ($canvieworiginal) {
+                            $publicoriginal = '<br />'.get_string('publicoriginal', 'questionnaire').'&nbsp;'.
+                                '<a href="'.$CFG->wwwroot.'/mod/sliclquestions/preview.php?id='.
+                                $cm->id.'" title="'.$strpreview.']">'.$originalsliclquestions->name.' ['.
+                                $originalcourse->fullname.']</a>';
+                        } else {
+                            // If current user is not enrolled as teacher in original course,
+                            // only display the original public questionnaire's name and course name.
+                            $publicoriginal = '<br />'.get_string('publicoriginal', 'sliclquestions').'&nbsp;'.
+                                $originalsliclquestions->name.' ['.$originalcourse->fullname.']';
+                        }
+                        $data[] = get_string($realm, 'sliclquestions').' '.$publicoriginal;
+                    } else {
+                        // Original public questionnaire was created in current course.
+                        // Find which courses it is used in.
+                        $publiccopy = '';
+                        $select = 'course != '.$course->id.' AND sid = '.$sliclquestions->sid;
+                        if ($copies = $DB->get_records_select('sliclquestions', $select, null, $sort = 'course ASC', $fields = 'id, course, name')) {
+                            foreach ($copies as $copy) {
+                                $copycourse = $DB->get_record('course', array('id' => $copy->course));
+                                $select = 'course = '.$copycourse->id.' AND sid = '.$sliclquestions->sid;
+                                $copysliclquestions = $DB->get_record('sliclquestions',
+                                                                      array('id'     => $copy->id,
+                                                                            'sid'    => $survey->id,
+                                                                            'course' => $copycourse->id));
+                                $cm = get_coursemodule_from_instance("sliclquestions", $copysliclquestions->id, $copycourse->id);
+                                $context = context_course::instance($copycourse->id, MUST_EXIST);
+                                $canviewcopy = has_capability('mod/sliclquestions:view', $context, $USER->id, true);
+                                if ($canviewcopy) {
+                                    $publiccopy .= '<br />'.get_string('publiccopy', 'sliclquestions').'&nbsp;:&nbsp;'.
+                                        '<a href = "'.$CFG->wwwroot.'/mod/sliclquestions/preview.php?id='.
+                                        $cm->id.'" title = "'.$strpreview.'">'.
+                                        $copysliclquestions->name.' ['.$copycourse->fullname.']</a>';
+                                } else {
+                                    // If current user does not have "view" capability in copy course,
+                                    // only display the copied public questionnaire's name and course name.
+                                    $publiccopy .= '<br />'.get_string('publiccopy', 'sliclquestions').'&nbsp;:&nbsp;'.
+                                        $copysliclquestions->name.' ['.$copycourse->fullname.']';
+                                }
+                            }
+                        }
+                        $data[] = get_string($realm, 'sliclquestions').' '.$publiccopy;
+                    }
                 } else {
                     $data[] = get_string($resalm, 'sliclquestions');
                 }

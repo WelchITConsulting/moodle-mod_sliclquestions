@@ -15,15 +15,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Filename : version
+ * Filename : settings
  * Author   : John Welch <jwelch@welchitconsulting.co.uk>
- * Created  : 03 Jan 2015
+ * Created  : 18 Mar 2015
  */
 
-defined('MOODLE_INTERNAL') || die();
+defined('MOODLE_INTERNAL') || die;
 
-$plugin->version   = 2015031800;
-$plugin->requires  = 2013110500;
-$plugin->maturiy   = MATURITY_BETA;
-$plugin->release   = 2015031800;
-$plugin->component = 'mod_sliclquestions';
+if ($ADMIN->fulltree) {
+    $options = array(0 => get_string('no'), 1 => get_string('yes'));
+    $str = get_string('configusergraphlong', 'sliclquestions');
+    $settings->add(new admin_setting_configselect('sliclquestions_usergraph',
+                                    get_string('configusergraph', 'sliclquestions'),
+                                    $str, 0, $options));
+}
