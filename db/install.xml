@@ -20,7 +20,7 @@ Author   : John Welch <jwelch@welchitconsulting.co.uk>
 Created  : 06 Jan 2015
 -->
 
-<XMLDB PATH="mod/sliclquestions" VERSION="2015010600" COMMENT="XMLDB file for Moodle mod/sliclquestions"
+<XMLDB PATH="mod/sliclquestions" VERSION="2015032300" COMMENT="XMLDB file for Moodle mod/sliclquestions"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="../../lib/xmldb/xmldb.xsd">
     <TABLES>
@@ -82,12 +82,36 @@ Created  : 06 Jan 2015
             </INDEXES>
         </TABLE>
 
+        <TABLE NAME="sliclquestion_students" COMMENT="Student registration table">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+                <FIELD NAME="survey_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="teacher_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="forename" TYPE="char" LENGTH="60" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="surname" TYPE="char" LENGTH="60" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="forename" TYPE="char" LENGTH="1" NOTNULL="true" DEFAULT="m" SEQUENCE="false"/>
+                <FIELD NAME="year_id" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="3" SEQUENCE="false"/>
+                <FIELD NAME="class_id" TYPE="char" LENGTH="60" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="kpi_level" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="2" SEQUENCE="false"/>
+                <FIELD NAME="deleteflag" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="datecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="dateupdated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="teacher_id" UNIQUE="false" FIELDS="teacher_id"/>
+            </INDEXES>
+        </TABLE>
+
         <TABLE NAME="sliclquestions_attempts" COMMENT="SLiCL Questions attempts table">
             <FIELDS>
                 <FIELD NAME="id" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="true"/>
                 <FIELD NAME="qid" TYPE="int" LENGTH="11" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
                 <FIELD NAME="userid" TYPE="int" LENGTH="11" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
                 <FIELD NAME="rid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="pupil_id" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
                 <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
             </FIELDS>
             <KEYS>
