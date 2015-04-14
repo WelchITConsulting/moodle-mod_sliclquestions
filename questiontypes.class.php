@@ -2232,10 +2232,10 @@ class sliclquestions_question {
 
         switch ($sort) {
             case 'ascending':
-                uasort($this->counts, 'sortavgasc');
+                uasort($this->counts, 'sliclquestions_sortavgasc');
                 break;
             case 'descending':
-                uasort($this->counts, 'sortavgdesc');
+                uasort($this->counts, 'sliclquestions_sortavgdesc');
                 break;
         }
         reset ($this->counts);
@@ -2504,7 +2504,7 @@ class sliclquestions_question {
     }
 }
 
-function sortavgasc($a, $b) {
+function sliclquestions_sortavgasc($a, $b) {
     if (isset($a->avg) && isset($b->avg)) {
         if ( $a->avg < $b->avg ) {
             return -1;
@@ -2516,7 +2516,7 @@ function sortavgasc($a, $b) {
     }
 }
 
-function sortavgdesc($a, $b) {
+function sliclquestions_sortavgdesc($a, $b) {
     if (isset($a->avg) && isset($b->avg)) {
         if ( $a->avg > $b->avg ) {
             return -1;
