@@ -201,10 +201,10 @@ if (($canviewallgroups || ($canviewgroups && $sliclquestions->capabilities->read
         }
     }
 } else if ($canviewgroups && $sliclquestions->capabilities->readallresponses && ($numresp > 0) && $canviewgroups &&
-           ($sliclquestions->resp_view == QUESTIONNAIRE_STUDENTVIEWRESPONSES_ALWAYS ||
-            ($sliclquestions->resp_view == QUESTIONNAIRE_STUDENTVIEWRESPONSES_WHENCLOSED
+           ($sliclquestions->resp_view == SLICLQUESTIONS_STUDENTVIEWRESPONSES_ALWAYS ||
+            ($sliclquestions->resp_view == SLICLQUESTIONS_STUDENTVIEWRESPONSES_WHENCLOSED
                 && $sliclquestions->is_closed()) ||
-            ($sliclquestions->resp_view == QUESTIONNAIRE_STUDENTVIEWRESPONSES_WHENANSWERED
+            ($sliclquestions->resp_view == SLICLQUESTIONS_STUDENTVIEWRESPONSES_WHENANSWERED
                 && $usernumresp > 0 )) &&
            $sliclquestions->is_survey_owner()) {
     $argstr = 'instance='.$sliclquestions->id.'&sid='.$sliclquestions->sid;

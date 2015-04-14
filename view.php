@@ -126,13 +126,13 @@ if (!$sliclquestions->is_active()) {
     }
 } else if (!$sliclquestions->user_can_take($USER->id)) {
     switch ($sliclquestions->qtype) {
-        case QUESTIONNAIREDAILY:
+        case SLICLQUESTIONSDAILY:
             $msgstring = ' '.get_string('today', 'sliclquestions');
             break;
-        case QUESTIONNAIREWEEKLY:
+        case SLICLQUESTIONSWEEKLY:
             $msgstring = ' '.get_string('thisweek', 'sliclquestions');
             break;
-        case QUESTIONNAIREMONTHLY:
+        case SLICLQUESTIONSMONTHLY:
             $msgstring = ' '.get_string('thismonth', 'sliclquestions');
             break;
         default:
@@ -218,10 +218,10 @@ if (( (
             ($canviewgroups && $sliclquestions->capabilities->readallresponseanytime))
             && $numresp > 0 && $owner && $numselectedresps > 0) ||
             $sliclquestions->capabilities->readallresponses && ($numresp > 0) && $canviewgroups &&
-            ($sliclquestions->resp_view == QUESTIONNAIRE_STUDENTVIEWRESPONSES_ALWAYS ||
-                    ($sliclquestions->resp_view == QUESTIONNAIRE_STUDENTVIEWRESPONSES_WHENCLOSED
+            ($sliclquestions->resp_view == SLICLQUESTIONS_STUDENTVIEWRESPONSES_ALWAYS ||
+                    ($sliclquestions->resp_view == SLICLQUESTIONS_STUDENTVIEWRESPONSES_WHENCLOSED
                             && $sliclquestions->is_closed()) ||
-                    ($sliclquestions->resp_view == QUESTIONNAIRE_STUDENTVIEWRESPONSES_WHENANSWERED
+                    ($sliclquestions->resp_view == SLICLQUESTIONS_STUDENTVIEWRESPONSES_WHENANSWERED
                             && $usernumresp > 0)) &&
             $sliclquestions->is_survey_owner()) {
     echo $OUTPUT->box_start('generalbox boxaligncenter boxwidthwide');

@@ -229,13 +229,13 @@ class sliclquestions {
 
         } else {
             switch ($this->qtype) {
-                case QUESTIONNAIREDAILY:
+                case SLICLQUESTIONSDAILY:
                     $msgstring = ' '.get_string('today', 'sliclquestions');
                     break;
-                case QUESTIONNAIREWEEKLY:
+                case SLICLQUESTIONSWEEKLY:
                     $msgstring = ' '.get_string('thisweek', 'sliclquestions');
                     break;
-                case QUESTIONNAIREMONTHLY:
+                case SLICLQUESTIONSMONTHLY:
                     $msgstring = ' '.get_string('thismonth', 'sliclquestions');
                     break;
                 default:
@@ -362,7 +362,7 @@ class sliclquestions {
 
         if (!$this->is_active() || !$this->user_is_eligible($userid)) {
             return false;
-        } else if ($this->qtype == QUESTIONNAIREUNLIMITED) {
+        } else if ($this->qtype == SLICLQUESTIONSUNLIMITED) {
             return true;
         } else if ($userid > 0) {
             return $this->user_time_for_new_attempt($userid);
@@ -388,15 +388,15 @@ class sliclquestions {
 
         switch ($this->qtype) {
 
-            case QUESTIONNAIREUNLIMITED:
+            case SLICLQUESTIONSUNLIMITED:
                 $cantake = true;
                 break;
 
-            case QUESTIONNAIREONCE:
+            case SLICLQUESTIONSONCE:
                 $cantake = false;
                 break;
 
-            case QUESTIONNAIREDAILY:
+            case SLICLQUESTIONSDAILY:
                 $attemptyear = date('Y', $attempt->timemodified);
                 $currentyear = date('Y', $timenow);
                 $attemptdayofyear = date('z', $attempt->timemodified);
@@ -405,7 +405,7 @@ class sliclquestions {
                             (($attemptyear == $currentyear) && ($attemptdayofyear < $currentdayofyear)));
                 break;
 
-            case QUESTIONNAIREWEEKLY:
+            case SLICLQUESTIONSWEEKLY:
                 $attemptyear = date('Y', $attempt->timemodified);
                 $currentyear = date('Y', $timenow);
                 $attemptweekofyear = date('W', $attempt->timemodified);
@@ -414,7 +414,7 @@ class sliclquestions {
                             (($attemptyear == $currentyear) && ($attemptweekofyear < $currentweekofyear)));
                 break;
 
-            case QUESTIONNAIREMONTHLY:
+            case SLICLQUESTIONSMONTHLY:
                 $attemptyear = date('Y', $attempt->timemodified);
                 $currentyear = date('Y', $timenow);
                 $attemptmonthofyear = date('n', $attempt->timemodified);
@@ -458,9 +458,9 @@ class sliclquestions {
 
             // If you are allowed to view this response for another user.
             if ($this->capabilities->readallresponses &&
-                ($this->resp_view == QUESTIONNAIRE_STUDENTVIEWRESPONSES_ALWAYS ||
-                 ($this->resp_view == QUESTIONNAIRE_STUDENTVIEWRESPONSES_WHENCLOSED && $this->is_closed()) ||
-                 ($this->resp_view == QUESTIONNAIRE_STUDENTVIEWRESPONSES_WHENANSWERED  && !$this->user_can_take($USER->id)))) {
+                ($this->resp_view == SLICLQUESTIONS_STUDENTVIEWRESPONSES_ALWAYS ||
+                 ($this->resp_view == SLICLQUESTIONS_STUDENTVIEWRESPONSES_WHENCLOSED && $this->is_closed()) ||
+                 ($this->resp_view == SLICLQUESTIONS_STUDENTVIEWRESPONSES_WHENANSWERED  && !$this->user_can_take($USER->id)))) {
                 return true;
             }
 
@@ -478,9 +478,9 @@ class sliclquestions {
 
             // If you are allowed to view this response for another user.
             if ($this->capabilities->readallresponses &&
-                ($this->resp_view == QUESTIONNAIRE_STUDENTVIEWRESPONSES_ALWAYS ||
-                 ($this->resp_view == QUESTIONNAIRE_STUDENTVIEWRESPONSES_WHENCLOSED && $this->is_closed()) ||
-                 ($this->resp_view == QUESTIONNAIRE_STUDENTVIEWRESPONSES_WHENANSWERED  && !$this->user_can_take($USER->id)))) {
+                ($this->resp_view == SLICLQUESTIONS_STUDENTVIEWRESPONSES_ALWAYS ||
+                 ($this->resp_view == SLICLQUESTIONS_STUDENTVIEWRESPONSES_WHENCLOSED && $this->is_closed()) ||
+                 ($this->resp_view == SLICLQUESTIONS_STUDENTVIEWRESPONSES_WHENANSWERED  && !$this->user_can_take($USER->id)))) {
                 return true;
             }
 

@@ -20,8 +20,8 @@
  * Created  : 18 Mar 2015
  */
 
-define('QUESTIONNAIRE_RESETFORM_RESET', 'sliclquestions_reset_data_');
-define('QUESTIONNAIRE_RESETFORM_DROP', 'sliclquestions_drop_sliclquestions_');
+define('SLICLQUESTIONS_RESETFORM_RESET', 'sliclquestions_reset_data_');
+define('SLICLQUESTIONS_RESETFORM_DROP', 'sliclquestions_drop_sliclquestions_');
 
 function sliclquestions_supports($feature) {
     switch($feature) {
@@ -643,10 +643,10 @@ function sliclquestions_extend_settings_navigation(settings_navigation $settings
             ($canviewgroups && $sliclquestions->capabilities->readallresponseanytime))
             && $numresp > 0 && $owner && $numselectedresps > 0) ||
             $sliclquestions->capabilities->readallresponses && ($numresp > 0) && $canviewgroups &&
-            ($sliclquestions->resp_view == QUESTIONNAIRE_STUDENTVIEWRESPONSES_ALWAYS ||
-                    ($sliclquestions->resp_view == QUESTIONNAIRE_STUDENTVIEWRESPONSES_WHENCLOSED
+            ($sliclquestions->resp_view == SLICLQUESTIONS_STUDENTVIEWRESPONSES_ALWAYS ||
+                    ($sliclquestions->resp_view == SLICLQUESTIONS_STUDENTVIEWRESPONSES_WHENCLOSED
                             && $sliclquestions->is_closed()) ||
-                    ($sliclquestions->resp_view == QUESTIONNAIRE_STUDENTVIEWRESPONSES_WHENANSWERED
+                    ($sliclquestions->resp_view == SLICLQUESTIONS_STUDENTVIEWRESPONSES_WHENANSWERED
                             && $usernumresp > 0)) &&
             $sliclquestions->is_survey_owner()) {
 
@@ -1011,7 +1011,7 @@ function sliclquestions_print_overview($courses, &$htmlarray) {
             $nbattempts = count($attempts);
 
             // Do not display a sliclquestions as due if it can only be sumbitted once and it has already been submitted!
-            if ($nbattempts != 0 && $sliclquestions->qtype == QUESTIONNAIREONCE) {
+            if ($nbattempts != 0 && $sliclquestions->qtype == SLICLQUESTIONSONCE) {
                 continue;
             }
 

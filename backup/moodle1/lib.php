@@ -113,7 +113,7 @@ class moodle1_mod_sliclquestions_handler extends moodle1_mod_handler
     }
 
     /**
-     * This is executed every time we have one /MOODLE_BACKUP/COURSE/MODULES/MOD/QUESTIONNAIRE/SURVEY/QUESTION
+     * This is executed every time we have one /MOODLE_BACKUP/COURSE/MODULES/MOD/SLICLQUESTIONS/SURVEY/QUESTION
      * data available
      */
     public function process_question($data)
@@ -136,7 +136,7 @@ class moodle1_mod_sliclquestions_handler extends moodle1_mod_handler
     }
 
     /**
-     * This is executed every time we have one /MOODLE_BACKUP/COURSE/MODULES/MOD/QUESTIONNAIRE/SURVEY/QUESTION/QUESTION_CHOICE
+     * This is executed every time we have one /MOODLE_BACKUP/COURSE/MODULES/MOD/SLICLQUESTIONS/SURVEY/QUESTION/QUESTION_CHOICE
      * data available
      */
     public function process_question_choice($data)

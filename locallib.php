@@ -25,27 +25,27 @@ require_once($CFG->dirroot.'/calendar/lib.php');
 require_once($CFG->dirroot.'/mod/sliclquestions/questiontypes.class.php');
 // Constants.
 
-define ('QUESTIONNAIREUNLIMITED', 0);
-define ('QUESTIONNAIREONCE', 1);
-define ('QUESTIONNAIREDAILY', 2);
-define ('QUESTIONNAIREWEEKLY', 3);
-define ('QUESTIONNAIREMONTHLY', 4);
+define ('SLICLQUESTIONSUNLIMITED', 0);
+define ('SLICLQUESTIONSONCE', 1);
+define ('SLICLQUESTIONSDAILY', 2);
+define ('SLICLQUESTIONSWEEKLY', 3);
+define ('SLICLQUESTIONSMONTHLY', 4);
 
-define ('QUESTIONNAIRE_STUDENTVIEWRESPONSES_NEVER', 0);
-define ('QUESTIONNAIRE_STUDENTVIEWRESPONSES_WHENANSWERED', 1);
-define ('QUESTIONNAIRE_STUDENTVIEWRESPONSES_WHENCLOSED', 2);
-define ('QUESTIONNAIRE_STUDENTVIEWRESPONSES_ALWAYS', 3);
+define ('SLICLQUESTIONS_STUDENTVIEWRESPONSES_NEVER', 0);
+define ('SLICLQUESTIONS_STUDENTVIEWRESPONSES_WHENANSWERED', 1);
+define ('SLICLQUESTIONS_STUDENTVIEWRESPONSES_WHENCLOSED', 2);
+define ('SLICLQUESTIONS_STUDENTVIEWRESPONSES_ALWAYS', 3);
 
-define('QUESTIONNAIRE_MAX_EVENT_LENGTH', 5 * 24 * 60 * 60);   // 5 days maximum.
+define('SLICLQUESTIONS_MAX_EVENT_LENGTH', 5 * 24 * 60 * 60);   // 5 days maximum.
 
-define('QUESTIONNAIRE_DEFAULT_PAGE_COUNT', 20);
+define('SLICLQUESTIONS_DEFAULT_PAGE_COUNT', 20);
 
 global $sliclquestionstypes;
-$sliclquestionstypes = array (QUESTIONNAIREUNLIMITED => get_string('qtypeunlimited', 'sliclquestions'),
-                              QUESTIONNAIREONCE => get_string('qtypeonce', 'sliclquestions'),
-                              QUESTIONNAIREDAILY => get_string('qtypedaily', 'sliclquestions'),
-                              QUESTIONNAIREWEEKLY => get_string('qtypeweekly', 'sliclquestions'),
-                              QUESTIONNAIREMONTHLY => get_string('qtypemonthly', 'sliclquestions'));
+$sliclquestionstypes = array (SLICLQUESTIONSUNLIMITED => get_string('qtypeunlimited', 'sliclquestions'),
+                              SLICLQUESTIONSONCE => get_string('qtypeonce', 'sliclquestions'),
+                              SLICLQUESTIONSDAILY => get_string('qtypedaily', 'sliclquestions'),
+                              SLICLQUESTIONSWEEKLY => get_string('qtypeweekly', 'sliclquestions'),
+                              SLICLQUESTIONSMONTHLY => get_string('qtypemonthly', 'sliclquestions'));
 
 global $sliclquestionsrespondents;
 $sliclquestionsrespondents = array ('fullname' => get_string('respondenttypefullname', 'sliclquestions'),
@@ -58,9 +58,9 @@ $sliclquestionsrealms = array ('private' => get_string('private', 'sliclquestion
 
 global $sliclquestionsresponseviewers;
 $sliclquestionsresponseviewers =
-    array ( QUESTIONNAIRE_STUDENTVIEWRESPONSES_WHENANSWERED => get_string('responseviewstudentswhenanswered', 'sliclquestions'),
-            QUESTIONNAIRE_STUDENTVIEWRESPONSES_WHENCLOSED => get_string('responseviewstudentswhenclosed', 'sliclquestions'),
-            QUESTIONNAIRE_STUDENTVIEWRESPONSES_ALWAYS => get_string('responseviewstudentsalways', 'sliclquestions'));
+    array ( SLICLQUESTIONS_STUDENTVIEWRESPONSES_WHENANSWERED => get_string('responseviewstudentswhenanswered', 'sliclquestions'),
+            SLICLQUESTIONS_STUDENTVIEWRESPONSES_WHENCLOSED => get_string('responseviewstudentswhenclosed', 'sliclquestions'),
+            SLICLQUESTIONS_STUDENTVIEWRESPONSES_ALWAYS => get_string('responseviewstudentsalways', 'sliclquestions'));
 
 global $autonumbering;
 $autonumbering = array (0 => get_string('autonumberno', 'sliclquestions'),
@@ -589,7 +589,7 @@ function sliclquestions_set_events($sliclquestions) {
     $event->visible = instance_is_visible('sliclquestions', $sliclquestions);
     $event->timeduration = ($sliclquestions->closedate - $sliclquestions->opendate);
 
-    if ($sliclquestions->closedate and $sliclquestions->opendate and $event->timeduration <= QUESTIONNAIRE_MAX_EVENT_LENGTH) {
+    if ($sliclquestions->closedate and $sliclquestions->opendate and $event->timeduration <= SLICLQUESTIONS_MAX_EVENT_LENGTH) {
         // Single event for the whole sliclquestions.
         $event->name = $sliclquestions->name;
         calendar_event::create($event);
