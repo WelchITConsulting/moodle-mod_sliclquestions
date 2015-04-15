@@ -20,6 +20,122 @@
  * Created  : 18 Mar 2015
  */
 
+
+function sliclquestions_add_instance($sliclquestions)
+{
+    global $DB;
+}
+
+function sliclquestions_update_instance($sliclquestions)
+{
+    global $DB;
+
+    if (!empty($sliclquestions->id) && !empty($sliclquestions->realm)) {
+        $DB->set_field('sliclquestions_survey', 'realm', $sliclquestions->realm, array('id' => $sliclquestions->id));
+    }
+
+    $sliclquestions->timemodified = time();
+    $sliclquestions->id = $sliclquestions->instance;
+
+    // Add the events for the date settings for the item to the calendar
+    sliclquestions_set_events($sliclquestions);
+
+    // Update the records and return the results
+    return $DB->update_record('sliclquestions', $sliclquestions);
+}
+
+/*
+// Given an object containing all the necessary data,
+// (defined by the form in mod.html) this function
+// will update an existing instance with new data.
+function sliclquestions_update_instance($sliclquestions) {
+    global $DB, $CFG;
+    require_once($CFG->dirroot.'/mod/sliclquestions/locallib.php');
+
+    // Check the realm and set it to the survey if its set.
+    if (!empty($sliclquestions->sid) && !empty($sliclquestions->realm)) {
+        $DB->set_field('sliclquestions_survey', 'realm', $sliclquestions->realm, array('id' => $sliclquestions->sid));
+    }
+
+    $sliclquestions->timemodified = time();
+    $sliclquestions->id = $sliclquestions->instance;
+
+    // May have to add extra stuff in here.
+    if (empty($sliclquestions->useopendate)) {
+        $sliclquestions->opendate = 0;
+    }
+    if (empty($sliclquestions->useclosedate)) {
+        $sliclquestions->closedate = 0;
+    }
+
+    if ($sliclquestions->resume == '1') {
+        $sliclquestions->resume = 1;
+    } else {
+        $sliclquestions->resume = 0;
+    }
+
+    // Field sliclquestions->navigate used for branching sliclquestionss. Starting with version 2.5.5.
+    /* if ($sliclquestions->navigate == '1') {
+        $sliclquestions->navigate = 1;
+    } else {
+        $sliclquestions->navigate = 0;
+    } */
+
+    // Get existing grade item.
+    sliclquestions_grade_item_update($sliclquestions);
+
+    sliclquestions_set_events($sliclquestions);
+
+    return $DB->update_record("sliclquestions", $sliclquestions);
+}*/
+
+
+
+
+
+
+/**
+ * Delete an instance of the sliclquestions and all dependant records from the
+ * database.
+ *
+ * @param int $id The ID for the sliclquestions instanc to be deleted
+ * @return boolean The result of the record deletion
+ */
+function sliclquestions_delete_instance($id)
+{
+    global $DB;
+
+    // Check that the id is a valid instance of the sliclquestions questionnaire
+    if ($sliclquestions = $DB->get_record('sliclquestions', array('id' => $id))) {
+        return false;
+    }
+
+    // Check for and delete any survey and response records
+    if ($survey = $DB->get_record('sliclquestions_survey', array('id' => $sliclquestions->sid))) {
+        if (!sliclquestions_delete_survey($sliclquestions->sid, $sliclquestions->id)) {
+            return false;
+        }
+    }
+
+    // Check for and remove any entries from the calendar
+    if ($events = $DB->get_records('event', array('modulename' => 'sliclquestions',
+                                                  'instance'   => $sliclquestions->id))) {
+        foreach($events as $event) {
+            $event->delete();
+        }
+    }
+
+    // Remove the instance and return the result
+    return $DB->delete_records('sliclquestions', array('id' => $id));
+}
+
+
+
+
+
+
+
+
 define('SLICLQUESTIONS_RESETFORM_RESET', 'sliclquestions_reset_data_');
 define('SLICLQUESTIONS_RESETFORM_DROP', 'sliclquestions_drop_sliclquestions_');
 
@@ -142,84 +258,6 @@ function sliclquestions_add_instance($sliclquestions) {
     sliclquestions_set_events($sliclquestions);
 
     return $sliclquestions->id;
-}
-
-// Given an object containing all the necessary data,
-// (defined by the form in mod.html) this function
-// will update an existing instance with new data.
-function sliclquestions_update_instance($sliclquestions) {
-    global $DB, $CFG;
-    require_once($CFG->dirroot.'/mod/sliclquestions/locallib.php');
-
-    // Check the realm and set it to the survey if its set.
-    if (!empty($sliclquestions->sid) && !empty($sliclquestions->realm)) {
-        $DB->set_field('sliclquestions_survey', 'realm', $sliclquestions->realm, array('id' => $sliclquestions->sid));
-    }
-
-    $sliclquestions->timemodified = time();
-    $sliclquestions->id = $sliclquestions->instance;
-
-    // May have to add extra stuff in here.
-    if (empty($sliclquestions->useopendate)) {
-        $sliclquestions->opendate = 0;
-    }
-    if (empty($sliclquestions->useclosedate)) {
-        $sliclquestions->closedate = 0;
-    }
-
-    if ($sliclquestions->resume == '1') {
-        $sliclquestions->resume = 1;
-    } else {
-        $sliclquestions->resume = 0;
-    }
-
-    // Field sliclquestions->navigate used for branching sliclquestionss. Starting with version 2.5.5.
-    /* if ($sliclquestions->navigate == '1') {
-        $sliclquestions->navigate = 1;
-    } else {
-        $sliclquestions->navigate = 0;
-    } */
-
-    // Get existing grade item.
-    sliclquestions_grade_item_update($sliclquestions);
-
-    sliclquestions_set_events($sliclquestions);
-
-    return $DB->update_record("sliclquestions", $sliclquestions);
-}
-
-// Given an ID of an instance of this module,
-// this function will permanently delete the instance
-// and any data that depends on it.
-function sliclquestions_delete_instance($id) {
-    global $DB, $CFG;
-    require_once($CFG->dirroot.'/mod/sliclquestions/locallib.php');
-
-    if (! $sliclquestions = $DB->get_record('sliclquestions', array('id' => $id))) {
-        return false;
-    }
-
-    $result = true;
-
-    if (! $DB->delete_records('sliclquestions', array('id' => $sliclquestions->id))) {
-        $result = false;
-    }
-
-    if ($survey = $DB->get_record('sliclquestions_survey', array('id' => $sliclquestions->sid))) {
-        // If this survey is owned by this course, delete all of the survey records and responses.
-        if ($survey->owner == $sliclquestions->course) {
-            $result = $result && sliclquestions_delete_survey($sliclquestions->sid, $sliclquestions->id);
-        }
-    }
-
-    if ($events = $DB->get_records('event', array("modulename" => 'sliclquestions', "instance" => $sliclquestions->id))) {
-        foreach ($events as $event) {
-            $event = calendar_event::load($event);
-            $event->delete();
-        }
-    }
-
-    return $result;
 }
 
 // Return a small object with summary information about what a

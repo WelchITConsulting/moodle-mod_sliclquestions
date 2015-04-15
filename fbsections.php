@@ -180,14 +180,14 @@ foreach ($sliclquestions->questions as $question) {
 
     // Questions to be included in feedback sections must be required, have a name
     // and must not be child of a parent question.
-    if ($qtype != QUESPAGEBREAK && $qtype != QUESSECTIONTEXT) {
+    if ($qtype != QUESPAGEBREAK && $qtype != SLICLQUESSECTIONTEXT) {
         $n++;
     }
 
     $cannotuse = false;
     $strcannotuse = '';
-    if ($qtype != QUESSECTIONTEXT && $qtype != QUESPAGEBREAK
-                    && ($qtype != QUESYESNO && $qtype != QUESRADIO && $qtype != QUESRATE
+    if ($qtype != SLICLQUESSECTIONTEXT && $qtype != SLICLQUESPAGEBREAK
+                    && ($qtype != SLICLQUESYESNO && $qtype != SLICLQUESRADIO && $qtype != SLICLQUESRATE
                     || $required != 'y' || $qname == '' || $question->dependquestion != 0)) {
         $cannotuse = true;
         $qn = '<strong>'.$n.'</strong>';

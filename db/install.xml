@@ -89,7 +89,7 @@ Created  : 06 Jan 2015
                 <FIELD NAME="teacher_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
                 <FIELD NAME="forename" TYPE="char" LENGTH="60" NOTNULL="true" SEQUENCE="false"/>
                 <FIELD NAME="surname" TYPE="char" LENGTH="60" NOTNULL="true" SEQUENCE="false"/>
-                <FIELD NAME="forename" TYPE="char" LENGTH="1" NOTNULL="true" DEFAULT="m" SEQUENCE="false"/>
+                <FIELD NAME="sex" TYPE="char" LENGTH="1" NOTNULL="true" DEFAULT="m" SEQUENCE="false"/>
                 <FIELD NAME="year_id" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="3" SEQUENCE="false"/>
                 <FIELD NAME="class_id" TYPE="char" LENGTH="60" NOTNULL="false" SEQUENCE="false"/>
                 <FIELD NAME="kpi_level" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="2" SEQUENCE="false"/>

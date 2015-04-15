@@ -41,6 +41,22 @@ class mod_sliclquestions_mod_form extends moodleform_mod {
 
         $this->add_intro_editor(false, get_string('description'));
 
+        $mform->addElement('radio', 'pagetype', get_string('pupilregistration', 'sliclquestions'), '', '0');
+        $mform->addElement('radio', 'pagetype', get_string('assessment', 'sliclquestions'), '', '1');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         $mform->addElement('header', 'timinghdr', get_string('timing', 'form'));
 
         $enableopengroup = array();

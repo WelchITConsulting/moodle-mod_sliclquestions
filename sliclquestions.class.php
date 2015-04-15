@@ -109,7 +109,7 @@ class sliclquestions {
             $isbreak = false;
             foreach ($records as $record) {
                 $this->questions[$record->id] = new sliclquestions_question(0, $record, $this->context);
-                if ($record->type_id != QUESPAGEBREAK) {
+                if ($record->type_id != SLICLQUESPAGEBREAK) {
                     $this->questionsbysec[$sec][$record->id] = &$this->questions[$record->id];
                     $isbreak = false;
                 } else {
@@ -281,10 +281,10 @@ class sliclquestions {
             }
         }
         foreach ($this->questions as $question) {
-            if ($question->type_id < QUESPAGEBREAK) {
+            if ($question->type_id < SLICLQUESPAGEBREAK) {
                 $i++;
             }
-            if ($question->type_id != QUESPAGEBREAK) {
+            if ($question->type_id != SLICLQUESPAGEBREAK) {
                 $question->response_display($data, $i);
             }
         }
@@ -309,11 +309,11 @@ class sliclquestions {
             $i = 0;
 
             foreach ($this->questions as $question) {
-                if ($question->type_id < QUESPAGEBREAK) {
+                if ($question->type_id < SLICLQUESPAGEBREAK) {
                     $i++;
                 }
                 $qid = preg_quote('q'.$question->id, '/');
-                if ($question->type_id != QUESPAGEBREAK) {
+                if ($question->type_id != SLICLQUESPAGEBREAK) {
                     $method = $qtypenames[$question->type_id].'_response_display';
                     if (method_exists($question, $method)) {
                         echo $OUTPUT->box_start('individualresp');
@@ -707,7 +707,7 @@ class sliclquestions {
         if ($section > 1) {
             for ($j = 2; $j <= $section; $j++) {
                 foreach ($this->questionsbysec[$j - 1] as $question) {
-                    if ($question->type_id < QUESPAGEBREAK) {
+                    if ($question->type_id < SLICLQUESPAGEBREAK) {
                         $i++;
                     }
                 }
@@ -1138,7 +1138,7 @@ class sliclquestions {
             // ADDED A SIMPLE LOOP FOR MAKING SURE PAGE BREAKS (type 99) AND LABELS (type 100) ARE NOT ALLOWED.
             foreach ($this->questionsbysec[$j - 1] as $sectionrecord) {
                 $tid = $sectionrecord->type_id;
-                if ($tid < QUESPAGEBREAK) {
+                if ($tid < SLICLQUESPAGEBREAK) {
                     $i++;
                 }
             }
@@ -2507,14 +2507,14 @@ class sliclquestions {
         $qnum = 0;
 
         foreach ($this->questions as $question) {
-            if ($question->type_id == QUESPAGEBREAK) {
+            if ($question->type_id == SLICLQUESPAGEBREAK) {
                 continue;
             }
             echo html_writer::start_tag('div', array('class' => 'qn-container'));
-            if ($question->type_id != QUESSECTIONTEXT) {
+            if ($question->type_id != SLICLQUESSECTIONTEXT) {
                 $qnum++;
                 echo html_writer::start_tag('div', array('class' => 'qn-info'));
-                if ($question->type_id != QUESSECTIONTEXT) {
+                if ($question->type_id != SLICLQUESSECTIONTEXT) {
                     echo html_writer::tag('h2', $qnum, array('class' => 'qn-number'));
                 }
                 echo html_writer::end_tag('div'); // End qn-info.
@@ -2604,7 +2604,7 @@ class sliclquestions {
             $qpos = $record->position;
             $col = $record->name;
             $type = $record->type_id;
-            if ($type == QUESRADIO || $type == QUESCHECK || $type == QUESRATE) {
+            if ($type == SLICLQUESRADIO || $type == SLICLQUESCHECK || $type == SLICLQUESRATE) {
                 /* single or multiple or rate */
                 $sql = "SELECT c.id as cid, q.id as qid, q.precise AS precise, q.name, c.content
                 FROM {sliclquestions_question} q ".
@@ -3014,12 +3014,12 @@ class sliclquestions {
             $qid = $question->id;
             $qtype = $question->type_id;
             $required = $question->required;
-            if (($qtype == QUESRADIO || $qtype == QUESDROP || $qtype == QUESRATE) and $required == 'y') {
+            if (($qtype == SLICLQUESRADIO || $qtype == SLICLQUESDROP || $qtype == SLICLQUESRATE) and $required == 'y') {
                 if (!isset($qmax[$qid])) {
                     $qmax[$qid] = 0;
                 }
                 $nbchoices = 1;
-                if ($qtype == QUESRATE) {
+                if ($qtype == SLICLQUESRATE) {
                     $nbchoices = 0;
                 }
                 foreach ($question->choices as $choice) {

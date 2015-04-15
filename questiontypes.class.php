@@ -28,32 +28,32 @@
  */
 
  // Constants.
-define('QUESCHOOSE', 0);
-define('QUESYESNO', 1);
-define('QUESTEXT', 2);
-define('QUESESSAY', 3);
-define('QUESRADIO', 4);
-define('QUESCHECK', 5);
-define('QUESDROP', 6);
-define('QUESRATE', 8);
-define('QUESDATE', 9);
-define('QUESNUMERIC', 10);
-define('QUESPAGEBREAK', 99);
-define('QUESSECTIONTEXT', 100);
+define('SLICLQUESCHOOSE', 0);
+define('SLICLQUESYESNO', 1);
+define('SLICLQUESTEXT', 2);
+define('SLICLQUESESSAY', 3);
+define('SLICLQUESRADIO', 4);
+define('SLICLQUESCHECK', 5);
+define('SLICLQUESDROP', 6);
+define('SLICLQUESRATE', 8);
+define('SLICLQUESDATE', 9);
+define('SLICLQUESNUMERIC', 10);
+define('SLICLQUESPAGEBREAK', 99);
+define('SLICLQUESSECTIONTEXT', 100);
 
 GLOBAL $qtypenames;
 $qtypenames = array(
-        QUESYESNO => 'yesno',
-        QUESTEXT => 'text',
-        QUESESSAY => 'essay',
-        QUESRADIO => 'radio',
-        QUESCHECK => 'check',
-        QUESDROP => 'drop',
-        QUESRATE => 'rate',
-        QUESDATE => 'date',
-        QUESNUMERIC => 'numeric',
-        QUESPAGEBREAK => 'pagebreak',
-        QUESSECTIONTEXT => 'sectiontext'
+        SLICLQUESYESNO => 'yesno',
+        SLICLQUESTEXT => 'text',
+        SLICLQUESESSAY => 'essay',
+        SLICLQUESRADIO => 'radio',
+        SLICLQUESCHECK => 'check',
+        SLICLQUESDROP => 'drop',
+        SLICLQUESRATE => 'rate',
+        SLICLQUESDATE => 'date',
+        SLICLQUESNUMERIC => 'numeric',
+        SLICLQUESPAGEBREAK => 'pagebreak',
+        SLICLQUESSECTIONTEXT => 'sectiontext'
         );
 GLOBAL $idcounter, $CFG;
 $idcounter = 0;
@@ -902,7 +902,7 @@ class sliclquestions_question {
         echo html_writer::start_tag('legend', array('class' => 'qn-legend'));
 
         // Do not display the info box for the label question type.
-        if ($this->type_id != QUESSECTIONTEXT) {
+        if ($this->type_id != SLICLQUESSECTIONTEXT) {
             if (!$nonumbering) {
                 echo html_writer::start_tag('div', array('class' => 'qn-info'));
                 echo html_writer::start_tag('div', array('class' => 'accesshide'));
@@ -931,17 +931,17 @@ class sliclquestions_question {
         echo html_writer::end_tag('legend');
         echo html_writer::start_tag('div', array('class' => 'qn-content'));
         echo html_writer::start_tag('div', array('class' => 'qn-question '.$skippedclass));
-        if ($this->type_id == QUESNUMERIC || $this->type_id == QUESTEXT ||
-            $this->type_id == QUESDROP) {
+        if ($this->type_id == SLICLQUESNUMERIC || $this->type_id == SLICLQUESTEXT ||
+            $this->type_id == SLICLQUESDROP) {
             echo html_writer::start_tag('label', array('for' => $this->type . $this->id));
         }
-        if ($this->type_id == QUESESSAY) {
+        if ($this->type_id == SLICLQUESESSAY) {
             echo html_writer::start_tag('label', array('for' => 'edit-q' . $this->id));
         }
         echo format_text(file_rewrite_pluginfile_urls($this->content, 'pluginfile.php',
             $this->context->id, 'mod_sliclquestions', 'question', $this->id), FORMAT_HTML);
-        if ($this->type_id == QUESNUMERIC || $this->type_id == QUESTEXT ||
-            $this->type_id == QUESESSAY || $this->type_id == QUESDROP) {
+        if ($this->type_id == SLICLQUESNUMERIC || $this->type_id == SLICLQUESTEXT ||
+            $this->type_id == SLICLQUESESSAY || $this->type_id == SLICLQUESDROP) {
             echo html_writer::end_tag('label');
         }
         echo html_writer::end_tag('div');
@@ -954,7 +954,7 @@ class sliclquestions_question {
     }
 
     private function response_check_required ($data) { // JR check all question types
-        if ($this->type_id == QUESRATE) { // Rate is a special case.
+        if ($this->type_id == SLICLQUESRATE) { // Rate is a special case.
             foreach ($this->choices as $cid => $choice) {
                 $str = 'q'."{$this->id}_$cid";
                 if (isset($data->$str)) {

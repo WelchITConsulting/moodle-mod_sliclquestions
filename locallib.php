@@ -689,7 +689,7 @@ function sliclquestions_nb_questions_on_page ($questionsinsliclquestions, $quest
     foreach ($questionsinsection as $question) {
         if ($question->dependquestion != 0) {
             switch ($questionsinsliclquestions[$question->dependquestion]->type_id) {
-                case QUESYESNO:
+                case SLICLQUESYESNO:
                     if ($question->dependchoice == 0) {
                         $questiondependchoice = "'y'";
                     } else {
@@ -718,9 +718,9 @@ function sliclquestions_get_dependencies($questions, $position) {
     $dependencies[''][0] = get_string('choosedots');
 
     foreach ($questions as $question) {
-        if (($question->type_id == QUESRADIO || $question->type_id == QUESDROP || $question->type_id == QUESYESNO)
+        if (($question->type_id == SLICLQUESRADIO || $question->type_id == SLICLQUESDROP || $question->type_id == SLICLQUESYESNO)
                         && $question->position < $position) {
-            if (($question->type_id == QUESRADIO || $question->type_id == QUESDROP) && $question->name != '') {
+            if (($question->type_id == SLICLQUESRADIO || $question->type_id == SLICLQUESDROP) && $question->name != '') {
                 foreach ($question->choices as $key => $choice) {
                     $contents = sliclquestions_choice_values($choice->content);
                     if ($contents->modname) {
@@ -733,7 +733,7 @@ function sliclquestions_get_dependencies($questions, $position) {
                     $dependencies[$question->name][$question->id.','.$key] = $question->name.'->'.$choice->content;
                 }
             }
-            if ($question->type_id == QUESYESNO && $question->name != '') {
+            if ($question->type_id == SLICLQUESYESNO && $question->name != '') {
                 $dependencies[$question->name][$question->id.',0'] = $question->name.'->'.get_string('yes');
                 $dependencies[$question->name][$question->id.',1'] = $question->name.'->'.get_string('no');
             }
@@ -858,7 +858,7 @@ function sliclquestions_check_page_breaks($sliclquestions) {
     for ($i = $count; $i > 0; $i--) {
         $qu = $positions[$i];
         $questionnb = $i;
-        if ($qu['type_id'] == QUESPAGEBREAK) {
+        if ($qu['type_id'] == SLICLQUESPAGEBREAK) {
             $questionnb--;
             // If more than one consecutive page breaks, remove extra one(s).
             $prevqu = null;
@@ -868,7 +868,7 @@ function sliclquestions_check_page_breaks($sliclquestions) {
                 $prevtypeid = $prevqu['type_id'];
             }
             // If $i == $count then remove that extra page break in last position.
-            if ($prevtypeid == QUESPAGEBREAK || $i == $count || $qu['qpos'] == 1) {
+            if ($prevtypeid == SLICLQUESPAGEBREAK || $i == $count || $qu['qpos'] == 1) {
                 $qid = $qu['question_id'];
                 $delpb ++;
                 $msg .= get_string("checkbreaksremoved", "sliclquestions", $delpb).'<br />';
@@ -885,7 +885,7 @@ function sliclquestions_check_page_breaks($sliclquestions) {
             }
         }
         // Add pagebreak between question child and not dependent question that follows.
-        if ($qu['type_id'] != QUESPAGEBREAK) {
+        if ($qu['type_id'] != SLICLQUESPAGEBREAK) {
             $qname = $positions[$i]['qname'];
             $j = $i - 1;
             if ($j != 0) {
@@ -894,7 +894,7 @@ function sliclquestions_check_page_breaks($sliclquestions) {
                 $prevdependchoice = $positions[$j]['dependchoice'];
                 $prevdependquestionname = $positions[$j]['qname'];
                 $prevqname = $positions[$j]['qname'];
-                if (($prevtypeid != QUESPAGEBREAK && ($prevdependquestion != $qu['dependquestion']
+                if (($prevtypeid != SLICLQUESPAGEBREAK && ($prevdependquestion != $qu['dependquestion']
                                 || $prevdependchoice != $qu['dependchoice']))
                                 || ($qu['dependquestion'] == 0 && $prevdependquestion != 0)) {
                     $sql = 'SELECT MAX(position) as maxpos FROM {sliclquestions_question} '.
@@ -906,7 +906,7 @@ function sliclquestions_check_page_breaks($sliclquestions) {
                     }
                     $question = new Object();
                     $question->survey_id = $sliclquestions->survey->id;
-                    $question->type_id = QUESPAGEBREAK;
+                    $question->type_id = SLICLQUESPAGEBREAK;
                     $question->position = $pos;
                     $question->content = 'break';
                     if (!($newqid = $DB->insert_record('sliclquestions_question', $question))) {
