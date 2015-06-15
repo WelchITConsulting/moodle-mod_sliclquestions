@@ -21,15 +21,17 @@
  */
 
 require_once($CFG->dirroot.'/course/moodleform_mod.php');
-require_once($CFG->dirroot.'/mod/sliclquestions/sliclquestions.class.php');
+//require_once($CFG->dirroot.'/mod/sliclquestions/sliclquestions.class.php');
 require_once($CFG->dirroot.'/mod/sliclquestions/locallib.php');
 
-class mod_sliclquestions_mod_form extends moodleform_mod {
+class mod_sliclquestions_mod_form extends moodleform_mod
+{
 
-    protected function definition() {
-        global $COURSE;
+    protected function definition()
+    {
+        global $COURSE, $sliclquestions_types;
 
-        $sliclquestions = new sliclquestions($this->_instance, null, $COURSE, $this->_cm);
+//        $sliclquestions = new sliclquestions($this->_instance, null, $COURSE, $this->_cm);
 
         $mform    =& $this->_form;
 
@@ -39,24 +41,12 @@ class mod_sliclquestions_mod_form extends moodleform_mod {
         $mform->setType('name', PARAM_TEXT);
         $mform->addRule('name', null, 'required', null, 'client');
 
-        $this->add_intro_editor(false, get_string('description'));
+        $this->standard_intro_elements(get_string('description'));
+        $mform->setRule('intro', null, 'required', null, 'client');
 
-        $mform->addElement('radio', 'pagetype', get_string('pupilregistration', 'sliclquestions'), '', '0');
-        $mform->addElement('radio', 'pagetype', get_string('assessment', 'sliclquestions'), '', '1');
+        $mform->addElement('select', 'questype', get_string('questype', 'sliclquestions'), $sliclquestions_types);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+        // The date and times the questionnaire can be answered
         $mform->addElement('header', 'timinghdr', get_string('timing', 'form'));
 
         $enableopengroup = array();
@@ -73,89 +63,111 @@ class mod_sliclquestions_mod_form extends moodleform_mod {
         $mform->addHelpButton('enableclosegroup', 'closedate', 'sliclquestions');
         $mform->disabledIf('enableclosegroup', 'useclosedate', 'notchecked');
 
-        global $sliclquestionstypes, $sliclquestionsrespondents, $sliclquestionsresponseviewers, $sliclquestionsrealms, $autonumbering;
-        $mform->addElement('header', 'sliclquestionshdr', get_string('responseoptions', 'sliclquestions'));
 
-        $mform->addElement('select', 'qtype', get_string('qtype', 'sliclquestions'), $sliclquestionstypes);
-        $mform->addHelpButton('qtype', 'qtype', 'sliclquestions');
 
-        $mform->addElement('hidden', 'cannotchangerespondenttype');
-        $mform->setType('cannotchangerespondenttype', PARAM_INT);
-        $mform->addElement('select', 'respondenttype', get_string('respondenttype', 'sliclquestions'), $sliclquestionsrespondents);
-        $mform->addHelpButton('respondenttype', 'respondenttype', 'sliclquestions');
-        $mform->disabledIf('respondenttype', 'cannotchangerespondenttype', 'eq', 1);
 
-        $mform->addElement('select', 'resp_view', get_string('responseview', 'sliclquestions'), $sliclquestionsresponseviewers);
-        $mform->addHelpButton('resp_view', 'responseview', 'sliclquestions');
 
-        $options = array('0' => get_string('no'), '1' => get_string('yes'));
-        $mform->addElement('select', 'resume', get_string('resume', 'sliclquestions'), $options);
-        $mform->addHelpButton('resume', 'resume', 'sliclquestions');
 
-        $options = array('0' => get_string('no'), '1' => get_string('yes'));
-        $mform->addElement('select', 'navigate', get_string('navigate', 'sliclquestions'), $options);
-        $mform->addHelpButton('navigate', 'navigate', 'sliclquestions');
 
-        $mform->addElement('select', 'autonum', get_string('autonumbering', 'sliclquestions'), $autonumbering);
-        $mform->addHelpButton('autonum', 'autonumbering', 'sliclquestions');
-        // Default = autonumber both questions and pages.
-        $mform->setDefault('autonum', 3);
 
-        // Removed potential scales from list of grades. CONTRIB-3167.
-        $grades[0] = get_string('nograde');
-        for ($i = 100; $i >= 1; $i--) {
-            $grades[$i] = $i;
-        }
-        $mform->addElement('select', 'grade', get_string('grade', 'sliclquestions'), $grades);
 
-        if (empty($sliclquestions->sid)) {
-            if (!isset($sliclquestions->id)) {
-                $sliclquestions->id = 0;
-            }
 
-            $mform->addElement('header', 'contenthdr', get_string('contentoptions', 'sliclquestions'));
-            $mform->addHelpButton('contenthdr', 'createcontent', 'sliclquestions');
 
-            $mform->addElement('radio', 'create', get_string('createnew', 'sliclquestions'), '', 'new-0');
 
-            // Retrieve existing private sliclquestionss from current course.
-            $surveys = sliclquestions_get_survey_select($sliclquestions->id, $COURSE->id, 0, 'private');
-            if (!empty($surveys)) {
-                $prelabel = get_string('useprivate', 'sliclquestions');
-                foreach ($surveys as $value => $label) {
-                    $mform->addElement('radio', 'create', $prelabel, $label, $value);
-                    $prelabel = '';
-                }
-            }
-            // Retrieve existing template sliclquestionss from this site.
-            $surveys = sliclquestions_get_survey_select($sliclquestions->id, $COURSE->id, 0, 'template');
-            if (!empty($surveys)) {
-                $prelabel = get_string('usetemplate', 'sliclquestions');
-                foreach ($surveys as $value => $label) {
-                    $mform->addElement('radio', 'create', $prelabel, $label, $value);
-                    $prelabel = '';
-                }
-            } else {
-                $mform->addElement('static', 'usetemplate', get_string('usetemplate', 'sliclquestions'),
-                                '('.get_string('notemplatesurveys', 'sliclquestions').')');
-            }
 
-            // Retrieve existing public sliclquestionss from this site.
-            $surveys = sliclquestions_get_survey_select($sliclquestions->id, $COURSE->id, 0, 'public');
-            if (!empty($surveys)) {
-                $prelabel = get_string('usepublic', 'sliclquestions');
-                foreach ($surveys as $value => $label) {
-                    $mform->addElement('radio', 'create', $prelabel, $label, $value);
-                    $prelabel = '';
-                }
-            } else {
-                $mform->addElement('static', 'usepublic', get_string('usepublic', 'sliclquestions'),
-                                   '('.get_string('nopublicsurveys', 'sliclquestions').')');
-            }
 
-            $mform->setDefault('create', 'new-0');
-        }
 
+
+
+
+
+
+
+
+//        global $sliclquestionstypes, $sliclquestionsrespondents, $sliclquestionsresponseviewers, $sliclquestionsrealms, $autonumbering;
+//        $mform->addElement('header', 'sliclquestionshdr', get_string('responseoptions', 'sliclquestions'));
+//
+//        $mform->addElement('select', 'qtype', get_string('qtype', 'sliclquestions'), $sliclquestionstypes);
+//        $mform->addHelpButton('qtype', 'qtype', 'sliclquestions');
+//
+//        $mform->addElement('hidden', 'cannotchangerespondenttype');
+//        $mform->setType('cannotchangerespondenttype', PARAM_INT);
+//        $mform->addElement('select', 'respondenttype', get_string('respondenttype', 'sliclquestions'), $sliclquestionsrespondents);
+//        $mform->addHelpButton('respondenttype', 'respondenttype', 'sliclquestions');
+//        $mform->disabledIf('respondenttype', 'cannotchangerespondenttype', 'eq', 1);
+//
+//        $mform->addElement('select', 'resp_view', get_string('responseview', 'sliclquestions'), $sliclquestionsresponseviewers);
+//        $mform->addHelpButton('resp_view', 'responseview', 'sliclquestions');
+//
+//        $options = array('0' => get_string('no'), '1' => get_string('yes'));
+//        $mform->addElement('select', 'resume', get_string('resume', 'sliclquestions'), $options);
+//        $mform->addHelpButton('resume', 'resume', 'sliclquestions');
+//
+//        $options = array('0' => get_string('no'), '1' => get_string('yes'));
+//        $mform->addElement('select', 'navigate', get_string('navigate', 'sliclquestions'), $options);
+//        $mform->addHelpButton('navigate', 'navigate', 'sliclquestions');
+//
+//        $mform->addElement('select', 'autonum', get_string('autonumbering', 'sliclquestions'), $autonumbering);
+//        $mform->addHelpButton('autonum', 'autonumbering', 'sliclquestions');
+//        // Default = autonumber both questions and pages.
+//        $mform->setDefault('autonum', 3);
+//
+//        // Removed potential scales from list of grades. CONTRIB-3167.
+//        $grades[0] = get_string('nograde');
+//        for ($i = 100; $i >= 1; $i--) {
+//            $grades[$i] = $i;
+//        }
+//        $mform->addElement('select', 'grade', get_string('grade', 'sliclquestions'), $grades);
+//
+//        if (empty($sliclquestions->sid)) {
+//            if (!isset($sliclquestions->id)) {
+//                $sliclquestions->id = 0;
+//            }
+//
+//            $mform->addElement('header', 'contenthdr', get_string('contentoptions', 'sliclquestions'));
+//            $mform->addHelpButton('contenthdr', 'createcontent', 'sliclquestions');
+//
+//            $mform->addElement('radio', 'create', get_string('createnew', 'sliclquestions'), '', 'new-0');
+//
+//            // Retrieve existing private sliclquestionss from current course.
+//            $surveys = sliclquestions_get_survey_select($sliclquestions->id, $COURSE->id, 0, 'private');
+//            if (!empty($surveys)) {
+//                $prelabel = get_string('useprivate', 'sliclquestions');
+//                foreach ($surveys as $value => $label) {
+//                    $mform->addElement('radio', 'create', $prelabel, $label, $value);
+//                    $prelabel = '';
+//                }
+//            }
+//            // Retrieve existing template sliclquestionss from this site.
+//            $surveys = sliclquestions_get_survey_select($sliclquestions->id, $COURSE->id, 0, 'template');
+//            if (!empty($surveys)) {
+//                $prelabel = get_string('usetemplate', 'sliclquestions');
+//                foreach ($surveys as $value => $label) {
+//                    $mform->addElement('radio', 'create', $prelabel, $label, $value);
+//                    $prelabel = '';
+//                }
+//            } else {
+//                $mform->addElement('static', 'usetemplate', get_string('usetemplate', 'sliclquestions'),
+//                                '('.get_string('notemplatesurveys', 'sliclquestions').')');
+//            }
+//
+//            // Retrieve existing public sliclquestionss from this site.
+//            $surveys = sliclquestions_get_survey_select($sliclquestions->id, $COURSE->id, 0, 'public');
+//            if (!empty($surveys)) {
+//                $prelabel = get_string('usepublic', 'sliclquestions');
+//                foreach ($surveys as $value => $label) {
+//                    $mform->addElement('radio', 'create', $prelabel, $label, $value);
+//                    $prelabel = '';
+//                }
+//            } else {
+//                $mform->addElement('static', 'usepublic', get_string('usepublic', 'sliclquestions'),
+//                                   '('.get_string('nopublicsurveys', 'sliclquestions').')');
+//            }
+//
+//            $mform->setDefault('create', 'new-0');
+//        }
+
+        // Load the standard form elements
         $this->standard_coursemodule_elements();
 
         // Buttons.
@@ -174,16 +186,16 @@ class mod_sliclquestions_mod_form extends moodleform_mod {
         } else {
             $defaultvalues['useclosedate'] = 1;
         }
-        // Prevent sliclquestions set to "anonymous" to be reverted to "full name".
-        $defaultvalues['cannotchangerespondenttype'] = 0;
-        if (!empty($defaultvalues['respondenttype']) && $defaultvalues['respondenttype'] == "anonymous") {
-            // If this sliclquestions has responses.
-            $numresp = $DB->count_records('sliclquestions_response',
-                            array('survey_id' => $defaultvalues['sid'], 'complete' => 'y'));
-            if ($numresp) {
-                $defaultvalues['cannotchangerespondenttype'] = 1;
-            }
-        }
+//        // Prevent sliclquestions set to "anonymous" to be reverted to "full name".
+//        $defaultvalues['cannotchangerespondenttype'] = 0;
+//        if (!empty($defaultvalues['respondenttype']) && $defaultvalues['respondenttype'] == "anonymous") {
+//            // If this sliclquestions has responses.
+//            $numresp = $DB->count_records('sliclquestions_response',
+//                            array('survey_id' => $defaultvalues['sid'], 'complete' => 'y'));
+//            if ($numresp) {
+//                $defaultvalues['cannotchangerespondenttype'] = 1;
+//            }
+//        }
     }
 
     public function validation($data, $files) {
@@ -191,14 +203,13 @@ class mod_sliclquestions_mod_form extends moodleform_mod {
         return $errors;
     }
 
-    public function add_completion_rules() {
-        $mform =& $this->_form;
-        $mform->addElement('checkbox', 'completionsubmit', '', get_string('completionsubmit', 'sliclquestions'));
-        return array('completionsubmit');
-    }
-
-    public function completion_rule_enabled($data) {
-        return !empty($data['completionsubmit']);
-    }
-
+//    public function add_completion_rules() {
+//        $mform =& $this->_form;
+//        $mform->addElement('checkbox', 'completionsubmit', '', get_string('completionsubmit', 'sliclquestions'));
+//        return array('completionsubmit');
+//    }
+//
+//    public function completion_rule_enabled($data) {
+//        return !empty($data['completionsubmit']);
+//    }
 }

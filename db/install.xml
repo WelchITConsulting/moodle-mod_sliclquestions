@@ -17,10 +17,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Filename : install
 Author   : John Welch <jwelch@welchitconsulting.co.uk>
-Created  : 06 Jan 2015
+Created  : 09 Jun 2015
 -->
 
-<XMLDB PATH="mod/sliclquestions" VERSION="2015032300" COMMENT="XMLDB file for Moodle mod/sliclquestions"
+<XMLDB PATH="mod/sliclquestions" VERSION="2015060900" COMMENT="XMLDB file for Moodle mod/sliclquestions"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="../../lib/xmldb/xmldb.xsd">
     <TABLES>
@@ -32,18 +32,10 @@ Created  : 06 Jan 2015
                 <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
                 <FIELD NAME="intro" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
                 <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-                <FIELD NAME="qtype" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-                <FIELD NAME="respondenttype" TYPE="char" LENGTH="9" NOTNULL="true" DEFAULT="fullname" SEQUENCE="false"/>
-                <FIELD NAME="resp_eligible" TYPE="char" LENGTH="8" NOTNULL="true" DEFAULT="all" SEQUENCE="false"/>
-                <FIELD NAME="resp_view" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="questype" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+
                 <FIELD NAME="opendate" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
                 <FIELD NAME="closedate" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-                <FIELD NAME="resume" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-                <FIELD NAME="navigate" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-                <FIELD NAME="grade" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-                <FIELD NAME="sid" TYPE="int" LENGTH="11" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-                <FIELD NAME="completionsubmit" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-                <FIELD NAME="autonum" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
                 <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
                 <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
             </FIELDS>
@@ -53,38 +45,9 @@ Created  : 06 Jan 2015
             </KEYS>
         </TABLE>
 
-        <TABLE NAME="sliclquestions_survey" COMMENT="SLiCL Questions survey table">
+        <TABLE NAME="sliclquestions_students" COMMENT="Student registration table">
             <FIELDS>
-                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-                <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
-                <FIELD NAME="owner" TYPE="char" LENGTH="16" NOTNULL="true" SEQUENCE="false"/>
-                <FIELD NAME="realm" TYPE="char" LENGTH="64" NOTNULL="true" SEQUENCE="false"/>
-                <FIELD NAME="status" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-                <FIELD NAME="title" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
-                <FIELD NAME="email" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
-                <FIELD NAME="subtitle" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
-                <FIELD NAME="info" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
-                <FIELD NAME="theme" TYPE="char" LENGTH="64" NOTNULL="false" SEQUENCE="false"/>
-                <FIELD NAME="thanks_page" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
-                <FIELD NAME="thanks_head" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
-                <FIELD NAME="thanks_body" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
-                <FIELD NAME="feedbacksections" TYPE="int" LENGTH="2" NOTNULL="false" DEFAULT="0" SEQUENCE="false"/>
-                <FIELD NAME="feedbacknotes" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
-                <FIELD NAME="feedbackscores" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-                <FIELD NAME="chart_type" TYPE="char" LENGTH="64" NOTNULL="false" SEQUENCE="false"/>
-            </FIELDS>
-            <KEYS>
-                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-            </KEYS>
-            <INDEXES>
-                <INDEX NAME="name" UNIQUE="false" FIELDS="name"/>
-                <INDEX NAME="owner" UNIQUE="false" FIELDS="owner"/>
-            </INDEXES>
-        </TABLE>
-
-        <TABLE NAME="sliclquestion_students" COMMENT="Student registration table">
-            <FIELDS>
-                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true"  SEQUENCE="true"/>
                 <FIELD NAME="survey_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
                 <FIELD NAME="teacher_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
                 <FIELD NAME="forename" TYPE="char" LENGTH="60" NOTNULL="true" SEQUENCE="false"/>
@@ -200,7 +163,7 @@ Created  : 06 Jan 2015
                 <FIELD NAME="id" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="true"/>
                 <FIELD NAME="responseid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
                 <FIELD NAME="questionid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-                <FIELD NAME="response" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="response" TYPE="int" LENGTH="10" UNSIGNED="true" NOTNULL="false" SEQUENCE="false"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
@@ -247,7 +210,7 @@ Created  : 06 Jan 2015
                 <FIELD NAME="responseid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
                 <FIELD NAME="questionid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
                 <FIELD NAME="response" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-                <FIELD NAME="rank" TYPE="int" LENGTH="11" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="rank" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
@@ -285,36 +248,6 @@ Created  : 06 Jan 2015
             <INDEXES>
                 <INDEX NAME="reponse_question" UNIQUE="false" FIELDS="responseid, questionid"/>
             </INDEXES>
-        </TABLE>
-
-        <TABLE NAME="sliclquestions_fb_sections" COMMENT="SLiCL Questions feedback sections table">
-            <FIELDS>
-                <FIELD NAME="id" TYPE="int" LENGTH="18" NOTNULL="true" SEQUENCE="true"/>
-                <FIELD NAME="surveyid" TYPE="int" LENGTH="18" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-                <FIELD NAME="section" TYPE="int" LENGTH="2" NOTNULL="false" SEQUENCE="false"/>
-                <FIELD NAME="scorecalculation" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
-                <FIELD NAME="sectionlabel" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false"/>
-                <FIELD NAME="sectionheading" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
-                <FIELD NAME="sectionheadingformat" TYPE="int" LENGTH="2" NOTNULL="false" DEFAULT="1" SEQUENCE="false"/>
-            </FIELDS>
-            <KEYS>
-                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-            </KEYS>
-        </TABLE>
-
-        <TABLE NAME="sliclquestions_feedback" COMMENT="SLiCL Questions feedback table">
-            <FIELDS>
-                <FIELD NAME="id" TYPE="int" LENGTH="18" NOTNULL="true" SEQUENCE="true"/>
-                <FIELD NAME="sectionid" TYPE="int" LENGTH="18" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-                <FIELD NAME="feedbacklabel" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false"/>
-                <FIELD NAME="feedbacktext" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
-                <FIELD NAME="feedbacktextformat" TYPE="int" LENGTH="2" NOTNULL="false" DEFAULT="1" SEQUENCE="false"/>
-                <FIELD NAME="minscore" TYPE="number" LENGTH="10" NOTNULL="false" DEFAULT="0.0000" SEQUENCE="false" DECIMALS="5"/>
-                <FIELD NAME="maxscore" TYPE="number" LENGTH="10" NOTNULL="false" DEFAULT="101.0000" SEQUENCE="false" DECIMALS="5"/>
-            </FIELDS>
-            <KEYS>
-                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-            </KEYS>
         </TABLE>
     </TABLES>
 </XMLDB>

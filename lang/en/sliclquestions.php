@@ -20,6 +20,23 @@
  * Created  : 06 Jan 2015
  */
 
+
+
+$string['pluginadministration']                     = 'SLiCL Questions Administration';
+$string['pluginname']                               = 'SLiCL Questions';
+$string['questype']                                 = 'Questionnaire type';
+$string['questype_help']                            = '<p>Defines the type of questionnaire to create:</p>'
+                                                    . '<ul><li>Pupil register: allows pupils to be registered for the pupil survey</li>'
+                                                    . '<li>Pupil assessment: assesses the pupils listed in the pupil register</li>'
+                                                    . '<li>Survey: create a standard survey questionnaire</li></ul>';
+$string['questype_pupilassess']                     = 'Pupil assessment';
+$string['questype_pupilregister']                   = 'Pupil register';
+$string['questype_survey']                          = 'Survey';
+
+
+
+
+
 $string['action']                                   = 'Action';
 $string['activityoverview']                         = 'You have questionnaires that are due';
 $string['additionalinfo']                           = 'Additional Info';
@@ -311,8 +328,6 @@ $string['page']                                     = 'Page';
 $string['pageof']                                   = 'Page {$a->page} of {$a->totpages}';
 $string['participant']                              = 'Participant';
 $string['pleasecomplete']                           = 'Please complete this choice.';
-$string['pluginadministration']                     = 'SLiCL Questions Administration';
-$string['pluginname']                               = 'SLiCL Questions';
 $string['position']                                 = 'position';
 $string['possibleanswers']                          = 'Possible answers';
 $string['posteddata']                               = 'Reached page with posted data:';
