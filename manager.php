@@ -15,15 +15,37 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Filename : version
+ * Filename : manager
  * Author   : John Welch <jwelch@welchitconsulting.co.uk>
- * Created  : 03 Jan 2015
+ * Created  : 21 Jun 2015
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2015062100;
-$plugin->requires  = 2015051100;
-$plugin->maturiy   = MATURITY_BETA;
-$plugin->release   = 2015062100;
-$plugin->component = 'mod_sliclquestions';
+class mod_sliclquestions_management_console
+{
+    static private $_instance;
+
+    static public function get_instance()
+    {
+        if (empty($this->_instance)) {
+            $this->_instance = new mod_sliclquestions_management_console();
+        }
+        return $this->_instance;
+    }
+
+    public function __construct()
+    {
+        echo "Management Console";
+    }
+
+    private function display_statistics()
+    {
+
+    }
+
+    private function get_non_respondents()
+    {
+
+    }
+}

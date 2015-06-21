@@ -34,34 +34,96 @@ $capabilities = array(
         'clonepermissionsfrom' => 'moodle/course:manageactivities'
     ),
 
-    // Ability to see that a questionnaire exists along with some basic informtation
-//    'mod/sliclquestions:view' => array(
-//
-//        'captype'            => 'read',
-//        'contextlevel'       => CONTEXT_MODULE,
-//        'legacy'             => array(
-//            'student'        => CAP_ALLOW,
-//            'teacher'        => CAP_ALLOW,
-//            'editingteacher' => CAP_ALLOW,
-//            'coursecreator'  => CAP_ALLOW,
-//            'manager'        => CAP_ALLOW
-//        )
-//    ),
-//
-//    // Ability to complete and submit a questionnaire
-//    'mod/sliclquestions:submit' => array(
-//
-//        'captype'            => 'write',
-//        'contextlevel'       => CONTEXT_MODULE,
-//        'legacy'             => array(
-//            'student'        => CAP_ALLOW,
-//            'teacher'        => CAP_ALLOW,
-//            'editingteacher' => CAP_ALLOW,
-//            'coursecreator'  => CAP_ALLOW,
-//            'manager'        => CAP_ALLOW
-//        )
-//    ),
-//
+    // Ability to view the module contents
+    'mod/sliclquestions:view' => array(
+
+        'captype'            => 'read',
+        'contextlevel'       => CONTEXT_MODULE,
+        'legacy'             => array(
+            'student'        => CAP_ALLOW,
+            'teacher'        => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+            'coursecreator'  => CAP_ALLOW,
+            'manager'        => CAP_ALLOW
+        )
+    ),
+
+    // Ability to submit completed questionnaires
+    'mod/sliclquestions:submit' => array(
+
+        'captype'            => 'write',
+        'contextlevel'       => CONTEXT_MODULE,
+        'legacy'             => array(
+            'student'        => CAP_ALLOW,
+            'teacher'        => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+            'coursecreator'  => CAP_ALLOW,
+            'manager'        => CAP_ALLOW
+        )
+    ),
+
+    // Ability to print a blank questionnaire
+    'mod/sliclquestions:printblank' => array(
+
+        'captype'            => 'read',
+        'contextlevel'       => CONTEXT_MODULE,
+        'legacy'             => array(
+            'student'        => CAP_ALLOW,
+            'teacher'        => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+            'coursecreator'  => CAP_ALLOW,
+            'manager'        => CAP_ALLOW
+        )
+    ),
+
+    // Ability to preview a questionnaire
+    'mod/sliclquestions:preview' => array(
+        'captype'            => 'read',
+        'contextlevel'       => CONTEXT_MODULE,
+        'legacy'             => array(
+            'teacher'        => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+            'coursecreator'  => CAP_ALLOW,
+            'manager'        => CAP_ALLOW
+        )
+    ),
+
+    // Ability to create and edit questionnairea
+    'mod/sliclquestions:manage' => array(
+
+        'captype'            => 'write',
+        'contextlevel'       => CONTEXT_MODULE,
+        'legacy'             => array(
+            'editingteacher' => CAP_ALLOW,
+            'coursecreator'  => CAP_ALLOW,
+            'manager'        => CAP_ALLOW
+        )
+    ),
+
+    // Ability to submit a pupil assessment questionnaire
+    'mod/sliclquestions:assesspupils' => array(
+        'captype'            => 'read',
+        'contextlevel'       => CONTEXT_MODULE,
+        'legacy'             => array(
+            'teacher'        => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+            'coursecreator'  => CAP_ALLOW,
+            'manager'        => CAP_ALLOW
+        )
+    ),
+
+    // Ability to create a register of pupils
+    'mod/sliclquestions:registerpupils' => array(
+        'captype'            => 'read',
+        'contextlevel'       => CONTEXT_MODULE,
+        'legacy'             => array(
+            'teacher'        => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+            'coursecreator'  => CAP_ALLOW,
+            'manager'        => CAP_ALLOW
+        )
+    ),
+
 //    // Ability to view individual responses to a questionnaire
 //    'mod/sliclquestions:viewsingleresponse' => array(
 //
@@ -84,16 +146,6 @@ $capabilities = array(
 //
 //    // Ability to delete someone's (or own) previous responses
 //    'mod/sliclquestions:deleteresponses' => array(
-//
-//        'captype'            => 'write',
-//        'contextlevel'       => CONTEXT_MODULE,
-//        'legacy'             => array(
-//            'manager'        => CAP_ALLOW
-//        )
-//    ),
-//
-//    // Ability to create and edit questionnairea
-//    'mod/sliclquestions:manage' => array(
 //
 //        'captype'            => 'write',
 //        'contextlevel'       => CONTEXT_MODULE,
@@ -169,33 +221,7 @@ $capabilities = array(
 //            'manager'        => CAP_ALLOW
 //        )
 //    ),
-//
-//    // Ability to print a blank questionnaire
-//    'mod/sliclquestions:printblank' => array(
-//
-//        'captype'            => 'read',
-//        'contextlevel'       => CONTEXT_MODULE,
-//        'legacy'             => array(
-//            'student'        => CAP_ALLOW,
-//            'teacher'        => CAP_ALLOW,
-//            'editingteacher' => CAP_ALLOW,
-//            'coursecreator'  => CAP_ALLOW,
-//            'manager'        => CAP_ALLOW
-//        )
-//    ),
-//
-//    // Ability to preview a questionnaire
-//    'mod/sliclquestions:preview' => array(
-//        'captype'            => 'read',
-//        'contextlevel'       => CONTEXT_MODULE,
-//        'legacy'             => array(
-//            'teacher'        => CAP_ALLOW,
-//            'editingteacher' => CAP_ALLOW,
-//            'coursecreator'  => CAP_ALLOW,
-//            'manager'        => CAP_ALLOW
-//        )
-//    ),
-//
+
 //    // Ability to message students from a questionnaire
 //    'mod/sliclquestions:message' => array(
 //        'riskbit'            => RISK_SPAM,
