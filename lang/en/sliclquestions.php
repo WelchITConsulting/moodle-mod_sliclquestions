@@ -32,6 +32,7 @@ $string['modulename_help']                          = 'The SLiCL Questions modul
 $string['modulenameplural']                         = 'SLiCL Questionnaires';
 
 $string['name']                                     = 'Questionnaire Name';
+$string['nonzeroerror']                             = 'You must select the type of survey to create';
 $string['novieewpermission']                        = 'You do not have permission to view these questionnaires.';
 
 $string['opendate']                                 = 'Use Open Date';
@@ -48,7 +49,7 @@ $string['questype_help']                            = '<p>Defines the type of qu
                                                     . '<li>Survey: create a standard survey questionnaire</li></ul>';
 $string['questype_pupilassess']                     = 'Pupil assessment';
 $string['questype_pupilregister']                   = 'Pupil register';
-$string['questype_survey']                          = 'Survey';
+$string['questype_survey']                          = 'Standard survey';
 
 $string['sliclquestions:addinstance']               = 'Add a new SLiCL questionnaire';
 $string['sliclquestions:assesspupils']              = 'Complete pupil assessment questionnaires';

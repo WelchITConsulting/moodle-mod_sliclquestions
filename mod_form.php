@@ -51,7 +51,7 @@ class mod_sliclquestions_mod_form extends moodleform_mod
         $mform->addElement('select', 'questype', get_string('questype', 'sliclquestions'), $sliclquestions_types);
         $mform->setType('questype', PARAM_INT);
         $mform->addRule('questype', null, 'required', null, 'client');
-        $mform->addRule('questype', get_string('null'), 'nonzero', null, 'client');
+        $mform->addRule('questype', get_string('nonzeroerror', 'sliclquestions'), 'nonzero', null, 'client');
         $mform->addElement('editor', 'page', get_string('content', 'sliclquestions'), null, sliclquestions_get_editor_options($this->context));
         $mform->addRule('page', get_string('required'), 'required', null, 'client');
 
