@@ -24,6 +24,7 @@ $string['choosequestiontype']                       = 'Choose type of survey';
 $string['closedate']                                = 'Use Close Date';
 $string['closeson']                                 = 'Questionnaire closes on {$a}';
 $string['closedate_help']                           = 'You can specify a date to close the questionnaire here. Check the check box, and select the date and time you want. Users will not be able to fill out the questionnaire after that date. If this is not selected, it will never be closed.';
+$string['content']                                  = 'Content (displayed at the top of the questionnaire)';
 $string['contentheader']                            = 'Page content';
 
 $string['modulename']                               = 'SLiCL Questions';
