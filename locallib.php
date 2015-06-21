@@ -39,7 +39,17 @@ $sliclquestions_types = array(0                                => get_string('ch
 
 
 
-
+function sliclquestions_get_editor_options($context)
+{
+    global $CFG;
+    return array('subdirs'      => 1,
+                 'maxbytes'     => $CFG->maxbytes,
+                 'maxfiles'     => 1,
+                 'changeformat' => 1,
+                 'context'      => $context,
+                 'noclean'      => 1,
+                 'trusttext'    => 0);
+}
 
 
 
