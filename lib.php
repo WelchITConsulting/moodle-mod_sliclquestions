@@ -27,7 +27,7 @@ require_once($CFG->dirroot . '/mod/sliclquestions/locallib.php');
 function sliclquestions_supports($feature)
 {
     switch($feature) {
-        case FEATURE_MOD_ARCHETYPE:             return MOD_ARCHETYPE_RESOURCE;
+        case FEATURE_MOD_ARCHETYPE:             return MOD_ARCHETYPE_ASSIGNMENT;
 
         case FEATURE_BACKUP_MOODLE2:            return false;
         case FEATURE_COMPLETION_TRACKS_VIEWS:   return false;
@@ -118,7 +118,7 @@ function sliclquestions_delete_instance($id)
 
     // Remove all responses from the tables
     $response_types = array('');
-    
+
     // Check for and remove any entries from the calendar
     if ($events = $DB->get_records('event', array('modulename' => 'sliclquestions',
                                                   'instance'   => $sliclquestions->id))) {
