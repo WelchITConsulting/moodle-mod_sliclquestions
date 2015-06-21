@@ -33,7 +33,6 @@ Created  : 09 Jun 2015
                 <FIELD NAME="intro" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
                 <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
                 <FIELD NAME="questype" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-
                 <FIELD NAME="opendate" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
                 <FIELD NAME="closedate" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
                 <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
@@ -41,7 +40,6 @@ Created  : 09 Jun 2015
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-                <KEY NAME="sid" TYPE="foreign" FIELDS="sid" REFTABLE="sliclquestions_survey" REFFIELDS="id"/>
             </KEYS>
         </TABLE>
 
