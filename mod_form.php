@@ -187,11 +187,11 @@ class mod_sliclquestions_mod_form extends moodleform_mod
         global $DB;
         if ($this->current->instance) {
             $draftitemid = file_get_submitted_draft_itemid('page');
-            $defaultvaluesp['page']['format'] = $defaultvalues['contentformat'];
-            $defaultvaluesp['page']['text']   = file_prepare_draft_area($draftitemid, $this->context->id,
-                                                                        'mod_sliclquestions', 'content', 0,
-                                                                        sliclquestions_editor_options($this->context));
-            $defaultvaluesp['page']['itemid'] = $draftitemid;
+            $defaultvalues['page']['format'] = $defaultvalues['contentformat'];
+            $defaultvalues['page']['text']   = file_prepare_draft_area($draftitemid, $this->context->id,
+                                                                       'mod_sliclquestions', 'content', 0,
+                                                                       sliclquestions_editor_options($this->context));
+            $defaultvalues['page']['itemid'] = $draftitemid;
         }
         if (empty($defaultvalues['opendate'])) {
             $defaultvalues['useopendate'] = 0;
