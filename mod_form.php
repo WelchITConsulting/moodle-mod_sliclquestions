@@ -21,32 +21,41 @@
  */
 
 require_once($CFG->dirroot.'/course/moodleform_mod.php');
-//require_once($CFG->dirroot.'/mod/sliclquestions/sliclquestions.class.php');
 require_once($CFG->dirroot.'/mod/sliclquestions/locallib.php');
 
 class mod_sliclquestions_mod_form extends moodleform_mod
 {
-
     protected function definition()
     {
-        global $COURSE, $sliclquestions_types;
-
-//        $sliclquestions = new sliclquestions($this->_instance, null, $COURSE, $this->_cm);
+        global $CFG, $COURSE, $sliclquestions_types;
 
         $mform    =& $this->_form;
 
-        $mform->addElement('header', 'general', get_string('general', 'form'));
+        $config = get_config('sliclquestions');
 
-        $mform->addElement('text', 'name', get_string('name', 'sliclquestions'), array('size' => '64'));
-        $mform->setType('name', PARAM_TEXT);
+        //----------------------------------------------------------------------
+        $mform->addElement('header', 'general', get_string('general', 'form'));
+        $mform->addElement('text', 'name', get_string('name', 'sliclquestions'), array('size' => '48'));
+        if (!empty($CFG->formatstringstriptags)) {
+            $mform->setType('name', PARAM_TEXT);
+        } else {
+            $mform->setType('name', PARAM_CLEANHTML);
+        }
         $mform->addRule('name', null, 'required', null, 'client');
+        $mform->addRule('name', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
 
         $this->standard_intro_elements(get_string('description'));
-        $mform->addRule('intro', null, 'required', null, 'client');
 
+        //----------------------------------------------------------------------
+        $mform->addElement('header', 'contentsection', get_string('contentheader', 'sliclquestions'));
         $mform->addElement('select', 'questype', get_string('questype', 'sliclquestions'), $sliclquestions_types);
+        $mform->setType('questype', PARAM_INT);
+        $mform->addRule('questype', null, 'required', null, 'client');
+        $mform->addRule('questype', get_string('null'), 'nonzero', null, 'client');
+        $mform->addElement('editor', 'page', get_string('content', 'sliclquestions'), null, sliclquestions_get_editor_options($this->context));
+        $mform->addRule('page', get_string('required'), 'required', null, 'client');
 
-        // The date and times the questionnaire can be answered
+        //----------------------------------------------------------------------
         $mform->addElement('header', 'timinghdr', get_string('timing', 'form'));
 
         $enableopengroup = array();
@@ -167,15 +176,21 @@ class mod_sliclquestions_mod_form extends moodleform_mod
 //            $mform->setDefault('create', 'new-0');
 //        }
 
-        // Load the standard form elements
+        //----------------------------------------------------------------------
         $this->standard_coursemodule_elements();
 
-        // Buttons.
+        //----------------------------------------------------------------------
         $this->add_action_buttons();
     }
 
     public function data_preprocessing(&$defaultvalues) {
         global $DB;
+        if ($this->current->instance) {
+            $draftitemid = file_get_submitted_draft_itemid('page');
+            $defaultvaluesp['page'] = array('format' => $defaultvalues['contentformat'],
+                                            'text'   => $defaultvalues['content'],
+                                            'itemid' => $draftitemid);
+        }
         if (empty($defaultvalues['opendate'])) {
             $defaultvalues['useopendate'] = 0;
         } else {

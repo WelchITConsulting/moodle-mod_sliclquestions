@@ -20,12 +20,22 @@
  * Created  : 06 Jan 2015
  */
 
+$string['choosequestiontype']                       = 'Choose type of survey';
+$string['closedate']                                = 'Use Close Date';
+$string['closeson']                                 = 'Questionnaire closes on {$a}';
+$string['closedate_help']                           = 'You can specify a date to close the questionnaire here. Check the check box, and select the date and time you want. Users will not be able to fill out the questionnaire after that date. If this is not selected, it will never be closed.';
+$string['contentheader']                            = 'Page content';
 
 $string['modulename']                               = 'SLiCL Questions';
 $string['modulename_help']                          = 'The SLiCL Questions module allows you to construct surveys using a variety of question types, for the purpose of gathering data for the SLiCL Project.';
 $string['modulenameplural']                         = 'SLiCL Questionnaires';
 
+$string['name']                                     = 'Questionnaire Name';
 $string['novieewpermission']                        = 'You do not have permission to view these questionnaires.';
+
+$string['opendate']                                 = 'Use Open Date';
+$string['opendate_help']                            = '<p>You can specify a date to open the questionnaire here. Check the check box, and select the date and time you want.</p>'
+                                                    . '<p>Users will not be able to fill out the questionnaire before that date. If this is not selected, it will be open immediately.</p>';
 
 $string['pluginadministration']                     = 'SLiCL Questions Administration';
 $string['pluginname']                               = 'SLiCL Questions';
@@ -115,9 +125,6 @@ $string['sliclquestions:view']                      = 'View a questionnaire';
 //$string['checkstarted']                             = 'Select started';
 //$string['clicktoswitch']                            = '(click to switch)';
 //$string['closed']                                   = 'The questionnaire was closed on {$a}. Thanks.';
-//$string['closedate']                                = 'Use Close Date';
-//$string['closeson']                                 = 'Questionnaire closes on {$a}';
-//$string['closedate_help']                           = 'You can specify a date to close the questionnaire here. Check the check box, and select the date and time you want. Users will not be able to fill out the questionnaire after that date. If this is not selected, it will never be closed.';
 //$string['completionsubmit']                         = 'Student must submit this questionnaire to complete it';
 //$string['confalts']                                 = '- OR - <br />Confirmation page';
 //$string['configusergraph']                          = 'Display charts for "Personality Test" feedback';
@@ -273,7 +280,6 @@ $string['sliclquestions:view']                      = 'View a questionnaire';
 //$string['myresponsetitle']                          = 'Your {$a} response(s)';
 //$string['myresults']                                = 'Your Results';
 //
-//$string['name']                                     = 'Name';
 //$string['navigate']                                 = 'Allow branching questions';
 //$string['navigate_help']                            = 'Enable Yes/No and Radio Buttons questions to have Child questions dependent on their choices in your questionnaire.';
 //$string['navigate_link']                            = 'mod/sliclquestions/conditional_branching';
@@ -312,9 +318,6 @@ $string['sliclquestions:view']                      = 'View a questionnaire';
 //$string['numeric_help']                             = 'Use this question type if you expect the response to be a correctly formatted number.';
 //
 //$string['of']                                       = 'of';
-//$string['opendate']                                 = 'Use Open Date';
-//$string['opendate_help']                            = 'You can specify a date to open the questionnaire here. Check the check box, and select the date and time you want.
-// Users will not be able to fill out the questionnaire before that date. If this is not selected, it will be open immediately.';
 //$string['option']                                   = 'option {$a}';
 //$string['optionalname']                             = 'Question Name';
 //$string['optionalname_help']                        = 'The Question Name is only used when you export responses to CSV/Excel format.

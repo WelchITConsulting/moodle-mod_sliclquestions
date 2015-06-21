@@ -26,15 +26,16 @@ require_once($CFG->dirroot.'/mod/sliclquestions/questiontypes.class.php');
 
 // Constants
 
-define('SLICLQUESTIONS_PUPILREGISTRATION', 0);
-define('SLICLQUESTIONS_PUPILASSESSMENT', 1);
-define('SLICLQUESTIONS_SURVEY', 2);
+define('SLICLQUESTIONS_SURVEY', 1);
+define('SLICLQUESTIONS_PUPILREGISTRATION', 2);
+define('SLICLQUESTIONS_PUPILASSESSMENT', 3);
 
 global $sliclquestions_types;
 
-$sliclquestions_types = array(SLICLQUESTIONS_PUPILREGISTRATION => get_string('questype_pupilregister', 'sliclquestions'),
-                              SLICLQUESTIONS_PUPILASSESSMENT   => get_string('questype_pupilassess', 'sliclquestions'),
-                              SLICLQUESTIONS_SURVEY            => get_string('questype_survey', 'sliclquestions'));
+$sliclquestions_types = array(0                                => get_string('choosequestiontype'),
+                              SLICLQUESTIONS_SURVEY            => get_string('questype_survey', 'sliclquestions'),
+                              SLICLQUESTIONS_PUPILREGISTRATION => get_string('questype_pupilregister', 'sliclquestions'),
+                              SLICLQUESTIONS_PUPILASSESSMENT   => get_string('questype_pupilassess', 'sliclquestions'));
 
 
 
