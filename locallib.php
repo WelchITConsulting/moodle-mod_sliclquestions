@@ -39,7 +39,7 @@ $sliclquestions_types = array(0                                => get_string('ch
 
 
 
-function sliclquestions_get_editor_options($context)
+function sliclquestions_editor_options($context)
 {
     global $CFG;
     return array('subdirs'      => 1,
@@ -51,7 +51,10 @@ function sliclquestions_get_editor_options($context)
                  'trusttext'    => 0);
 }
 
+function sliclquestions_set_events($data)
+{
 
+}
 
 
 

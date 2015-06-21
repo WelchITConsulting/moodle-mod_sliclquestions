@@ -42,37 +42,62 @@ function sliclquestions_supports($feature)
     }
 }
 
-function sliclquestions_add_instance($sliclquestions)
+function sliclquestions_add_instance($data, $mform = null)
 {
     global $DB;
 
-    $time = time();
-    $sliclquestions->timemodified = $time;
-    $sliclquestions->timecreated = $time;
+    $cmid = $data->coursemodule;
 
-    if (!$id = $DB->add_record('sliclquestions', $sliclquestions)) {
-        return false;
+    $data->timemodified = time();
+    $data->timecreated = $data->timemodified;
+
+    if ($mform) {
+        $data->content       = $data->page['text'];
+        $data->contentformat = $data->page['format'];
     }
 
-    return $id;
+    $data->id = $DB->insert_record('sliclquestions', $data);
+
+    // Add the events for the date settings for the item to the calendar
+    sliclquestions_set_events($data);
+
+    $DB->set_field('course_modules', 'instance', $data->id, array('id' => $cmid));
+    $context = context_module::instance($cmid);
+    if ($mform && !empty($data->page['itemid'])) {
+        $draftitemid = $data->page['itemid'];
+        $data->content = file_save_draft_area_files($draftitemid, $context->id,
+                                                    'mod_sliclquestions', 'content', 0,
+                                                    sliclquestions_editor_options($context),
+                                                    $data->content);
+        $DB->update_record('sliclquestions', $data);
+    }
+    return $data->id;
 }
 
-function sliclquestions_update_instance($sliclquestions)
+function sliclquestions_update_instance($data, $mform)
 {
     global $DB;
 
-//    if (!empty($sliclquestions->id) && !empty($sliclquestions->realm)) {
-//        $DB->set_field('sliclquestions_survey', 'realm', $sliclquestions->realm, array('id' => $sliclquestions->id));
-//    }
+    $cmid                = $data->coursemodule;
+    $draftitemid         = $data->page['itemid'];
+    $data->id            = $data->instance;
+    $data->content       = $data->page['text'];
+    $data->contentformat = $data->page['format'];
+    $data->timemodified  = time();
 
-    $sliclquestions->timemodified = time();
-    $sliclquestions->id = $sliclquestions->instance;
-
+    $DB->update_record('sliclquestions', $data);
     // Add the events for the date settings for the item to the calendar
-//    sliclquestions_set_events($sliclquestions);
+    sliclquestions_set_events($data);
 
-    // Update the records and return the results
-    return $DB->update_record('sliclquestions', $sliclquestions);
+    $context = context_module::instance($cmid);
+    if ($draftitemid) {
+        $data->content = file_save_draft_area_files($draftitemid, $context->id,
+                                                    'mod_sliclquestions', 'content', 0,
+                                                    sliclquestions_editor_options($context),
+                                                    $data->content);
+        $DB->update_record('sliclquestions', $data);
+    }
+    return true;
 }
 
 /**
@@ -91,13 +116,9 @@ function sliclquestions_delete_instance($id)
         return false;
     }
 
-    // Check for and delete any survey and response records
-    if ($survey = $DB->get_record('sliclquestions_survey', array('id' => $sliclquestions->sid))) {
-        if (!sliclquestions_delete_survey($sliclquestions->sid, $sliclquestions->id)) {
-            return false;
-        }
-    }
-
+    // Remove all responses from the tables
+    $response_types = array('');
+    
     // Check for and remove any entries from the calendar
     if ($events = $DB->get_records('event', array('modulename' => 'sliclquestions',
                                                   'instance'   => $sliclquestions->id))) {
