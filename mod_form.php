@@ -42,7 +42,7 @@ class mod_sliclquestions_mod_form extends moodleform_mod
         $mform->addRule('name', null, 'required', null, 'client');
 
         $this->standard_intro_elements(get_string('description'));
-        $mform->setRule('intro', null, 'required', null, 'client');
+        $mform->addRule('intro', null, 'required', null, 'client');
 
         $mform->addElement('select', 'questype', get_string('questype', 'sliclquestions'), $sliclquestions_types);
 

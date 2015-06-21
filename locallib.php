@@ -32,7 +32,7 @@ define('SLICLQUESTIONS_SURVEY', 2);
 
 global $sliclquestions_types;
 
-$sliclquestions_types = array(SLICLQUESTIONS_PUPILREGISTRATION => get_string('questype_pupilregisster', 'sliclquestions'),
+$sliclquestions_types = array(SLICLQUESTIONS_PUPILREGISTRATION => get_string('questype_pupilregister', 'sliclquestions'),
                               SLICLQUESTIONS_PUPILASSESSMENT   => get_string('questype_pupilassess', 'sliclquestions'),
                               SLICLQUESTIONS_SURVEY            => get_string('questype_survey', 'sliclquestions'));
 
