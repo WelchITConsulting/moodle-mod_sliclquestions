@@ -190,7 +190,8 @@ class mod_sliclquestions_mod_form extends moodleform_mod
             $defaultvalues['page']['format'] = $defaultvalues['contentformat'];
             $defaultvalues['page']['text']   = file_prepare_draft_area($draftitemid, $this->context->id,
                                                                        'mod_sliclquestions', 'content', 0,
-                                                                       sliclquestions_editor_options($this->context));
+                                                                       sliclquestions_editor_options($this->context),
+                                                                       $defaultvalues['content']);
             $defaultvalues['page']['itemid'] = $draftitemid;
         }
         if (empty($defaultvalues['opendate'])) {
