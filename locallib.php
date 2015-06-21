@@ -56,7 +56,22 @@ function sliclquestions_set_events($data)
 
 }
 
-
+function sliclquestions_search_form($course, $search)
+{
+    global $CFG, $OUPUT;
+    return '<div class="sliclquestions-search"><form action="'
+         . $CFG->wwwroot
+         . '/mod/sliclquestions/search.php" style="display:inline">'
+         . '<fieldset class="invisiblefieldset">'
+         . $OUPUT->help_icon('search')
+         . '<label class="accesshide" for="search">'
+         . get_string('search', 'sliclquestions')
+         . '</label><input id="search" name="search" type="text" size="18" value="'
+         . s($search, true)
+         . '" /><input name="id" type="hidden" value="'
+         . $course->id
+         . '" /></fieldset></form></div>';
+}
 
 
 

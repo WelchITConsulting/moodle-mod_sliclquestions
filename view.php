@@ -75,7 +75,7 @@ $url = new moodle_url('/mod/sliclquestions/view.php', $params);
 $PAGE->set_url($url);
 
 if (!$PAGE->button) {
-    $PAGE->set_button(sbgallery_search_form($course, $search));
+    $PAGE->set_button(sliclquestions_search_form($course, $search));
 }
 
 // Print site header
