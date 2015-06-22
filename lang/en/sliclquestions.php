@@ -41,6 +41,10 @@ $string['opendate_help']                            = '<p>You can specify a date
 
 $string['pluginadministration']                     = 'SLiCL Questions Administration';
 $string['pluginname']                               = 'SLiCL Questions';
+$string['printheading']                             = 'Display survey name';
+$string['printheadingexplain']                      = 'Display survey name above content';
+$string['printintro']                               = 'Display survey intro';
+$string['printintroexplain']                        = 'Display survey intro above content?';
 
 $string['questype']                                 = 'Questionnaire type';
 $string['questype_help']                            = '<p>Defines the type of questionnaire to create:</p>'
