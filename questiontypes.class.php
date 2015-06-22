@@ -23,18 +23,18 @@
 require_once($CFG->dirroot . '/mod/sliclquestions/locallib.php');
 
 // Define question constants
-define('QUESCHOOSE', 0);
-define('QUESYESNO', 1);
-define('QUESTEXT', 2);
-define('QUESESSAY', 3);
-define('QUESRADIO', 4);
-define('QUESCHECK', 5);
-define('QUESDROP', 6);
-define('QUESRATE', 8);
-define('QUESDATE', 9);
-define('QUESNUMERIC', 10);
-define('QUESPAGEBREAK', 99);
-define('QUESSECTIONTEXT', 100);
+define('SLICLQUESCHOOSE', 0);
+define('SLICLQUESYESNO', 1);
+define('SLICLQUESTEXT', 2);
+define('SLICLQUESESSAY', 3);
+define('SLICLQUESRADIO', 4);
+define('SLICLQUESCHECK', 5);
+define('SLICLQUESDROP', 6);
+define('SLICLQUESRATE', 8);
+define('SLICLQUESDATE', 9);
+define('SLICLQUESNUMERIC', 10);
+define('SLICLQUESPAGEBREAK', 99);
+define('SLICLQUESSECTIONTEXT', 100);
 
 class sliclquestions_question
 {
