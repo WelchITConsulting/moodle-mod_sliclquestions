@@ -181,7 +181,7 @@ class mod_sliclquestions_pupil_register
                               'center',
                               'center',
                               'center');
-        $sql = 'SELECT * FROM {sliclregister_students} WHERE register_id=? '
+        $sql = 'SELECT * FROM {sliclquestions_students} WHERE register_id=? '
              . 'AND teacher_id=? AND deleteflag=0 ORDER BY sex DESC, kpi_level '
              . 'ASC, surname ASC, forename ASC';
         $pupils = $DB->get_records_sql($sql, array($surveyid, $USER->id));
