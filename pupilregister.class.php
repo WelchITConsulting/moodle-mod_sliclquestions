@@ -87,7 +87,6 @@ class mod_sliclquestions_pupil_register
     private function display_statistics($course, $url)
     {
         global $CFG;
-        require_once($CFG->dirroot . '/enrol/locallib.php');
         $sort  = optional_param('sort', 'firstname', PARAM_ALPHA);
         $order = optional_param('order', 'ASC', PARAM_ALPHA);
         $firstnamesort = array('s' => 'firstname');
@@ -137,8 +136,8 @@ class mod_sliclquestions_pupil_register
 
 
 
-
-        $manager = new course_enrolement_manager(null, $course, 0, 3);
+        require_once($CFG->dirroot . '/enrol/locallib.php');
+        $manager = new course_enrolment_manager(null, $course, 0, 3);
         foreach($manager->get_users($sort, $order) AS $userobj) {
             $sql = 'SELECT COUNT(*) FROM {sliclquestions_students} '
                  . 'WHERE deleteflag=0 AND sex=? AND teacher_id=?';
