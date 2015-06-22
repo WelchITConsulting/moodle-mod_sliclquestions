@@ -26,15 +26,15 @@ class mod_sliclquestions_management_console
 {
     static private $_instance;
 
-    static public function get_instance($course, $cm, $survey, $url, $params)
+    static public function get_instance($course, $cm, $context, $survey, $url, $params)
     {
         if (empty(self::$_instance)) {
-            self::$_instance = new mod_sliclquestions_management_console($course, $cm, $survey, $url, $params);
+            self::$_instance = new mod_sliclquestions_management_console($course, $cm, $context, $survey, $url, $params);
         }
         return self::$_instance;
     }
 
-    public function __construct($course, $cm, $survey, $url, $params)
+    public function __construct($course, $cm, $context, $survey, $url, $params)
     {
         echo "Management Console";
     }
