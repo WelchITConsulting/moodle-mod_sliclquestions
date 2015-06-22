@@ -69,10 +69,6 @@ if ($id) {
 $url = new moodle_url('/mod/sliclquestions/view.php', $params);
 $PAGE->set_url($url);
 
-if (!$PAGE->button) {
-    $PAGE->set_button(sliclquestions_search_form($course, $search));
-}
-
 // Print site header
 $PAGE->set_title(format_string($sliclquestions->name));
 $PAGE->set_heading(format_string($course->fullname));
