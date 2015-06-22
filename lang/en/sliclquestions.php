@@ -27,6 +27,8 @@ $string['closedate_help']                           = 'You can specify a date to
 $string['content']                                  = 'Content (displayed at the top of the questionnaire)';
 $string['contentheader']                            = 'Page content';
 
+$string['displayoptions']                           = 'Display options';
+
 $string['modulename']                               = 'SLiCL Questions';
 $string['modulename_help']                          = 'The SLiCL Questions module allows you to construct surveys using a variety of question types, for the purpose of gathering data for the SLiCL Project.';
 $string['modulenameplural']                         = 'SLiCL Questionnaires';
