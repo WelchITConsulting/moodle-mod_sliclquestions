@@ -37,7 +37,7 @@ $string['modulenameplural']                         = 'SLiCL Questionnaires';
 
 $string['name']                                     = 'Questionnaire Name';
 $string['nonzeroerror']                             = 'You must select the type of survey to create';
-$string['novieewpermission']                        = 'You do not have permission to view these questionnaires.';
+$string['noviewpermission']                         = 'You do not have permission to view these questionnaires.';
 
 $string['opendate']                                 = 'Use Open Date';
 $string['opendate_help']                            = '<p>You can specify a date to open the questionnaire here. Check the check box, and select the date and time you want.</p>'
