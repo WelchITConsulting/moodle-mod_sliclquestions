@@ -58,7 +58,7 @@ class mod_sliclquestions_mod_form extends moodleform_mod
         $mform->addRule('page', get_string('required'), 'required', null, 'client');
 
         //----------------------------------------------------------------------
-        $mform->addElement('header', 'displayoptions', get_string('displayoptions', 'sliclquestions'));
+        $mform->addElement('header', 'displayoptionshdr', get_string('displayoptions', 'sliclquestions'));
 
         $mform->addElement('advcheckbox', 'printheading', get_string('printheading', 'sliclquestions'));
         $mform->setDefault('printheading', $config->printheading);
