@@ -114,7 +114,7 @@ class mod_sliclquestions_pupil_register
         $totalfemales = 0;
 //        $sql = 'SELECT u.firstname,u.lastname,r.teacher_id,r.sex,count(*) AS numrec'
 //             . ' FROM {sliclregister_pupils} r, {user} u'
-//             . ' WHERE r.teacher_id=u.id AND r.register_id=? AND r.deleteflag=0'
+//             . ' WHERE r.teacher_id=u.id AND r.survey_id=? AND r.deleteflag=0'
 //             . ' GROUP BY u.firstname,u.lastname,r.teacher_id,r.sex'
 //             . ' ORDER BY u.lastname ASC,u.firstname ASC,r.sex DESC';
 //        $results = $DB->get_records_sql($sql, array($course->id));
@@ -180,7 +180,7 @@ class mod_sliclquestions_pupil_register
                               'center',
                               'center',
                               'center');
-        $sql = 'SELECT * FROM {sliclquestions_students} WHERE register_id=? '
+        $sql = 'SELECT * FROM {sliclquestions_students} WHERE survey_id=? '
              . 'AND teacher_id=? AND deleteflag=0 ORDER BY sex DESC, kpi_level '
              . 'ASC, surname ASC, forename ASC';
         $pupils = $DB->get_records_sql($sql, array($surveyid, $USER->id));
