@@ -24,20 +24,20 @@ class mod_sliclquestions_pupil_register
 {
     static private $_instance;
 
-    static public function get_instance($course, $cm, $context, $survey, $url, $params)
+    static public function get_instance($course, $context, $survey, $url, $params)
     {
         if (empty(self::$_instance)) {
-            self::$_instance = new mod_sliclquestions_pupil_register($course, $cm, $context, $survey, $url, $params);
+            self::$_instance = new mod_sliclquestions_pupil_register($course, $context, $survey, $url, $params);
         }
         return self::$_instance;
     }
 
-    public function __construct($course, $cm, $context, $survey, $url, $params)
+    public function __construct($course, $context, $survey, $url, $params)
     {
         if (!empty($params['act'])) {
             $this->perform_action($survey->id, $url, $params);
         } elseif (has_capability('mod/sliclquestions:viewstatistics', $context)) {
-            $this->display_statistics();
+            $this->display_statistics($course, $url);
         } else {
             $this->display($survey->id, $url, $params);
         }
@@ -84,7 +84,7 @@ class mod_sliclquestions_pupil_register
         }
     }
 
-    private function display_statistics($courseid, $url)
+    private function display_statistics($course, $url)
     {
         global $CFG;
         require_once($CFG->dirroot . '/enrol/locallib.php');
@@ -118,7 +118,7 @@ class mod_sliclquestions_pupil_register
 //             . ' WHERE r.teacher_id=u.id AND r.register_id=? AND r.deleteflag=0'
 //             . ' GROUP BY u.firstname,u.lastname,r.teacher_id,r.sex'
 //             . ' ORDER BY u.lastname ASC,u.firstname ASC,r.sex DESC';
-//        $results = $DB->get_records_sql($sql, array($courseid));
+//        $results = $DB->get_records_sql($sql, array($course->id));
 //        $data = array();
 //        foreach($results as $record) {
 //            if (!array_key_exists($record->teacher_id, $data)) {

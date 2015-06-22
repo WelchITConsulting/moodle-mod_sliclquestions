@@ -95,7 +95,7 @@ if ( has_capability('mod/sliclquestions:manage', $context)) {
 
     // Load the management console
     require_once($CFG->dirroot . '/mod/sliclquestions/manager.class.php');
-    mod_sliclquestions_management_console::get_instance($course, $cm, $context, $sliclquestions, $url, $params);
+    mod_sliclquestions_management_console::get_instance($course, $context, $sliclquestions, $url, $params);
 }
 
 echo $OUTPUT->box_start('generalbox sliclquestions boxwidthwide');
@@ -109,7 +109,7 @@ switch($sliclquestions->questype) {
 
             // Load the pupil registration manager
             require_once($CFG->dirroot . '/mod/sliclquestions/pupilregister.class.php');
-            mod_sliclquestions_pupil_register::get_instance($course, $cm,$context, $sliclquestions, $url, $params);
+            mod_sliclquestions_pupil_register::get_instance($course, $context, $sliclquestions, $url, $params);
 
         } else {
 
@@ -125,7 +125,7 @@ switch($sliclquestions->questype) {
 
             // Load the pupil registration manager
             require_once($CFG->dirroot . '/mod/sliclquestions/pupilassessment.class.php');
-            mod_sliclquestions_pupil_assessment::get_instance($course, $cm, $context, $sliclquestions, $url, $params);
+            mod_sliclquestions_pupil_assessment::get_instance($course, $context, $sliclquestions, $url, $params);
 
         } else {
 
@@ -141,7 +141,7 @@ switch($sliclquestions->questype) {
 
             // Load the pupil registration manager
             require_once($CFG->dirroot . '/mod/sliclquestions/survey.class.php');
-            mod_sliclquestions_survey::get_instance($course, $cm, $context, $sliclquestions, $url, $params);
+            mod_sliclquestions_survey::get_instance($course, $context, $sliclquestions, $url, $params);
 
         } else {
 

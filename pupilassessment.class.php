@@ -24,15 +24,15 @@ class mod_sliclquestions_pupil_assessment
 {
     static private $_instance;
 
-    static public function get_instance($course, $cm, $context, $survey, $url, $params)
+    static public function get_instance($course, $context, $survey, $url, $params)
     {
         if (empty(self::$_instance)) {
-            self::$_instance = new mod_sliclquestions_pupil_assessment($course, $cm, $context, $survey, $url, $params);
+            self::$_instance = new mod_sliclquestions_pupil_assessment($course, $context, $survey, $url, $params);
         }
         return self::$_instance;
     }
 
-    public function __construct($course, $cm, $context, $survey, $url, $params)
+    public function __construct($course, $context, $survey, $url, $params)
     {
         echo 'Pupil Assessment Class';
     }
