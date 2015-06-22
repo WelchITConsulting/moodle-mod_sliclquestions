@@ -57,6 +57,15 @@ function sliclquestions_add_instance($data, $mform = null)
     }
     $data->displayoptions = serialize(array('printheading' => $data->printheading,
                                             'printintro'   => $data->printintro));
+
+    if (empty($data->useopendate)) {
+        $data->opendate = 0;
+    }
+    if (empty($data->useclosedate)) {
+        $data->closedate = 0;
+    }
+
+    // Create the instance in the datanase
     $data->id = $DB->insert_record('sliclquestions', $data);
 
     // Add the events for the date settings for the item to the calendar
@@ -87,6 +96,12 @@ function sliclquestions_update_instance($data, $mform)
     $data->timemodified   = time();
     $data->displayoptions = serialize(array('printheading' => $data->printheading,
                                             'printintro'   => $data->printintro));
+    if (empty($data->useopendate)) {
+        $data->opendate = 0;
+    }
+    if (empty($data->useclosedate)) {
+        $data->closedate = 0;
+    }
 
     $DB->update_record('sliclquestions', $data);
     // Add the events for the date settings for the item to the calendar
