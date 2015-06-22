@@ -103,14 +103,14 @@ class mod_sliclquestions_pupil_register
             $surnamesort['o'] = 'ASC';
         }
         $nameheader = '<a href="' . $url->out(true, $firstnamesort) . '">'
-                    . get_string('forename', 'sliclquestions') . '</a> / <a href'
+                    . get_string('firstname') . '</a> / <a href'
                     . $url->out(true, $surnamesort) . '">'
-                    . get_string('surname', 'sliclquestions') . '</a>';
+                    . get_string('lastname') . '</a>';
         $table = new html_table();
         $table->head = array($nameheader,
                              get_string('pupilsfemale', 'sliclquestions'),
                              get_string('pupilsmale', 'sliclquestions'));
-        $table->align('left', 'center', 'center');
+        $table->align = array('left', 'center', 'center');
         $totalmales = 0;
         $totalfemales = 0;
 //        $sql = 'SELECT u.firstname,u.lastname,r.teacher_id,r.sex,count(*) AS numrec'

@@ -49,6 +49,8 @@ $string['printheading']                             = 'Display survey name';
 $string['printheadingexplain']                      = 'Display survey name above content';
 $string['printintro']                               = 'Display survey intro';
 $string['printintroexplain']                        = 'Display survey intro above content?';
+$string['pupilsfemale']                             = 'Female pupils';
+$string['pupilsmale']                               = 'Male pupils';
 
 $string['questype']                                 = 'Questionnaire type';
 $string['questype_help']                            = '<p>Defines the type of questionnaire to create:</p>'
