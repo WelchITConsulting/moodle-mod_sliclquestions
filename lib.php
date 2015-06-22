@@ -55,7 +55,8 @@ function sliclquestions_add_instance($data, $mform = null)
         $data->content       = $data->page['text'];
         $data->contentformat = $data->page['format'];
     }
-
+    $data->displayoptions = serialize(array('printheading' => $data->printheading,
+                                            'printintro'   => $data->printintro));
     $data->id = $DB->insert_record('sliclquestions', $data);
 
     // Add the events for the date settings for the item to the calendar
@@ -78,12 +79,14 @@ function sliclquestions_update_instance($data, $mform)
 {
     global $DB;
 
-    $cmid                = $data->coursemodule;
-    $draftitemid         = $data->page['itemid'];
-    $data->id            = $data->instance;
-    $data->content       = $data->page['text'];
-    $data->contentformat = $data->page['format'];
-    $data->timemodified  = time();
+    $cmid                 = $data->coursemodule;
+    $draftitemid          = $data->page['itemid'];
+    $data->id             = $data->instance;
+    $data->content        = $data->page['text'];
+    $data->contentformat  = $data->page['format'];
+    $data->timemodified   = time();
+    $data->displayoptions = serialize(array('printheading' => $data->printheading,
+                                            'printintro'   => $data->printintro));
 
     $DB->update_record('sliclquestions', $data);
     // Add the events for the date settings for the item to the calendar

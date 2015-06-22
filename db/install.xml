@@ -34,6 +34,7 @@ Created  : 09 Jun 2015
                 <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
                 <FIELD NAME="content" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
                 <FIELD NAME="contentformat" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="displayoptions" TYPE="char" LENGTH="70" NOTNULL="false" SEQUENCE="false"/>
                 <FIELD NAME="questype" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
                 <FIELD NAME="opendate" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
                 <FIELD NAME="closedate" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
@@ -57,8 +58,8 @@ Created  : 09 Jun 2015
                 <FIELD NAME="class_id" TYPE="char" LENGTH="60" NOTNULL="false" SEQUENCE="false"/>
                 <FIELD NAME="kpi_level" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="2" SEQUENCE="false"/>
                 <FIELD NAME="deleteflag" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-                <FIELD NAME="datecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-                <FIELD NAME="dateupdated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id"/>

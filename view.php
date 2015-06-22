@@ -21,8 +21,6 @@
  */
 
 require_once("../../config.php");
-//require_once($CFG->libdir  .  '/completionlib.php');
-//require_once($CFG->dirroot . '/mod/sliclquestions/sliclquestions.class.php');
 require_once($CFG->dirroot . '/mod/sliclquestions/locallib.php');
 
 $id  = optional_param('id', null, PARAM_INT);       // Course Module ID
@@ -68,9 +66,6 @@ if ($id) {
 } elseif ($a) {
     $params['a'] = $a;
 }
-if ($act) {
-    $params['act'] = $act;
-}
 $url = new moodle_url('/mod/sliclquestions/view.php', $params);
 $PAGE->set_url($url);
 
@@ -90,6 +85,10 @@ if (empty($cm->visible) && !has_capability('moodle/course:viewhiddenactivities',
 if (!has_capability('mod/sliclquestions:view', $context)) {
     notice(get_string('noviewpermission', 'sliclquestions'));
 }
+$currentgroupid = groups_get_activity_group($cm);
+if (!groups_is_member($currentgroupid, $USER->id)) {
+    $currentgroupid = 0;
+}
 
 // Print out page header
 echo $OUTPUT->heading(format_string($sliclquestions->name), true)
@@ -98,8 +97,9 @@ echo $OUTPUT->heading(format_string($sliclquestions->name), true)
 // Check if we have manage permissions
 if ( has_capability('mod/sliclquestions:manage', $context)) {
 
-    // Display the management console
-    require_once($CFG->dirroot . '/mod/sliclquestions/manager.php');
+    // Load the management console
+    require_once($CFG->dirroot . '/mod/sliclquestions/manager.class.php');
+    mod_sliclquestions_management_console::get_instance($course, $cm, $sliclquestions, $url, $params);
 }
 
 echo $OUTPUT->box_start('generalbox sliclquestions boxwidthwide');
@@ -110,27 +110,48 @@ switch($sliclquestions->questype) {
     case SLICLQUESTIONS_PUPILREGISTRATION:
 
         if ( has_capability('mod/sliclquestions:registerpupils', $context)) {
-            echo "Pupil registration";
+
+            // Load the pupil registration manager
+            require_once($CFG->dirroot . '/mod/sliclquestions/pupilregister.class.php');
+            mod_sliclquestions_pupil_register::get_instance($course, $cm, $survey, $url, $params);
+
         } else {
-            echo "You do not have permission";
+
+            // Display the no view permisson message
+            notice(get_string('noviewpermission', 'sliclquestions'));
+
         }
         break;
 
     case SLICLQUESTIONS_PUPILASSESSMENT:
 
         if ( has_capability('mod/sliclquestions:assesspupils', $context)) {
-            echo "Pupil assessment";
+
+            // Load the pupil registration manager
+            require_once($CFG->dirroot . '/mod/sliclquestions/pupilassessment.class.php');
+            mod_sliclquestions_pupil_assessment::get_instance($course, $cm, $survey, $url, $params);
+
         } else {
-            echo "You do not have permission";
+
+            // Display the no view permisson message
+            notice(get_string('noviewpermission', 'sliclquestions'));
+
         }
         break;
 
     case SLICLQUESTIONS_SURVEY:
 
         if ( has_capability('mod/sliclquestions:submit', $context)) {
-            echo "Complete a standard survey";
+
+            // Load the pupil registration manager
+            require_once($CFG->dirroot . '/mod/sliclquestions/survey.class.php');
+            mod_sliclquestions_survey::get_instance($course, $cm, $survey, $url, $params);
+
         } else {
-            echo "You do not have permission";
+
+            // Display the no view permisson message
+            notice(get_string('noviewpermission', 'sliclquestions'));
+
         }
         break;
 

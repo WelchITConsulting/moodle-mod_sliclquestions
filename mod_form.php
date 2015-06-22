@@ -35,6 +35,7 @@ class mod_sliclquestions_mod_form extends moodleform_mod
 
         //----------------------------------------------------------------------
         $mform->addElement('header', 'general', get_string('general', 'form'));
+
         $mform->addElement('text', 'name', get_string('name', 'sliclquestions'), array('size' => '48'));
         if (!empty($CFG->formatstringstriptags)) {
             $mform->setType('name', PARAM_TEXT);
@@ -48,12 +49,21 @@ class mod_sliclquestions_mod_form extends moodleform_mod
 
         //----------------------------------------------------------------------
         $mform->addElement('header', 'contentsection', get_string('contentheader', 'sliclquestions'));
+
         $mform->addElement('select', 'questype', get_string('questype', 'sliclquestions'), $sliclquestions_types);
         $mform->setType('questype', PARAM_INT);
         $mform->addRule('questype', null, 'required', null, 'client');
         $mform->addRule('questype', get_string('nonzeroerror', 'sliclquestions'), 'nonzero', null, 'client');
         $mform->addElement('editor', 'page', get_string('content', 'sliclquestions'), null, sliclquestions_editor_options($this->context));
         $mform->addRule('page', get_string('required'), 'required', null, 'client');
+
+        //----------------------------------------------------------------------
+        $mform->addElement('header', 'displayoptions', get_string('displayoptions', 'form'));
+
+        $mform->addElement('advcheckbox', 'printheading', get_string('printheading', 'sliclquestions'));
+        $mform->setDefault('printheading', $config->printheading);
+        $mform->addElement('advcheckbox', 'printintro', get_string('printintro', 'sliclquestions'));
+        $mform->setDefault('printintro', $config->printintro);
 
         //----------------------------------------------------------------------
         $mform->addElement('header', 'timinghdr', get_string('timing', 'form'));
@@ -99,6 +109,15 @@ class mod_sliclquestions_mod_form extends moodleform_mod
             $defaultvalues['useclosedate'] = 0;
         } else {
             $defaultvalues['useclosedate'] = 1;
+        }
+        if (!empty($defaultvalues['displayoptions'])) {
+            $displayoptions = unserialize($defaultvalues['displayoptions']);
+            if (isset($displayoptions['printintro'])) {
+                $defaultvalues['printintro'] = $displayoptions['printintro'];
+            }
+            if (isset($displayoptions['printheading'])) {
+                $defaultvalues['printheading'] = $displayoptions['printheading'];
+            }
         }
     }
 }

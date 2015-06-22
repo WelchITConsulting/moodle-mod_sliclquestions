@@ -15,37 +15,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Filename : manager
+ * Filename : survey
  * Author   : John Welch <jwelch@welchitconsulting.co.uk>
- * Created  : 21 Jun 2015
+ * Created  : 22 Jun 2015
  */
 
-defined('MOODLE_INTERNAL') || die();
-
-class mod_sliclquestions_management_console
+class mod_sliclquestions_survey
 {
     static private $_instance;
 
-    static public function get_instance()
+    static public function get_instance($course, $cm, $survey, $url, $params)
     {
-        if (empty($this->_instance)) {
-            $this->_instance = new mod_sliclquestions_management_console();
+        if (empty(self::$_instance)) {
+            self::$_instance = new mod_sliclquestions_survey($course, $cm, $survey, $url, $params);
         }
-        return $this->_instance;
+        return self::$_instance;
     }
 
-    public function __construct()
+    public function __construct($course, $cm, $survey, $url, $params)
     {
-        echo "Management Console";
-    }
-
-    private function display_statistics()
-    {
-
-    }
-
-    private function get_non_respondents()
-    {
-
+        echo 'Survey class';
     }
 }
