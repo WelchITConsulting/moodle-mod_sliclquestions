@@ -20,6 +20,8 @@
  * Created  : 06 Jan 2015
  */
 
+$string['addpupil']                                 = 'Add pupil';
+
 $string['choosequestiontype']                       = 'Choose type of survey';
 $string['closedate']                                = 'Use Close Date';
 $string['closeson']                                 = 'Questionnaire closes on {$a}';
@@ -75,9 +77,14 @@ $string['sliclquestions:printblank']                = 'Print blank questionnaire
 $string['sliclquestions:registerpupils']            = 'Create a register of pupils';
 $string['sliclquestions:submit']                    = 'Complete and submit a questionnaire';
 $string['sliclquestions:view']                      = 'View a questionnaire';
-//$string['sliclquestions:viewsingleresponse']        = 'View complete individual responses';
+$string['sliclquestions:viewstatistics']            = 'View the module statistics';
 
-
+$string['tblclass']                                 = 'Class';
+$string['tblcommand']                               = 'Action';
+$string['tblkpilevel']                              = 'KPI level';
+$string['tblname']                                  = 'First name / Surname';
+$string['tblsex']                                   = 'Sex';
+$string['tblyear']                                  = 'School Year';
 
 
 //$string['action']                                   = 'Action';

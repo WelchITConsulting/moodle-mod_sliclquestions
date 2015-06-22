@@ -124,16 +124,17 @@ $capabilities = array(
         )
     ),
 
-//    // Ability to view individual responses to a questionnaire
-//    'mod/sliclquestions:viewsingleresponse' => array(
-//
-//        'captype'            => 'read',
-//        'contextlevel'       => CONTEXT_MODULE,
-//        'legacy'             => array(
-//            'manager'        => CAP_ALLOW
-//        )
-//    ),
-//
+    // Ability to view individual responses to a questionnaire
+    'mod/sliclquestions:viewstatistics' => array(
+        'captype'            => 'read',
+        'contextlevel'       => CONTEXT_MODULE,
+        'legacy'             => array(
+            'editingteacher' => CAP_ALLOW,
+            'coursecreator'  => CAP_ALLOW,
+            'manager'        => CAP_ALLOW
+        )
+    ),
+
 //    // Ability to download responses in a CSV file
 //    'mod/sliclquestions:downloadresponses' => array(
 //
