@@ -134,7 +134,7 @@ echo '<pre>' . print_r($context, true) . '</pre>';
                 $totalmales += $record->numrec;
             } else {
                 $data[$record->teacher_id][1] = $record->numrec;
-                $totalemales += $record->numrec;
+                $totalmales += $record->numrec;
             }
         }
         $table->data = $data;
