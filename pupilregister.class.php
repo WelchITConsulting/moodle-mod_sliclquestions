@@ -135,6 +135,7 @@ class mod_sliclquestions_pupil_register
                 $data[$record->id][1] = $record->numrec;
                 $totalfemales += $record->numrec;
             }
+            echo '<pre>' . print_r($data, true) . '</pre>';
         }
         $table->data = $data;
         $totaltable = new html_table();
