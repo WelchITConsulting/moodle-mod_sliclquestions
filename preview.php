@@ -53,7 +53,7 @@ if ($id) {
 if (!$popup) {
     require_login($course);
 }
-$context = $context_module::instance($cm->id);
+$context = context_module::instance($cm->id);
 $params = array();
 if ($id) {
     $params['id'] = $id;
