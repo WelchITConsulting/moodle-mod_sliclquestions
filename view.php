@@ -93,7 +93,7 @@ if (!isset($options['printheading']) || !empty($options['printheading'])) {
     echo $OUTPUT->heading(format_string($sliclquestions->name), true);
 }
 if (!empty($options['printintro'])) {
-    if (trim(strip_tags($page->intro))) {
+    if (trim(strip_tags($sliclquestions->intro))) {
         echo $OUTPUT->box_start('mod_introbox', 'pageintro')
            . format_module_intro('sliclquestions', $sliclquestions, $cm->id)
            . $OUTPUT->box_end();

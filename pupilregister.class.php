@@ -195,8 +195,8 @@ class mod_sliclquestions_pupil_register
                                          'pid' => $pupil->id));
                 $deletebtn = '<a href="' . $deleteurl . '">' . get_string('delete') . '</a>';
                 $table->data[] = array($pupil->forename . ' ' . $pupil->surname.
-                                       ($pupil->sex == m ? get_string('male', 'sliclquestions')
-                                                         : get_string('female', 'sliclquestions')),
+                                       ($pupil->sex == 'm' ? get_string('male', 'sliclquestions')
+                                                           : get_string('female', 'sliclquestions')),
                                        $pupil->year_id,
                                        $pupil->class_id,
                                        $pupil->kpi_level,
