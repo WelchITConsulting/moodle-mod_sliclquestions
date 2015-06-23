@@ -15,51 +15,358 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Filename : sliclquestions
+ * Filename : questionnaire
  * Author   : John Welch <jwelch@welchitconsulting.co.uk>
- * Created  : 09 Jun 2015
+ * Created  : 23 Jun 2015
  */
-
-require_once($CFG->dirroot . '/mod/sliclquestions/locallib.php');
 
 class sliclquestions
 {
-    private $id = -1;
-    private $course = '';
-    private $name = '';
-    private $intro = '';
-    private $introformat = 0;
-    private $questype = 0;
-
-    private $opendate = 0;
-    private $closedate = 0;
-    private $timecreated = 0;
-    private $timemodified = 0;
-    private $cm = 0;
-    private $context = null;
-
-    public function __construct($id, $sliclquestions, &$course, &$cm)
+    public function __construct(&$course, &$cm, $id = 0, $questionnaire = null, $addquestions = null)
     {
         global $DB;
 
         if ($id) {
-            $sliclquestions = $DB->get_record('sliclquestions', array('id' => $id));
+            $questionnaire = $DB->get_record('sliclquestions', array('id' => $id));
         }
-        if (is_object($sliclquestions)) {
-            $properties = get_object_vars($sliclquestions);
-            foreach($properties as $k => $v) {
-                $this->$k = $v;
+        if (is_object($questionnaire)) {
+            $properties = get_object_vars($questionnaire);
+            foreach ($properties as $prop => $val) {
+                $this->$prop = $val;
             }
         }
         $this->course = $course;
-        $this->cm = $cm;
+        $this->cm     = $cm;
         if (!empty($cm) && !empty($this->id)) {
             $this->context = context_module::instance($cm->id);
+        } else {
+            $this->context = null;
+        }
+        if ($addquestions) {
+            $this->add_questions($this->id);
+        }
+        if (!empty($this->cm->id)) {
+            $this->capabilities = sliclquestions_load_capabilities($this->cm->id);
         }
     }
 
-    public function get_type()
+    public function add_questions($id = false)
     {
-        return $this->questype;
+        global $DB;
+
+
     }
-}
+
+    public function view()
+    {
+        global $CFG, $USER, $PAGE, $OUTPUT;
+
+        $PAGE->set_title(format_string($this->name));
+    }
+
+    public function view_response($rid, $referer = '', $blankquestionnaire = false, $resps = '', $compare = false, $isgroupmember = false, $allresponses = false, $currentgroupid = 0)
+    {
+
+    }
+
+    public function view_all_responses($resps)
+    {
+
+    }
+
+    public function is_open()
+    {
+        return (($this->opendate > 0) ? ($this->opendate < time()) : true);
+    }
+
+    public function is_closed()
+    {
+        return (($this->closedate > 0) ? ($this->closedate < time()) : false);
+    }
+
+    public function user_can_take($userid)
+    {
+        if (!$this->user_is_eligible($userid)) {
+            return false;
+        } elseif ($this->qtype == SLICLQUESTIONNAIREUNLIMITED) {
+            return true;
+        } elseif ($userid > 0) {
+            return $this->user_time_for_new_attempt($userid);
+        }
+        return false;
+    }
+
+    public function user_is_eligible($userid)
+    {
+        return ($this->capabilities->view && $this->capabilities->submit);
+    }
+
+    public function user_time_for_new_attempt($userid)
+    {
+        global $DB;
+    }
+
+    public function is_survey_owner()
+    {
+        return (!empty($this->survey->owner) && ($this->course->id == $this->survey->owner));
+    }
+
+    public function can_view_response($rid)
+    {
+
+    }
+
+    public function count_submissions($userid = false)
+    {
+
+    }
+
+    public function print_survey($userid = false, $quser)
+    {
+
+    }
+
+    public function survey_print_render($courseid, $message = '', $referer = '', $rid = 0, $blankquestionnaire = false)
+    {
+        global $CFG, $DB, $OUTPUT, $USER;
+
+        if (!$course = $DB->get_record('course', array('id' => $courseid))) {
+            print_error('incorrectcourseid', 'sliclquestions');
+        }
+        $this->course = $course;
+        if (!empty($rid)) {
+            $this->view_response($rid, $referer, $blankquestionnaire);
+            return;
+        }
+        if (empty($section)) {
+            $section = 1;
+        }
+        if (isset($this->questionsbysec)) {
+            $numsections = count($this->questionsbysec);
+        } else {
+            $numsections = 0;
+        }
+        if ($section > $numsections) {
+            return false;
+        }
+        $hasrequired = $this->has_required();
+        $i = 1;
+        for ($j = 2; $j <= $section; $j++) {
+            $i += count($this->questionsbysec[$j - 1]);
+        }
+        echo html_writer::start_tag('form', array('id'     => 'phpesp_response',
+                                                  'method' => 'post',
+                                                  'action' => $CFG->wwwroot
+                                                            . '/mod/sliclquestions/preview.php?id='
+                                                            . $this->cm->id));
+        $formdata = new stdClass();
+        $errors = 1;
+        if (data_submitted()) {
+            $formdata = data_submitted();
+            $pageerror = '';
+            $s = 1;
+            $errors = 0;
+            foreach($this->questionsbysec as $section) {
+                $errormsg = $this->response_check_format($s, $formdata);
+                if ($errormsg) {
+                    if ($numsections > 1) {
+                        $pageerror = get_string('page', 'sliclquestions') . ' ' . $s . ' : ';
+                    }
+                    echo '<div class="notifyproblem">'
+                       . $pageerror
+                       . '</div>';
+                }
+                $s++;
+            }
+        }
+        echo $OUTPUT->box_start();
+        $this->print_survey_start($message, $section = 1, 1, $hasrequired, $rid = '');
+        $descendantsandchoices = array();
+        if (($referer == 'preview') && sliclquestions_hasd_dependencies($this->questions)) {
+            $descendantsandchoices = sliclquestions_get_descendants_and_choices($this->questions);
+        }
+        if ($errors == 0) {
+            echo html_writer::div(get_string('submitpreviewcorrect', 'sliclquestions'),
+                                  array('class' => 'message'));
+        }
+        $page = 1;
+        foreach($this->questionsbysec as $section) {
+            if ($numsections > 1) {
+                echo html_writer::div(get_string('page', 'sliclquestions') . ' ' . $page,
+                                      array('class' => 'surveypage'));
+                $page++;
+            }
+            foreach($section as $question) {
+                $descendantsdata = array();
+                if ($question->type_id == SLICLQUESSECTIONTEXT) {
+                    $i--;
+                }
+                if (($referer == 'preview') && $descendantsandchoices &&
+                        (($question->type_id == SLICLQUESYESNO) || ($question->type_id == SLICLQUESRADIO) || ($question->type_id == SLICLQUESDROP))) {
+                    if (isset($descendantsandchoices['descendants'][$question->id])) {
+                        $descendantsdata['descendants'] = $descendantsandchoices['descendants'][$question->id];
+                        $descendantsdata['choices']     = $descendantsandchoices['choices'][$question->id];
+                    }
+                }
+                $question->survey_display($formdata, $descendantsdata, $i++, $usehtmleditor = null, $blankquestionnaire, $referer);
+            }
+        }
+        if (($referer == 'preview') && !$blankquestionnaire) {
+            echo html_writer::start_div()
+               . html_writer::empty_tag('input', array('type'  => 'submit',
+                                                       'name'  => 'submit',
+                                                       'value' => get_string('submitpreview', 'sliclquestions')))
+               . html_writer::link('/mod/sliclquestions/preview.php?id' . $this->cm->id, get_string('reset'))
+               . html_writer::end_div();
+        }
+    }
+
+    public function survey_update($data)
+    {
+
+    }
+
+    public function survey_copy($owner)
+    {
+
+    }
+
+    public function type_has_choices()
+    {
+
+    }
+
+    public function survey_results_navbar_alpha($currid, $currentgroupid, $cm, $byresponse)
+    {
+
+    }
+
+    public function survey_results_navbar_student($currid, $userid, $instance, $resps, $reporttype = 'myreport', $sid = '')
+    {
+
+    }
+
+    public function survey_results($precision = 1, $showtotals = 1, $qid = '', $cids = '', $rid = '', $uid = false, $currentgroupid = '', $sort = '')
+    {
+
+    }
+
+    public function generate_csv($rid = '', $userid = '', $choicecodes = 1, $choicetext = 0, $currentgroupid = '')
+    {
+
+    }
+
+    public function move_question($moveqid, $movetopos)
+    {
+
+    }
+
+    public function response_analysis($rid, $resps, $compare, $isgroupmember, $allresponses, $currentgroupid)
+    {
+
+    }
+
+
+    /**
+     * Private Functions
+     */
+
+    /**
+     *
+     * @param type $section
+     */
+    private function has_required($section = 0)
+    {
+
+    }
+
+    private function survey_render(&$formdata, $section = 1, $message = '')
+    {
+
+    }
+
+    private function print_survey_start($message, $section, $numsections, $hasrequired, $rid = '', $blankquestionnaire = false)
+    {
+
+    }
+
+    private function print_survey_end($section, $numsections)
+    {
+
+    }
+
+    private function response_check_format($section, $formdata, $checkmissing = true, $checkwrongformat = true)
+    {
+
+    }
+
+    private function response_delete($rid, $sec = null)
+    {
+
+    }
+
+    private function response_import_sec($rid, $sec, &$varr)
+    {
+
+    }
+
+    private function response_import_all($rid, &$varr)
+    {
+
+    }
+
+    private function response_commit($rid)
+    {
+
+    }
+
+    private function get_response($username, $rid = 0)
+    {
+
+    }
+
+    private function response_select_max_sec($rid)
+    {
+
+    }
+
+    private function response_select_max_pos($rid)
+    {
+
+    }
+
+    private function response_select_name($rid, $choicecodes, $choicetext)
+    {
+
+    }
+
+    private function response_send_email($rid, $userid = false)
+    {
+
+    }
+
+    private function response_insert($sid, $section, $rid, $userid, $resume = false)
+    {
+
+    }
+
+    private function response_select($rid, $col = null, $csvexport = false, $choicecodes = 0, $choicetext = 1)
+    {
+
+    }
+
+    private function response_goto_thankyou()
+    {
+
+    }
+
+    private function response_goto_saved($url)
+    {
+
+    }
+
+    private function export_csv($filename)
+    {
+
+    }
+ }
