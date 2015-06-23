@@ -506,7 +506,7 @@ class sliclquestions_question
     }
 }
 
-function sortavgasc($a, $b)
+function sliclsortavgasc($a, $b)
 {
     if (isset($a->avg) && isset($b->avg)) {
         if ($a->avg < $b->avg) {
@@ -518,7 +518,7 @@ function sortavgasc($a, $b)
     }
 }
 
-function sortavgdesc($a, $b)
+function sliclsortavgdesc($a, $b)
 {
     if (isset($a->avg) && isset($b->avg)) {
         if ($a->avg > $b->avg) {
