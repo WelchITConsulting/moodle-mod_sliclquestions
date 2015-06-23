@@ -102,7 +102,7 @@ class mod_sliclquestions_pupil_register
             $surnamesort['o'] = 'ASC';
         }
         $nameheader = '<a href="' . $url->out(true, $firstnamesort) . '">'
-                    . get_string('firstname') . '</a> / <a href'
+                    . get_string('firstname') . '</a> / <a href="'
                     . $url->out(true, $surnamesort) . '">'
                     . get_string('lastname') . '</a>';
         $table = new html_table();
@@ -119,7 +119,18 @@ class mod_sliclquestions_pupil_register
              . ' AND r.shortname=? AND ra.contextid=?) AS ce '
              . ' LEFT OUTER JOIN sbr_sliclquestions_students sr ON ce.id=sr.teacher_id'
              . ' AND sr.survey_id=1 AND sr.deleteflag=0 GROUP BY ce.firstname,ce.lastname,sr.teacher_id,sr.sex'
-             . ' ORDER BY ce.lastname ASC,ce.firstname ASC,sr.sex DESC';
+             . ' ORDER BY ';
+        $s = optional_param('s', 'lastname', PARAM_ALPHA);
+        $o = optional_param('o', 'ASC', PARAM_ALPHA);
+        if ($s == 'firstname') {
+            $sql .= 'ce.firstname '
+                  . ($o == 'ASC' ? 'ASC' : 'DESC')
+                  . ',ce.lastname ASC,sr.sex DESC';
+        } else {
+            $sql .= 'ce.lastname '
+                  . ($o == 'ASC' ? 'ASC' : 'DESC')
+                  . ',ce.firstname ASC,sr.sex DESC';
+        }
         $context = context_course::instance($course->id);
         $results = $DB->get_records_sql($sql, array('sbenquirer',
                                                     $context->id));
