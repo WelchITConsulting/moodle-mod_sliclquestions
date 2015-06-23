@@ -86,7 +86,7 @@ class mod_sliclquestions_pupil_register
 
     private function display_statistics(&$course, $context, $url)
     {
-        global $CFG;
+        global $CFG, $DB;
         $sort  = optional_param('sort', 'firstname', PARAM_ALPHA);
         $order = optional_param('order', 'ASC', PARAM_ALPHA);
         $firstnamesort = array('s' => 'firstname');
