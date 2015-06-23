@@ -126,14 +126,14 @@ echo '<pre>' . print_r($context, true) . '</pre>';
                                                     $context->id));
         $data = array();
         foreach($results as $record) {
-            if (!array_key_exists($record->teacher_id, $data)) {
-                $data[$record->teacher_id] = array($record->firstname . ' ' . $record->lastname, 0, 0);
+            if (!array_key_exists($record->id, $data)) {
+                $data[$record->id] = array($record->firstname . ' ' . $record->lastname, 0, 0);
             }
             if ($record->sex == 'm') {
-                $data[$record->teacher_id][2] = $record->numrec;
+                $data[$record->id][2] = $record->numrec;
                 $totalmales += $record->numrec;
             } else {
-                $data[$record->teacher_id][1] = $record->numrec;
+                $data[$record->id][1] = $record->numrec;
                 $totalmales += $record->numrec;
             }
         }
