@@ -121,7 +121,6 @@ class mod_sliclquestions_pupil_register
              . ' AND sr.survey_id=1 AND sr.deleteflag=0 GROUP BY ce.firstname,ce.lastname,sr.teacher_id,sr.sex'
              . ' ORDER BY ce.lastname ASC,ce.firstname ASC,sr.sex DESC';
         $context = context_course::instance($course->id);
-echo '<pre>' . print_r($context, true) . '</pre>';
         $results = $DB->get_records_sql($sql, array('sbenquirer',
                                                     $context->id));
         $data = array();
@@ -134,7 +133,7 @@ echo '<pre>' . print_r($context, true) . '</pre>';
                 $totalmales += $record->numrec;
             } else {
                 $data[$record->id][1] = $record->numrec;
-                $totalmales += $record->numrec;
+                $totalfemales += $record->numrec;
             }
         }
         $table->data = $data;
