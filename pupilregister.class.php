@@ -87,23 +87,23 @@ class mod_sliclquestions_pupil_register
     private function display_statistics(&$course, $context, $url)
     {
         global $CFG, $DB;
-        $sort  = optional_param('sort', 'firstname', PARAM_ALPHA);
-        $order = optional_param('order', 'ASC', PARAM_ALPHA);
+        $sort  = optional_param('s', 'lastname', PARAM_ALPHA);
+        $order = optional_param('o', 'ASC', PARAM_ALPHA);
         $firstnamesort = array('s' => 'firstname');
         if ($sort == 'firstname') {
             $firstnamesort['o'] = ($order == 'ASC' ? 'DESC' : 'ASC');
         } else {
             $firstnamesort['o'] = 'ASC';
         }
-        $surnamesort = array('s' => 'surname');
-        if ($sort == 'surname') {
-            $surnamesort['o'] = ($order == 'ASC' ? 'DESC' : 'ASC');
+        $lastnamesort = array('s' => 'lastname');
+        if ($sort == 'lastname') {
+            $lastnamesort['o'] = ($order == 'ASC' ? 'DESC' : 'ASC');
         } else {
-            $surnamesort['o'] = 'ASC';
+            $lastnamesort['o'] = 'ASC';
         }
         $nameheader = '<a href="' . $url->out(true, $firstnamesort) . '">'
                     . get_string('firstname') . '</a> / <a href="'
-                    . $url->out(true, $surnamesort) . '">'
+                    . $url->out(true, $lastnamesort) . '">'
                     . get_string('lastname') . '</a>';
         $table = new html_table();
         $table->head = array($nameheader,
@@ -120,15 +120,13 @@ class mod_sliclquestions_pupil_register
              . ' LEFT OUTER JOIN sbr_sliclquestions_students sr ON ce.id=sr.teacher_id'
              . ' AND sr.survey_id=1 AND sr.deleteflag=0 GROUP BY ce.firstname,ce.lastname,sr.teacher_id,sr.sex'
              . ' ORDER BY ';
-        $s = optional_param('s', 'lastname', PARAM_ALPHA);
-        $o = optional_param('o', 'ASC', PARAM_ALPHA);
-        if ($s == 'firstname') {
+        if ($sort == 'firstname') {
             $sql .= 'ce.firstname '
-                  . ($o == 'ASC' ? 'ASC' : 'DESC')
+                  . ($order == 'ASC' ? 'ASC' : 'DESC')
                   . ',ce.lastname ASC,sr.sex DESC';
         } else {
             $sql .= 'ce.lastname '
-                  . ($o == 'ASC' ? 'ASC' : 'DESC')
+                  . ($order == 'ASC' ? 'ASC' : 'DESC')
                   . ',ce.firstname ASC,sr.sex DESC';
         }
         $context = context_course::instance($course->id);
