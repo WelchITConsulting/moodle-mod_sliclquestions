@@ -120,7 +120,7 @@ class mod_sliclquestions_pupil_register
              . ' LEFT OUTER JOIN sbr_sliclquestions_students sr ON ce.id=sr.teacher_id'
              . ' AND sr.survey_id=1 AND sr.deleteflag=0 GROUP BY ce.firstname,ce.lastname,sr.teacher_id,sr.sex'
              . ' ORDER BY ce.lastname ASC,ce.firstname ASC,sr.sex DESC';
-echo '<p>cid:' . $context->id . '</p>';
+echo '<pre>' . print_r($context, true) . '</pre>';
         $results = $DB->get_records_sql($sql, array('sbenquirer',
                                                     $context->id));
         $data = array();
@@ -138,12 +138,15 @@ echo '<p>cid:' . $context->id . '</p>';
         }
         $table->data = $data;
         $totaltable = new html_table();
-        $totaltable->head   = array(get_string('pupilsregistered', 'sliclquestions'),
+        $totaltable->head   = array('',
                                     get_string('pupilsfemale', 'sliclquestions'),
                                     get_string('pupilsmale', 'sliclquestions'),
                                     get_string('pupilstotal', 'sliclquestions'));
         $totaltable->align  = array('left', 'center', 'center', 'center');
-        $totaltable->data[] = array('', $totalfemales, $totalmales, ($totalfemales + $totalmales));
+        $totaltable->data[] = array(get_string('pupilsregistered', 'sliclquestions'),
+                                    $totalfemales,
+                                    $totalmales,
+                                    ($totalfemales + $totalmales));
         echo html_writer::tag('p', get_string('stats_content', 'sliclquestions'))
            . html_writer::start_div('slicl-registered-pupils')
            . html_writer::table($totaltable)
