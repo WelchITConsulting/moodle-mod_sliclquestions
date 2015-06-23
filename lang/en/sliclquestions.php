@@ -57,7 +57,7 @@ $string['printintro']                               = 'Display survey intro';
 $string['printintroexplain']                        = 'Display survey intro above content?';
 $string['pupilsfemale']                             = 'Female pupils';
 $string['pupilsmale']                               = 'Male pupils';
-$string['pupilsregistered']                         = 'Total registered pupils';
+$string['pupilsregistered']                         = 'Total number of pupils registered';
 $string['pupilstotal']                              = 'Total pupils';
 
 $string['questype']                                 = 'Questionnaire type';

@@ -120,6 +120,7 @@ class mod_sliclquestions_pupil_register
              . ' LEFT OUTER JOIN sbr_sliclquestions_students sr ON ce.id=sr.teacher_id'
              . ' AND sr.survey_id=1 AND sr.deleteflag=0 GROUP BY ce.firstname,ce.lastname,sr.teacher_id,sr.sex'
              . ' ORDER BY ce.lastname ASC,ce.firstname ASC,sr.sex DESC';
+        $context = context_course::instance($course->id);
 echo '<pre>' . print_r($context, true) . '</pre>';
         $results = $DB->get_records_sql($sql, array('sbenquirer',
                                                     $context->id));
