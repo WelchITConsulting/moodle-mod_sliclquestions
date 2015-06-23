@@ -57,6 +57,8 @@ $string['printintro']                               = 'Display survey intro';
 $string['printintroexplain']                        = 'Display survey intro above content?';
 $string['pupilsfemale']                             = 'Female pupils';
 $string['pupilsmale']                               = 'Male pupils';
+$string['pupilsregistered']                         = 'Total registered pupils';
+$string['pupilstotal']                              = 'Total pupils';
 
 $string['questype']                                 = 'Questionnaire type';
 $string['questype_help']                            = '<p>Defines the type of questionnaire to create:</p>'
@@ -86,6 +88,7 @@ $string['sliclquestions:registerpupils']            = 'Create a register of pupi
 $string['sliclquestions:submit']                    = 'Complete and submit a questionnaire';
 $string['sliclquestions:view']                      = 'View a questionnaire';
 $string['sliclquestions:viewstatistics']            = 'View the module statistics';
+$string['stats_content']                            = '<p>This page displays a list of all of the Creative Enquirers registered on the SLiCL project with the number of pupils, both male and female, they have registered on the project.</p>';
 
 $string['tblclass']                                 = 'Class';
 $string['tblcommand']                               = 'Action';

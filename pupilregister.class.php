@@ -120,6 +120,7 @@ class mod_sliclquestions_pupil_register
              . ' LEFT OUTER JOIN sbr_sliclquestions_students sr ON ce.id=sr.teacher_id'
              . ' AND sr.survey_id=1 AND sr.deleteflag=0 GROUP BY ce.firstname,ce.lastname,sr.teacher_id,sr.sex'
              . ' ORDER BY ce.lastname ASC,ce.firstname ASC,sr.sex DESC';
+echo '<p>cid:' . $context->id . '</p>';
         $results = $DB->get_records_sql($sql, array('sbenquirer',
                                                     $context->id));
         $data = array();
@@ -136,25 +137,11 @@ class mod_sliclquestions_pupil_register
             }
         }
         $table->data = $data;
-
-
-
-
-//        require_once($CFG->dirroot . '/enrol/locallib.php');
-//        $manager = new course_enrolment_manager(null, $course, 0, 3);
-//        foreach($manager->get_users($sort, $order) AS $userobj) {
-//            $sql = 'SELECT COUNT(*) FROM {sliclquestions_students} '
-//                 . 'WHERE deleteflag=0 AND sex=? AND teacher_id=?';
-//            $males   = (int)$DB->count_records_sql($sql, array('m', $userobj->id));
-//            $females = (int)$DB->count_records_sql($sql, array('f', $userobj->id));
-//            $table->data[] = array($userobj->firstname . ' ' . $userobj->lastname,
-//                                   $females,
-//                                   $males);
-//            $totalmales   += $males;
-//            $totalfemales += $females;
-//        }
         $totaltable = new html_table();
-        $totaltable->head   = array();
+        $totaltable->head   = array(get_string('pupilsregistered', 'sliclquestions'),
+                                    get_string('pupilsfemale', 'sliclquestions'),
+                                    get_string('pupilsmale', 'sliclquestions'),
+                                    get_string('pupilstotal', 'sliclquestions'));
         $totaltable->align  = array('left', 'center', 'center', 'center');
         $totaltable->data[] = array('', $totalfemales, $totalmales, ($totalfemales + $totalmales));
         echo html_writer::tag('p', get_string('stats_content', 'sliclquestions'))
