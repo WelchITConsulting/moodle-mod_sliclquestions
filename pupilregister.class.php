@@ -131,11 +131,10 @@ class mod_sliclquestions_pupil_register
             if ($record->sex == 'm') {
                 $data[$record->id][2] = $record->numrec;
                 $totalmales += $record->numrec;
-            } else {
+            } elseif ($record->sex == 'f') {
                 $data[$record->id][1] = $record->numrec;
                 $totalfemales += $record->numrec;
             }
-            echo '<pre>' . print_r($data, true) . '</pre>';
         }
         $table->data = $data;
         $totaltable = new html_table();
