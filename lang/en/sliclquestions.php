@@ -34,6 +34,9 @@ $string['displayoptions']                           = 'Display options';
 $string['event_previed']                            = 'SLiCL questionnaire previewed';
 $string['event_previed_desc']                       = 'The user with id \'$d\' previewed the SLiCL questionnaire with course module id \'%d\'.';
 
+$string['female']                                   = 'Female';
+
+$string['male']                                     = 'Male';
 $string['modulename']                               = 'SLiCL Questions';
 $string['modulename_help']                          = 'The SLiCL Questions module allows you to construct surveys using a variety of question types, for the purpose of gathering data for the SLiCL Project.';
 $string['modulenameplural']                         = 'SLiCL Questionnaires';
