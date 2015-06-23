@@ -24,7 +24,7 @@ class mod_sliclquestions_pupil_register
 {
     static private $_instance;
 
-    static public function get_instance($course, $context, $survey, $url, $params)
+    static public function get_instance(&$course, $context, &$survey, $url, $params)
     {
         if (empty(self::$_instance)) {
             self::$_instance = new mod_sliclquestions_pupil_register($course, $context, $survey, $url, $params);
@@ -32,12 +32,12 @@ class mod_sliclquestions_pupil_register
         return self::$_instance;
     }
 
-    public function __construct($course, $context, $survey, $url, $params)
+    public function __construct(&$course, $context, &$survey, $url, $params)
     {
         if (!empty($params['act'])) {
             $this->perform_action($survey->id, $url, $params);
         } elseif (has_capability('mod/sliclquestions:viewstatistics', $context)) {
-            $this->display_statistics($course, $url);
+            $this->display_statistics($course, $context, $url);
         } else {
             $this->display($survey->id, $url, $params);
         }
@@ -84,7 +84,7 @@ class mod_sliclquestions_pupil_register
         }
     }
 
-    private function display_statistics(&$course, $url)
+    private function display_statistics(&$course, $context, $url)
     {
         global $CFG;
         $sort  = optional_param('sort', 'firstname', PARAM_ALPHA);
@@ -112,7 +112,7 @@ class mod_sliclquestions_pupil_register
         $table->align = array('left', 'center', 'center');
         $totalmales = 0;
         $totalfemales = 0;
-        $context = context_course::instance($course->cm->id);
+//        $context = context_course::instance($course->cm->id);
         $sql = 'SELECT DISTINCT ce.id, ce.firstname, ce.lastname, sr.sex, count(*) AS numrec'
              . ' FROM (SELECT u.id, u.firstname, u.lastname FROM sbr_user u, sbr_role_assignments ra'
              . ' sbr_role r WHERE u.id = ra.userid AND ra.roleid = r.id'
