@@ -84,7 +84,7 @@ class mod_sliclquestions_pupil_register
         }
     }
 
-    private function display_statistics($course, $url)
+    private function display_statistics(&$course, $url)
     {
         global $CFG;
         $sort  = optional_param('sort', 'firstname', PARAM_ALPHA);
@@ -112,43 +112,47 @@ class mod_sliclquestions_pupil_register
         $table->align = array('left', 'center', 'center');
         $totalmales = 0;
         $totalfemales = 0;
-//        $sql = 'SELECT u.firstname,u.lastname,r.teacher_id,r.sex,count(*) AS numrec'
-//             . ' FROM {sliclregister_pupils} r, {user} u'
-//             . ' WHERE r.teacher_id=u.id AND r.survey_id=? AND r.deleteflag=0'
-//             . ' GROUP BY u.firstname,u.lastname,r.teacher_id,r.sex'
-//             . ' ORDER BY u.lastname ASC,u.firstname ASC,r.sex DESC';
-//        $results = $DB->get_records_sql($sql, array($course->id));
-//        $data = array();
-//        foreach($results as $record) {
-//            if (!array_key_exists($record->teacher_id, $data)) {
-//                $data[$record->teacher_id] = array($record->firstname . ' ' . $record->lastname);
-//            }
-//            if ($record->sex == 'f') {
-//                $data[$record->teacher_id][]
-//                $totalfemales += $record->numrec;
-//            }
-//            $data[$record->teacher_id] = array(,
-//                                               ( ? $record->numrec : 0),
-//                                               ($record->sex == 'm' ? $record->numrec : 0));
-//        }
-
-
-
-
-
-        require_once($CFG->dirroot . '/enrol/locallib.php');
-        $manager = new course_enrolment_manager(null, $course, 0, 3);
-        foreach($manager->get_users($sort, $order) AS $userobj) {
-            $sql = 'SELECT COUNT(*) FROM {sliclquestions_students} '
-                 . 'WHERE deleteflag=0 AND sex=? AND teacher_id=?';
-            $males   = (int)$DB->count_records_sql($sql, array('m', $userobj->id));
-            $females = (int)$DB->count_records_sql($sql, array('f', $userobj->id));
-            $table->data[] = array($userobj->firstname . ' ' . $userobj->lastname,
-                                   $females,
-                                   $males);
-            $totalmales   += $males;
-            $totalfemales += $females;
+        $context = context_course::instance($course->cm->id);
+        $sql = 'SELECT DISTINCT ce.id, ce.firstname, ce.lastname, sr.sex, count(*) AS numrec'
+             . ' FROM (SELECT u.id, u.firstname, u.lastname FROM sbr_user u, sbr_role_assignments ra'
+             . ' sbr_role r WHERE u.id = ra.userid AND ra.roleid = r.id'
+             . ' AND r.shortname=? AND ra.contextid=?) AS ce '
+             . ' LEFT OUTER JOIN sbr_sliclquestions_students sr ON ce.id=sr.teacher_id'
+             . ' AND sr.survey_id=1 AND sr.deleteflag=0 GROUP BY ce.firstname,ce.lastname,sr.teacher_id,sr.sex'
+             . ' ORDER BY ce.lastname ASC,ce.firstname ASC,sr.sex DESC';
+        $results = $DB->get_records_sql($sql, array('sbenquirer',
+                                                    $context->id));
+        $data = array();
+        foreach($results as $record) {
+            if (!array_key_exists($record->teacher_id, $data)) {
+                $data[$record->teacher_id] = array($record->firstname . ' ' . $record->lastname, 0, 0);
+            }
+            if ($record->sex == 'm') {
+                $data[$record->teacher_id][2] = $record->numrec;
+                $totalmales += $record->numrec;
+            } else {
+                $data[$record->teacher_id][1] = $record->numrec;
+                $totalemales += $record->numrec;
+            }
         }
+        $table->data = $data;
+
+
+
+
+//        require_once($CFG->dirroot . '/enrol/locallib.php');
+//        $manager = new course_enrolment_manager(null, $course, 0, 3);
+//        foreach($manager->get_users($sort, $order) AS $userobj) {
+//            $sql = 'SELECT COUNT(*) FROM {sliclquestions_students} '
+//                 . 'WHERE deleteflag=0 AND sex=? AND teacher_id=?';
+//            $males   = (int)$DB->count_records_sql($sql, array('m', $userobj->id));
+//            $females = (int)$DB->count_records_sql($sql, array('f', $userobj->id));
+//            $table->data[] = array($userobj->firstname . ' ' . $userobj->lastname,
+//                                   $females,
+//                                   $males);
+//            $totalmales   += $males;
+//            $totalfemales += $females;
+//        }
         $totaltable = new html_table();
         $totaltable->head   = array();
         $totaltable->align  = array('left', 'center', 'center', 'center');
