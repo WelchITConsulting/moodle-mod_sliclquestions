@@ -114,7 +114,7 @@ class mod_sliclquestions_pupil_register
         $totalfemales = 0;
 //        $context = context_course::instance($course->cm->id);
         $sql = 'SELECT DISTINCT ce.id, ce.firstname, ce.lastname, sr.sex, count(*) AS numrec'
-             . ' FROM (SELECT u.id, u.firstname, u.lastname FROM sbr_user u, sbr_role_assignments ra'
+             . ' FROM (SELECT u.id, u.firstname, u.lastname FROM sbr_user u, sbr_role_assignments ra,'
              . ' sbr_role r WHERE u.id = ra.userid AND ra.roleid = r.id'
              . ' AND r.shortname=? AND ra.contextid=?) AS ce '
              . ' LEFT OUTER JOIN sbr_sliclquestions_students sr ON ce.id=sr.teacher_id'
