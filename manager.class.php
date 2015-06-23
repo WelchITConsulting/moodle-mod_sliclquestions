@@ -36,7 +36,7 @@ class mod_sliclquestions_management_console
 
     public function __construct($course, $context, $survey, $url, $params)
     {
-        echo "Management Console";
+//        echo "Management Console";
     }
 
     private function display_statistics()
