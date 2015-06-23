@@ -113,7 +113,7 @@ class mod_sliclquestions_pupil_register
         $totalmales = 0;
         $totalfemales = 0;
 //        $context = context_course::instance($course->cm->id);
-        $sql = 'SELECT DISTINCT CONCAT(ce.id,r.sex) AS ind, ce.id, ce.firstname, ce.lastname, sr.sex, count(*) AS numrec'
+        $sql = 'SELECT DISTINCT CONCAT(ce.id,sr.sex) AS ind, ce.id, ce.firstname, ce.lastname, sr.sex, count(*) AS numrec'
              . ' FROM (SELECT u.id, u.firstname, u.lastname FROM sbr_user u, sbr_role_assignments ra,'
              . ' sbr_role r WHERE u.id = ra.userid AND ra.roleid = r.id'
              . ' AND r.shortname=? AND ra.contextid=?) AS ce '
