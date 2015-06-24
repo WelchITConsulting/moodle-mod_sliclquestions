@@ -31,7 +31,6 @@ class sliclquestions
         }
         if (is_object($questionnaire)) {
             $properties = get_object_vars($questionnaire);
-die('<pre>' . print_r($questionnaire, true) . '</pre>');
             foreach ($properties as $prop => $val) {
                 $this->$prop = $val;
             }
