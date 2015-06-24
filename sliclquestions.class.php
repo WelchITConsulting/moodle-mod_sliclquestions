@@ -50,11 +50,31 @@ class sliclquestions
         }
     }
 
-    public function add_questions($id = false)
+    public function add_questions($id = false, $section = false)
     {
         global $DB;
 
-
+        if (!isset($this->questions)) {
+            $this->questions = array();
+            $this->questionsbysec = array();
+        }
+        $select = 'survey_id = ' . $id . ' AND deleted != \'y\'';
+        if ($records = $DB->get_records_select('sliclquestions_question', $select, null, 'position')) {
+            $sec = 1;
+            $isbreak = false;
+            foreach($records as $record) {
+                $this->questions[$record->id] = new sliclquestions_question(0, $record, $this->context);
+                if ($record->type_id == SLICLQUESPAGEBREAK) {
+                    $this->questionsbysec[$sec][$record->id] = &$this->questions[$record->id];
+                    $isbreak = false;
+                } else {
+                    if (($record->position != 1) && ($isbreak == false)) {
+                        $sec++;
+                        $isbreak = true;
+                    }
+                }
+            }
+        }
     }
 
     public function view()

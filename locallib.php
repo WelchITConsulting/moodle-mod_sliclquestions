@@ -73,10 +73,8 @@ function sliclquestions_search_form($course, $search)
          . '" /></fieldset></form></div>';
 }
 
-function sliclquestions_array_remove_by_key($arr,$key)
-{
-    return array_values(array_diff_key($arr,array($key)));
-}
+
+
 
 
 
