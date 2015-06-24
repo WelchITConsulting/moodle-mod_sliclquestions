@@ -128,7 +128,6 @@ class mod_sliclquestions_pupil_register
                   . ',ce.firstname ASC,sr.sex DESC';
         }
         $context = context_course::instance($course->id);
-echo '<pre>' . print_r($context, true) . '</pre>';
         $results = $DB->get_records_sql($sql, array('sbenquirer',
                                                     $context->id));
         $data = array();
