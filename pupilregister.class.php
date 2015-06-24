@@ -55,7 +55,6 @@ class mod_sliclquestions_pupil_register
 
         if ($params['act'] == 'edit') {
             $pid = required_param('pid', PARAM_INT);
-echo '<pre>pid:' . $pid . '<br>' . print_r($data, true) . '</pre>';
             $data = $DB->get_record('sliclquestions_students', array('id' => $pid));
             $data->pid = $pid;
             $data->id  = $params['id'];
@@ -65,24 +64,21 @@ echo '<pre>pid:' . $pid . '<br>' . print_r($data, true) . '</pre>';
             $DB->set_field('sliclquestions_students', 'deleteflag', 1, array('id' => $pid));
             redirect($url);
         }
-echo '<pre>' . print_r($data, true) . '</pre>';
         if ($mform->is_cancelled()) {
             $p = array_remove_by_key($params, 'act');
             redirect($url);
-        } elseif ($data = $mform->get_data()) {
-            $data->survey_id = $survey->id;
-            $data->teacher_id = $USER->id;
-            $data->timemodified = time();
+        } elseif ($mdata = $mform->get_data()) {
+            $mdata->survey_id = $survey->id;
+            $mdata->teacher_id = $USER->id;
+            $mdata->timemodified = time();
             if ($params['act'] == 'new') {
-                $data->timecreated = $data->timemodified;
-                $DB->insert_record('sliclquestions_students', $data);
+                $mdata->timecreated = $data->timemodified;
+                $DB->insert_record('sliclquestions_students', $mdata);
             } else {
-                $data->id = $data->pid;
-                $DB->update_record('sliclquestions_students', $data);
+                $mdata->id = $data->pid;
+                $DB->update_record('sliclquestions_students', $mdata);
             }
         } else {
-echo '<pre>Display Form<br>' . print_r($data, true) . '</pre>';
-            die('<pre>' . print_r($data, true) . '</pre>');
             $mform->set_data($data);
             $mform->display();
         }
