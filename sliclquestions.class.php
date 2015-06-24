@@ -46,7 +46,7 @@ class sliclquestions
             $this->add_questions($this->id);
         }
         if (!empty($this->cm->id)) {
-            $this->capabilities = sliclquestions_load_capabilities($this->cm->id);
+            $this->capabilities = $this->load_capabilities($this->cm->id);
         }
     }
 
@@ -278,6 +278,38 @@ class sliclquestions
     private function has_required($section = 0)
     {
 
+    }
+
+    private function load_capabilities($cmid)
+    {
+        static $cb;
+        if (isset($cb)) {
+            return $cb;
+        }
+        if (!$ctx = context_module::instance($cmid)) {
+            print_error('badcontext');
+        }
+
+        $cb = new stdClass();
+        $cb->addinstance            = has_capability('mod/sliclquestions:addinstance', $ctx);
+        $cb->view                   = has_capability('mod/sliclquestions:view', $ctx);
+        $cb->submit                 = has_capability('mod/sliclquestions:submit', $ctx);
+        $cb->printblank             = has_capability('mod/sliclquestions:printblank', $ctx);
+        $cb->preview                = has_capability('mod/sliclquestions:preview', $ctx);
+        $cb->manage                 = has_capability('mod/sliclquestions:manage', $ctx);
+        $cb->assesspupils           = has_capability('mod/sliclquestions:assesspupils', $ctx);
+        $cb->registerpupils         = has_capability('mod/sliclquestions:registerpupils', $ctx);
+        $cb->viewstatistics         = has_capability('mod/sliclquestions:viewstatistics', $ctx);
+//        $cb->downloadresponses      = has_capability('mod/sliclquestions:downloadresponses', $ctx);
+//        $cb->deleteresponses        = has_capability('mod/sliclquestions:deleteresponses', $ctx);
+//        $cb->editquestions          = has_capability('mod/sliclquestions:editquestions', $ctx);
+//        $cb->createtemplate         = has_capability('mod/sliclquestions:createtemplates', $ctx);
+//        $cb->createpublic           = has_capability('mod/sliclquestions:createpublic', $ctx);
+//        $cb->readownresponses       = has_capability('mod/sliclquestions:readownresponses', $ctx);
+//        $cb->readallresponses       = has_capability('mod/sliclquestions:readallresponses', $ctx);
+//        $cb->readallresponseanytime = has_capability('mod/sliclquestions:readallresponseanytime', $ctx);
+//        $cb->message                = has_capability('mod/sliclquestions:message', $ctx);
+        return $cb;
     }
 
     private function survey_render(&$formdata, $section = 1, $message = '')
