@@ -55,10 +55,12 @@ class mod_sliclquestions_pupil_register
 
         if ($params['act'] == 'edit') {
             $pid = required_param('pid', PARAM_INT);
+echo '<pre>pid:' . $pid . '<br>' . print_r($data, true) . '</pre>';
             $data = $DB->get_record('sliclquestions_students', array('id' => $pid));
             $data->pid = $pid;
             $data->id  = $params['id'];
             $data->act = $params['act'];
+echo '<pre>' . '<br>' . print_r($data, true) . '</pre>';
         } elseif ($params['act'] == 'delete') {
             $pid = required_param('pid', PARAM_INT);
             $DB->set_field('sliclquestions_students', 'deleteflag', 1, array('id' => $pid));
