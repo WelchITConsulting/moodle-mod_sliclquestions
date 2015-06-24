@@ -60,12 +60,12 @@ echo '<pre>pid:' . $pid . '<br>' . print_r($data, true) . '</pre>';
             $data->pid = $pid;
             $data->id  = $params['id'];
             $data->act = $params['act'];
-echo '<pre>' . '<br>' . print_r($data, true) . '</pre>';
         } elseif ($params['act'] == 'delete') {
             $pid = required_param('pid', PARAM_INT);
             $DB->set_field('sliclquestions_students', 'deleteflag', 1, array('id' => $pid));
             redirect($url);
         }
+echo '<pre>' . print_r($data, true) . '</pre>';
         if ($mform->is_cancelled()) {
             $p = array_remove_by_key($params, 'act');
             redirect($url);
