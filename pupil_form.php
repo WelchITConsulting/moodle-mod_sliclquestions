@@ -23,7 +23,7 @@
 require_once($CFG->libdir . '/formslib.php');
 require_once($CFG->dirroot . '/mod/sliclquestions/locallib.php');
 
-class mod_sliclquestions_pupil_form extends moodleform_mod
+class mod_sliclquestions_pupil_form extends moodleform
 {
     protected function definition()
     {
