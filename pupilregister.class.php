@@ -79,6 +79,7 @@ class mod_sliclquestions_pupil_register
                 $DB->update_record('sliclquestions_students', $data);
             }
         } else {
+            die('<pre>' . print_r($data, true) . '</pre>');
             $mform->set_data($data);
             $mform->display();
         }
