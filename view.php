@@ -21,6 +21,7 @@
  */
 
 require_once("../../config.php");
+require_once($CFG->dirroot . '/mod/sliclquestions/sliclquestions.class.php');
 require_once($CFG->dirroot . '/mod/sliclquestions/locallib.php');
 
 $id  = optional_param('id', null, PARAM_INT);       // Course Module ID
@@ -59,6 +60,9 @@ $context = context_module::instance($cm->id);
 $PAGE->set_context($context);
 $PAGE->set_cm($cm);
 
+// Create a SLiCL Questions class instance
+$sliclquestions = new sliclquestions($course, $cm, 0, $questionnaire, false);
+
 // Define the page URL
 $params = array();
 if ($id) {
@@ -68,6 +72,9 @@ if ($id) {
 }
 $url = new moodle_url('/mod/sliclquestions/view.php', $params);
 $PAGE->set_url($url);
+if ($act) {
+    $params['act'] = $act;
+}
 
 // Print site header
 $PAGE->set_title(format_string($sliclquestions->name));
@@ -144,7 +151,7 @@ switch($sliclquestions->questype) {
 
             // Load the pupil registration manager
             require_once($CFG->dirroot . '/mod/sliclquestions/pupilassessment.class.php');
-            mod_sliclquestions_pupil_assessment::get_instance($course, $context, $sliclquestions, $url, $params);
+            mod_sliclquestions_pupil_assessment::get_instance($sliclquestions, $context, $url, $params);
 
         } else {
 

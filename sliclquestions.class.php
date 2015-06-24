@@ -22,7 +22,7 @@
 
 class sliclquestions
 {
-    public function __construct(&$course, &$cm, $id = 0, $questionnaire = null, $addquestions = null)
+    public function __construct(&$course, &$cm, $id = 0, &$questionnaire = null, $addquestions = null)
     {
         global $DB;
 

@@ -21,10 +21,12 @@
  */
 
 $string['addpupil']                                 = 'Add pupil';
+$string['answerquestions']                          = 'Answer the questions...';
 
 $string['choosequestiontype']                       = 'Choose type of survey';
 $string['closedate']                                = 'Use Close Date';
 $string['closeson']                                 = 'Questionnaire closes on {$a}';
+$string['closed']                                   = 'The questionnaire was closed on {$a}. Thanks.';
 $string['closedate_help']                           = 'You can specify a date to close the questionnaire here. Check the check box, and select the date and time you want. Users will not be able to fill out the questionnaire after that date. If this is not selected, it will never be closed.';
 $string['content']                                  = 'Content<br>(displayed at the top of the questionnaire)';
 $string['contentheader']                            = 'Page content';
@@ -42,7 +44,9 @@ $string['modulename_help']                          = 'The SLiCL Questions modul
 $string['modulenameplural']                         = 'SLiCL Questionnaires';
 
 $string['name']                                     = 'Questionnaire Name';
+$string['noneinuse']                                = 'This questionnaire does not contain any questions.';
 $string['nonzeroerror']                             = 'You must select the type of survey to create';
+$string['notopen']                                  = 'This questionnaire will not open until {$a}.';
 $string['noviewpermission']                         = 'You do not have permission to view these questionnaires.';
 
 $string['opendate']                                 = 'Use Open Date';
@@ -68,6 +72,8 @@ $string['questype_help']                            = '<p>Defines the type of qu
 $string['questype_pupilassess']                     = 'Pupil assessment';
 $string['questype_pupilregister']                   = 'Pupil register';
 $string['questype_survey']                          = 'Standard survey';
+
+$string['resumesurvey']                             = 'Resume questionnaire';
 
 $string['sliclquestions:addinstance']               = 'Add a new SLiCL questionnaire';
 $string['sliclquestions:assesspupils']              = 'Complete pupil assessment questionnaires';
@@ -112,7 +118,6 @@ $string['tblyear']                                  = 'School Year';
 //$string['alreadyfilled']                            = 'You have already filled out this questionnaire for us{$a}. Thank you.';
 //$string['andaveragevalues']                         = 'and average values';
 //$string['anonymous']                                = 'Anonymous';
-//$string['answerquestions']                          = 'Answer the questions...';
 //$string['attempted']                                = 'This questionnaire has been submitted.';
 //$string['attemptstillinprogress']                   = 'In progress. Saved on:';
 //$string['autonumbering']                            = 'Auto numbering';
@@ -150,7 +155,6 @@ $string['tblyear']                                  = 'School Year';
 //$string['checknotstarted']                          = 'Select not started';
 //$string['checkstarted']                             = 'Select started';
 //$string['clicktoswitch']                            = '(click to switch)';
-//$string['closed']                                   = 'The questionnaire was closed on {$a}. Thanks.';
 //$string['completionsubmit']                         = 'Student must submit this questionnaire to complete it';
 //$string['confalts']                                 = '- OR - <br />Confirmation page';
 //$string['configusergraph']                          = 'Display charts for "Personality Test" feedback';
@@ -318,7 +322,6 @@ $string['tblyear']                                  = 'School Year';
 //$string['noduplicates']                             = 'No duplicate choices';
 //$string['noduplicateschoiceserror']                 = 'You must enter at least 2 Possible answers for the "No duplicate choices" option!';
 //$string['notenoughscaleitems']                      = 'You must enter a minimum value of 2 scale items!';
-//$string['noneinuse']                                = 'This questionnaire does not contain any questions.';
 //$string['non_respondents']                          = 'Users who have not yet submitted their responses to this questionnaire';
 //$string['nopublicsurveys']                          = 'No public questionnaires.';
 //$string['noresponsedata']                           = 'No responses for this question.';
@@ -330,7 +333,6 @@ $string['tblyear']                                  = 'School Year';
 //$string['notavail']                                 = 'This questionnaire is no longer available. Ask your teacher to delete it.';
 //$string['noteligible']                              = 'You are not eligible to take this questionnaire.';
 //$string['notemplatesurveys']                        = 'No template questionnaires.';
-//$string['notopen']                                  = 'This questionnaire will not open until {$a}.';
 //$string['notrequired']                              = 'Response is not required';
 //$string['not_started']                              = 'not started';
 //$string['nousersselected']                          = 'No users selected';
@@ -463,7 +465,6 @@ $string['tblyear']                                  = 'School Year';
 //$string['resume']                                   = 'Save/Resume answers';
 //$string['resume_help']                              = 'Setting this option allows users to save their answers to a questionnaire before submitting them. Users can leave the questionnaire unfinished and resume from the save point at a later date.';
 //$string['resume_link']                              = 'mod/sliclquestions/mod#Save/Resume_answers';
-//$string['resumesurvey']                             = 'Resume questionnaire';
 //$string['return']                                   = 'Return';
 //
 //$string['save']                                     = 'Save';
