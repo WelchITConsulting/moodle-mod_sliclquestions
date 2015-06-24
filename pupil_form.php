@@ -29,11 +29,11 @@ class mod_sliclquestions_pupil_form extends moodleform
     {
         $mform =& $this->_form;
 
-        $mform->addElement('text', 'forename', get_string('forename', 'sliclquestions'), array('size' => 64));
+        $mform->addElement('text', 'forename', get_string('firstname'), array('size' => 64));
         $mform->setType('forename', PARAM_TEXT);
         $mform->addRule('forename', null, 'required', null, 'client');
 
-        $mform->addElement('text', 'surname', get_string('surname', 'sliclquestions'), array('size' => 64));
+        $mform->addElement('text', 'surname', get_string('lastname'), array('size' => 64));
         $mform->setType('surname', PARAM_TEXT);
         $mform->addRule('surname', null, 'required', null, 'client');
 
