@@ -81,6 +81,7 @@ echo '<pre>' . print_r($data, true) . '</pre>';
                 $DB->update_record('sliclquestions_students', $data);
             }
         } else {
+echo '<pre>Display Form<br>' . print_r($data, true) . '</pre>';
             die('<pre>' . print_r($data, true) . '</pre>');
             $mform->set_data($data);
             $mform->display();
