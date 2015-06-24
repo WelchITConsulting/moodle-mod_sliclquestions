@@ -61,7 +61,7 @@ $PAGE->set_context($context);
 $PAGE->set_cm($cm);
 
 // Create a SLiCL Questions class instance
-$sliclquestions = new sliclquestions($course, $cm, 0, $questionnaire, false);
+$sliclquestions = new sliclquestions($course, $cm, 0, $sliclquestions);
 
 // Define the page URL
 $params = array();

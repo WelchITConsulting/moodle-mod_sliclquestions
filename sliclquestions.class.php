@@ -29,7 +29,6 @@ class sliclquestions
         if ($id) {
             $questionnaire = $DB->get_record('sliclquestions', array('id' => $id));
         }
-die('<pre>' . print_r($questionnaire, true) . '</pre>');
         if (is_object($questionnaire)) {
             $properties = get_object_vars($questionnaire);
 die('<pre>' . print_r($questionnaire, true) . '</pre>');
