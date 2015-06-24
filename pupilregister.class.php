@@ -111,7 +111,6 @@ class mod_sliclquestions_pupil_register
         $table->align = array('left', 'center', 'center');
         $totalmales = 0;
         $totalfemales = 0;
-//        $context = context_course::instance($course->cm->id);
         $sql = 'SELECT DISTINCT CONCAT(ce.id,sr.sex) AS ind, ce.id, ce.firstname, ce.lastname, sr.sex, count(*) AS numrec'
              . ' FROM (SELECT u.id, u.firstname, u.lastname FROM {user} u, {role_assignments} ra,'
              . ' {role} r WHERE u.id = ra.userid AND ra.roleid = r.id'
@@ -129,6 +128,7 @@ class mod_sliclquestions_pupil_register
                   . ',ce.firstname ASC,sr.sex DESC';
         }
         $context = context_course::instance($course->id);
+echo '<pre>' . print_r($context, true) . '</pre>';
         $results = $DB->get_records_sql($sql, array('sbenquirer',
                                                     $context->id));
         $data = array();

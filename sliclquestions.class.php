@@ -50,7 +50,7 @@ class sliclquestions
         }
     }
 
-    public function add_questions($id = false, $section = false)
+    public function add_questions($id)
     {
         global $DB;
 
