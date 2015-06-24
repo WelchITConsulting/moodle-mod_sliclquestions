@@ -25,7 +25,7 @@ $string['answerquestions']                          = 'Answer the questions...';
 
 $string['choosequestiontype']                       = 'Choose type of survey';
 $string['classid']                                  = 'Class ID';
-$string['class_id_help']                            = 'If you are entering data for more than one class, you can use this to differentiate between the different classes.';
+$string['classid_help']                             = 'If you are entering data for more than one class, you can use this to differentiate between the different classes.';
 $string['closedate']                                = 'Use Close Date';
 $string['closeson']                                 = 'Questionnaire closes on {$a}';
 $string['closed']                                   = 'The questionnaire was closed on {$a}. Thanks.';
