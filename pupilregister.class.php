@@ -66,7 +66,7 @@ class mod_sliclquestions_pupil_register
         }
         if ($mform->is_cancelled()) {
             $p = array_remove_by_key($params, 'act');
-            redirect($url);
+            redirect($url, $p);
         } elseif ($mdata = $mform->get_data()) {
             $mdata->survey_id = $survey->id;
             $mdata->teacher_id = $USER->id;
