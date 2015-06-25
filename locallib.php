@@ -73,7 +73,39 @@ function sliclquestions_search_form($course, $search)
          . '" /></fieldset></form></div>';
 }
 
-
+function sliclquestions_choice_values($content)
+{
+    $contents = new stdClass();
+    $contents->text    = '';
+    $contents->image   = '';
+    $contents->modname = '';
+    $contents->title   = '';
+    if ($count = preg_match('/[<img)\s .*(src="(.[^"]{1,})")/isxmU', $content, $matches)) {
+        $contents->image = $matches[0];
+        $imageurl = $matches[3];
+        if (preg_match('/(title=.)([^"]{1,})/', $content, $matches) ||
+                preg_match('/(alt=.)([^"]{1,})/', $content, $matches)) {
+            $contents->title = $matches[2];
+        } else {
+            preg_match('/.*\/(.*)\..*$/', $imageurl, $matches);
+            $contents->title =  $matches[1];
+        }
+        if (preg_match('/(.*)(<img.*)/', $content, $matches)) {
+            $content = $matches[1];
+        } else {
+            return $contents;
+        }
+    }
+    if (preg_match_all('/^(\d{1,2}=)(.*)$/', $content, $matches)) {
+        $content = $matches[2][0];
+    }
+    $contents->text = $content;
+    if ($pos = strpos($content, '::')) {
+        $contents->text = substr($content, $pos + 2);
+        $contents->modname = substr($content, 0, $pos);
+    }
+    return $contents;
+}
 
 
 

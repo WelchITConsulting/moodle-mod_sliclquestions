@@ -146,7 +146,7 @@ class sliclquestions
                 $params = array('context'       => $context,
                                 'courseid'      => $this->course->id,
                                 'relateduserid' => $USER->id,
-                                'anonymous'     => ($this->respondenttype == 'anonymous'),
+                                'anonymous'     => false,
                                 'other'         => array('sliclquestionsid' => $this->id));
                 $event = \mod_sliclquestions\event\attempt_submitted::create($params);
                 $event->trigger();
@@ -424,12 +424,95 @@ class sliclquestions
 
     private function print_survey_start($message, $section, $numsections, $hasrequired, $rid = '', $blankquestionnaire = false)
     {
-
+        global $CFG, $DB, $OUTPUT;
+        require_once($CFG->libdir . '/filelib.php');
+        $userid = '';
+        $resp = '';
+        $groupname = '';
+        $currentgroupid = 0;
+        $timesubmitted = '';
+        if ($rid) {
+            $courseid = $this->course->id;
+            if ($resp = $db->get_record('sliclquestions_response', array('id' => $rid))) {
+                $userid = $resp->userid;
+                if ($this->cm->groupmode > 0) {
+                    if ($groups = groups_get_all_groups($courseid, $resp->id)) {
+                        if (count($groups) == 1) {
+                            $group = current($groups);
+                            $currentgroupid = $group->id;
+                            $groupname = ' (' . get_string('group') . ': ' . $group->name . ')';
+                        } else {
+                            $groupname = ' (' . get_string('groups') . ': ';
+                            foreach ($groups as $group) {
+                                $groupname .= $group->name . ', ';
+                            }
+                            $groupname = substr($groupname, 0, strlen($groupname) = 2) . ')';
+                        }
+                    } else {
+                        $groupname = ' (' . get_string('groupnonmembers') . ')';
+                    }
+                }
+                $event = \mod_sliclquestions\event\response_viewed::create(array('objectid'      => $this->id,
+                                                                                 'context'       => $this->context,
+                                                                                 'courseid'      => $this->course->id,
+                                                                                 'relateduserid' => $userid,
+                                                                                 'other'         => array('action'         => 'vresp',
+                                                                                                          'currentgroupid' => $currentgroupid,
+                                                                                                          'rid'            => $rid)));
+                $event->trigger();
+            }
+        }
+        $ruser = '';
+        if ($resp && !$blankquestionnaire) {
+            if ($userid) {
+                if ($user = $DB->get_record('user', array('id' => $userid))) {
+                    $ruser = fullname($user);
+                }
+            }
+            if ($resp->submitted) {
+                $timesubmitted = '&nbsp;' . get_string('submitted', 'sliclquestions') . '&nbsp;' . userdate($resp->submitted);
+            }
+        }
+        if ($ruser) {
+            echo get_string('respondent', 'sliclquestions') . ': <strong>'
+               . $ruser . '</strong>' . $groupname . $timesubmitted
+               . html_writer::tag('h3', format_text($this->name, FORMAT_HTML), array('class' => 'surveyTitle'));
+            if ($this->capabilities->printblank && $blankquestionnaire && ($section == 1)) {
+                $linkname = '&nbsp;' . get_string('printblank', 'sliclquestions');
+                $title = get_string('printblanktooltip', 'sliclquestions');
+                $link =  new moodle_url('/mod/sliclquestions/print.php', array('id'  => $this->id,
+                                                                               'rid' => 0,
+                                                                               'courseid' => $this->course->id,
+                                                                               'sec'      => 1));
+                $options = array('menubar'    => true,
+                                 'location'   => false,
+                                 'scrollbars' => true,
+                                 'resizable'  => true,
+                                 'height'     => 600,
+                                 'width'      => 800,
+                                 'title'      => $title);
+                $name = 'popup';
+                $action = new popup_action('click', $link, $name, $options);
+                $class  = 'floatprinticon';
+                echo $OUTPUT->action_link($link, $linkname, $action,
+                                          array('class' => $class,
+                                                'title' => $title),
+                                          new pix_icon('t/print', $title));
+            }
+            if ($message) {
+                echo html_writer::div($message, 'notifyproblem');
+            }
+        }
     }
 
     private function print_survey_end($section, $numsections)
     {
-
+        if ($numsections > 1) {
+            $a = new stdClass();
+            $a->page = $section;
+            $a->totpages = $numsections;
+            echo html_writer::div(get_string('pageof', 'sliclquestions', $a) . '&nbsp;&nbsp;');
+        }
     }
 
     private function response_check_format($section, $formdata, $checkmissing = true, $checkwrongformat = true)

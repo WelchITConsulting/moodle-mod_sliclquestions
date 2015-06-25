@@ -43,7 +43,7 @@ function xmldb_sliclquestions_upgrade($oldversion=0)
         $field = new xmldb_field('username');
         $dbman->drop_field($table, $field);
 
-        upgrade_mod_savepoint(true, '2015010600', 'sliclquestions');
+        upgrade_mod_savepoint(true, '2015062500', 'sliclquestions');
     }
 
     return true;
