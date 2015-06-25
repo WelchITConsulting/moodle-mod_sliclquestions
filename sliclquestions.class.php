@@ -394,7 +394,6 @@ class sliclquestions
         $cb->manage                 = has_capability('mod/sliclquestions:manage', $ctx);
         $cb->assesspupils           = has_capability('mod/sliclquestions:assesspupils', $ctx);
         $cb->registerpupils         = has_capability('mod/sliclquestions:registerpupils', $ctx);
-        $cb->viewhiddenactivities   = has_capability('mod/course:viewhiddenactivities', $ctx);
         $cb->viewstatistics         = has_capability('mod/sliclquestions:viewstatistics', $ctx);
 //        $cb->downloadresponses      = has_capability('mod/sliclquestions:downloadresponses', $ctx);
 //        $cb->deleteresponses        = has_capability('mod/sliclquestions:deleteresponses', $ctx);
@@ -405,6 +404,9 @@ class sliclquestions
 //        $cb->readallresponses       = has_capability('mod/sliclquestions:readallresponses', $ctx);
 //        $cb->readallresponseanytime = has_capability('mod/sliclquestions:readallresponseanytime', $ctx);
 //        $cb->message                = has_capability('mod/sliclquestions:message', $ctx);
+
+        $cb->viewhiddenactivities   = has_capability('moodle/course:viewhiddenactivities', $ctx);
+
         return $cb;
     }
 
