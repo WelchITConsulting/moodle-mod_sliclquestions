@@ -536,7 +536,7 @@ class sliclquestions_question
             echo html_writer::tag('td',
                                  $str . $val,
                                  array('style' => 'width:' . $colwidth . ';text-align:center',
-                                       'class' => 'smalltext'))
+                                       'class' => 'smalltext'));
         }
         if (!$isna) {
             echo html_writer::ta('td',
