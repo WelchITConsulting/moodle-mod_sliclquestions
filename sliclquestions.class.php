@@ -446,7 +446,7 @@ class sliclquestions
                             foreach ($groups as $group) {
                                 $groupname .= $group->name . ', ';
                             }
-                            $groupname = substr($groupname, 0, strlen($groupname) = 2) . ')';
+                            $groupname = substr($groupname, 0, strlen($groupname) - 2) . ')';
                         }
                     } else {
                         $groupname = ' (' . get_string('groupnonmembers') . ')';
