@@ -26,11 +26,25 @@ function xmldb_sliclquestions_upgrade($oldversion=0)
 
     $dbman = $DB->get_manager();
 
-//    if ($oldversion < 2015010600) {
+    if ($oldversion < 2015062500) {
 
+        $table = new xmldb_table('sliclquestions_response');
 
-//        upgrade_mod_savepoint(true, '2015010600', 'sliclquestions');
-//    }
+        $field = new xmldb_field('userid');
+        $field->set_attributes(XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED,
+                               XMLDB_NOTNULL, null, 0, 'survey_id');
+        $dbman->add_field($table, $field);
+
+        unset($field);
+        $field = new xmldb_field('grade');
+        $dbman->drop_field($table, $field);
+
+        unset($field);
+        $field = new xmldb_field('username');
+        $dbman->drop_field($table, $field);
+
+        upgrade_mod_savepoint(true, '2015010600', 'sliclquestions');
+    }
 
     return true;
 }

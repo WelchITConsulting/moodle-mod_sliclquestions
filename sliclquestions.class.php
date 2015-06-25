@@ -328,7 +328,14 @@ class sliclquestions
 
     public function type_has_choices()
     {
-
+        global $DB;
+        $haschoices = array();
+        if ($record = $DB->get_records('sliclquestions_question_type', array(), 'typeid', 'typeid, has_choices')) {
+            foreach($records as $record) {
+                $haschoices[$typeid] = (($record->has_choices == 'y') ? 1 : 0);
+            }
+        }
+        return $haschoices;
     }
 
     public function survey_results_navbar_alpha($currid, $currentgroupid, $cm, $byresponse)
