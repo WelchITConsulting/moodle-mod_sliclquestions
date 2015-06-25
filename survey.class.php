@@ -24,15 +24,15 @@ class mod_sliclquestions_survey
 {
     static private $_instance;
 
-    static public function get_instance($course, $context, $survey, $url, $params)
+    static public function get_instance(&$sliclquestions, &$context, &$url, &$params)
     {
         if (empty(self::$_instance)) {
-            self::$_instance = new mod_sliclquestions_survey($course, $context, $survey, $url, $params);
+            self::$_instance = new mod_sliclquestions_survey($sliclquestions, $context, $url, $params);
         }
         return self::$_instance;
     }
 
-    public function __construct($course, $context, $survey, $url, $params)
+    public function __construct(&$sliclquestions, &$context, &$url, &$params)
     {
         global $USER;
 
