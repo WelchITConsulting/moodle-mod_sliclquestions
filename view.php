@@ -167,7 +167,7 @@ switch($sliclquestions->questype) {
 
             // Load the pupil registration manager
             require_once($CFG->dirroot . '/mod/sliclquestions/survey.class.php');
-            mod_sliclquestions_survey::get_instance($course, $context, $sliclquestions, $url, $params);
+            mod_sliclquestions_survey::get_instance($sliclquestions, $context, $url, $params);
 
         } else {
 
