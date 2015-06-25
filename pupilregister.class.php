@@ -201,7 +201,7 @@ class mod_sliclquestions_pupil_register
                                        $pupil->year_id,
                                        $pupil->class_id,
                                        $pupil->kpi_level,
-                                       $editbtn . '<br>' . $deletebtn);
+                                       '');//$editbtn . '<br>' . $deletebtn);
             }
         } else {
             // No pupils registered
