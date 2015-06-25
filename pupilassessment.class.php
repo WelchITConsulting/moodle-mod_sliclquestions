@@ -69,6 +69,5 @@ class mod_sliclquestions_pupil_assessment
             echo html_writer::link(new moodle_url('/mod/sliclquestions/questions.php', array('id' => $sliclquestions->cm->id)),
                                    $str);
         }
-        echo '<p>end of module</p>';
     }
 }

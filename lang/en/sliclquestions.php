@@ -50,6 +50,7 @@ $string['modulenameplural']                         = 'SLiCL Questionnaires';
 $string['name']                                     = 'Questionnaire Name';
 $string['noneinuse']                                = 'This questionnaire does not contain any questions.';
 $string['nonzeroerror']                             = 'You must select the type of survey to create';
+$string['noteligible']                              = 'You are not eligible to take this questionnaire.';
 $string['notopen']                                  = 'This questionnaire will not open until {$a}.';
 $string['noviewpermission']                         = 'You do not have permission to view these questionnaires.';
 
@@ -337,7 +338,6 @@ $string['tblyear']                                  = 'School Year';
 //$string['notapplicable']                            = 'N/A';
 //$string['notapplicablecolumn']                      = 'N/A column';
 //$string['notavail']                                 = 'This questionnaire is no longer available. Ask your teacher to delete it.';
-//$string['noteligible']                              = 'You are not eligible to take this questionnaire.';
 //$string['notemplatesurveys']                        = 'No template questionnaires.';
 //$string['notrequired']                              = 'Response is not required';
 //$string['not_started']                              = 'not started';

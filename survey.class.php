@@ -67,6 +67,5 @@ class mod_sliclquestions_survey
             echo html_writer::link(new moodle_url('/mod/sliclquestions/questions.php', array('id' => $sliclquestions->cm->id)),
                                    $str);
         }
-        echo 'Survey class';
     }
 }
