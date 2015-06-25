@@ -394,17 +394,16 @@ class sliclquestions
 
         $cb = new stdClass();
         $cb->addinstance            = has_capability('mod/sliclquestions:addinstance', $ctx);
-        $cb->view                   = has_capability('mod/sliclquestions:view', $ctx);
-        $cb->submit                 = has_capability('mod/sliclquestions:submit', $ctx);
-        $cb->printblank             = has_capability('mod/sliclquestions:printblank', $ctx);
-        $cb->preview                = has_capability('mod/sliclquestions:preview', $ctx);
-        $cb->manage                 = has_capability('mod/sliclquestions:manage', $ctx);
         $cb->assesspupils           = has_capability('mod/sliclquestions:assesspupils', $ctx);
-        $cb->registerpupils         = has_capability('mod/sliclquestions:registerpupils', $ctx);
+        $cb->editquestions          = has_capability('mod/sliclquestions:editquestions', $ctx);
+        $cb->manage                 = has_capability('mod/sliclquestions:manage', $ctx);
+        $cb->preview                = has_capability('mod/sliclquestions:preview', $ctx);
+        $cb->printblank             = has_capability('mod/sliclquestions:printblank', $ctx);
+        $cb->submit                 = has_capability('mod/sliclquestions:submit', $ctx);
+        $cb->view                   = has_capability('mod/sliclquestions:view', $ctx);
         $cb->viewstatistics         = has_capability('mod/sliclquestions:viewstatistics', $ctx);
 //        $cb->downloadresponses      = has_capability('mod/sliclquestions:downloadresponses', $ctx);
 //        $cb->deleteresponses        = has_capability('mod/sliclquestions:deleteresponses', $ctx);
-//        $cb->editquestions          = has_capability('mod/sliclquestions:editquestions', $ctx);
 //        $cb->createtemplate         = has_capability('mod/sliclquestions:createtemplates', $ctx);
 //        $cb->createpublic           = has_capability('mod/sliclquestions:createpublic', $ctx);
 //        $cb->readownresponses       = has_capability('mod/sliclquestions:readownresponses', $ctx);

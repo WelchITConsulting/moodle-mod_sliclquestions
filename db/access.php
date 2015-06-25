@@ -154,17 +154,17 @@ $capabilities = array(
 //            'manager'        => CAP_ALLOW
 //        )
 //    ),
-//
-//    // Ability to edit questionnaire questions
-//    'mod/sliclquestions:editquestions' => array(
-//
-//        'captype'            => 'write',
-//        'contextlevel'       => CONTEXT_MODULE,
-//        'legacy'             => array(
-//            'manager'        => CAP_ALLOW
-//        )
-//    ),
-//
+
+    // Ability to edit questionnaire questions
+    'mod/sliclquestions:editquestions' => array(
+
+        'captype'            => 'write',
+        'contextlevel'       => CONTEXT_MODULE,
+        'legacy'             => array(
+            'manager'        => CAP_ALLOW
+        )
+    ),
+
 //    // Ability to create template questionnaires which can be copied, but not used
 //    'mod/sliclquestions:createtemplates' => array(
 //
