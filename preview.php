@@ -31,7 +31,7 @@ $currentgroupid = optional_param('g', 0, PARAM_INT);
 
 if ($id) {
     if (!$cm = get_coursemodule_from_id('sliclquestions', $id)) {
-        printf_error('invalidcoursemodule');
+        print_error('invalidcoursemodule');
     }
     if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
         print_error('coursemisconf');
@@ -47,7 +47,7 @@ if ($id) {
         print_error('coursemisconf');
     }
     if (!$cm = get_coursemodule_from_instance('sliclquestions', $sliclquestions->id, $course->id)) {
-        printf_error('invalidcoursemodule');
+        print_error('invalidcoursemodule');
     }
 }
 if (!$popup) {
