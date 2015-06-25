@@ -27,10 +27,10 @@ class sliclquestions
         global $DB;
 
         if ($id) {
-            $questionnaire = $DB->get_record('sliclquestions', array('id' => $id));
+            $sliclquestions = $DB->get_record('sliclquestions', array('id' => $id));
         }
-        if (is_object($questionnaire)) {
-            $properties = get_object_vars($questionnaire);
+        if (is_object($sliclquestions)) {
+            $properties = get_object_vars($sliclquestions);
             foreach ($properties as $prop => $val) {
                 $this->$prop = $val;
             }
@@ -82,6 +82,81 @@ class sliclquestions
         global $CFG, $USER, $PAGE, $OUTPUT;
 
         $PAGE->set_title(format_string($this->name));
+        $PAGE->set_heading(format_string($this->course->fullname));
+
+        // Initialise the Javascript
+        $PAGE->requires->js_init_call('M.mod_sliclquestions.init_attempt_form',
+                                      null, false, array('name'     => 'mod_sliclquestions',
+                                                         'fullpath' => '/mod/sliclquestions/javascript/module.js',
+                                                         'requires' => array('base',
+                                                                             'dom',
+                                                                             'event-delegate',
+                                                                             'event-key',
+                                                                             'core_question_engine',
+                                                                             'moodle-core-formchangechecker'),
+                                                         'strings'  => array(array('cancel', 'moodle'),
+                                                                             array('flagged', 'question'),
+                                                                             array('functiondisabledbysecuremode', 'quiz'),
+                                                                             array('startattempt', 'quiz'),
+                                                                             array('timesup', 'quiz'),
+                                                                             array('changesmadereallygoaway', 'moodle'))));
+        echo $OUTPUT->header();
+        if (!$this->cm->visible && !$this->capabilites->viewhiddenactivities) {
+            notice(get_string('activityiscurrentlyhidden'));
+        }
+        if (!$this->capabilities->view) {
+            $OUTPUT->notification(get_string('noteligible', 'sliclquestions', $this->name));//, 'notifyproblem');
+            echo html_writer::link(new moodle_url('/course/view.php',
+                                                  array('id' => $this->course->id)),
+                                   get_string('continue'));
+            exit;
+        }
+        if (!$this->is_open()) {
+            echo html_writer::div(get_text('notopen', 'sliclquestions'), 'notifyproblem');
+        } elseif ($this->is_closed ()) {
+            echo html_writer::div(get_text('closed', 'sliclquestions'), 'notifyproblem');
+        } elseif (!$this->user_is_eligible($USER->id)) {
+            echo html_writer::div(get_string('noteligible', 'sliclquestions'), 'notifyproblem');
+        } elseif ($this->user_can_take($USER->id)) {
+            $msg = $this->print_survey($USER->id);
+            $viewform = data_submitted($CFG->wwwroot . '/mod/sliclquestions/complete.php');
+            if (!empty($viewform->rid)) {
+                $viewform->rid = (int)$viewform->rid;
+            }
+            if (!empty($viewform->sec)) {
+                $viewform->sec = (int)$viewform->sec;
+            }
+            if (data_submitted() && confirm_sesskey() && isset($viewform->submit) &&
+                    isset($viewform->submittype) && ($viewform->submittype == 'Submit survey') && empty($msg)) {
+                $this->response_delete($viewform->rid, $viewform->sec);
+                $this->rid = $this->response_insert($this->id, $viewform->sec, $viewform->rid, $USER->id);
+                $this->response_commit($viewform->rid);
+                if (!empty($viewform->rid) && is_numeric($viewform->rid)) {
+                    $rid = $viewform->rid;
+                } else {
+                    $rid = $this->rid;
+                }
+                $DB->insert_record('sliclquestions_attempts',
+                                   (object)array('qid'          => $this->id,
+                                                 'userid'       => $USER->id,
+                                                 'rid'          => $rid,
+                                                 'timemodified' => time()),
+                                   false);
+                $context = context_module::instance($this->cm->id);
+                $params = array('context'       => $context,
+                                'courseid'      => $this->course->id,
+                                'relateduserid' => $USER->id,
+                                'anonymous'     => ($this->respondenttype == 'anonymous'),
+                                'other'         => array('sliclquestionsid' => $this->id));
+                $event = \mod_sliclquestions\event\attempt_submitted::create($params);
+                $event->trigger();
+                $this->response_send_email($this->rid);
+                $this->response_goto_thankyou();
+            }
+        } else {
+            echo html_writer::div(get_string('alreadyfilled', 'sliclquestions', ''), 'notifyproblem');
+        }
+        echo $OUTPUT->footer($this->course);
     }
 
     public function view_response($rid, $referer = '', $blankquestionnaire = false, $resps = '', $compare = false, $isgroupmember = false, $allresponses = false, $currentgroupid = 0)
@@ -319,6 +394,7 @@ class sliclquestions
         $cb->manage                 = has_capability('mod/sliclquestions:manage', $ctx);
         $cb->assesspupils           = has_capability('mod/sliclquestions:assesspupils', $ctx);
         $cb->registerpupils         = has_capability('mod/sliclquestions:registerpupils', $ctx);
+        $cb->viewhiddenactivities   = has_capability('mod/course:viewhiddenactivities', $ctx);
         $cb->viewstatistics         = has_capability('mod/sliclquestions:viewstatistics', $ctx);
 //        $cb->downloadresponses      = has_capability('mod/sliclquestions:downloadresponses', $ctx);
 //        $cb->deleteresponses        = has_capability('mod/sliclquestions:deleteresponses', $ctx);
