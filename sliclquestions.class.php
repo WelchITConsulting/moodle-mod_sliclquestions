@@ -186,7 +186,7 @@ class sliclquestions
         } elseif ($this->qtype == SLICLQUESTIONNAIREUNLIMITED) {
             return true;
         } elseif ($userid > 0) {
-            return $this->user_time_for_new_attempt($userid);
+            return true;
         }
         return false;
     }
