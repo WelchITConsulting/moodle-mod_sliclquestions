@@ -62,6 +62,12 @@ class mod_sliclquestions_pupil_form extends moodleform
         $mform->addElement('hidden', 'id', 0);
         $mform->setType('id', PARAM_INT);
 
+        $mform->addElement('hidden', 'act', 0);
+        $mform->setType('act', PARAM_ALPHA);
+
+        $mform->addElement('hidden', 'pid', 0);
+        $mform->setType('pid', PARAM_INT);
+
         $this->add_action_buttons();
     }
 }
