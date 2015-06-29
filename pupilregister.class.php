@@ -220,7 +220,7 @@ class mod_sliclquestions_pupil_register
         $addurl = $url;
         $addurl->param('act', 'add');
         $addbutton = new single_button($addurl, get_string('addpupil', 'sliclquestions'));
-        $addbutton->class = 'continuebutton';
+        $addbutton->class = 'breadcrumb-button';
 
         $options = (empty($survey->displayoptions) ? array() : unserialize($survey->displayoptions));
 
