@@ -37,7 +37,7 @@ class mod_sliclquestions_pupil_register
         if (!empty($params['act'])) {
             $this->perform_action($survey->id, $url, $params);
         } elseif (has_capability('mod/sliclquestions:viewstatistics', $context)) {
-            $this->display_statistics($course, $context, $url);
+            $this->display_statistics($survey, $course, $context, $url);
         } else {
             $this->display($survey, $url, $params);
         }
@@ -93,7 +93,7 @@ class mod_sliclquestions_pupil_register
         }
     }
 
-    private function display_statistics(&$course, $context, $url)
+    private function display_statistics(&$survey, &$course, $context, $url)
     {
         global $CFG, $DB, $OUTPUT;
         $sort  = optional_param('s', 'lastname', PARAM_ALPHA);
