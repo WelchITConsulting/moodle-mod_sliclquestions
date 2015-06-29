@@ -95,7 +95,7 @@ class mod_sliclquestions_pupil_register
 
     private function display_statistics(&$course, $context, $url)
     {
-        global $CFG, $DB;
+        global $CFG, $DB, $OUTPUT;
         $sort  = optional_param('s', 'lastname', PARAM_ALPHA);
         $order = optional_param('o', 'ASC', PARAM_ALPHA);
         $firstnamesort = array('s' => 'firstname');
@@ -164,11 +164,18 @@ class mod_sliclquestions_pupil_register
                                     $totalfemales,
                                     $totalmales,
                                     ($totalfemales + $totalmales));
-        echo html_writer::tag('p', get_string('stats_content', 'sliclquestions'))
+        echo $OUTPUT->header()
+           . $OUTPUT->heading(format_text($survey->name))
+           . ((!empty($options->printintro) && trim( strip_tags($survey->intro))) ? $OUTPUT->box(format_module_intro('sliclquestions', $survey, $survey->cm->id), 'mod_introbox', 'intro') : '')
+           . $OUTPUT->box(format_text($survey->content, $survey->contentformat, $formatopt), 'generalbox center clearfix')
+           . $OUTPUT->box_start('generalbox center clearfix')
+           . html_writer::tag('p', get_string('stats_content', 'sliclquestions'))
            . html_writer::start_div('slicl-registered-pupils')
            . html_writer::table($totaltable)
            . html_writer::end_div()
-           . html_writer::table($table);
+           . html_writer::table($table)
+           . $OUTPUT->box_end()
+           . $OUTPUT->footer();
     }
 
     private function display(&$survey, &$url, &$params)
