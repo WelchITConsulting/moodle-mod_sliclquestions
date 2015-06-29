@@ -89,7 +89,34 @@ class sliclquestions
         }
     }
 
+    public function render_page_header()
+    {
+        global $OUTPUT;
 
+        $opts = (empty($this->displayoptions) ? array() : unserialize($this->displayoptions));
+
+        if (!isset($opts['displayheading']) || !empty($opts['displayheading'])) {
+            echo $OUTPUT->heading(format_string($this->name), 2);
+        }
+        if (!empty($opts['printintro']) && trim(strip_tags($page->intro))) {
+            echo $OUTPUT->box(format_module_intro('sliclquestions',
+                                                  $this, $this->cm->id),
+                                                  'mod_intobox',
+                                                  'sliclquestionsintro');
+        }
+        $content = file_rewrite_pluginfile_urls($this->content,
+                                                'pluginfile.php',
+                                                $this->context->id,
+                                                'mod_sliclquestions',
+                                                'content',
+                                                $this->id);
+        $formatopts = new stdClass();
+        $formatopts->noclean = true;
+        $formatopts->overflowdiv = true;
+        $formatopts->context     = $this->context;
+        echo $OUTPUT->box(format_text($content, $this->contentformat, $formatopts),
+                          'generalbox center clearfix');
+    }
 
 
 
