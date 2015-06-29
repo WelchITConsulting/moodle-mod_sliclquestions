@@ -177,7 +177,7 @@ class mod_sliclquestions_pupil_register
         // Output the list of pupils
         echo $OUTPUT->header()
            . $OUTPUT->heading(format_text($survey->name))
-           . ((!empty($options->printintro) && trim( strip_tags($survey->intro))) ? $OUTPUT->box(format_module_intro('sliclquestions', $survey, $survey->cm->id), 'mod_introbox', 'intro') : '')
+           . ((!empty($options['printintro']) && trim( strip_tags($survey->intro))) ? $OUTPUT->box(format_module_intro('sliclquestions', $survey, $survey->cm->id), 'mod_introbox', 'intro') : '')
            . $OUTPUT->box(format_text($survey->content, $survey->contentformat, $formatopt), 'generalbox center clearfix')
            . $OUTPUT->box_start('generalbox center clearfix')
            . html_writer::tag('p', get_string('stats_content', 'sliclquestions'))
