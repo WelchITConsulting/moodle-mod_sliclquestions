@@ -48,10 +48,12 @@ class mod_sliclquestions_pupil_register
         global $CFG, $DB, $USER;
         require_once($CFG->dirroot . '/mod/sliclquestions/pupil_form.php');
         $mform = new mod_sliclquestions_pupil_form();
+
         $data = new stdClass();
-        $data->id  = $params['id'];
-        $data->act = $params['act'];
-        $data->pid = 0;
+        $data->id        = $params['id'];
+        $data->act       = $params['act'];
+        $data->pid       = 0;
+        $data->survey_id = $surveyid;
 
         if ($params['act'] == 'edit') {
             $pid = required_param('pid', PARAM_INT);
