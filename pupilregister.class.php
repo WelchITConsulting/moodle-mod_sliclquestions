@@ -60,8 +60,8 @@ class mod_sliclquestions_pupil_register
             $pid = required_param('pid', PARAM_INT);
             $data = $DB->get_record('sliclquestions_students', array('id' => $pid));
             $data->pid = $pid;
-            $data->id  = $params['id'];
-            $data->act = $params['act'];
+//            $data->id  = $params['id'];
+//            $data->act = $params['act'];
         } elseif ($params['act'] == 'delete') {
             $pid = required_param('pid', PARAM_INT);
             $DB->set_field('sliclquestions_students', 'deleteflag', 1, array('id' => $pid));
@@ -71,19 +71,17 @@ class mod_sliclquestions_pupil_register
             redirect($url);
         } elseif ($mdata = $mform->get_data()) {
             $data->forename     = $mdata->forename;
-            $data->surname      = $mdate->surname;
+            $data->surname      = $mdata->surname;
             $data->sex          = $mdata->sex;
-            $data->year_id      = $mdata->year_od;
+            $data->year_id      = $mdata->year_id;
             $data->class_id     = $mdata->class_id;
             $data->kpi_level    = $mdata->kpi_level;
             $data->timemodified = time();
             if ($params['act'] == 'new') {
                 $data->timecreated = $data->timemodified;
-die('<pre>Add: ' . print_r($data, true) . '</pre>');
                 $DB->insert_record('sliclquestions_students', $data);
             } else {
                 $data->id = $data->pid;
-die('<pre>Edit: ' . print_r($data, true) . '</pre>');
                 $DB->update_record('sliclquestions_students', $data);
             }
         } else {
