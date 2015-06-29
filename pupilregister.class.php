@@ -164,6 +164,17 @@ class mod_sliclquestions_pupil_register
                                     $totalfemales,
                                     $totalmales,
                                     ($totalfemales + $totalmales));
+
+        // Get the display options
+        $options = (empty($survey->displayoptions) ? array() : unserialize($survey->displayoptions));
+
+        $content = file_rewrite_pluginfile_urls($survey->content, 'pluginfile.php', $survey->context->id, 'mod_sliclquestions', 'content', $survey->id);
+        $formatopt              = new stdClass();
+        $formatopt->noclean     = true;
+        $formatopt->overflowdiv = true;
+        $formatopt->context     = $survey->context;
+
+        // Output the list of pupils
         echo $OUTPUT->header()
            . $OUTPUT->heading(format_text($survey->name))
            . ((!empty($options->printintro) && trim( strip_tags($survey->intro))) ? $OUTPUT->box(format_module_intro('sliclquestions', $survey, $survey->cm->id), 'mod_introbox', 'intro') : '')
