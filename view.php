@@ -80,20 +80,12 @@ if ($act) {
 $PAGE->set_title(format_string($sliclquestions->name));
 $PAGE->set_heading(format_string($course->fullname));
 
-
-
-
-notice(get_string('noviewpermission', 'sliclquestions'), $url);
-
-die();
-
-
 // Capability checks
 if (empty($cm->visible) && !has_capability('moodle/course:viewhiddenactivities', $context)) {
-    notice(get_string('activityiscurrentlyhidden'));
+    notice(get_string('activityiscurrentlyhidden'), $url);
 }
 if (!has_capability('mod/sliclquestions:view', $context)) {
-    notice(get_string('noviewpermission', 'sliclquestions'));
+    notice(get_string('noviewpermission', 'sliclquestions'), $url);
 }
 $currentgroupid = groups_get_activity_group($cm);
 if (!groups_is_member($currentgroupid, $USER->id)) {
@@ -124,7 +116,7 @@ switch($sliclquestions->questype) {
         } else {
 
             // Display the no view permisson message
-            notice(get_string('noviewpermission', 'sliclquestions'));
+            notice(get_string('noviewpermission', 'sliclquestions'), $url);
 
         }
         break;
@@ -140,7 +132,7 @@ switch($sliclquestions->questype) {
         } else {
 
             // Display the no view permisson message
-            notice(get_string('noviewpermission', 'sliclquestions'));
+            notice(get_string('noviewpermission', 'sliclquestions'), $url);
 
         }
         break;
@@ -156,7 +148,7 @@ switch($sliclquestions->questype) {
         } else {
 
             // Display the no view permisson message
-            notice(get_string('noviewpermission', 'sliclquestions'));
+            notice(get_string('noviewpermission', 'sliclquestions'), $url);
 
         }
         break;
