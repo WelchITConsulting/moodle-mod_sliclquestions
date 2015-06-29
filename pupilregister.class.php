@@ -86,10 +86,10 @@ class mod_sliclquestions_pupil_register
             }
             redirect($url);
         } else {
-            $OUTPUT->header();
+            echo $OUTPUT->header();
             $mform->set_data($data);
             $mform->display();
-            $OUTPUT->footer();
+            echo $OUTPUT->footer();
         }
     }
 
