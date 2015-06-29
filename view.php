@@ -80,6 +80,12 @@ if ($act) {
 $PAGE->set_title(format_string($sliclquestions->name));
 $PAGE->set_heading(format_string($course->fullname));
 
+
+
+
+
+
+
 // Capability checks
 if (empty($cm->visible) && !has_capability('moodle/course:viewhiddenactivities', $context)) {
     notice(get_string('activityiscurrentlyhidden'));
@@ -92,46 +98,6 @@ if (!groups_is_member($currentgroupid, $USER->id)) {
     $currentgroupid = 0;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//echo $OUTPUT->header();
-//
-//$options = empty($sliclquestions->displayoptions) ? array() : unserialize($sliclquestions->displayoptions);
-//
-//// Print out page header
-//if (!isset($options['printheading']) || !empty($options['printheading'])) {
-//    echo $OUTPUT->heading(format_string($sliclquestions->name), true);
-//}
-//if (!empty($options['printintro'])) {
-//    if (trim(strip_tags($sliclquestions->intro))) {
-//        echo $OUTPUT->box_start('mod_introbox', 'pageintro')
-//           . format_module_intro('sliclquestions', $sliclquestions, $cm->id)
-//           . $OUTPUT->box_end();
-//    }
-//}
-//$content = file_rewrite_pluginfile_urls($sliclquestions->content, 'pluginfile.php',
-//                                        $context->id, 'mod_sliclquestions',
-//                                        'content', $sliclquestions->id);
-//$formatoptions              = new stdClass();
-//$formatoptions->noclean     = true;
-//$formatoptions->overflowdiv = true;
-//$formatoptions->context     = $context;
-//$content = format_text($content, $sliclquestions->content, $formatoptions);
-//echo $OUTPUT->box($content, 'generalbox center clearfix');
-//
 // Check if we have manage permissions
 if ( has_capability('mod/sliclquestions:manage', $context)) {
 
@@ -197,9 +163,3 @@ switch($sliclquestions->questype) {
         echo "View permissions only";
         break;
 }
-
-//// Close the content box
-//echo $OUTPUT->box_end();
-//
-//// Print the site footer
-//echo $OUTPUT->footer();
