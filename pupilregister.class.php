@@ -220,6 +220,7 @@ class mod_sliclquestions_pupil_register
         $addurl = $url;
         $addurl->param('act', 'add');
         $addbutton = new single_button($addurl, get_string('addpupil', 'sliclquestions'));
+        $addbutton->class = 'continuebutton';
 
         $options = (empty($survey->displayoptions) ? array() : unserialize($survey->displayoptions));
 
@@ -236,8 +237,11 @@ class mod_sliclquestions_pupil_register
            . $OUTPUT->box(format_text($survey->content, $survey->contentformat, $formatopt), 'generalbox center clearfix')
            . $OUTPUT->render($addbutton)
 //           . html_writer::link($addurl, get_string('addpupil', 'sliclquestions'))
+           . $OUTPUT->box_start('generalbox center clearfix')
            . html_writer::table($table)
-           . html_writer::link($addurl, get_string('addpupil', 'sliclquestions'))
+           . $OUTPUT->box_end()
+           . $OUTPUT->render($addbutton)
+//           . html_writer::link($addurl, get_string('addpupil', 'sliclquestions'))
            . $OUTPUT->footer();
     }
 }
