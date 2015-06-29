@@ -79,9 +79,11 @@ class mod_sliclquestions_pupil_register
             $data->timemodified = time();
             if ($params['act'] == 'new') {
                 $data->timecreated = $data->timemodified;
+die('<pre>Add: ' . print_r($data, true) . '</pre>');
                 $DB->insert_record('sliclquestions_students', $data);
             } else {
                 $data->id = $data->pid;
+die('<pre>Edit: ' . print_r($data, true) . '</pre>');
                 $DB->update_record('sliclquestions_students', $data);
             }
         } else {
