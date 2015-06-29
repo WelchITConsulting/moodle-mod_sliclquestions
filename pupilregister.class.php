@@ -68,10 +68,8 @@ class mod_sliclquestions_pupil_register
             redirect($url);
         }
         if ($mform->is_cancelled()) {
-die('<pre>' . print_r($url, true) . '</pre>');
             redirect($url);
         } elseif ($mdata = $mform->get_data()) {
-die('<pre>' . print_r($url, true) . '</pre>');
             $data->forename     = $mdata->forename;
             $data->surname      = $mdata->surname;
             $data->sex          = $mdata->sex;
@@ -86,6 +84,7 @@ die('<pre>' . print_r($url, true) . '</pre>');
                 $data->id = $data->pid;
                 $DB->update_record('sliclquestions_students', $data);
             }
+            redirect($url);
         } else {
             $mform->set_data($data);
             $mform->display();
