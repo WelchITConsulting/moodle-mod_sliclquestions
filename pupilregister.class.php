@@ -223,7 +223,7 @@ class mod_sliclquestions_pupil_register
 
         $options = (empty($survey->displayoptions) ? array() : unserialize($survey->displayoptions));
 
-        $content = file_rewrite_pluginfile_urls($survey->content, 'pluginfile.php', $$survey->context->id, 'mod_sliclquestions', 'content', $survey->id);
+        $content = file_rewrite_pluginfile_urls($survey->content, 'pluginfile.php', $survey->context->id, 'mod_sliclquestions', 'content', $survey->id);
         $formatopt              = new stdClass();
         $formatopt->noclean     = true;
         $formatopt->overflowdiv = true;
