@@ -60,8 +60,8 @@ class mod_sliclquestions_pupil_register
             $pid = required_param('pid', PARAM_INT);
             $data = $DB->get_record('sliclquestions_students', array('id' => $pid));
             $data->pid = $pid;
-//            $data->id  = $params['id'];
-//            $data->act = $params['act'];
+            $data->id  = $params['id'];
+            $data->act = $params['act'];
         } elseif ($params['act'] == 'delete') {
             $pid = required_param('pid', PARAM_INT);
             $DB->set_field('sliclquestions_students', 'deleteflag', 1, array('id' => $pid));
