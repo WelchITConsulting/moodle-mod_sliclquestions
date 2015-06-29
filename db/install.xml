@@ -20,7 +20,7 @@ Author   : John Welch <jwelch@welchitconsulting.co.uk>
 Created  : 09 Jun 2015
 -->
 
-<XMLDB PATH="mod/sliclquestions" VERSION="2015062503" COMMENT="XMLDB file for Moodle mod/sliclquestions"
+<XMLDB PATH="mod/sliclquestions" VERSION="2015062900" COMMENT="XMLDB file for Moodle mod/sliclquestions"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="../../lib/xmldb/xmldb.xsd">
     <TABLES>
@@ -112,20 +112,6 @@ Created  : 09 Jun 2015
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
                 <KEY NAME="typeid" TYPE="unique" FIELDS="typeid"/>
-            </KEYS>
-        </TABLE>
-
-        <TABLE NAME="sliclquestions_attempts" COMMENT="SLiCL Questions attempts table">
-            <FIELDS>
-                <FIELD NAME="id" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="true"/>
-                <FIELD NAME="qid" TYPE="int" LENGTH="11" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-                <FIELD NAME="userid" TYPE="int" LENGTH="11" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-                <FIELD NAME="rid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-                <FIELD NAME="pupil_id" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-                <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-            </FIELDS>
-            <KEYS>
-                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
             </KEYS>
         </TABLE>
 

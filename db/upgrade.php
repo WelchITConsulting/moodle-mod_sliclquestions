@@ -54,5 +54,12 @@ function xmldb_sliclquestions_upgrade($oldversion=0)
         upgrade_mod_savepoint(true, 2015062503, 'sliclquestions');
     }
 
+    if ($oldversion < 2015062900) {
+
+        $table = new xmldb_table('sliclquestions_attempts');
+        $dbman->drop_table($table);
+        upgrade_mod_savepoint(true, 2015062900, 'sliclquestions');
+    }
+
     return true;
 }
