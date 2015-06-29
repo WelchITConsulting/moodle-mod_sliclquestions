@@ -83,7 +83,7 @@ $PAGE->set_heading(format_string($course->fullname));
 
 
 
-notice(get_string('noviewpermission', 'sliclquestions'));
+notice(get_string('noviewpermission', 'sliclquestions'), $url);
 
 die();
 

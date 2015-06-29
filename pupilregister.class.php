@@ -45,7 +45,7 @@ class mod_sliclquestions_pupil_register
 
     private function perform_action($surveyid, $url, $params)
     {
-        global $CFG, $DB, $USER;
+        global $CFG, $DB, $USER, $PAGE, $OUTPUT;
         require_once($CFG->dirroot . '/mod/sliclquestions/pupil_form.php');
         $mform = new mod_sliclquestions_pupil_form();
 
@@ -86,8 +86,10 @@ class mod_sliclquestions_pupil_register
             }
             redirect($url);
         } else {
+            $OUTPUT->header();
             $mform->set_data($data);
             $mform->display();
+            $OUTPUT->footer();
         }
     }
 
