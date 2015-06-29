@@ -50,10 +50,11 @@ class mod_sliclquestions_pupil_register
         $mform = new mod_sliclquestions_pupil_form();
 
         $data = new stdClass();
-        $data->id        = $params['id'];
-        $data->act       = $params['act'];
-        $data->pid       = 0;
-        $data->survey_id = $surveyid;
+        $data->id         = $params['id'];
+        $data->act        = $params['act'];
+        $data->pid        = 0;
+        $data->survey_id  = $surveyid;
+        $data->teacher_id = $USER->id;
 
         if ($params['act'] == 'edit') {
             $pid = required_param('pid', PARAM_INT);
@@ -69,15 +70,19 @@ class mod_sliclquestions_pupil_register
         if ($mform->is_cancelled()) {
             redirect($url);
         } elseif ($mdata = $mform->get_data()) {
-            $mdata->survey_id = $survey->id;
-            $mdata->teacher_id = $USER->id;
-            $mdata->timemodified = time();
+            $data->forename     = $mdata->forename;
+            $data->surname      = $mdate->surname;
+            $data->sex          = $mdata->sex;
+            $data->year_id      = $mdata->year_od;
+            $data->class_id     = $mdata->class_id;
+            $data->kpi_level    = $mdata->kpi_level;
+            $data->timemodified = time();
             if ($params['act'] == 'new') {
-                $mdata->timecreated = $data->timemodified;
-                $DB->insert_record('sliclquestions_students', $mdata);
+                $data->timecreated = $data->timemodified;
+                $DB->insert_record('sliclquestions_students', $data);
             } else {
-                $mdata->id = $data->pid;
-                $DB->update_record('sliclquestions_students', $mdata);
+                $data->id = $data->pid;
+                $DB->update_record('sliclquestions_students', $data);
             }
         } else {
             $mform->set_data($data);
