@@ -39,7 +39,7 @@ class mod_sliclquestions_pupil_register
         } elseif (has_capability('mod/sliclquestions:viewstatistics', $context)) {
             $this->display_statistics($course, $context, $url);
         } else {
-            $this->display($survey->id, $url, $params);
+            $this->display($survey, $url, $params);
         }
     }
 
@@ -171,13 +171,11 @@ class mod_sliclquestions_pupil_register
            . html_writer::table($table);
     }
 
-    private function display($surveyid, $url, $params)
+    private function display(&$survey, &$url, &$params)
     {
-        global $DB, $USER;
-        $params['act'] = 'add';
-        $addurl = $url;
-        $addurl->param('act', 'add');
-        echo html_writer::link($addurl, get_string('addpupil', 'sliclquestions'));
+        global $DB, $USER, $OUTPUT;
+
+        // Define the table of pupils
         $table = new html_table();
         $table->head = array(get_string('tblname', 'sliclquestions'),
                              get_string('tblsex', 'sliclquestions'),
@@ -194,7 +192,7 @@ class mod_sliclquestions_pupil_register
         $sql = 'SELECT * FROM {sliclquestions_students} WHERE survey_id=? '
              . 'AND teacher_id=? AND deleteflag=0 ORDER BY sex DESC, kpi_level '
              . 'ASC, surname ASC, forename ASC';
-        $pupils = $DB->get_records_sql($sql, array($surveyid, $USER->id));
+        $pupils = $DB->get_records_sql($sql, array($survey->id, $USER->id));
         if ($pupils) {
             foreach($pupils as $pupil) {
                 $editurl = $url;
@@ -216,7 +214,30 @@ class mod_sliclquestions_pupil_register
         } else {
             // No pupils registered
         }
-        echo html_writer::table($table);
-        echo html_writer::link($addurl, get_string('addpupil', 'sliclquestions'));
+
+        // Define the URL for add pupil links
+        $params['act'] = 'add';
+        $addurl = $url;
+        $addurl->param('act', 'add');
+        $addbutton = new single_button($addurl, get_string('addpupil', 'sliclquestions'));
+
+        $options = (empty($survey->displayoptions) ? array() : unserialize($survey->displayoptions));
+
+        $content = file_rewrite_pluginfile_urls($survey->content, 'pluginfile.php', $$survey->context->id, 'mod_sliclquestions', 'content', $survey->id);
+        $formatopt              = new stdClass();
+        $formatopt->noclean     = true;
+        $formatopt->overflowdiv = true;
+        $formatopt->context     = $survey->context;
+
+        // Output the list of pupils
+        echo $OUTPUT->header()
+           . $OUTPUT->heading(format_text($survey->name))
+           . ((!empty($options->printintro) && trim( strip_tags($survey->intro))) ? $OUTPUT->box(format_module_intro('sliclquestions', $survey, $survey->cm->id), 'mod_introbox', 'intro') : '')
+           . $OUTPUT->box(format_text($survey->content, $survey->contentformat, $formatopt), 'generalbox center clearfix')
+           . $OUTPUT->render($addbutton)
+//           . html_writer::link($addurl, get_string('addpupil', 'sliclquestions'))
+           . html_writer::table($table)
+           . html_writer::link($addurl, get_string('addpupil', 'sliclquestions'))
+           . $OUTPUT->footer();
     }
 }
