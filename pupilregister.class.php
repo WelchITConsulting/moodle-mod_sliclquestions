@@ -20,6 +20,8 @@
  * Created  : 22 Jun 2015
  */
 
+require_once($CFG->dirroot . '/mod/sliclquestions/class/sliclquestions.class.php');
+
 class mod_sliclquestions_pupil_register
 {
     static private $_instance;
@@ -91,102 +93,6 @@ class mod_sliclquestions_pupil_register
             $mform->display();
             echo $OUTPUT->footer();
         }
-    }
-
-    private function display_statistics(&$survey, &$course, $context, $url)
-    {
-        global $CFG, $DB, $OUTPUT;
-        $sort  = optional_param('s', 'lastname', PARAM_ALPHA);
-        $order = optional_param('o', 'ASC', PARAM_ALPHA);
-        $firstnamesort = array('s' => 'firstname');
-        if ($sort == 'firstname') {
-            $firstnamesort['o'] = ($order == 'ASC' ? 'DESC' : 'ASC');
-        } else {
-            $firstnamesort['o'] = 'ASC';
-        }
-        $lastnamesort = array('s' => 'lastname');
-        if ($sort == 'lastname') {
-            $lastnamesort['o'] = ($order == 'ASC' ? 'DESC' : 'ASC');
-        } else {
-            $lastnamesort['o'] = 'ASC';
-        }
-        $nameheader = '<a href="' . $url->out(true, $firstnamesort) . '">'
-                    . get_string('firstname') . '</a> / <a href="'
-                    . $url->out(true, $lastnamesort) . '">'
-                    . get_string('lastname') . '</a>';
-        $table = new html_table();
-        $table->head = array($nameheader,
-                             get_string('pupilsfemale', 'sliclquestions'),
-                             get_string('pupilsmale', 'sliclquestions'));
-        $table->align = array('left', 'center', 'center');
-        $totalmales = 0;
-        $totalfemales = 0;
-        $sql = 'SELECT DISTINCT CONCAT(ce.id,sr.sex) AS ind, ce.id, ce.firstname, ce.lastname, sr.sex, count(*) AS numrec'
-             . ' FROM (SELECT u.id, u.firstname, u.lastname FROM {user} u, {role_assignments} ra,'
-             . ' {role} r WHERE u.id = ra.userid AND ra.roleid = r.id'
-             . ' AND r.shortname=? AND ra.contextid=?) AS ce '
-             . ' LEFT OUTER JOIN {sliclquestions_students} sr ON ce.id=sr.teacher_id'
-             . ' AND sr.survey_id=1 AND sr.deleteflag=0 GROUP BY ce.firstname,ce.lastname,sr.teacher_id,sr.sex'
-             . ' ORDER BY ';
-        if ($sort == 'firstname') {
-            $sql .= 'ce.firstname '
-                  . ($order == 'ASC' ? 'ASC' : 'DESC')
-                  . ',ce.lastname ASC,sr.sex DESC';
-        } else {
-            $sql .= 'ce.lastname '
-                  . ($order == 'ASC' ? 'ASC' : 'DESC')
-                  . ',ce.firstname ASC,sr.sex DESC';
-        }
-        $context = context_course::instance($course->id);
-        $results = $DB->get_records_sql($sql, array('sbenquirer',
-                                                    $context->id));
-        $data = array();
-        foreach($results as $record) {
-            if (!array_key_exists($record->id, $data)) {
-                $data[$record->id] = array($record->firstname . ' ' . $record->lastname, 0, 0);
-            }
-            if ($record->sex == 'm') {
-                $data[$record->id][2] = $record->numrec;
-                $totalmales += $record->numrec;
-            } elseif ($record->sex == 'f') {
-                $data[$record->id][1] = $record->numrec;
-                $totalfemales += $record->numrec;
-            }
-        }
-        $table->data = $data;
-        $totaltable = new html_table();
-        $totaltable->head   = array('',
-                                    get_string('pupilsfemale', 'sliclquestions'),
-                                    get_string('pupilsmale', 'sliclquestions'),
-                                    get_string('pupilstotal', 'sliclquestions'));
-        $totaltable->align  = array('left', 'center', 'center', 'center');
-        $totaltable->data[] = array(get_string('pupilsregistered', 'sliclquestions'),
-                                    $totalfemales,
-                                    $totalmales,
-                                    ($totalfemales + $totalmales));
-
-        // Get the display options
-        $options = (empty($survey->displayoptions) ? array() : unserialize($survey->displayoptions));
-
-        $content = file_rewrite_pluginfile_urls($survey->content, 'pluginfile.php', $survey->context->id, 'mod_sliclquestions', 'content', $survey->id);
-        $formatopt              = new stdClass();
-        $formatopt->noclean     = true;
-        $formatopt->overflowdiv = true;
-        $formatopt->context     = $survey->context;
-
-        // Output the list of pupils
-        echo $OUTPUT->header()
-           . $OUTPUT->heading(format_text($survey->name))
-           . ((!empty($options['printintro']) && trim( strip_tags($survey->intro))) ? $OUTPUT->box(format_module_intro('sliclquestions', $survey, $survey->cm->id), 'mod_introbox', 'intro') : '')
-           . $OUTPUT->box(format_text($survey->content, $survey->contentformat, $formatopt), 'generalbox center clearfix')
-           . $OUTPUT->box_start('generalbox center clearfix', 'sliclintro')
-           . html_writer::tag('p', get_string('stats_content', 'sliclquestions'))
-           . html_writer::start_div('slicl-registered-pupils')
-           . html_writer::table($totaltable)
-           . html_writer::end_div()
-           . html_writer::table($table)
-           . $OUTPUT->box_end()
-           . $OUTPUT->footer();
     }
 
     private function display(&$survey, &$url, &$params)
