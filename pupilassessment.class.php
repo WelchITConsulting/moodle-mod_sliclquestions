@@ -20,7 +20,7 @@
  * Created  : 22 Jun 2015
  */
 
-require_once($CFG->dirroot . '/mod/sliclquestions/sliclquestions.class.php');
+require_once($CFG->dirroot . '/mod/sliclquestions/classes/sliclquestions.class.php');
 
 class mod_sliclquestions_pupil_assessment
 {
@@ -43,9 +43,9 @@ class mod_sliclquestions_pupil_assessment
         } elseif ($sliclquestions->is_closed()) {
             echo html_writer::div(get_string('closed', 'sliclquestions', userdate($sliclquestions->closedate)), 'message');
         } elseif ($sliclquestions->user_is_eligible($USER->id)) {
-            if ($sliclquestions->questions) {
-                echo html_writer::div(get_string('noteligible', 'sliclquestions'), 'message');
-            }
+//            if ($sliclquestions->questions) {
+//                echo html_writer::div(get_string('noteligible', 'sliclquestions'), 'message');
+//            }
         } elseif ($sliclquestions->user_can_take($USER-id)) {
             $select = 'survey_id = ' . $sliclquestions->id
                     . ' AND userid = ' . $USER->id;

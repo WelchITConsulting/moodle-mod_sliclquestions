@@ -20,7 +20,7 @@
  * Created  : 25 Jun 2015
  */
 
-require_once($CFG->dirroot . '/mod/sliclquestions/classes/sliclquestions_question.php');
+require_once($CFG->dirroot . '/mod/sliclquestions/classes/question.class.php');
 
 class sliclquestions
 {
