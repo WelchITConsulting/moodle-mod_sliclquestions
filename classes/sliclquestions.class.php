@@ -34,7 +34,7 @@ class sliclquestions
         if (  is_object($sliclquestions)) {
             $properties = get_object_vars($sliclquestions);
             foreach($properties as $prop => $val) {
-                $this->$property = $val;
+                $this->$prop = $val;
             }
         }
         $this->course = $course;
@@ -70,7 +70,7 @@ class sliclquestions
             $this->questions      = array();
             $this->questionsbysec = array();
         }
-        $select = 'survey_id=' . $id . ' AND deleted=\'y\'';
+        $select = 'survey_id=' . $id . ' AND deleted!=\'y\'';
         if ($records = $DB->get_records_select('sliclquestions_question', $select, null, 'position')) {
             $sec = 1;
             $isbreak =false;
@@ -118,8 +118,63 @@ class sliclquestions
                           'generalbox center clearfix');
     }
 
+    public function view($url)
+    {
+        $msg = $this->print_survey($USER->id);
+        $viewform = data_submitted($url);
+        if (!empty($viewform->rid)) {
+            $viewform->rid = (int)$viewform->rid;
+        }
+        if (!empty($viewform->sec)) {
+            $viewform->sec = (int)$viewform->sec;
+        }
+        if (data_submitted() && confirm_sesskey() && isset($viewform->submit) &&
+                isset($viewform->submittype) && ($viewform->submittype == 'Submit survey') &&
+                empty($msg)) {
+            $this->response_delete($viewform->rid, $viewform->sec);
+            $this->rid = $this->response_insert($this->id, $viewform->sec, $viewform->rid, $USER->id);
+            $this->response_commit($this->rid);
+            if (!empty($viewform->rid) && is_numeric($viewform->rid)) {
+                $rid = $viewform->rid;
+            } else {
+                $rid = $this->rid;
+            }
 
+//            // Update completion status
+//            $completion = new completion_info($this->course);
+//            if ($completion->is_enabled($this->cm) && $this->completion_submit) {
+//                $completion->update_state($this->cm, COMPLETION_COMPLETE);
+//            }
+//
+//            // Log this submitted response
+//            $context = context_module::instance($this->cm->id);
+//            $event = \mod\sliclquestions\event\attempt_submitted::create(array('context'       => $context,
+//                                                                               'courseid'      => $this->course->id,
+//                                                                               'relateduserid' => $USER->id,
+//                                                                               'other'         => array('sliclquestionsid' => $this->id)));
+            $event->trigger();
 
+            $this->response_send_email($this->rid);
+            $this->response_goto_thankyou();
+        } else {
+            notify(get_string('alreadyfilled', 'sliclquestions'), $url);
+        }
+    }
+
+    public function is_open()
+    {
+        return (($this->opendate > 0) ? ($this->opendate < time()) : false);
+    }
+
+    public function is_closed()
+    {
+        return (($this->closedate > 0) ? ($this->closedate < time()) : false);
+    }
+
+    public function user_is_eligible()
+    {
+        return ($this->capabilities->view && $this->capabilities->submit);
+    }
 
 
 
@@ -153,5 +208,118 @@ class sliclquestions
             $cb->viewhiddenactivities    = has_capability('moodle/course:viewhiddenactivities', $this->context);
         }
         return $cb;
+    }
+
+    private function print_survey($userid = false)
+    {
+        global $CFG, $OUTPUT;
+
+        $formdata = new stdClass();
+        if (data_submitted() && confirm_sesskey()) {
+            $formdata = data_submitted();
+        }
+        $formdata->rid = $this->get_response($userid);
+
+        $msg = '';
+        $numsections = isset($this->questionsbysec) ? count($this->questionsbysec) : 0;
+        $action = $CFG->wwwroot . '/mod/sliclquestions/complete.php?id=' . $this->cm->id;
+
+
+
+
+
+
+
+
+        $formdatareferer = !empty($formdata->referer) ? htmlspecialchars($formdata->referer) : '';
+        $formdatsrid     = isset($formdata->rid) ? $formdata->rid : 0;
+        echo $OUPUT->box_start('generalbox')
+           . html_writer::start_tag('form', array('id'     => 'phpesp_response',
+                                                  'method' => 'post',
+                                                  'action' => $action))
+           . html_writer::empty_tag('input', array('type'  => 'hidden',
+                                                   'name'  => 'referer',
+                                                   'value' => (!empty($formdata->referer) ? htmlspecialchars($formdata->referer) : '')))
+           . html_writer::empty_tag('input', array('type'  => 'hidden',
+                                                   'name'  => 'a',
+                                                   'value' => $this->id))
+           . html_writer::empty_tag('input', array('type'  => 'hidden',
+                                                   'name'  => 'rid',
+                                                   'value' => $this->rid))
+           . html_writer::empty_tag('input', array('type'  => 'hidden',
+                                                   'name'  => 'sec',
+                                                   'value' => $this->sec))
+           . html_writer::empty_tag('input', array('type'  => 'hidden',
+                                                   'name'  => 'sesskey',
+                                                   'value' => sesskey()));
+        if (isset($this->questions) && $numsections) {
+            //********************* Add code from survey_render function as only called from here
+            $this->usehtmleditor = null;
+            if ($formdata->sec > $numsections) {
+                $formdata->sec = $numsections;
+                echo html_writer::div(get_string('finished', 'sliclquestions'), 'warning');
+                return false;
+            }
+            $hasrequired = $this->has_required($formdata->sec);
+            $i = 0;
+            if ($formdata->sec > 1) {
+                for ($j = 2; $j <= $formdata->sec; $j++) {
+                    foreach($this->questionsbysec[$j - 1] as $question) {
+                        if ($question->type_id < SLICLQUESPAGEBREAK) {
+                            $i++;
+                        }
+                    }
+                }
+            }
+            $this->print_survey_start($msg, $formdata->sec, $numsections, $hasrequired, '', 1);
+            foreach ($this->questionsbysec[$section] as $question) {
+                if ($question->type_id != SLICLQUESSECTIONTEXT) {
+                    $i++;
+                }
+                $question->survey_display($fordata, $descendantdata = '', $i, $this->usehtmleditor);
+            }
+            $this->print_survey_end($fordata->sec, $numsections);
+            // End of survey_render code
+            echo html_writer::start_div('notice', array('style' => 'padding: .5em 0 .5em .2em'))
+               . html_writer::start_div('buttons')
+               . (($formdata->sec > 1) ? html_writer::empty_tag('input', array('name'  => 'prev',
+                                                                               'type'  => 'submit',
+                                                                               'value' => get_string('previouspage', 'sliclquestions')))
+                                       : '')
+               . ($this->resume ? html_writer::empty_tag('input', array('name'  => 'resume',
+                                                                        'type'  => 'submit',
+                                                                        'value' => get_string('save', 'sliclquestions')))
+                                : '');
+            if ($formdata->sec == $numsections) {
+                echo html_writer::start_div()
+                   . html_writer::empty_tag('input', array('type'  => 'hidden',
+                                                           'name'  => 'submittype',
+                                                           'value' => 'Submit survey'))
+                   . html_writer::empty_tag('input', array('type'  => 'submit',
+                                                           'name'  => 'submit',
+                                                           'value' => get_string('submitsurvey', 'sliclquestions')))
+                   . html_writer::end_div();
+            } else {
+                echo html_writer::start_div()
+                   . html_writer::empty_tag('input', array('type'  => 'submit',
+                                                           'name'  => 'next',
+                                                           'value' => get_string('nextpage', 'sliclquestions')))
+                   . html_writer::end_div();
+            }
+            echo html_writer::end_div()
+               . html_writer::end_div()
+               . html_writer::end_tag('form')
+               . html_writer::end_div();
+            return $msg;
+        }
+
+        echo html_writer::table('p', get_string('noneinuse', 'sliclquestions'))
+           . html_writer::end_tag('form')
+           . html_writer::end_div();
+    }
+
+    private function print_survey_start($msg, $section, $numsections, $hasrequired, $rid = '', $blankquestionnaire = false)
+    {
+
     }
 }

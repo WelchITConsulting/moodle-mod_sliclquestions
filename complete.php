@@ -21,15 +21,16 @@
  */
 
 require_once('../../config.php');
-require_once($CFG->dirroot . '/mod/sliclquestions/sliclquestions.class.php');
+require_once($CFG->dirroot . '/mod/sliclquestions/classes/sliclquestions.class.php');
 
 if (!isset($SESSION->sliclquestions)) {
     $SESSION->sliclquestions = new stdClass();
 }
 $SESSION->sliclquestions->current_tab = 'view';
 
-$id = optional_param('id', null, PARAM_INT);    // Course module ID
-$a  = optional_param('a',  null, PARAM_INT);    // SLiCL questions ID
+$id  = optional_param('id', null, PARAM_INT);       // Course module ID
+$a   = optional_param('a',  null, PARAM_INT);       // SLiCL questions ID
+$act = optional_param('act', null, PARAM_ALPHA);    // Action to perform
 
 if ($id) {
     if (! $cm = get_coursemodule_from_id('sliclquestions', $id)) {
@@ -56,6 +57,7 @@ if ($id) {
 } else {
     print_error('missingparameter');
 }
+
 // Check login and get context.
 require_course_login($course, true, $cm);
 $context = context_module::instance($cm->id);
@@ -73,10 +75,13 @@ if ($id) {
     $params['a'] = $a;
 }
 $url = new moodle_url('/mod/sliclquestions/view.php', $params);
-$PAGE->set_url($url);
+if ($act) {
+    $params['act'] = $act;
+}
+$PAGE->set_url(new moodle_url('/mod/sliclquestions/complete.php', $params));
 
 // Print site header
-$PAGE->set_title(format_string($sliclquestions->name));
+$PAGE->set_title(iformat_string($sliclquestions->name));
 $PAGE->set_heading(format_string($course->fullname));
 echo $OUTPUT->header();
 
@@ -91,4 +96,13 @@ $currentgroupid = groups_get_activity_group($cm);
 if (!groups_is_member($currentgroupid, $USER->id)) {
     $currentgroupid = 0;
 }
-$sliclquestions->view();
+if (!$sliclquestions->is_open()) {
+    notice(get_string('notopen', 'sliclquestions'), $url);
+} elseif (!$sliclquestions->is_closed()) {
+    notice(get_string('closed', 'sliclquestions'), $url);
+} elseif (!$sliclquestions->user_is_eligible()) {
+    notice(get_string('', 'sliclquestions'), $url);
+} else {
+    $sliclquestions->view($url);
+}
+echo $OUTPUT->footer();
