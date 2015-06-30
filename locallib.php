@@ -22,7 +22,7 @@
 
 require_once($CFG->libdir.'/eventslib.php');
 require_once($CFG->dirroot.'/calendar/lib.php');
-require_once($CFG->dirroot.'/mod/sliclquestions/questiontypes.class.php');
+require_once($CFG->dirroot.'/mod/sliclquestions/classes/questiontypes.class.php');
 
 // Constants
 

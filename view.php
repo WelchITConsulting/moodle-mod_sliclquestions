@@ -21,7 +21,7 @@
  */
 
 require_once("../../config.php");
-require_once($CFG->dirroot . '/mod/sliclquestions/sliclquestions.class.php');
+require_once($CFG->dirroot . '/mod/sliclquestions/classes/sliclquestions.class.php');
 require_once($CFG->dirroot . '/mod/sliclquestions/locallib.php');
 
 $id  = optional_param('id', null, PARAM_INT);       // Course Module ID
@@ -85,7 +85,6 @@ if (empty($cm->visible) && !has_capability('moodle/course:viewhiddenactivities',
     notice(get_string('activityiscurrentlyhidden'), $url);
 }
 if (!has_capability('mod/sliclquestions:view', $context)) {
-    echo html_writer::div('Test Item');
     notice(get_string('noviewpermission', 'sliclquestions'), $url);
 }
 $currentgroupid = groups_get_activity_group($cm);
@@ -111,7 +110,7 @@ switch($sliclquestions->questype) {
         if ( has_capability('mod/sliclquestions:registerpupils', $context)) {
 
             // Load the pupil registration manager
-            require_once($CFG->dirroot . '/mod/sliclquestions/pupilregister.class.php');
+            require_once($CFG->dirroot . '/mod/sliclquestions/classes/pupilregister.class.php');
             mod_sliclquestions_pupil_register::get_instance($course, $context, $sliclquestions, $url, $params);
 
         } else {
@@ -127,7 +126,7 @@ switch($sliclquestions->questype) {
         if ( has_capability('mod/sliclquestions:assesspupils', $context)) {
 
             // Load the pupil registration manager
-            require_once($CFG->dirroot . '/mod/sliclquestions/pupilassessment.class.php');
+            require_once($CFG->dirroot . '/mod/sliclquestions/classes/pupilassessment.class.php');
             mod_sliclquestions_pupil_assessment::get_instance($sliclquestions, $context, $url, $params);
 
         } else {
@@ -143,7 +142,7 @@ switch($sliclquestions->questype) {
         if ( has_capability('mod/sliclquestions:submit', $context)) {
 
             // Load the pupil registration manager
-            require_once($CFG->dirroot . '/mod/sliclquestions/survey.class.php');
+            require_once($CFG->dirroot . '/mod/sliclquestions/classes/survey.class.php');
             mod_sliclquestions_survey::get_instance($sliclquestions, $context, $url, $params);
 
         } else {
