@@ -85,6 +85,7 @@ if (empty($cm->visible) && !has_capability('moodle/course:viewhiddenactivities',
     notice(get_string('activityiscurrentlyhidden'), $url);
 }
 if (!has_capability('mod/sliclquestions:view', $context)) {
+    echo html_writer::div('Test Item');
     notice(get_string('noviewpermission', 'sliclquestions'), $url);
 }
 $currentgroupid = groups_get_activity_group($cm);
