@@ -564,7 +564,7 @@ class sliclquestions
                                                       'mod_sliclquestions',
                                                       'thankbody', $this->id),
                          FORMAT_HTML)
-           .
+           . $OUTPUT->single_button(get_string('continue'), '/mod/sliclquestions/view.php?id=' . $this->cm->id)
            . $OUTPUT->footer();
 
     }
