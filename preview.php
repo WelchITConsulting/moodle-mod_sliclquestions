@@ -21,7 +21,7 @@
  */
 
 require_once('../../config.php');
-require_once($CFG->dirroot . '/mod/sliclquestions/classes/sliclquestions.class.php');
+require_once($CFG->dirroot . '/mod/sliclquestions/classfiles/sliclquestions.class.php');
 
 $id             = optional_param('id', 0, PARAM_INT);
 $sid            = optional_param('s', 0, PARAM_INT);

@@ -20,8 +20,8 @@
  * Created  : 28 Jun 2015
  */
 
-require_once($CFG->dirroot . '/mod/sliclquestions/classes/sliclquestions.class.php');
-require_once($CFG->dirroot . '/mod/sliclquestions/classes/student.class.php');
+require_once($CFG->dirroot . '/mod/sliclquestions/classfiles/sliclquestions.class.php');
+require_once($CFG->dirroot . '/mod/sliclquestions/classfiles/student.class.php');
 
 class sliclquestions_pupilassessment extends sliclquestions
 {

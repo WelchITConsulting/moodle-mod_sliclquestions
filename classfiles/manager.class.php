@@ -22,7 +22,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/mod/sliclquestions/classes/sliclquestions.class.php');
+require_once($CFG->dirroot . '/mod/sliclquestions/classfiles/sliclquestions.class.php');
 
 class mod_sliclquestions_management_console
 {

@@ -20,7 +20,7 @@
  * Created  : 25 Jun 2015
  */
 
-require_once($CFG->dirroot . '/mod/sliclquestions/classes/question.class.php');
+require_once($CFG->dirroot . '/mod/sliclquestions/classfiles/question.class.php');
 
 class sliclquestions
 {
@@ -208,6 +208,25 @@ class sliclquestions
             $cb->viewhiddenactivities    = has_capability('moodle/course:viewhiddenactivities', $this->context);
         }
         return $cb;
+    }
+
+    private function has_required($sec = 0)
+    {
+        if (empty($this->questions)) {
+            return false;
+        } elseif ($sec <= 0) {
+            foreach($this->questions as $question) {
+                if ($question->required == 'y') {
+                    return true;
+                }
+            }
+        }
+        foreach($this->questionsbysec[$sec] as $question) {
+            if ($question->required == 'y') {
+                return true;
+            }
+        }
+        return false;
     }
 
     private function print_survey($userid = false)
@@ -415,5 +434,138 @@ class sliclquestions
             $a->totpages = $numsections;
             echo html_writer::div(get_string('pageof', 'sliclquestions'), 'surveypage');
         }
+    }
+
+    private function response_delete($rid, $sec = null)
+    {
+        global $DB;
+
+        if (empty($rid)) {
+            return;
+        }
+        if ($sec != null) {
+            if ($sec < 1) {
+                return;
+            }
+            $numsections = isset($this->questionsbysec) ? count($this->questionsbysec) : 0;
+            $sec = min($numsections, $sec);
+            $qids = array();
+            foreach($this->questionsbysec[$sec] as $question) {
+                $qids[] = $questions->id;
+            }
+            if (empty($qids)) {
+                return;
+            } else {
+                list($qsql, $params) = $DB->get_in_or_equal($qids);
+                $qsql .= ' AND question_id ' . $qsql;
+            }
+        } else {
+            $qsql = '';
+            $params = array();
+        }
+        $select = 'response_id = \'' . $rid . '\' ' . $qsql;
+        foreach(array('reponse_bool', 'resp_single', 'resp_multiple', 'response_rank',
+                      'response_text', 'response_other', 'response_date') as $tbl) {
+            $DB->delete_records_select('sliclquestions_' . $tbl, $select, $params);
+        }
+    }
+
+    private function response_insert($sid, $sec, $rid, $userid, $resume = false)
+    {
+        global $DB, $USER;
+
+        $record = new stdClass();
+        $record->submitted = time();
+        if (empty($rid)) {
+            $record->survey_id = $sid;
+            $record->userid    = $userid;
+            $rid               = $DB->insert_record('sliclquestions_response', $record);
+        } else {
+            $record->id = $rid;
+            $DB->update_record('sliclquestions_response', $record);
+        }
+        if ($resume) {
+            $params = array('context'       => context_module::instance($this->cm->id),
+                            'courseid'      => $this->course->id,
+                            'relateduserid' => $userid,
+                            'other'         => array('questionnaireid' => $sid));
+            $event = \mod_sliclquestions\event\attempt_saved::create($params);
+            $event->trigger();
+        }
+        if (!empty($this->questionsbysec[$sec])) {
+            foreach($this->questionsbysec[$sec] as $question) {
+                $question->insert_response($rid);
+            }
+        }
+        return $rid;
+    }
+
+    private function response_commit($rid)
+    {
+        global $DB;
+
+        $record = new stdClass();
+        $record->id = $rid;
+        $record->complete = 'y';
+        $record->submitted = time();
+        return $DB->update_record('sliclquestions_response', $record);
+    }
+
+    private function get_response($userid, $rid = 0)
+    {
+        global $DB;
+
+        $rid = intval($rid);
+        if ($rid != 0) {
+            $fields = 'id, username';
+            $select = 'id = ' . $rid . ' AND survey_id = ' . $this->id
+                    . ' AND userid = ' . $userid . ' AND complete = \'n\'';
+            return (($DB->get_record_select('sliclquestions_response', $select, null, $fields) !== false) ? $rid : '');
+        }
+        $select = 'survey_id = ' . $$this->id . ' AND complete = \'n\' AND userid = ' . $userid;
+        if ($recs = $DB->get_records_select('sliclquestions_response', $select, null, 'submitted DESC', 'id,survey_id', 0, 1)) {
+            $rec = reset($recs);
+            return $rec->id;
+        }
+        return '';
+    }
+
+    private function response_send_email($rid, $userid = false)
+    {
+//        global $CFG, $DB;
+//
+//        require_once($CFG->libdir . '/phpmailer/class.phpmailer.php');
+//
+//        $name = s($this->name);
+//        if ($rec = $DB->get_record('sliclquestions')) {
+//            $email = $rec->email;
+//        } else {
+//            $email = '';
+//        }
+//        if (empty($email)) {
+            return false;
+//        }
+//        $answers = $this->generate_csv($rid, $userid = '', null, 1, $groupid = 0);
+//
+//        // Line endings for html and plain text emails
+//        $endplain = "\r\n";
+//        $endhtml  = $endplain . '<br>';
+//
+//        $subject = get_string('surveyresponse', 'sliclquestions', $name . ' [' . $rid . ']');
+    }
+
+    private function response_goto_thankyou()
+    {
+        global $OUTPUT;
+        echo $OUTPUT->header()
+           . html_writer::tag('h3', get_string('thankhead', 'sliclquestions'))
+           . format_text(file_rewrite_pluginfile_urls($text, 'pluginfile.php',
+                                                      $this->context->id,
+                                                      'mod_sliclquestions',
+                                                      'thankbody', $this->id),
+                         FORMAT_HTML)
+           .
+           . $OUTPUT->footer();
+
     }
 }

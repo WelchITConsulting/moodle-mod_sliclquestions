@@ -20,6 +20,32 @@
  * Created  : 25 Jun 2015
  */
 
+define('SLICLQUESCHOOSE',         0);
+define('SLICLQUESYESNO',          1);
+define('SLICLQUESTEXT',           2);
+define('SLICLQUESESSAY',          3);
+define('SLICLQUESRADIO',          4);
+define('SLICLQUESCHECK',          5);
+define('SLICLQUESDROP',           6);
+define('SLICLQUESRATE',           8);
+define('SLICLQUESDATE',           9);
+define('SLICLQUESNUMERIC',       10);
+define('SLICLQUESPAGEBREAK',     99);
+define('SLICLQUESSECTIONTEXT',  100);
+
+global $qtypenames;
+$qtypenames = array(SLICLQUESYESNO          => 'yesno',
+                    SLICLQUESTEXT           => 'text',
+                    SLICLQUESESSAY          => 'essay',
+                    SLICLQUESRADIO          => 'radio',
+                    SLICLQUESCHECK          => 'check',
+                    SLICLQUESDROP           => 'drop',
+                    SLICLQUESRATE           => 'rate',
+                    SLICLQUESDATE           => 'date',
+                    SLICLQUESNUMERIC        => 'numeric',
+                    SLICLQUESPAGEBREAK      => 'pagebreak',
+                    SLICLQUESSECTIONTEXT    => 'sectiontext');
+
 class sliclquestions_question
 {
     private $id             = 0;
@@ -79,7 +105,18 @@ class sliclquestions_question
         return false;
     }
 
-
+    public function survey_display($formdata, $descendantsdata, $qnum = '', $blankquestionnaire = false)
+    {
+        global $qtypenames;
+        $method = $qtypenames[$this->type_id] . '_survey_display';
+        if (method_exists($this, $method)) {
+            $this->questionstart_survey_display($qnum, $formdata, $descendantsdata);
+            $this->$method($formdata, $descendantsdata, $blankquestionnaire);
+            $this->questionend_survey_display($qnum);
+        } else {
+            print_error('displaymethod', 'sliclquestions');
+        }
+    }
 
 
 

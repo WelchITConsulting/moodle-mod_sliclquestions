@@ -21,7 +21,7 @@
  */
 
 require_once('../../config.php');
-require_once($CFG->dirroot . '/mod/sliclquestions/classes/sliclquestions.class.php');
+require_once($CFG->dirroot . '/mod/sliclquestions/classfiles/sliclquestions.class.php');
 
 if (!isset($SESSION->sliclquestions)) {
     $SESSION->sliclquestions = new stdClass();
