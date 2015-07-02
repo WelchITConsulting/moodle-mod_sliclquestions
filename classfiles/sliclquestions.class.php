@@ -77,7 +77,7 @@ class sliclquestions
             foreach($records as $record) {
                 $this->questions[$record->id] = new sliclquestions_question(0, $record, $this->context);
                 if ($record->type_id != SLICLQUESPAGEBREAK) {
-                    $this->questionsbysec[sec][$record->id] = &$this->questions[$record->id];
+                    $this->questionsbysec[$sec][$record->id] = &$this->questions[$record->id];
                     $isbreak = false;
                 } else {
                     if (($record->position != 1) && !$isbreak) {
