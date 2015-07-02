@@ -89,12 +89,20 @@ class sliclquestions
         }
     }
 
+    /**
+     * Renders the page header content for the SLICL questions pages
+     *
+     * @global object $OUTPUT The current Moodle renderer object
+     * @global object $PAGE The current Moodle page object
+     */
     public function render_page_header()
     {
-        global $OUTPUT;
+        global $OUTPUT, $PAGE;
 
+        if (!$PAGE->headerprinted) {
+            echo $OUTPUT->header();
+        }
         $opts = (empty($this->displayoptions) ? array() : unserialize($this->displayoptions));
-
         if (!isset($opts['displayheading']) || !empty($opts['displayheading'])) {
             echo $OUTPUT->heading(format_string($this->name), 2);
         }
