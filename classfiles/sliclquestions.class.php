@@ -163,7 +163,7 @@ class sliclquestions
 
     public function is_open()
     {
-        return (($this->opendate > 0) ? ($this->opendate < time()) : false);
+        return (($this->opendate > 0) ? ($this->opendate < time()) : true);
     }
 
     public function is_closed()
