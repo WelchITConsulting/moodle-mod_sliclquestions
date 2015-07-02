@@ -81,9 +81,8 @@ if ($act) {
 $PAGE->set_url(new moodle_url('/mod/sliclquestions/complete.php', $params));
 
 // Print site header
-$PAGE->set_title(iformat_string($sliclquestions->name));
+$PAGE->set_title(format_string($sliclquestions->name));
 $PAGE->set_heading(format_string($course->fullname));
-echo $OUTPUT->header();
 
 // Capability checks
 if (empty($cm->visible) && !has_capability('moodle/course:viewhiddenactivities', $context)) {
@@ -103,6 +102,7 @@ if (!$sliclquestions->is_open()) {
 } elseif (!$sliclquestions->user_is_eligible()) {
     notice(get_string('', 'sliclquestions'), $url);
 } else {
+    $sliclquestions->render_page_header();
     $sliclquestions->view($url);
 }
 echo $OUTPUT->footer();
