@@ -37,7 +37,7 @@ class sliclquestions_pupil_assessment
 
     public function __construct(&$course, &$context, &$survey, &$url, &$params)
     {
-        $this->display_pupils($sliclquestions, $url, $params);
+        $this->display_pupils($survey, $url, $params);
     }
 
     private function display_pupils(&$survey, &$url, &$params)
