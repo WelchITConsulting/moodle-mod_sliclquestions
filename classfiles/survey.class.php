@@ -46,7 +46,7 @@ class sliclquestions_survey
             notice(get_string('notopen', 'sliclquestions', userdate($survey->opendate)), $url);
         } elseif ($survey->is_closed()) {
             notice(get_string('closed', 'sliclquestions', userdate($survey->closedate)), $url);
-        } elseif ($survey->user_is_eligible($USER->id)) {
+        } elseif (!$survey->user_is_eligible($USER->id)) {
             if ($survey->questions) {
                 notice(get_string('noteligible', 'sliclquestions'), $url);
             }
