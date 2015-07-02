@@ -27,7 +27,7 @@ class sliclquestions_pupil_assessment
 {
     static private $_instance;
 
-    static public function get_instance(&$course, $context, &$survey, $url, $params)
+    static public function get_instance(&$course, &$context, &$survey, &$url, &$params)
     {
         if (empty(self::$_instance)) {
             self::$_instance = new sliclquestions_pupil_assessment($course, $context, $survey, $url, $params);
