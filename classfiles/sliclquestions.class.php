@@ -197,7 +197,7 @@ class sliclquestions
             $cb->manage                  = has_capability('mod/sliclquestions:manage', $this->context);
             $cb->assesspupils            = has_capability('mod/sliclquestions:assesspupils', $this->context);
             $cb->registerpupils          = has_capability('mod/sliclquestions:registerpupils', $this->context);
-            $cb->viewstatistics          = has_capability('mod/sliclquestions:viewstatistics', $context);
+            $cb->viewstatistics          = has_capability('mod/sliclquestions:viewstatistics', $this->context);
 //            $cb->viewsingleresponse      = has_capability('mod/sliclquestions:viewsingleresponse', $this->context);
 //            $cb->downloadresponses       = has_capability('mod/sliclquestions:downloadresponses', $this->context);
 //            $cb->deleteresponses         = has_capability('mod/sliclquestions:deleteresponses', $this->context);
