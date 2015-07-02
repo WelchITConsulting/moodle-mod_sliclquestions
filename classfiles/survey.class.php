@@ -20,6 +20,8 @@
  * Created  : 22 Jun 2015
  */
 
+require_once($CFG->dirroot . '/mod/sliclquestions/classfiles/sliclquestions.class.php');
+
 class sliclquestions_survey
 {
     static private $_instance;
@@ -32,7 +34,10 @@ class sliclquestions_survey
         return self::$_instance;
     }
 
-    public function __construct(&$course, &$context, &$survey, &$url, &$params)
+    public function __construct(&$course, &$context,
+                                sliclquestions &$survey,
+                                moodle_url &$url,
+                                &$params)
     {
         global $USER;
 
@@ -40,44 +45,32 @@ class sliclquestions_survey
             notice(get_string('notopen', 'sliclquestions', userdate($survey->opendate)), $url);
         } elseif ($survey->is_closed()) {
             notice(get_string('closed', 'sliclquestions', userdate($survey->closedate)), $url);
+        } elseif ($survey->user_is_eligible($USER->id)) {
+            if ($survey->questions) {
+                notice(get_string('noteligible', 'sliclquestions'), $url);
+            }
+        } else {
+            $select = 'survey_id = ' . $survey->id
+                    . ' AND userid = ' . $USER->id;
+            $resume = $DB->get_record_select('sliclquestions_response', $select, null) !== false;
+            if ($resume) {
+                $complete = get_string('resumesurvey', 'sliclquestions');
+            } else {
+                $complete = get_string('answerquestions', 'sliclquestions');
+            }
+            if ($survey->questions) {
+                $complete = html_writer::tag('strong', $complete);
+                echo html_writer::link(new moodle_url('/mod/sliclquestions/complete.php', array('id' => $survey->cm->id)),
+                                       $complete);
+            }
         }
-
-//        if (!$survey->is_open()) {
-//            echo html_writer::div(get_string('notopen', 'sliclquestions', userdate($survey->opendate)), 'message');
-//        } elseif ($survey->is_closed()) {
-//            echo html_writer::div(get_string('closed', 'sliclquestions', userdate($survey->closedate)), 'message');
-//        } elseif ($survey->user_is_eligible($USER->id)) {
-//            if ($survey->questions) {
-//                echo html_writer::div(get_string('noteligible', 'sliclquestions'), 'message');
-//            }
-//        } elseif ($survey->user_can_take($USER-id)) {
-//            $select = 'survey_id = ' . $survey->id
-//                    . ' AND userid = ' . $USER->id;
-//            $resume = $DB->get_record_select('sliclquestions_response', $select, null) !== false;
-//            if ($resume) {
-//                $complete = get_string('resumesurvey', 'sliclquestions');
-//            } else {
-//                $complete = get_string('answerquestions', 'sliclquestions');
-//            }
-//            if ($survey->questions) {
-//                $complete = html_writer::tag('strong', $complete);
-//                echo html_writer::link(new moodle_url('/mod/sliclquestions/complete.php', array('id' => $survey->cm->id)),
-//                                       $complete);
-//            }
-//        }
-//        if (!$survey->questions) {
-//            echo html_writer::tag('p', get_string('noneinuse', 'sliclquestions'));
-//        }
-//        if ($survey->capabilities->editquestions && !$survey->questions) {
-//            $str = html_writer::tag('strong', get_string('addquestions', 'sliclquestions'));
-//            echo html_writer::link(new moodle_url('/mod/sliclquestions/questions.php', array('id' => $survey->cm->id)),
-//                                   $str);
-//        }
-
-
-
-
-        
-        echo '<p>End of survey</p>';
+        if (!$survey->questions) {
+            echo html_writer::tag('p', get_string('noneinuse', 'sliclquestions'));
+        }
+        if ($survey->capabilities->editquestions && !$survey->questions) {
+            $str = html_writer::tag('strong', get_string('addquestions', 'sliclquestions'));
+            echo html_writer::link(new moodle_url('/mod/sliclquestions/questions.php', array('id' => $survey->cm->id)),
+                                   $str);
+        }
     }
 }
