@@ -34,12 +34,10 @@ class sliclquestions_survey
         return self::$_instance;
     }
 
-    public function __construct(&$course, &$context,
-                                sliclquestions &$survey,
-                                moodle_url &$url,
-                                &$params)
+    public function __construct(&$course, &$context, sliclquestions &$survey,
+                                moodle_url &$url, &$params)
     {
-        global $USER;
+        global $DB, $USER;
 
         $survey->render_page_header();
         if (!$survey->is_open()) {
