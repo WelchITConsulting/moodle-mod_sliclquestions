@@ -111,7 +111,7 @@ switch($sliclquestions->questype) {
 
             // Load the pupil registration manager
             require_once($CFG->dirroot . '/mod/sliclquestions/classfiles/pupilregister.class.php');
-            mod_sliclquestions_pupil_register::get_instance($course, $context, $sliclquestions, $url, $params);
+            sliclquestions_pupil_register::get_instance($course, $context, $sliclquestions, $url, $params);
 
         } else {
 
@@ -127,7 +127,7 @@ switch($sliclquestions->questype) {
 
             // Load the pupil registration manager
             require_once($CFG->dirroot . '/mod/sliclquestions/classfiles/pupilassessment.class.php');
-            sliclquestions_pupil_assessment::get_instance($sliclquestions, $context, $url, $params);
+            sliclquestions_pupil_assessment::get_instance($course, $context, $sliclquestions, $url, $params);
 
         } else {
 
@@ -143,7 +143,7 @@ switch($sliclquestions->questype) {
 
             // Load the pupil registration manager
             require_once($CFG->dirroot . '/mod/sliclquestions/classfiles/survey.class.php');
-            mod_sliclquestions_survey::get_instance($sliclquestions, $context, $url, $params);
+            sliclquestions_survey::get_instance($course, $context, $sliclquestions, $url, $params);
 
         } else {
 

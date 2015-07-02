@@ -30,7 +30,7 @@ class sliclquestions_pupil_assessment
     static public function get_instance(&$course, $context, &$survey, $url, $params)
     {
         if (empty(self::$_instance)) {
-            self::$_instance = new mod_sliclquestions_pupil_register($course, $context, $survey, $url, $params);
+            self::$_instance = new sliclquestions_pupil_assessment($course, $context, $survey, $url, $params);
         }
         return self::$_instance;
     }

@@ -22,14 +22,14 @@
 
 require_once($CFG->dirroot . '/mod/sliclquestions/classfiles/sliclquestions.class.php');
 
-class mod_sliclquestions_pupil_register
+class sliclquestions_pupil_register
 {
     static private $_instance;
 
     static public function get_instance(&$course, $context, &$survey, $url, $params)
     {
         if (empty(self::$_instance)) {
-            self::$_instance = new mod_sliclquestions_pupil_register($course, $context, $survey, $url, $params);
+            self::$_instance = new sliclquestions_pupil_register($course, $context, $survey, $url, $params);
         }
         return self::$_instance;
     }

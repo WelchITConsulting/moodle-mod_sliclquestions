@@ -20,14 +20,14 @@
  * Created  : 22 Jun 2015
  */
 
-class mod_sliclquestions_survey
+class sliclquestions_survey
 {
     static private $_instance;
 
     static public function get_instance(&$sliclquestions, &$context, &$url, &$params)
     {
         if (empty(self::$_instance)) {
-            self::$_instance = new mod_sliclquestions_survey($sliclquestions, $context, $url, $params);
+            self::$_instance = new sliclquestions_survey($sliclquestions, $context, $url, $params);
         }
         return self::$_instance;
     }
