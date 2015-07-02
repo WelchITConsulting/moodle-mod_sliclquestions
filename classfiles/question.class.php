@@ -99,20 +99,20 @@ class sliclquestions_question
     public function insert_response($rid)
     {
         $method = 'insert_' . $this->responsetable;
-        if (  method_exists($this, $method)) {
+        if (method_exists($this, $method)) {
             return $this->$method($rid);
         }
         return false;
     }
 
-    public function survey_display($formdata, $descendantsdata, $qnum = '', $blankquestionnaire = false)
+    public function render($formdata, $descendantsdata, $qnum = '', $blankquestionnaire = false)
     {
         global $qtypenames;
-        $method = $qtypenames[$this->type_id] . '_survey_display';
+        $method = 'render_' . $qtypenames[$this->type_id];
         if (method_exists($this, $method)) {
-            $this->questionstart_survey_display($qnum, $formdata, $descendantsdata);
+            $this->render_start($qnum, $formdata, $descendantsdata);
             $this->$method($formdata, $descendantsdata, $blankquestionnaire);
-            $this->questionend_survey_display($qnum);
+            $this->render_end();
         } else {
             print_error('displaymethod', 'sliclquestions');
         }
@@ -331,5 +331,265 @@ class sliclquestions_question
             }
         }
         return false;
+    }
+
+    private function render_start($qnum, $formdata = '')
+    {
+        global $PAGE, $SESSION;
+
+        $currenttab = $SESSEION->sliclquestions_current_tab;
+        $pagetype = $PAGE->pagetype;
+        $skippedquestion = false;
+        $skppedclass = '';
+
+    }
+
+    private function render_end()
+    {
+        echo html_writer::end_div()
+           . html_writer::end_tag('fieldset');
+    }
+
+    private function render_yesno($data, $descendantdata, $blankquestionnaire = false)
+    {
+
+    }
+
+    private function render_text($data, $descendantdata, $blankquestionnaire = false)
+    {
+        $params = array('type'       => 'text',
+                        'name'       => 'q' . $this->id,
+                        'id'         => $this->type . $this->id,
+                        'size'       => $this->length,
+                        'value'      => (isset($data->{'q' . $this->id}) ? stripslashes($data->{'q' . $this->id}) : ''),
+                        'onkeypress' => 'return event.keycode != 13');
+        if ($this->precise > 0) {
+            $params['maxlength'] = $this->precise;
+        }
+        echo html_writer::empty_tag('input', $params);
+    }
+
+    private function render_essay($data, $descendantdata, $blankquestionnaire = false)
+    {
+        $rows = 15;
+        if ($this->precise == 0) {
+            $canusehtmleditor = true;
+            $rows = (($this->length == 0) ? $rows : $this->length);
+        } else {
+            $canusehtmleditor = false;
+            $rows = (($this->precise > 1) ? $this->precise : $this->length);
+        }
+        $name = 'q' . $this->id;
+        if ($canusehtmleditor) {
+            $editor = editors_get_preferred_editor();
+            $editor->use_editor($name, array('subdirs' => 0, 'maxbytes' => 0,
+                                             'maxfiles' => -1, 'context' => $this->context,
+                                             'noclean' => 0, 'trusttext' => 0));
+        }
+        echo html_writer::tag('textarea',
+                              (isset($data->$name) ? $data->$name : ''),
+                              array('name' => $name,
+                                    'id'   => $name,
+                                    'rows' => $rows,
+                                    'cols' => 80));
+    }
+
+    private function render_radio($data, $descendantdata, $blankquestionnaire = false)
+    {
+
+    }
+
+    private function render_check($data, $descendantdata, $blankquestionnaire = false)
+    {
+
+    }
+
+    private function render_drop($data, $descendantdata, $blankquestionnaire = false)
+    {
+
+    }
+
+    private function render_rate($data, $descendantdata, $blankquestionnaire = false)
+    {
+        $name = 'q' . $this->id;
+        if (!empty($data) && (!isset($data->$name) || !is_array($data->name))) {
+            $data->$name = array();
+        }
+        $isna         = $this->precise = 1;
+        $osgood       = $this->precise = 3;
+        $n            = array();
+        $v            = array();
+        $nameddegrees = 0;
+        $maxndlen     = 0;
+        $nocontent    = false;
+        foreach($this->choices as $cid => $choice) {
+            if (empty($choice->content)) {
+                $nocontent = true;
+                $contents  = sliclquestions_choice_values($content);
+                if ($contents->modname) {
+                    $choice->content = $contents->text;
+                }
+            } else {
+                if (preg_match('/^([0-9]{1,3})=(.*)$/', $choice->content, $ndd)) {
+                    $n[$nameddegrees] = format_text($ndd[2], FORMAT_HTML);
+                    if (strlen($n[$nameddegrees]) > $maxndlen) {
+                        $maxndlen = strlen($n[$nameddegrees]);
+                    }
+                    $v[$nameddegrees] = $ndd[1];
+                    $this->choices[$cid] = '';
+                    $nameddegrees++;
+                }
+            }
+        }
+        echo html_writer::start_tag('table', array('style' => 'width:' . ($nocontent ? '50%' : '99.9%')))
+           . html_writer::start_tag('tbody')
+           . html_writer::start_tag('tr');
+        if ($osgood) {
+            if ($maxndlen < 4) {
+                $width = '45%';
+            } elseif ($maxndlen < 13) {
+                $width = '40%';
+            } else {
+                $width = '30%';
+            }
+            $colwidth  = ((100 - ($width * 2)) / $this->length) . '%';
+            $textalign = 'right';
+        } elseif ($nocontent) {
+            $width     = '0%';
+            $colwidth  = (100 / $this->length) . '%';
+            $textalign = 'right';
+        } else {
+            $width     = '59%';
+            $colwidth  = (40 / $this->length) . '%';
+            $textalign = 'left';
+        }
+        echo html_writer::tag('td', '', array('style' => 'width:' . $width));
+        if ($isna) {
+            $na = get_string('notapplicable', 'sliclquestions');
+        } else {
+            $na = '';
+        }
+        if ($this->precise == 2) {
+            $order     = true;
+            $nbchoices = $this->length;
+        } else {
+            $order     = false;
+            $nbchoices = count($this->choices) - $nameddegrees;
+        }
+        if (($nbchoices > 1) && ($this->precise != 2) && !$blankquestionnaire) {
+            echo html_writer::tag('td', '');
+        }
+        for ($j = 0; $j < $this->length; $j++) {
+            if (isset($n[$j])) {
+                $str = $n[$j];
+                $val = $v[$j];
+            } else {
+                $str = $j + 1;
+                $val = $j + 1;
+            }
+            if ($blankquestionnaire) {
+                $val = html_writer::empty_tag('br')
+                     . '('
+                     . $val
+                     . ')';
+            } else {
+                $val = '';
+            }
+            echo html_writer::tag('td', $str . $val, array('style' => 'width:' . $colwidth . ';text-align:center',
+                                                           'class' => 'smalltext'));
+        }
+        if ($na) {
+            echo html_writer::tag('td', $na . array('style' => 'width:' . $colwidth . ';text-align:center',
+                                                    'class' => 'smalltext'));
+        }
+        echo html_writer::end_tag('tr');
+        $num = 0;
+        foreach($this->choices as $cid => $choice) {
+            $str = $name . '_' . $cid;
+            $num += (isset($data->$str) && ($data->$str != -999));
+        }
+        $notcomplete = false;
+        if (($num != $nbchoices) && ($num != 0)) {
+            notify(get_string('checkallradiobuttons', 'sliclquestions', $nbchoices));
+            $notcomplete = true;
+        }
+        foreach($this->choices as $cid => $choice) {
+            if (isset($choice->content)) {
+                $str = $name . '_' . $cid;
+                $content = $choice->content;
+                if ($osgood) {
+                    list($content, $contentright) = preg_split('/[|]/', $this->content);
+                }
+                echo html_writer::start_tag('tr', array('class' => 'raterow'))
+                   . html_writer::tag('td', format_text($content, FORMAT_HTML),
+                                      array('style' => 'text-align:' . $textalign));
+                $bg = 'c0';
+                if (($nbchoices > 1) && ($this->precise != 2) && !$blankquestionnaire) {
+                    $completeclass = 'notanswered';
+                    $title         = '';
+                    if ($notcomplete && isset($data->$str) && ($data->$str == -999)) {
+                        $completeclass = 'notcomplete';
+                        $title         = get_string('pleasecomplete', 'sliclquestions');
+                    }
+                    $inpparams = array('name'    => $str,
+                                       'type'    => 'radio',
+                                       'value'   => '-999',
+                                       'checked' => 'checked');
+                    if ($order) {
+                        $inpparams['onclick'] = 'other_rate_uncheck(name,value)';
+                    }
+                    echo html_writer::start_tag('td', array('title' => $title,
+                                                            'class' => $completeclass,
+                                                            'style' => 'width:1%'))
+                       . html_writer::empty_tag('input', $inpparams)
+                       . html_writer::end_tag('td');
+                }
+                for ($j = 0; $j < $this->length + $isna; $j++) {
+                    $inpparams = array('name'    => $str,
+                                       'type'    => 'radio',
+                                       'value'   => (($j < $this->length) ? $j : -1));
+                    if (isset($data->$str) && (($j == $data->$str) || (($j == $this->length) && ($data->$str == -1)))) {
+                        $params['checked'] = 'checked';
+                    }
+                    if ($blankquestionnaire) {
+                        $params['disabled'] = 'disabled';
+                    }
+                    echo html_writer::start_tag('td', array('style' => 'text-align:center',
+                                                            'class' => $bg . ' raterow'))
+                       . html_writer::tag('span',
+                                          get_string('option', 'sliclquestions', ($j + 1)),
+                                          array('class' => 'accesshide'))
+                       . html_writer::empty_tag('input', $inpparams)
+                       . html_writer::end_tag('td');
+                    $bg = (($bg == 'c0') ? 'c1' : 'c0');
+                }
+                if ($osgood) {
+                    echo html_writer::tag('td', format_text($contentright, FORMAT_HTML));
+                }
+                echo html_writer::end_tag('tr');
+            }
+        }
+        echo html_writer::end_tag('tbody')
+           . html_writer::end_tag('table');
+    }
+
+    private function render_date($data, $descendantdata, $blankquestionnaire = false)
+    {
+
+    }
+
+    private function render_numeric($data, $descendantdata, $blankquestionnaire = false)
+    {
+
+    }
+
+    private function render_pagebreak($data, $descendantdata, $blankquestionnaire = false)
+    {
+
+    }
+
+    private function render_sectiontext($data, $descendantdata, $blankquestionnaire = false)
+    {
+
     }
 }

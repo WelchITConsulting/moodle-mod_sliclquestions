@@ -295,7 +295,7 @@ class sliclquestions
                 if ($question->type_id != SLICLQUESSECTIONTEXT) {
                     $i++;
                 }
-                $question->survey_display($fordata, $descendantdata = '', $i, $this->usehtmleditor);
+                $question->render($fordata, $descendantdata = '', $i, $this->usehtmleditor);
             }
             $this->print_survey_end($fordata->sec, $numsections);
             // End of survey_render code
