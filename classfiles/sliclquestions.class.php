@@ -295,15 +295,26 @@ class sliclquestions
         }
         if (!empty($formdata->resume) && $this->resume) {
             $this->repsonse_delete($formdata->rid, $formdata->sec);
-            $formdata->rid = $this->response_insert($this->id, )
+            $formdata->rid = $this->response_insert($this->id, $formdata->sec, $formdata->rid, $userid, $resume = true);
+            $this->response_goto_saved($action);
+            return;
         }
+        if (!empty($formdata->next)) {
+
+
+
+
+        }
+        if (!empty($formdata->prev)) {
 
 
 
 
 
-
-
+        }
+        if (!empty($formdata->rid)) {
+            $this->response_import_sec($formdata->rid, $formdata->sec, $formdata);
+        }
         $formdatareferer = !empty($formdata->referer) ? htmlspecialchars($formdata->referer) : '';
         $formdatsrid     = isset($formdata->rid) ? $formdata->rid : 0;
         echo $OUTPUT->box_start('generalbox')
