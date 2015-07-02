@@ -192,18 +192,22 @@ class sliclquestions
             $cb = new stdClass();
             $cb->view                    = has_capability('mod/sliclquestions:view', $this->context);
             $cb->submit                  = has_capability('mod/sliclquestions:submit', $this->context);
-            $cb->viewsingleresponse      = has_capability('mod/sliclquestions:viewsingleresponse', $this->context);
-            $cb->downloadresponses       = has_capability('mod/sliclquestions:downloadresponses', $this->context);
-            $cb->deleteresponses         = has_capability('mod/sliclquestions:deleteresponses', $this->context);
-            $cb->manage                  = has_capability('mod/sliclquestions:readallresponses', $this->context);
-            $cb->editquestions           = has_capability('mod/sliclquestions:editquestions', $this->context);
-            $cb->createtemplates         = has_capability('mod/sliclquestions:createtemplates', $this->context);
-            $cb->createpublic            = has_capability('mod/sliclquestions:createpublic', $this->context);
-            $cb->readownresponses        = has_capability('mod/sliclquestions:readownresponses', $this->context);
-            $cb->readallresponses        = has_capability('mod/sliclquestions:readallresponses', $this->context);
-            $cb->readallresponsesanytime = has_capability('mod/sliclquestions:readallresponsesanytime', $this->context);
             $cb->printblank              = has_capability('mod/sliclquestions:printblank', $this->context);
             $cb->preview                 = has_capability('mod/sliclquestions:preview', $this->context);
+            $cb->manage                  = has_capability('mod/sliclquestions:manage', $this->context);
+            $cb->assesspupils            = has_capability('mod/sliclquestions:assesspupils', $this->context);
+            $cb->registerpupils          = has_capability('mod/sliclquestions:registerpupils', $this->context);
+            $cb->viewstatistics          = has_capability('mod/sliclquestions:viewstatistics', $context);
+//            $cb->viewsingleresponse      = has_capability('mod/sliclquestions:viewsingleresponse', $this->context);
+//            $cb->downloadresponses       = has_capability('mod/sliclquestions:downloadresponses', $this->context);
+//            $cb->deleteresponses         = has_capability('mod/sliclquestions:deleteresponses', $this->context);
+//            $cb->manage                  = has_capability('mod/sliclquestions:readallresponses', $this->context);
+            $cb->editquestions           = has_capability('mod/sliclquestions:editquestions', $this->context);
+//            $cb->createtemplates         = has_capability('mod/sliclquestions:createtemplates', $this->context);
+//            $cb->createpublic            = has_capability('mod/sliclquestions:createpublic', $this->context);
+//            $cb->readownresponses        = has_capability('mod/sliclquestions:readownresponses', $this->context);
+//            $cb->readallresponses        = has_capability('mod/sliclquestions:readallresponses', $this->context);
+//            $cb->readallresponsesanytime = has_capability('mod/sliclquestions:readallresponsesanytime', $this->context);
 
             $cb->viewhiddenactivities    = has_capability('moodle/course:viewhiddenactivities', $this->context);
         }
