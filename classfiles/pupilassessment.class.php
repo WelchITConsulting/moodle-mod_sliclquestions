@@ -23,7 +23,7 @@
 require_once($CFG->dirroot . '/mod/sliclquestions/classfiles/sliclquestions.class.php');
 require_once($CFG->dirroot . '/mod/sliclquestions/classfiles/student.class.php');
 
-class sliclquestions_pupilassessment extends sliclquestions
+class sliclquestions_pupil_assessment extends sliclquestions
 {
     public function __construct(&$course, &$cm, $id = 0, &$sliclquestions = null, $addquestions = null)
     {
