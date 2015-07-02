@@ -35,7 +35,7 @@ class sliclquestions_pupil_assessment
         return self::$_instance;
     }
 
-    public function __construct(&$course, &$cm, $id = 0, &$sliclquestions = null, $addquestions = null)
+    public function __construct(&$course, &$context, &$survey, &$url, &$params)
     {
         $this->display_pupils($sliclquestions, $url, $params);
     }
@@ -65,7 +65,7 @@ class sliclquestions_pupil_assessment
                 $assessurl = $url;
                 $assessurl->params(array('act' => 'assess',
                                          'pid' => $pupil->id));
-                $assessbtn = '<a href="' . $editurl . '">' . get_string('edit') . '</a>';
+                $assessbtn = '<a href="' . $assessurl . '">' . get_string('edit') . '</a>';
                 $table->data[] = array($pupil->forename . ' ' . $pupil->surname,
                                        ($pupil->sex == 'm' ? get_string('male', 'sliclquestions')
                                                            : get_string('female', 'sliclquestions')),
@@ -79,7 +79,11 @@ class sliclquestions_pupil_assessment
 
         $options = (empty($survey->displayoptions) ? array() : unserialize($survey->displayoptions));
 
-        $content = file_rewrite_pluginfile_urls($survey->content, 'pluginfile.php', $survey->context->id, 'mod_sliclquestions', 'content', $survey->id);
+        $content = file_rewrite_pluginfile_urls($survey->content,
+                                                'pluginfile.php',
+                                                $survey->context->id,
+                                                'mod_sliclquestions', 'content',
+                                                $survey->id);
         $formatopt              = new stdClass();
         $formatopt->noclean     = true;
         $formatopt->overflowdiv = true;
