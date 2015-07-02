@@ -41,6 +41,7 @@ class sliclquestions_survey
     {
         global $USER;
 
+        $survey->render_page_header();
         if (!$survey->is_open()) {
             notice(get_string('notopen', 'sliclquestions', userdate($survey->opendate)), $url);
         } elseif ($survey->is_closed()) {
