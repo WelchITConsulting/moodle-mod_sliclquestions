@@ -245,18 +245,58 @@ class sliclquestions
 
     private function print_survey($userid = false)
     {
-        global $CFG, $OUTPUT;
+        global $CFG, $OUTPUT, $SESSION;
 
         $formdata = new stdClass();
         if (data_submitted() && confirm_sesskey()) {
             $formdata = data_submitted();
         }
         $formdata->rid = $this->get_response($userid);
-
+        if (!empty($formdata->rid) && (empty($formdata->sec) || (intval($formdata->sec) < 1))) {
+            $pos = 0;
+            foreach(array('response_bool', 'resp_single', 'resp_multiple', 'response_rank',
+                          'response_text', 'response_other', 'response_date') as $tbl) {
+                $sql = 'SELECT MAX(q.question) as num FROM {sliclquestions_'
+                     . $tbl
+                     . '} a, {sliclquestions_question} q WHERE q.id=a.question_id'
+                     . ' AND q.survet_id=? AND q.deleted=\'n\' AND a.response_id=?';
+                if ($record = $DB->get_record_sql($sql, array($this->id, $rid))) {
+                    $newmax = (int)$record->num;
+                    if ($newmax > $pos) {
+                        $pos = $newmax;
+                    }
+                }
+            }
+            $select = 'survey_id =\'' . $this->id . '\' AND type_id = 99 AND position < '
+                    . $pos
+                    . ' AND deleted = \'n\'';
+            $formdata->sec = $DB->count_records_select('sliclquestions_question', $select) + 1;
+        }
+        if (empty($formdata->sec)) {
+            $formdata->sec = 1;
+        } else {
+            $formdata->sec = (intval($formdata->sec) > 0) ? intval($formdata->sec) : 1;
+        }
         $msg = '';
         $numsections = isset($this->questionsbysec) ? count($this->questionsbysec) : 0;
         $action = $CFG->wwwroot . '/mod/sliclquestions/complete.php?id=' . $this->cm->id;
-
+        if ($formdata->sec == 1) {
+            $SESSION->sliclquestions->end = fals;
+        }
+        $SESSION->sliclquestions->nbquestionsonpage = '';
+        if (!empty($formdata->submit)) {
+            if (isset($SESSION->sliclquestions->end) && ($SESSION->sliclquestions->end == true)) {
+                return;
+            }
+            $msg = $this->response_check_format($formdata->sec, $formdata);
+            if (empty($msg)) {
+                return;
+            }
+        }
+        if (!empty($formdata->resume) && $this->resume) {
+            $this->repsonse_delete($formdata->rid, $formdata->sec);
+            $formdata->rid = $this->response_insert($this->id, )
+        }
 
 
 
