@@ -266,7 +266,7 @@ class sliclquestions
 
         $formdatareferer = !empty($formdata->referer) ? htmlspecialchars($formdata->referer) : '';
         $formdatsrid     = isset($formdata->rid) ? $formdata->rid : 0;
-        echo $OUPUT->box_start('generalbox')
+        echo $OUTPUT->box_start('generalbox')
            . html_writer::start_tag('form', array('id'     => 'phpesp_response',
                                                   'method' => 'post',
                                                   'action' => $action))
