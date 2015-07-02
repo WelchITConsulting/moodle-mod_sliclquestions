@@ -281,7 +281,7 @@ class sliclquestions
         $numsections = isset($this->questionsbysec) ? count($this->questionsbysec) : 0;
         $action = $CFG->wwwroot . '/mod/sliclquestions/complete.php?id=' . $this->cm->id;
         if ($formdata->sec == 1) {
-            $SESSION->sliclquestions->end = fals;
+            $SESSION->sliclquestions->end = false;
         }
         $SESSION->sliclquestions->nbquestionsonpage = '';
         if (!empty($formdata->submit)) {
