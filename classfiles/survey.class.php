@@ -36,16 +36,16 @@ class sliclquestions_survey
     {
         global $USER;
 
-        if (!$sliclquestions->is_open()) {
-            echo html_writer::div(get_string('notopen', 'sliclquestions', userdate($sliclquestions->opendate)), 'message');
-        } elseif ($sliclquestions->is_closed()) {
-            echo html_writer::div(get_string('closed', 'sliclquestions', userdate($sliclquestions->closedate)), 'message');
-        } elseif ($sliclquestions->user_is_eligible($USER->id)) {
-            if ($sliclquestions->questions) {
+        if (!$survey->is_open()) {
+            echo html_writer::div(get_string('notopen', 'sliclquestions', userdate($survey->opendate)), 'message');
+        } elseif ($survey->is_closed()) {
+            echo html_writer::div(get_string('closed', 'sliclquestions', userdate($survey->closedate)), 'message');
+        } elseif ($survey->user_is_eligible($USER->id)) {
+            if ($survey->questions) {
                 echo html_writer::div(get_string('noteligible', 'sliclquestions'), 'message');
             }
-        } elseif ($sliclquestions->user_can_take($USER-id)) {
-            $select = 'survey_id = ' . $sliclquestions->id
+        } elseif ($survey->user_can_take($USER-id)) {
+            $select = 'survey_id = ' . $survey->id
                     . ' AND userid = ' . $USER->id;
             $resume = $DB->get_record_select('sliclquestions_response', $select, null) !== false;
             if ($resume) {
@@ -53,18 +53,18 @@ class sliclquestions_survey
             } else {
                 $complete = get_string('answerquestions', 'sliclquestions');
             }
-            if ($sliclquestions->questions) {
+            if ($survey->questions) {
                 $complete = html_writer::tag('strong', $complete);
-                echo html_writer::link(new moodle_url('/mod/sliclquestions/complete.php', array('id' => $sliclquestions->cm->id)),
+                echo html_writer::link(new moodle_url('/mod/sliclquestions/complete.php', array('id' => $survey->cm->id)),
                                        $complete);
             }
         }
-        if (!$sliclquestions->questions) {
+        if (!$survey->questions) {
             echo html_writer::tag('p', get_string('noneinuse', 'sliclquestions'));
         }
-        if ($sliclquestions->capabilities->editquestions && !$sliclquestions->questions) {
+        if ($survey->capabilities->editquestions && !$survey->questions) {
             $str = html_writer::tag('strong', get_string('addquestions', 'sliclquestions'));
-            echo html_writer::link(new moodle_url('/mod/sliclquestions/questions.php', array('id' => $sliclquestions->cm->id)),
+            echo html_writer::link(new moodle_url('/mod/sliclquestions/questions.php', array('id' => $survey->cm->id)),
                                    $str);
         }
     }
