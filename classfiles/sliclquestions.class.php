@@ -98,7 +98,7 @@ class sliclquestions
         if (!isset($opts['displayheading']) || !empty($opts['displayheading'])) {
             echo $OUTPUT->heading(format_string($this->name), 2);
         }
-        if (!empty($opts['printintro']) && trim(strip_tags($page->intro))) {
+        if (!empty($opts['printintro']) && trim(strip_tags($this->intro))) {
             echo $OUTPUT->box(format_module_intro('sliclquestions',
                                                   $this, $this->cm->id),
                                                   'mod_intobox',
