@@ -397,7 +397,7 @@ class sliclquestions
             return $msg;
         }
 
-        echo html_writer::table('p', get_string('noneinuse', 'sliclquestions'))
+        echo html_writer::tag('p', get_string('noneinuse', 'sliclquestions'))
            . html_writer::end_tag('form')
            . html_writer::end_div();
     }
