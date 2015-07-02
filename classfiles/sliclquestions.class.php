@@ -536,7 +536,7 @@ class sliclquestions
                     . ' AND userid = ' . $userid . ' AND complete = \'n\'';
             return (($DB->get_record_select('sliclquestions_response', $select, null, $fields) !== false) ? $rid : '');
         }
-        $select = 'survey_id = ' . $$this->id . ' AND complete = \'n\' AND userid = ' . $userid;
+        $select = 'survey_id = ' . $this->id . ' AND complete = \'n\' AND userid = ' . $userid;
         if ($recs = $DB->get_records_select('sliclquestions_response', $select, null, 'submitted DESC', 'id,survey_id', 0, 1)) {
             $rec = reset($recs);
             return $rec->id;
