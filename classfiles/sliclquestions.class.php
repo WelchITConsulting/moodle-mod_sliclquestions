@@ -128,6 +128,8 @@ class sliclquestions
 
     public function view($url)
     {
+        global $USER;
+
         $msg = $this->print_survey($USER->id);
         $viewform = data_submitted($url);
         if (!empty($viewform->rid)) {
