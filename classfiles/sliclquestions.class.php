@@ -278,10 +278,10 @@ class sliclquestions
                                                    'value' => $this->id))
            . html_writer::empty_tag('input', array('type'  => 'hidden',
                                                    'name'  => 'rid',
-                                                   'value' => $this->rid))
+                                                   'value' => (isset($formdata->rid) ? $formdata->rid : '0')))
            . html_writer::empty_tag('input', array('type'  => 'hidden',
                                                    'name'  => 'sec',
-                                                   'value' => $this->sec))
+                                                   'value' => $formdata->sec))
            . html_writer::empty_tag('input', array('type'  => 'hidden',
                                                    'name'  => 'sesskey',
                                                    'value' => sesskey()));
