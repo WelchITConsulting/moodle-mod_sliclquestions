@@ -27,7 +27,7 @@ class sliclquestions_pupil_assessment
 {
     static private $_instance;
 
-    static public function get_instance(&$course, &$context, &$survey, &$url, &$params)
+    static public function get_instance(&$course, &$context, sliclquestions &$survey, &$url, &$params)
     {
         if (empty(self::$_instance)) {
             self::$_instance = new sliclquestions_pupil_assessment($course, $context, $survey, $url, $params);
@@ -37,6 +37,11 @@ class sliclquestions_pupil_assessment
 
     public function __construct(&$course, &$context, &$survey, &$url, &$params)
     {
+        if (!$survey->is_open()) {
+            notice(get_string('notopen', 'sliclquestions', userdate($survey->opendate)), $url);
+        } elseif ($survey->is_closed()) {
+            notice(get_string('closed', 'sliclquestions', userdate($survey->closedate)), $url);
+        }
         $this->display_pupils($survey, $url, $params);
     }
 
