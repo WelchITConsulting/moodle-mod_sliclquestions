@@ -99,10 +99,7 @@ class sliclquestions
     {
         global $OUTPUT, $PAGE;
 
-        echo '<pre>' . print_r($PAGE, true) . '</pre>';
-        if (!$PAGE->headerprinted) {
-            echo $OUTPUT->header();
-        }
+        echo $OUTPUT->header();
         $opts = (empty($this->displayoptions) ? array() : unserialize($this->displayoptions));
         if (!isset($opts['displayheading']) || !empty($opts['displayheading'])) {
             echo $OUTPUT->heading(format_string($this->name), 2);
@@ -163,7 +160,7 @@ class sliclquestions
 //                                                                               'courseid'      => $this->course->id,
 //                                                                               'relateduserid' => $USER->id,
 //                                                                               'other'         => array('sliclquestionsid' => $this->id)));
-            $event->trigger();
+//            $event->trigger();
 
             $this->response_send_email($this->rid);
             $this->response_goto_thankyou();
