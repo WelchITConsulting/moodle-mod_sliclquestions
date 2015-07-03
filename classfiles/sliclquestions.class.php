@@ -164,8 +164,6 @@ class sliclquestions
 
             $this->response_send_email($this->rid);
             $this->response_goto_thankyou();
-        } else {
-            notify(get_string('alreadyfilled', 'sliclquestions'), $url);
         }
     }
 
@@ -184,7 +182,21 @@ class sliclquestions
         return ($this->capabilities->view && $this->capabilities->submit);
     }
 
+    public function user_can_take($userid, $pupilid = 0)
+    {
+        global $DB;
 
+        $sql = 'SELECT COUNT(id)'
+             . ' FROM {sliclquestions_response}'
+             . ' WHERE survey_id=? AND user_id=?';
+        $params = array($this->id, $userid);
+        if ($this->questype == SLICLQUESTIONS_PUPILASSESSMENT) {
+            $sql .= ' AND pupil_id=?';
+            $params[] = $pupilid;
+        }
+        $num = $DB->count_records_sql($sql, $params);
+        return ($num == 0);
+    }
 
 
     /**

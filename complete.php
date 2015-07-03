@@ -101,8 +101,10 @@ if (!$sliclquestions->is_open()) {
     notice(get_string('closed', 'sliclquestions', $sliclquestions->closedate), $url);
 } elseif (!$sliclquestions->user_is_eligible()) {
     notice(get_string('noteligible', 'sliclquestions'), $url);
-} else {
+} elseif ($sliclquestions->user_can_take($USER->id)) {
     $sliclquestions->render_page_header();
     $sliclquestions->view($url);
+} else {
+    notify(get_string('alreadyfilled', 'sliclquestions'), $url);
 }
 echo $OUTPUT->footer();
