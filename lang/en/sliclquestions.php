@@ -21,6 +21,7 @@
  */
 
 $string['addpupil']                                 = 'Add pupil';
+$string['alreadyfilled']                            = 'You have already filled out this questionnaire for us{$a}. Thank you.';
 $string['answerquestions']                          = 'Answer the questions...';
 
 $string['choosequestiontype']                       = 'Choose type of survey';
@@ -122,7 +123,6 @@ $string['tblyear']                                  = 'School Year';
 //$string['alignment_help']                           = 'Select buttons alignment: vertical (default) or horizontal.';
 //$string['alignment_link']                           = 'mod/sliclquestions/questions#Radio_Buttons';
 //$string['all']                                      = 'All';
-//$string['alreadyfilled']                            = 'You have already filled out this questionnaire for us{$a}. Thank you.';
 //$string['andaveragevalues']                         = 'and average values';
 //$string['anonymous']                                = 'Anonymous';
 //$string['attempted']                                = 'This questionnaire has been submitted.';

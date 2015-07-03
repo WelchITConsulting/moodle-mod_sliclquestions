@@ -99,6 +99,7 @@ class sliclquestions
     {
         global $OUTPUT, $PAGE;
 
+        echo '<pre>' . print_r($PAGE, true) . '</pre>';
 //        if (!$PAGE->headerprinted) {
             echo $OUTPUT->header();
 //        }
