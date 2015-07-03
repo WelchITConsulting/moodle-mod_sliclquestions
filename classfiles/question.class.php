@@ -123,7 +123,10 @@ class sliclquestions_question
         return $this->required;
     }
 
-
+    public function get_type_id()
+    {
+        return $this->type_id;
+    }
 
 
 

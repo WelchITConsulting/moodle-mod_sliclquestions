@@ -359,7 +359,7 @@ class sliclquestions
             if ($formdata->sec > 1) {
                 for ($j = 2; $j <= $formdata->sec; $j++) {
                     foreach($this->questionsbysec[$j - 1] as $question) {
-                        if ($question->type_id < SLICLQUESPAGEBREAK) {
+                        if ($question->get_type_id() < SLICLQUESPAGEBREAK) {
                             $i++;
                         }
                     }
@@ -367,7 +367,7 @@ class sliclquestions
             }
             $this->print_survey_start($msg, $formdata->sec, $numsections, $hasrequired, '', 1);
             foreach ($this->questionsbysec[$formdata->sec] as $question) {
-                if ($question->type_id != SLICLQUESSECTIONTEXT) {
+                if ($question->get_type_id() != SLICLQUESSECTIONTEXT) {
                     $i++;
                 }
                 $question->render($formdata, $descendantdata = '', $i, $this->usehtmleditor);
