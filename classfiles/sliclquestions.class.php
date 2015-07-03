@@ -100,9 +100,9 @@ class sliclquestions
         global $OUTPUT, $PAGE;
 
         echo '<pre>' . print_r($PAGE, true) . '</pre>';
-//        if (!$PAGE->headerprinted) {
+        if (!$PAGE->headerprinted) {
             echo $OUTPUT->header();
-//        }
+        }
         $opts = (empty($this->displayoptions) ? array() : unserialize($this->displayoptions));
         if (!isset($opts['displayheading']) || !empty($opts['displayheading'])) {
             echo $OUTPUT->heading(format_string($this->name), 2);
