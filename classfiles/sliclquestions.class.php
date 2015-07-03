@@ -75,6 +75,7 @@ class sliclquestions
             $sec = 1;
             $isbreak =false;
             foreach($records as $record) {
+echo '<pre>Record: ' . print_r($record, true) . '</pre>';
                 $this->questions[$record->id] = new sliclquestions_question(0, $record, $this->context);
                 if ($record->type_id != SLICLQUESPAGEBREAK) {
                     $this->questionsbysec[$sec][$record->id] = &$this->questions[$record->id];
