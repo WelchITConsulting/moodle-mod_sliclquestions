@@ -146,7 +146,7 @@ class sliclquestions_question
     private function get_choices()
     {
         global $DB;
-        if ($choices = $DB->get_records('sliclquestions_quest_choice', array('question_id' => $this->id), 'is ASC')) {
+        if ($choices = $DB->get_records('sliclquestions_quest_choice', array('question_id' => $this->id), 'id ASC')) {
             foreach($choices as $choice) {
                 $this->choices[$choice->id] = new stdClass();
                 $this->choices[$choice->id]->content = $choice->content;
