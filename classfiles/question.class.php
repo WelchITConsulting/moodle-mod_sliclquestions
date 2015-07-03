@@ -76,6 +76,7 @@ class sliclquestions_question
         if ($id) {
             $question = $DB->get_record('sliclquestions_question', array('id' => $id));
         }
+echo '<pre>' . print_r($question, true) . '</pre>';
         if (is_object($question)) {
             $this->id             = $question->id;
             $this->name           = $question->name;
@@ -93,7 +94,9 @@ class sliclquestions_question
             if ($qtypes[$this->type->id]->has_choices) {
                 $this->get_choices();
             }
+die('loaded class object');
         }
+die('class not loaded');
         $this->context = $context;
     }
 

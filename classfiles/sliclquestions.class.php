@@ -309,7 +309,6 @@ class sliclquestions
             $this->response_goto_saved($action);
             return;
         }
-die('<pre>' . print_r($this, true) . '</pre>');
         if (!empty($formdata->next)) {
 
 
