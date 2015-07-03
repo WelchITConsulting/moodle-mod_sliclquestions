@@ -391,13 +391,13 @@ class sliclquestions
             echo html_writer::end_div()
                . html_writer::end_div()
                . html_writer::end_tag('form')
-               . html_writer::end_div();
+               . $OUTPUT->box_end();
             return $msg;
         }
 
         echo html_writer::tag('p', get_string('noneinuse', 'sliclquestions'))
            . html_writer::end_tag('form')
-           . html_writer::end_div();
+           . $OUTPUT->box_end();
     }
 
     private function print_survey_start($msg, $section, $numsections, $hasrequired, $rid = '', $blankquestionnaire = false)
