@@ -62,7 +62,7 @@ class sliclquestions_survey
                 echo html_writer::link(new moodle_url('/mod/sliclquestions/complete.php', array('id' => $survey->cm->id)),
                                        $complete);
             }
-            $OUTPUT->footer();
+            echo $OUTPUT->footer();
         }
         if (!$survey->questions) {
             echo html_writer::tag('p', get_string('noneinuse', 'sliclquestions'));
