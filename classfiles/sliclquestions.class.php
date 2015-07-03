@@ -240,13 +240,13 @@ class sliclquestions
             return false;
         } elseif ($sec <= 0) {
             foreach($this->questions as $question) {
-                if ($question->required == 'y') {
+                if ($question->is_required() == 'y') {
                     return true;
                 }
             }
         }
         foreach($this->questionsbysec[$sec] as $question) {
-            if ($question->required == 'y') {
+            if ($question->is_required() == 'y') {
                 return true;
             }
         }

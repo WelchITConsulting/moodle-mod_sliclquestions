@@ -118,6 +118,10 @@ class sliclquestions_question
         }
     }
 
+    public function is_required()
+    {
+        return $this->required;
+    }
 
 
 
