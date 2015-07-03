@@ -90,7 +90,7 @@ class sliclquestions_question
             $this->type_id        = $question->type_id;
             $this->type           = $qtypes[$this->type_id];
             $this->responsetable  = $qtypes[$this->type_id]->response_table;
-            if ($qtypes[$this->type->id]->has_choices) {
+            if ($qtypes[$this->type_id]->has_choices) {
                 $this->get_choices();
             }
         }
@@ -345,7 +345,7 @@ class sliclquestions_question
     {
         global $PAGE, $SESSION;
 
-        $currenttab = $SESSEION->sliclquestions_current_tab;
+        $currenttab = $SESSION->sliclquestions->current_tab;
         $pagetype = $PAGE->pagetype;
         $skippedquestion = false;
         $skppedclass = '';
