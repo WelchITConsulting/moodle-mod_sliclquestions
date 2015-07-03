@@ -70,13 +70,12 @@ class sliclquestions_question
         static $qtypes = null;
 
         if (is_null($qtypes)) {
-            $qtypes = $DB->get_records('sliclquestions_question_type', array(), 'typeid',
+            $qtypes = $DB->get_records('sliclquestions_quest_type', array(), 'typeid',
                                        'typeid, type, has_choices, response_table');
         }
         if ($id) {
             $question = $DB->get_record('sliclquestions_question', array('id' => $id));
         }
-echo '<pre>' . print_r($question, true) . '</pre>';
         if (is_object($question)) {
             $this->id             = $question->id;
             $this->name           = $question->name;
@@ -94,9 +93,7 @@ echo '<pre>' . print_r($question, true) . '</pre>';
             if ($qtypes[$this->type->id]->has_choices) {
                 $this->get_choices();
             }
-die('loaded class object');
         }
-die('class not loaded');
         $this->context = $context;
     }
 
