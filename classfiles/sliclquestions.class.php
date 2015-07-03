@@ -366,13 +366,13 @@ class sliclquestions
                 }
             }
             $this->print_survey_start($msg, $formdata->sec, $numsections, $hasrequired, '', 1);
-            foreach ($this->questionsbysec[$section] as $question) {
+            foreach ($this->questionsbysec[$formdata->sec] as $question) {
                 if ($question->type_id != SLICLQUESSECTIONTEXT) {
                     $i++;
                 }
-                $question->render($fordata, $descendantdata = '', $i, $this->usehtmleditor);
+                $question->render($formdata, $descendantdata = '', $i, $this->usehtmleditor);
             }
-            $this->print_survey_end($fordata->sec, $numsections);
+            $this->print_survey_end($formdata->sec, $numsections);
             // End of survey_render code
             echo html_writer::start_div('notice', array('style' => 'padding: .5em 0 .5em .2em'))
                . html_writer::start_div('buttons')
@@ -416,7 +416,7 @@ class sliclquestions
     {
         global $DB, $OUTPUT;
 
-        $Resp      = '';
+        $resp      = '';
         $userid    = 0;
         $groupname = '';
         if ($rid) {
@@ -440,15 +440,15 @@ class sliclquestions
                         $groupname = ' (' . get_string('groupnonmembers') . ')';
                     }
                 }
-                $params = array('objectid'      => $this->id,
-                                'context'       => $this->context,
-                                'courseid'      => $this->course->id,
-                                'relateduserid' => $userid,
-                                'other'         => array('action'         => 'vresp',
-                                                         'currentgroupid' => $currentgroupid,
-                                                         'rid'            => $rid));
-                $event = \mod_sliclquestions\event\response_viewed::create($params);
-                $event->trigger();
+//                $params = array('objectid'      => $this->id,
+//                                'context'       => $this->context,
+//                                'courseid'      => $this->course->id,
+//                                'relateduserid' => $userid,
+//                                'other'         => array('action'         => 'vresp',
+//                                                         'currentgroupid' => $currentgroupid,
+//                                                         'rid'            => $rid));
+//                $event = \mod_sliclquestions\event\response_viewed::create($params);
+//                $event->trigger();
             }
         }
         $ruser = '';
@@ -475,7 +475,7 @@ class sliclquestions
                . $timesubmitted
                . html_writer::end_div();
         }
-        echo html_writer::tag('h3', format_text($this->title, FORMAT_HTML), array('class' => 'surveytitle'));
+        echo html_writer::tag('h3', format_text($this->name, FORMAT_HTML), array('class' => 'surveytitle'));
         if ($this->capabilities->printblank && $blankquestionnaire && ($section == 1)) {
 
             $link = new moodle_url('/mod/sliclquestions/print.php', array('qid'      => $this->id,
