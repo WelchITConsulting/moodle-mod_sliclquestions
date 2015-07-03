@@ -48,21 +48,21 @@ $qtypenames = array(SLICLQUESYESNO          => 'yesno',
 
 class sliclquestions_question
 {
-    private $id             = 0;
-    private $name           = '';
-    private $dependquestion = 0;
-    private $dependchoice   = '';
-    private $type_id        = -1;
-    private $type           = '';
-    private $choices        = array();
-    private $responsetable  = '';
-    private $length         = 0;
-    private $precise        = 0;
-    private $position       = 0;
-    private $content        = '';
-    private $required       = false;
-    private $deleted        = false;
-    private $context        = '';
+    public $id             = 0;
+    public $name           = '';
+    public $dependquestion = 0;
+    public $dependchoice   = '';
+    public $type_id        = -1;
+    public $type           = '';
+    public $choices        = array();
+    public $responsetable  = '';
+    public $length         = 0;
+    public $precise        = 0;
+    public $position       = 0;
+    public $content        = '';
+    public $required       = false;
+    public $deleted        = false;
+    public $context        = '';
 
     public function __construct($id = 0, $question = null, $context = null)
     {
@@ -119,15 +119,6 @@ class sliclquestions_question
         }
     }
 
-    public function is_required()
-    {
-        return $this->required;
-    }
-
-    public function get_type_id()
-    {
-        return $this->type_id;
-    }
 
 
 

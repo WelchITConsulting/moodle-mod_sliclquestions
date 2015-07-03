@@ -639,4 +639,170 @@ class sliclquestions
            . $OUTPUT->footer();
 
     }
+
+    private function response_check_format($sec, $formdata, $checkmissing = true, $checkwrongformat = true)
+    {
+        global $PAGE, $OUTPUT;
+
+        $missing        = 0;
+        $strmissing     = '';
+        $wrongformat    = 0;
+        $strwrongformat = 0;
+        $i              = 1;
+        for ($j = 2; $j <= $sec; $j++) {
+            foreach($this->questionsbysec[$j - 1] as $sectionrecord) {
+                $tid = $sectionrecord->type_id;
+                if ($tid < SLICLQUESPAGEBREAK) {
+                    $i++;
+                }
+            }
+        }
+        $qnum = $i - 1;
+        foreach($this->questionsbysec[$sec] as $question) {
+            if ($question->type_id == SLICLQUESSECTIONTEXT) {
+                $qnum++;
+            }
+            $missingresp = false;
+            $quesname = 'q' . $question->id;
+            if (($question->required == 'y') && ($question->deleted == 'n') &&
+                    ((!isset($formdata->$quesname) && ($formdata->$quesname)) ||
+                    (!isset($formdata->$quesname))) &&
+                    ($question->type_id != SLICLQUESSECTIONTEXT) &&
+                    ($question->type_id != SLICLQUESRATE)) {
+                if (($PAGE->pagetype != 'mod-sliclquestions-preview') ||
+                        ($question->dependquestion == 0)) {
+                    $missingresp = true;
+                } else {
+                    if ($question->dependchoice == 0) {
+                        $dependchoice = 'y';
+                    } elseif ($question->dependchoice == 1) {
+                        $dependchoice = 'n';
+                    } else {
+                        $dependchoice = $question->dependchoice;
+                    }
+                    if (isset($formdata->{'q' . $question->dependquestion}) &&
+                            ($formdata->{'q' . $question->dependquestion} == $dependchoice)) {
+                        $missingresp = true;
+                    }
+                }
+            }
+            if ($missingresp) {
+                $missing++;
+                $strmissing .= get_string('num', 'sliclquestions') . $qnum . '. ';
+            }
+            switch($question->type_id) {
+
+                case SLICLQUESRADIO:
+                    if (!isset($formdata->{'q' . $question->id})) {
+                        break;
+                    }
+                    $resp = $formdata->{'q' . $question->id};
+                    $pos  = strpos($resp, 'other_');
+                    if (is_int($pos) === true) {
+                        $othercontent = 'q' . $question->id . substr($resp, 5);
+                        if (!$formdata->$othercontent) {
+                            $wrongformat++;
+                            $strwrongformat .= get_string('num', 'sliclquestions')
+                                             . $qnum . '. ';
+                            break;
+                        }
+                    }
+                    if ((is_int($pos) === true) && ($question->required == 'y')) {
+                        $resp = 'q' . $question->id . substr($resp, 5);
+                        if (!$formdata->$resp) {
+                            $missing++;
+                            $strmissing .= get_string('num', 'sliclquestions')
+                                         . $qnum . '. ';
+                        }
+                    }
+                    break;
+
+                case SLICLQUESCHECK:
+                    if (!isset($formdata->{'q' . $question->id})) {
+                        break;
+                    }
+                    $resps = $formdata->{'q' . $question->id};
+                    $nbrespchoices = 0;
+
+
+
+                    if ($nbchoices && (($nbchoices < $min) || ($nbchoices > $max))) {
+                        $wrongformat++;
+                        $strwrongformat .= get_string('num', 'sliclquestions') . $qnum . '. ';
+                    }
+                    break;
+
+                case SLICLQUESRATE:
+                    $num = 0;
+                    $nbchoices = count($question->choices);
+                    $na = get_string('notapplicable', 'sliclquestions');
+                    foreach($question->choices as $cid => $choice) {
+                        $nameddegrees = 0;
+                        if (preg_match('/^[0-9]{1,3}=/', $choice->content, $ndd)) {
+                            $nameddegrees++;
+                        } else {
+                            $str = 'q' . $question->id . '_' . $cid;
+                            if (isset($formdata->$str) && ($formdata->$str == $na)) {
+                                $formdata->$str = -1;
+                            }
+                            $num += (isset($formdata->$str) && ($formdata->$str != -999));
+                        }
+                        $nbchoices -= $nameddegrees;
+                    }
+                    if ($num == 0) {
+                        $missingresp = false;
+                        if (($PAGE->pagetype != 'mod-sliclquestions-preview') || ($question->dependquestion == 0)) {
+                            if ($question->required == 'y') {
+                                $missingresp = true;
+                            }
+                        } else {
+                            if (isset($formdata->{'q' . $question->dependquestion}) &&
+                                    ($formdata->{'q' . $question->dependquestion} == $question->dependquestion)) {
+                                $missingresp = true;
+                            }
+                        }
+                        if ($missingresp) {
+                            $missing++;
+                            $strmissing .= get_string('num', 'sliclquestions') . $qnum . '. ';
+                        }
+                    }
+                    $isrestricted = ($question->length < count($question->choices)) && ($question->precise == 2);
+                    if ($isrestricted) {
+                        $nbchoices = min($nbchoices, $question->length);
+                    }
+                    if (($num != $nbchoices) && ($num != 0)) {
+                        $wrongformat++;
+                        $strwrongformat .= get_string('num', 'sliclquestions') . $qnum . '. ';
+                    }
+                    break;
+
+                case SLICLQUESDATE:
+                    if (!isset($formdata->{'q' . $question->id})) {
+                        break;
+                    }
+                    $checkdateresult = '';
+                    if ($formdata->{'q' . $question->id} != '') {
+                        $checkdateresult = $this->check_date($formdata->{'q' . $question->id});
+                    }
+                    if (substr($checkdateresult, 0, 5) == 'wrong') {
+                        $wrongformat++;
+                        $strwrongformat .= get_string('num', 'sliclquestions') . $qnum . '. ';
+                    }
+                    break;
+
+                case SLICLQUESNUMERIC:
+                    if (!isset($formdata->{'q' . $question->id})) {
+                        break;
+                    }
+                    if (($formdata->{'q' . $question->id} != '') && !is_numeric($formdata->{'q' . $question->id})) {
+                        $wrongformat++;
+                        $strwrongformat .= get_string('num', 'sliclquestions') . $qnum . '. ';
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
 }
