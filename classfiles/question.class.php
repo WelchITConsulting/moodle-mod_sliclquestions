@@ -64,7 +64,7 @@ class sliclquestions_question
     private $deleted        = false;
     private $context        = '';
 
-    public function __constuct($id = 0, $question = null, $context = null)
+    public function __construct($id = 0, $question = null, $context = null)
     {
         global $DB;
         static $qtypes = null;
