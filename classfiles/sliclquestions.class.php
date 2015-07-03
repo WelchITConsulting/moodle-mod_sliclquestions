@@ -188,10 +188,10 @@ class sliclquestions
 
         $sql = 'SELECT COUNT(id)'
              . ' FROM {sliclquestions_response}'
-             . ' WHERE survey_id=? AND user_id=?';
+             . ' WHERE survey_id=? AND userid=?';
         $params = array($this->id, $userid);
         if ($this->questype == SLICLQUESTIONS_PUPILASSESSMENT) {
-            $sql .= ' AND pupil_id=?';
+            $sql .= ' AND pupilid=?';
             $params[] = $pupilid;
         }
         $num = $DB->count_records_sql($sql, $params);
