@@ -379,11 +379,7 @@ class sliclquestions
                . (($formdata->sec > 1) ? html_writer::empty_tag('input', array('name'  => 'prev',
                                                                                'type'  => 'submit',
                                                                                'value' => get_string('previouspage', 'sliclquestions')))
-                                       : '')
-               . ($this->resume ? html_writer::empty_tag('input', array('name'  => 'resume',
-                                                                        'type'  => 'submit',
-                                                                        'value' => get_string('save', 'sliclquestions')))
-                                : '');
+                                       : '');
             if ($formdata->sec == $numsections) {
                 echo html_writer::start_div()
                    . html_writer::empty_tag('input', array('type'  => 'hidden',
