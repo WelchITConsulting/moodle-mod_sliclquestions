@@ -240,13 +240,13 @@ class sliclquestions
             return false;
         } elseif ($sec <= 0) {
             foreach($this->questions as $question) {
-                if ($question->is_required() == 'y') {
+                if ($question->required == 'y') {
                     return true;
                 }
             }
         }
         foreach($this->questionsbysec[$sec] as $question) {
-            if ($question->is_required() == 'y') {
+            if ($question->required == 'y') {
                 return true;
             }
         }
@@ -359,7 +359,7 @@ class sliclquestions
             if ($formdata->sec > 1) {
                 for ($j = 2; $j <= $formdata->sec; $j++) {
                     foreach($this->questionsbysec[$j - 1] as $question) {
-                        if ($question->get_type_id() < SLICLQUESPAGEBREAK) {
+                        if ($question->type_id < SLICLQUESPAGEBREAK) {
                             $i++;
                         }
                     }
@@ -367,7 +367,7 @@ class sliclquestions
             }
             $this->print_survey_start($msg, $formdata->sec, $numsections, $hasrequired, '', 1);
             foreach ($this->questionsbysec[$formdata->sec] as $question) {
-                if ($question->get_type_id() != SLICLQUESSECTIONTEXT) {
+                if ($question->type_id != SLICLQUESSECTIONTEXT) {
                     $i++;
                 }
                 $question->render($formdata, $descendantdata = '', $i, $this->usehtmleditor);
@@ -642,7 +642,7 @@ class sliclquestions
 
     private function response_check_format($sec, $formdata, $checkmissing = true, $checkwrongformat = true)
     {
-        global $PAGE, $OUTPUT;
+        global $PAGE;
 
         $missing        = 0;
         $strmissing     = '';
@@ -723,9 +723,30 @@ class sliclquestions
                     }
                     $resps = $formdata->{'q' . $question->id};
                     $nbrespchoices = 0;
-
-
-
+                    foreach($resps as $resp) {
+                        $pos = strpos($resp, 'other_');
+                        if (is_int($pos) == true) {
+                            $othercontent = 'q' . $question->id . substr($resp, 5);
+                            if (!$formdata->$othercontent) {
+                                $wrongformat++;
+                                $strwrongformat .= get_string('num', 'sliclquestions') . $qnum . ': ';
+                                break;
+                            }
+                        }
+                        if (  is_numeric($resp) || (is_int($pos) == true)) {
+                            $nbrespchoices++;
+                        }
+                    }
+                    $nbquestchoices = count($question->choices);
+                    $min = $question->length;
+                    $max = $question->precise;
+                    if ($max == 0) {
+                        $max = $nbquestchoices;
+                    }
+                    if ($min > $max) {
+                        $min = $max;
+                    }
+                    $min = min($nbquestchoices, $min);
                     if ($nbchoices && (($nbchoices < $min) || ($nbchoices > $max))) {
                         $wrongformat++;
                         $strwrongformat .= get_string('num', 'sliclquestions') . $qnum . '. ';
@@ -804,5 +825,24 @@ class sliclquestions
                     break;
             }
         }
+        $msg = '';
+        if (!$checkmissing && $missing) {
+            if ($missing == 1) {
+                $msg = get_string('missingquestions', 'sliclquestions') . $strmissing;
+            } else {
+                $msg = get_string('missingquestions', 'sliclquestions') . $strmissing;
+            }
+            if ($wrongformat) {
+                $msg .= html_writer::empty_tag('br');
+            }
+        }
+        if ($checkwrongformat && $wrongformat) {
+            if ($wrongformat == 1) {
+                $msg = get_string('mwrongformat', 'sliclquestions') . $strwrongformat;
+            } else {
+                $msg = get_string('wrongformats', 'sliclquestions') . $strwrongformat;
+            }
+        }
+        return $msg;
     }
 }
