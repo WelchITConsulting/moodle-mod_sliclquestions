@@ -52,6 +52,7 @@ class sliclquestions_question
     private $name           = '';
     private $dependquestion = 0;
     private $dependchoice   = '';
+    private $type_id        = -1;
     private $type           = '';
     private $choices        = array();
     private $responsetable  = '';
