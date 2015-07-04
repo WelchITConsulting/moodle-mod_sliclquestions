@@ -26,6 +26,7 @@ require_once($CFG->dirroot . '/mod/sliclquestions/locallib.php');
 
 $id  = optional_param('id', null, PARAM_INT);       // Course Module ID
 $a   = optional_param('a', null, PARAM_INT);        // Or sliclquestions ID
+$pid = optional_param('pid', null, PARAM_INT);      // Pupil ID
 $act = optional_param('act', null, PARAM_ALPHA);    // Action to be performed
 
 if ($id) {
@@ -61,7 +62,7 @@ $PAGE->set_context($context);
 $PAGE->set_cm($cm);
 
 // Create a SLiCL Questions class instance
-$sliclquestions = new sliclquestions($course, $cm, 0, $sliclquestions, true);
+$sliclquestions = new sliclquestions($course, $cm, 0, $sliclquestions, $pid, true);
 
 // Define the page URL
 $params = array();
