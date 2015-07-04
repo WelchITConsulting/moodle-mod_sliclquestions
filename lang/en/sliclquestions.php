@@ -93,6 +93,7 @@ $string['pupilsregistered']                         = 'Total number of pupils re
 $string['pupilstotal']                              = 'Total pupils';
 
 $string['questionnairecloses']                      = 'Questionnaire Closes';
+$string['questionnum']                              = 'Question #';
 $string['questype']                                 = 'Questionnaire type';
 $string['questype_help']                            = '<p>Defines the type of questionnaire to create:</p>'
                                                     . '<ul><li>Pupil register: allows pupils to be registered for the pupil survey</li>'
@@ -102,6 +103,7 @@ $string['questype_pupilassess']                     = 'Pupil assessment';
 $string['questype_pupilregister']                   = 'Pupil register';
 $string['questype_survey']                          = 'Standard survey';
 
+$string['required']                                 = 'Response is required';
 $string['respondent']                               = 'Respondent';
 $string['responses']                                = 'Responses';
 $string['resumesurvey']                             = 'Resume questionnaire';
@@ -453,7 +455,6 @@ $string['wrongformats']                             = 'There is something wrong 
 //$string['redirecturl']                              = 'The URL to which a user is redirected after completing this questionnaire.';
 //$string['remove']                                   = 'Delete';
 //$string['removenotinuse']                           = 'This questionnaire used to depend on a Public questionnaire which has been deleted. It can no longer be used and should be deleted.';
-//$string['required']                                 = 'Response is required';
 //$string['required_help']                            = 'If you select ***Yes***, response to this question will be required, i.e. the respondent will not be able to submit the questionnaire until this question has been answered.';
 //$string['required_link']                            = 'mod/sliclquestions/questions#Response_Required';
 //$string['requiredparameter']                        = 'A required parameter was missing.';
