@@ -60,7 +60,7 @@ class sliclquestions_student
     {
         global $DB;
         $sql = 'SELECT COUNT(*)'
-             . ' FROM {sliclquestions_student}'
+             . ' FROM {sliclquestions_response}'
              . ' WHERE survey_id=? AND pupilid=?';
         if ($DB->count_records_sql($sql, array($sid, $this->id))) {
             return true;
