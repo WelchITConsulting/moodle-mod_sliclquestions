@@ -604,10 +604,12 @@ die('<pre>' . print_r($this, true) . '</pre>');
                     . ' AND userid = ' . $userid
                     . (isset($this->student) ? ' AND pupilid=' . $this->student->id : '')
                     . ' AND complete = \'n\'';
-echo '<pre>Select: ' . $select . '</pre>';
             return (($DB->get_record_select('sliclquestions_response', $select, null, $fields) !== false) ? $rid : '');
         }
-        $select = 'survey_id = ' . $this->id . ' AND complete = \'n\' AND userid = ' . $userid;
+        $select = 'survey_id = ' . $this->id
+                . (isset($this->student) ? ' AND pupilid=' . $this->student->id : '')
+                . ' AND complete = \'n\' AND userid = ' . $userid;
+echo '<pre>Select: ' . $select . '</pre>';
         if ($recs = $DB->get_records_select('sliclquestions_response', $select, null, 'submitted DESC', 'id,survey_id', 0, 1)) {
             $rec = reset($recs);
             return $rec->id;
