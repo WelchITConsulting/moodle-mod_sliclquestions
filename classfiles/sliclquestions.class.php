@@ -268,8 +268,8 @@ class sliclquestions
         $formdata->rid = $this->get_response($userid);
         if (!empty($formdata->rid) && (empty($formdata->sec) || (intval($formdata->sec) < 1))) {
             $pos = 0;
-            foreach(array('response_bool', 'resp_single', 'resp_multiple', 'response_rank',
-                          'response_text', 'response_other', 'response_date') as $tbl) {
+            foreach(array('resp_bool', 'resp_single', 'resp_multiple', 'resp_rank',
+                          'resp_text', 'resp_other', 'resp_date') as $tbl) {
                 $sql = 'SELECT MAX(q.question) as num FROM {sliclquestions_'
                      . $tbl
                      . '} a, {sliclquestions_question} q WHERE q.id=a.question_id'
