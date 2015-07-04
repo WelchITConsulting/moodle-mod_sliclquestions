@@ -51,6 +51,7 @@ function xmldb_sliclquestions_upgrade($oldversion=0)
         $table = new xmldb_table('sliclquestions_question');
         $field = new xmldb_field('result_id');
         $dbman->drop_field($table, $field);
+
         upgrade_mod_savepoint(true, 2015062503, 'sliclquestions');
     }
 
@@ -58,6 +59,7 @@ function xmldb_sliclquestions_upgrade($oldversion=0)
 
         $table = new xmldb_table('sliclquestions_attempts');
         $dbman->drop_table($table);
+
         upgrade_mod_savepoint(true, 2015062900, 'sliclquestions');
     }
 
@@ -79,7 +81,20 @@ function xmldb_sliclquestions_upgrade($oldversion=0)
         $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_text', array('typeid' => 10));
         $DB->set_field('sliclquestions_quest_type', 'responsetable', '', array('typeid' => 99));
         $DB->set_field('sliclquestions_quest_type', 'responsetable', '', array('typeid' => 100));
+
         upgrade_mod_savepoint(true, 20150070401, 'sliclquestions');
+    }
+
+    if ($oldversion < 2015070402) {
+
+        $table = new xmldb_table('sliclquestions');
+
+        $field = new xmldb_field('register');
+        $field->set_attributes(XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL,
+                               null, 0, 'questype');
+        $dbman->add_field($table, $field);
+
+        upgrade_mod_savepoint(true, 2015070402, 'sliclquestions');
     }
 
     return true;

@@ -20,7 +20,7 @@ Author   : John Welch <jwelch@welchitconsulting.co.uk>
 Created  : 09 Jun 2015
 -->
 
-<XMLDB PATH="mod/sliclquestions" VERSION="2015070401" COMMENT="XMLDB file for Moodle mod/sliclquestions"
+<XMLDB PATH="mod/sliclquestions" VERSION="2015070402" COMMENT="XMLDB file for Moodle mod/sliclquestions"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="../../lib/xmldb/xmldb.xsd">
     <TABLES>
@@ -36,6 +36,7 @@ Created  : 09 Jun 2015
                 <FIELD NAME="contentformat" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
                 <FIELD NAME="displayoptions" TYPE="char" LENGTH="70" NOTNULL="false" SEQUENCE="false"/>
                 <FIELD NAME="questype" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="register" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
                 <FIELD NAME="opendate" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
                 <FIELD NAME="closedate" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
                 <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>

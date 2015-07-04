@@ -564,14 +564,15 @@ class sliclquestions
             $record->id = $rid;
             $DB->update_record('sliclquestions_response', $record);
         }
-        if ($resume) {
-            $params = array('context'       => context_module::instance($this->cm->id),
-                            'courseid'      => $this->course->id,
-                            'relateduserid' => $userid,
-                            'other'         => array('questionnaireid' => $sid));
-            $event = \mod_sliclquestions\event\attempt_saved::create($params);
-            $event->trigger();
-        }
+//        if ($resume) {
+//            $params = array('context'       => context_module::instance($this->cm->id),
+//                            'courseid'      => $this->course->id,
+//                            'relateduserid' => $userid,
+//                            'other'         => array('questionnaireid' => $sid));
+//            $event = \mod_sliclquestions\event\attempt_saved::create($params);
+//            $event->trigger();
+//        }
+die('<pre>' . print_r($this, true) . '</pre>');
         if (!empty($this->questionsbysec[$sec])) {
             foreach($this->questionsbysec[$sec] as $question) {
                 $question->insert_response($rid);
@@ -636,16 +637,21 @@ class sliclquestions
 
     private function response_goto_thankyou()
     {
-        global $OUTPUT;
-        echo $OUTPUT->header()
-           . html_writer::tag('h3', get_string('thankhead', 'sliclquestions'))
-           . format_text(file_rewrite_pluginfile_urls($text, 'pluginfile.php',
-                                                      $this->context->id,
-                                                      'mod_sliclquestions',
-                                                      'thankbody', $this->id),
-                         FORMAT_HTML)
-           . $OUTPUT->single_button(get_string('continue'), '/mod/sliclquestions/view.php?id=' . $this->cm->id)
-           . $OUTPUT->footer();
+        if ($this->questype == SLICLQUESTIONS_PUPILASSESSMENT) {
+            die('Results submitted - returning to pupil list');
+        } else {
+            die('THanks for the submission');
+        }
+//        global $OUTPUT;
+//        echo $OUTPUT->header()
+//           . html_writer::tag('h3', get_string('thankhead', 'sliclquestions'))
+//           . format_text(file_rewrite_pluginfile_urls($text, 'pluginfile.php',
+//                                                      $this->context->id,
+//                                                      'mod_sliclquestions',
+//                                                      'thankbody', $this->id),
+//                         FORMAT_HTML)
+//           . $OUTPUT->single_button(get_string('continue'), '/mod/sliclquestions/view.php?id=' . $this->cm->id)
+//           . $OUTPUT->footer();
 
     }
 
