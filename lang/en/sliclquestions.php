@@ -21,6 +21,8 @@
  */
 
 $string['addpupil']                                 = 'Add pupil';
+$string['additionalinfo']                           = 'Additional Info';
+$string['additionalinfo_help']                      = 'Text to be displayed at the top of the first page of this questionnaire. (i.e. instructions, background info, etc.)';
 $string['addquestions']                             = 'Add questions';
 $string['alreadyfilled']                            = 'You have already filled out this questionnaire for us{$a}. Thank you.';
 $string['answerquestions']                          = 'Answer the questions...';
@@ -33,7 +35,6 @@ $string['closedate']                                = 'Use Close Date';
 $string['closeson']                                 = 'Questionnaire closes on {$a}';
 $string['closed']                                   = 'The questionnaire was closed on {$a}. Thanks.';
 $string['closedate_help']                           = 'You can specify a date to close the questionnaire here. Check the check box, and select the date and time you want. Users will not be able to fill out the questionnaire after that date. If this is not selected, it will never be closed.';
-$string['content']                                  = 'Content<br>(displayed at the top of the questionnaire)';
 $string['contentheader']                            = 'Page content';
 
 $string['displayoptions']                           = 'Display options';
@@ -145,8 +146,6 @@ $string['wrongformats']                             = 'There is something wrong 
 
 //$string['action']                                   = 'Action';
 //$string['activityoverview']                         = 'You have questionnaires that are due';
-//$string['additionalinfo']                           = 'Additional Info';
-//$string['additionalinfo_help']                      = 'Text to be displayed at the top of the first page of this questionnaire. (i.e. instructions, background info, etc.)';
 //$string['addnewquestion']                           = 'Adding {$a} question';
 //$string['addselqtype']                              = 'Add selected question type';
 //$string['alignment']                                = 'Radio buttons Alignment';
