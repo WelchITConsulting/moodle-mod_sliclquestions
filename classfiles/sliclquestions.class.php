@@ -266,6 +266,7 @@ class sliclquestions
             $formdata = data_submitted();
         }
         $formdata->rid = $this->get_response($userid);
+echo '<pre>' . print_r($formdata, true) . '</pre>';
         if (!empty($formdata->rid) && (empty($formdata->sec) || (intval($formdata->sec) < 1))) {
             $pos = 0;
             foreach(array('resp_bool', 'resp_single', 'resp_multiple', 'resp_rank',
