@@ -501,7 +501,7 @@ class sliclquestions
 //                                                                          'sec'      => 1));
 //            $title = get_string('printblanktooltip', 'sliclquestions');
 //            echo $OUTPUT->action_link($link,
-//                                      '&nbsp' . get_string('printblank', 'sliclquestions'),
+//                                      '&nbsp;' . get_string('printblank', 'sliclquestions'),
 //                                      new popup_action('click', $link, 'popup', array('menubar'    => true,
 //                                                                                      'location'   => false,
 //                                                                                      'scrollbars' => true,
