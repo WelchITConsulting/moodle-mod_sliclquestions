@@ -65,7 +65,7 @@ function xmldb_sliclquestions_upgrade($oldversion=0)
 
         $table = new xmldb_table('sliclquestions_quest_type');
         $field = new xmldb_field('response_table');
-        $field->set_attributes(XMLDB_TYPE_TEXT, 32, null, XMLDB_NOTNULL, null, 0);
+        $field->set_attributes(XMLDB_TYPE_TEXT, '32');
         $dbman->rename_field($table, $field, 'responsetable');
 
         $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_bool', array('id' => 1));
