@@ -270,7 +270,7 @@ class sliclquestions
             $pos = 0;
             foreach(array('resp_bool', 'resp_single', 'resp_multiple', 'resp_rank',
                           'resp_text', 'resp_other', 'resp_date') as $tbl) {
-                $sql = 'SELECT MAX(q.question) as num FROM {sliclquestions_'
+                $sql = 'SELECT MAX(q.position) as num FROM {sliclquestions_'
                      . $tbl
                      . '} a, {sliclquestions_question} q WHERE q.id=a.question_id'
                      . ' AND q.survey_id=? AND q.deleted=\'n\' AND a.response_id=?';
