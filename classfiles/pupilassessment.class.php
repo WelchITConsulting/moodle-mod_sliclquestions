@@ -74,7 +74,7 @@ class sliclquestions_pupil_assessment
                     $assessurl = $url;
                     $assessurl->params(array('act' => 'assess',
                                              'pid' => $pupil->id));
-                    $assessbtn = '<a href="' . $assessurl . '">' . get_string('edit') . '</a>';
+                    $assessbtn = '<a href="' . $assessurl . '">' . get_string('assess', 'sliclquestions') . '</a>';
                 }
                 $table->data[] = array($pupil->forename . ' ' . $pupil->surname,
                                        ($pupil->sex == 'm' ? get_string('male', 'sliclquestions')

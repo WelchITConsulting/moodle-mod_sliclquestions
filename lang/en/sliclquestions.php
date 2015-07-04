@@ -26,6 +26,7 @@ $string['additionalinfo_help']                      = 'Text to be displayed at t
 $string['addquestions']                             = 'Add questions';
 $string['alreadyfilled']                            = 'You have already filled out this questionnaire for us{$a}. Thank you.';
 $string['answerquestions']                          = 'Answer the questions...';
+$string['assess']                                   = 'Assess';
 
 $string['checkallradiobuttons']                     = 'Please check <strong>{$a}</strong> radio buttons!';
 $string['choosequestiontype']                       = 'Choose type of survey';
