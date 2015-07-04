@@ -107,7 +107,14 @@ function sliclquestions_choice_values($content)
     return $contents;
 }
 
+function sliclquestions_registers()
+{
+    global $DB;
 
+    $sql = 'SELECT id, name FROM {sliclquestions}'
+         . ' WHERE questype=? ORDER by name';
+    return $DB->get_results_sql($sql, array(SLICLQUESTIONS_PUPILREGISTRATION));
+}
 
 
 //// Constants.

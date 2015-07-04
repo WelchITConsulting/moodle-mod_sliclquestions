@@ -82,7 +82,7 @@ function xmldb_sliclquestions_upgrade($oldversion=0)
         $DB->set_field('sliclquestions_quest_type', 'responsetable', '', array('typeid' => 99));
         $DB->set_field('sliclquestions_quest_type', 'responsetable', '', array('typeid' => 100));
 
-        upgrade_mod_savepoint(true, 20150070401, 'sliclquestions');
+        upgrade_mod_savepoint(true, 2015070401, 'sliclquestions');
     }
 
     if ($oldversion < 2015070402) {
