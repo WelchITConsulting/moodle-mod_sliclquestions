@@ -327,7 +327,17 @@ class sliclquestions
 
         }
         if (!empty($formdata->rid)) {
-            $this->response_import_sec($formdata->rid, $formdata->sec, $formdata);
+            if (($formdata->sec >= 1) && isset($this->questionsbysec[$formdata->sec])) {
+                $vals = $this->response_select($formdata->rid, 'content');
+                reset($vals);
+                foreach($vals as $id => $arr) {
+                    if (isset($arr[0]) && is_array($arr[0])) {
+                        $formdata->{'q' . $id} = array_map('array_pop', $arr);
+                    } else {
+                        $formdata->{'q' . $id} = array_pop($arr);
+                    }
+                }
+            }
         }
         $formdatareferer = !empty($formdata->referer) ? htmlspecialchars($formdata->referer) : '';
         $formdatsrid     = isset($formdata->rid) ? $formdata->rid : 0;
@@ -865,22 +875,6 @@ die('<pre>' . print_r($this, true) . '</pre>');
         return $msg;
     }
 
-    private function response_import_sec($rid, $sec, &$formdata)
-    {
-        if (($sec < 1) || !isset($this->questionsbysec[$sec])) {
-            return;
-        }
-        $vals = $this->response_select($rid, 'content');
-        reset($vals);
-        foreach($vals as $id => $arr) {
-            if (isset($arr[0]) && is_array($arr[0])) {
-                $formdata->{'q' . $id} = array_map('array_pop', $arr);
-            } else {
-                $formdata->{'q' . $id} = array_pop($arr);
-            }
-        }
-    }
-
     private function response_select($rid, $col = '', $csvexport = false, $choicecodes = 0, $choicetext = 1)
     {
         global $DB;
@@ -890,7 +884,8 @@ die('<pre>' . print_r($this, true) . '</pre>');
             $col = explode(',', preg_replace('/\s/', '', $col));
         }
         if (is_array($col) && (count($col) > 0)) {
-            $col = implode(',', array_map(create_function('$a', 'return "q.$a'), $col));
+            $col = ','
+                 . implode(',', array_map(create_function('$a', 'return "q.$a";'), $col));
         }
 
         return $values;
