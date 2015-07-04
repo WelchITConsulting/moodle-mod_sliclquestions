@@ -601,7 +601,9 @@ die('<pre>' . print_r($this, true) . '</pre>');
         if ($rid != 0) {
             $fields = 'id, username';
             $select = 'id = ' . $rid . ' AND survey_id = ' . $this->id
-                    . ' AND userid = ' . $userid . ' AND complete = \'n\'';
+                    . ' AND userid = ' . $userid
+                    . (isset($this->student) ? ' AND pupilid=' . $this->student->id : '')
+                    . ' AND complete = \'n\'';
             return (($DB->get_record_select('sliclquestions_response', $select, null, $fields) !== false) ? $rid : '');
         }
         $select = 'survey_id = ' . $this->id . ' AND complete = \'n\' AND userid = ' . $userid;
