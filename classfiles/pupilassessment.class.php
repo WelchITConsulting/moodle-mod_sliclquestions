@@ -64,7 +64,7 @@ class sliclquestions_pupil_assessment
         $sql = 'SELECT * FROM {sliclquestions_students} WHERE survey_id=? '
              . 'AND teacher_id=? AND deleteflag=0 ORDER BY sex DESC, kpi_level '
              . 'ASC, surname ASC, forename ASC';
-        $pupils = $DB->get_records_sql($sql, array($survey->id, $USER->id));
+        $pupils = $DB->get_records_sql($sql, array($survey->register, $USER->id));
         if ($pupils) {
             foreach($pupils as $pupil) {
                 $assessurl = $url;
