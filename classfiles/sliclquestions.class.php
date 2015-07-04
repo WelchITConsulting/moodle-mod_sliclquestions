@@ -21,10 +21,11 @@
  */
 
 require_once($CFG->dirroot . '/mod/sliclquestions/classfiles/question.class.php');
+require_once($CFG->dirroot . '/mod/sliclquestions/classfiles/student.class.php');
 
 class sliclquestions
 {
-    public function __construct(&$course, &$cm, $id = 0, $sliclquestions = null, $addquestions = false)
+    public function __construct(&$course, &$cm, $id = 0, $sliclquestions = null, $studentid = null, $addquestions = false)
     {
         global $DB;
 
@@ -43,6 +44,9 @@ class sliclquestions
             $this->context = context_module::instance($cm->id);
         } else {
             $this->context = null;
+        }
+        if (!empty($studentid)) {
+            $this->student = new sliclquestions_student($studentid, null, $this->context);
         }
         if ($addquestions) {
             $this->add_questions($this->id);
@@ -346,6 +350,11 @@ class sliclquestions
            . html_writer::empty_tag('input', array('type'  => 'hidden',
                                                    'name'  => 'sesskey',
                                                    'value' => sesskey()));
+        if (!empty($this->student)) {
+            echo html_writer::empty_tag('input', array('type'  => 'hidden',
+                                                       'name'  => 'sesskey',
+                                                       'value' => $this->student->id));
+        }
         if (isset($this->questions) && $numsections) {
             //********************* Add code from survey_render function as only called from here
             $this->usehtmleditor = null;
@@ -838,7 +847,7 @@ class sliclquestions
         }
         if ($checkwrongformat && $wrongformat) {
             if ($wrongformat == 1) {
-                $msg = get_string('mwrongformat', 'sliclquestions') . $strwrongformat;
+                $msg = get_string('wrongformat', 'sliclquestions') . $strwrongformat;
             } else {
                 $msg = get_string('wrongformats', 'sliclquestions') . $strwrongformat;
             }

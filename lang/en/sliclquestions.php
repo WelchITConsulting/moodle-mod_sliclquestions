@@ -21,9 +21,11 @@
  */
 
 $string['addpupil']                                 = 'Add pupil';
+$string['addquestions']                             = 'Add questions';
 $string['alreadyfilled']                            = 'You have already filled out this questionnaire for us{$a}. Thank you.';
 $string['answerquestions']                          = 'Answer the questions...';
 
+$string['checkallradiobuttons']                     = 'Please check <strong>{$a}</strong> radio buttons!';
 $string['choosequestiontype']                       = 'Choose type of survey';
 $string['classid']                                  = 'Class ID';
 $string['classid_help']                             = 'If you are entering data for more than one class, you can use this to differentiate between the different classes.';
@@ -40,27 +42,39 @@ $string['event_previed']                            = 'SLiCL questionnaire previ
 $string['event_previed_desc']                       = 'The user with id \'$d\' previewed the SLiCL questionnaire with course module id \'%d\'.';
 
 $string['female']                                   = 'Female';
+$string['finished']                                 = 'You have answered all the questions in this questionnaire!';
 
 $string['kpilevel']                                 = 'KPI level';
 
 $string['male']                                     = 'Male';
+$string['missingquestion']                          = 'Please answer required question ';
+$string['missingquestions']                         = 'Please answer required questions: ';
 $string['modulename']                               = 'SLiCL Questions';
 $string['modulename_help']                          = 'The SLiCL Questions module allows you to construct surveys using a variety of question types, for the purpose of gathering data for the SLiCL Project.';
 $string['modulenameplural']                         = 'SLiCL Questionnaires';
 
 $string['name']                                     = 'Questionnaire Name';
+$string['nextpage']                                 = 'Next Page';
 $string['noneinuse']                                = 'This questionnaire does not contain any questions.';
 $string['nonzeroerror']                             = 'You must select the type of survey to create';
+$string['notapplicable']                            = 'N/A';
 $string['noteligible']                              = 'You are not eligible to take this questionnaire.';
 $string['notopen']                                  = 'This questionnaire will not open until {$a}.';
 $string['noviewpermission']                         = 'You do not have permission to view these questionnaires.';
+$string['num']                                      = '#';
 
 $string['opendate']                                 = 'Use Open Date';
 $string['opendate_help']                            = '<p>You can specify a date to open the questionnaire here. Check the check box, and select the date and time you want.</p>'
                                                     . '<p>Users will not be able to fill out the questionnaire before that date. If this is not selected, it will be open immediately.</p>';
+$string['option']                                   = 'option {$a}';
 
+$string['pageof']                                   = 'Page {$a->page} of {$a->totpages}';
+$string['pleasecomplete']                           = 'Please complete this choice.';
 $string['pluginadministration']                     = 'SLiCL Questions Administration';
 $string['pluginname']                               = 'SLiCL Questions';
+$string['preview_questionnaire']                    = 'Questionnaire Preview';
+$string['previewing']                               = ' Previewing Questionnaire ';
+$string['previouspage']                             = 'Previous Page';
 $string['printblank']                               = 'Print Blank';
 $string['printblanktooltip']                        = 'Opens printer-friendly window with blank Questionnaire';
 $string['printheading']                             = 'Display survey name';
@@ -72,6 +86,7 @@ $string['pupilsmale']                               = 'Male pupils';
 $string['pupilsregistered']                         = 'Total number of pupils registered';
 $string['pupilstotal']                              = 'Total pupils';
 
+$string['questionnairecloses']                      = 'Questionnaire Closes';
 $string['questype']                                 = 'Questionnaire type';
 $string['questype_help']                            = '<p>Defines the type of questionnaire to create:</p>'
                                                     . '<ul><li>Pupil register: allows pupils to be registered for the pupil survey</li>'
@@ -81,6 +96,8 @@ $string['questype_pupilassess']                     = 'Pupil assessment';
 $string['questype_pupilregister']                   = 'Pupil register';
 $string['questype_survey']                          = 'Standard survey';
 
+$string['respondent']                               = 'Respondent';
+$string['responses']                                = 'Responses';
 $string['resumesurvey']                             = 'Resume questionnaire';
 
 $string['schoolyear']                               = 'School year';
@@ -105,7 +122,10 @@ $string['sliclquestions:submit']                    = 'Complete and submit a que
 $string['sliclquestions:view']                      = 'View a questionnaire';
 $string['sliclquestions:viewstatistics']            = 'View the module statistics';
 $string['stats_content']                            = '<p>This page displays a list of all of the Creative Enquirers registered on the SLiCL project with the number of pupils, both male and female, they have registered on the project.</p>';
+$string['strfdate']                                 = '%d/%m/%Y';
+$string['submitted']                                = 'Submitted on:';
 $string['submitsurvey']                             = 'Submit questionnaire';
+$string['surveyresponse']                           = 'Response from questionnaire';
 
 $string['tblclass']                                 = 'Class';
 $string['tblcommand']                               = 'Action';
@@ -113,6 +133,11 @@ $string['tblkpilevel']                              = 'KPI level';
 $string['tblname']                                  = 'First name / Surname';
 $string['tblsex']                                   = 'Sex';
 $string['tblyear']                                  = 'School Year';
+$string['thankhead']                                = 'Thank you for completing this SLiCL Questions questionnaire.';
+
+$string['wrongformat']                              = 'There is something wrong with your answer to question:&nbsp;';
+$string['wrongformats']                             = 'There is something wrong with your answer to questions:&nbsp;';
+
 
 
 //$string['action']                                   = 'Action';
@@ -120,7 +145,6 @@ $string['tblyear']                                  = 'School Year';
 //$string['additionalinfo']                           = 'Additional Info';
 //$string['additionalinfo_help']                      = 'Text to be displayed at the top of the first page of this questionnaire. (i.e. instructions, background info, etc.)';
 //$string['addnewquestion']                           = 'Adding {$a} question';
-//$string['addquestions']                             = 'Add questions';
 //$string['addselqtype']                              = 'Add selected question type';
 //$string['alignment']                                = 'Radio buttons Alignment';
 //$string['alignment_help']                           = 'Select buttons alignment: vertical (default) or horizontal.';
@@ -155,7 +179,6 @@ $string['tblyear']                                  = 'School Year';
 //$string['chart:type']                               = 'Chart type';
 //$string['chart:type_help']                          = 'Select the Chart type you want to use for this feedback';
 //$string['chart:vprogress']                          = 'Vertical Progress bar';
-//$string['checkallradiobuttons']                     = 'Please check <strong>{$a}</strong> radio buttons!';
 //$string['checkboxes']                               = 'Check Boxes';
 //$string['checkboxes_help']                          = 'Enter one option per line for the user to select one or multiple answers from.';
 //$string['checkboxes_link']                          = 'mod/questionnaire/questions#Check_Boxes';
@@ -271,7 +294,6 @@ $string['tblyear']                                  = 'School Year';
 //$string['field']                                    = 'Question {$a}';
 //$string['fieldlength']                              = 'Input box length';
 //$string['fieldlength_help']                         = 'For the **Text Box** question type, enter the **Input Box length** and the **Maximum text length** of text to be entered by respondent. Default values are 20 characters for the Input Box width and 25 characters for the maximum length of text entered.';
-//$string['finished']                                 = 'You have answered all the questions in this questionnaire!';
 //$string['firstrespondent']                          = 'First Respondent';
 //$string['formateditor']                             = 'HTML editor';
 //$string['formatplain']                              = 'Plain text';
@@ -313,8 +335,6 @@ $string['tblyear']                                  = 'School Year';
 //$string['missingname']                              = 'Question {$a} cannot be used in this feedback section because it does not have a name.';
 //$string['missingrequired']                          = 'Question {$a} cannot be used in this feedback section because it is not required.';
 //$string['missingnameandrequired']                   = 'Question {$a} cannot be used in this feedback section because it does not have a name and it is not required.';
-//$string['missingquestion']                          = 'Please answer Required question ';
-//$string['missingquestions']                         = 'Please answer Required questions: ';
 //$string['movedisabled']                             = 'This item cannot be moved';
 //$string['myresponses']                              = 'All your responses';
 //$string['myresponsetitle']                          = 'Your {$a} response(s)';
@@ -324,7 +344,6 @@ $string['tblyear']                                  = 'School Year';
 //$string['navigate_help']                            = 'Enable Yes/No and Radio Buttons questions to have Child questions dependent on their choices in your questionnaire.';
 //$string['navigate_link']                            = 'mod/sliclquestions/conditional_branching';
 //$string['next']                                     = 'Next';
-//$string['nextpage']                                 = 'Next Page';
 //$string['nlines']                                   = '{$a} lines';
 //$string['noanswer']                                 = 'No answer';
 //$string['noattempts']                               = 'No attempts have been made on this questionnaire';
@@ -338,14 +357,12 @@ $string['tblyear']                                  = 'School Year';
 //$string['noresponses']                              = 'No responses';
 //$string['normal']                                   = 'Normal';
 //$string['notanumber']                               = '<strong>{$a}</strong> is not an accepted number format.';
-//$string['notapplicable']                            = 'N/A';
 //$string['notapplicablecolumn']                      = 'N/A column';
 //$string['notavail']                                 = 'This questionnaire is no longer available. Ask your teacher to delete it.';
 //$string['notemplatesurveys']                        = 'No template questionnaires.';
 //$string['notrequired']                              = 'Response is not required';
 //$string['not_started']                              = 'not started';
 //$string['nousersselected']                          = 'No users selected';
-//$string['num']                                      = '#';
 //$string['numattemptsmade']                          = '{$a} attempts made on this questionnaire';
 //$string['numberfloat']                              = 'The number you entered <strong>{$a->number}</strong> has been reformatted/rounded with <strong>{$a->precision}</strong> decimal place(s).';
 //$string['numberofdecimaldigits']                    = 'Nb of decimal digits';
@@ -355,7 +372,6 @@ $string['tblyear']                                  = 'School Year';
 //$string['numeric_help']                             = 'Use this question type if you expect the response to be a correctly formatted number.';
 //
 //$string['of']                                       = 'of';
-//$string['option']                                   = 'option {$a}';
 //$string['optionalname']                             = 'Question Name';
 //$string['optionalname_help']                        = 'The Question Name is only used when you export responses to CSV/Excel format.
 // If you never export to CSV, then you needn\'t worry about Question names at all.
@@ -387,17 +403,12 @@ $string['tblyear']                                  = 'School Year';
 //$string['owner']                                    = 'Owner';
 //
 //$string['page']                                     = 'Page';
-//$string['pageof']                                   = 'Page {$a->page} of {$a->totpages}';
 //$string['participant']                              = 'Participant';
-//$string['pleasecomplete']                           = 'Please complete this choice.';
 //$string['position']                                 = 'position';
 //$string['possibleanswers']                          = 'Possible answers';
 //$string['posteddata']                               = 'Reached page with posted data:';
 //$string['preview_label']                            = 'Preview';
-//$string['preview_questionnaire']                    = 'Questionnaire Preview';
-//$string['previewing']                               = ' Previewing Questionnaire ';
 //$string['previous']                                 = 'Previous';
-//$string['previouspage']                             = 'Previous Page';
 //$string['print']                                    = 'Print this Response';
 //$string['printtooltip']                             = 'Opens printer-friendly window with current Response';
 //$string['private']                                  = 'Private';
@@ -413,7 +424,6 @@ $string['tblyear']                                  = 'School Year';
 //$string['qtypeunlimited']                           = 'respond many';
 //$string['qtypeweekly']                              = 'respond weekly';
 //$string['questionnaireadministration']              = 'SLiCL Questions Administration';
-//$string['questionnairecloses']                      = 'Questionnaire Closes';
 //$string['questionnaireopens']                       = 'Questionnaire Opens';
 //$string['questionnairereport']                      = 'SLiCL Questions Report';
 //$string['questionnum']                              = 'Question #';
@@ -446,7 +456,6 @@ $string['tblyear']                                  = 'School Year';
 //$string['reset']                                    = 'Reset';
 //$string['removeallquestionnaireattempts']           = 'Delete all questionnaire responses';
 //$string['respeligiblerepl']                         = '(replaced by role overrides)';
-//$string['respondent']                               = 'Respondent';
 //$string['respondenteligibleall']                    = 'all';
 //$string['respondenteligiblestudents']               = 'students only';
 //$string['respondenteligibleteachers']               = 'teachers only';
@@ -460,7 +469,6 @@ $string['tblyear']                                  = 'School Year';
 //$string['responsefieldlines']                       = 'Input box size';
 //$string['responseformat']                           = 'Response format';
 //$string['responseoptions']                          = 'Response options';
-//$string['responses']                                = 'Responses';
 //$string['responseview']                             = 'Students can view ALL responses';
 //$string['responseview_help']                        = 'You can specify who can see the responses of all respondents to submitted questionnaires (general statistics tables).';
 //$string['responseview_link']                        = 'mod/sliclquestions/mod#Response_viewing';
@@ -498,19 +506,16 @@ $string['tblyear']                                  = 'School Year';
 //$string['settingssaved']                            = 'Settings saved';
 //$string['show_nonrespondents']                      = 'Non-respondents';
 //$string['started']                                  = 'started';
-//$string['strfdate']                                 = '%d/%m/%Y';
 //$string['strfdateformatcsv']                        = 'd/m/Y H:i:s';
 //$string['submitoptions']                            = 'Submission options';
 //$string['submitpreview']                            = 'Submit preview';
 //$string['submitpreviewcorrect']                     = 'This submission would be accepted as correctly filled in.';
-//$string['submitted']                                = 'Submitted on:';
 //$string['subtitle']                                 = 'Subtitle';
 //$string['subtitle_help']                            = 'Subtitle of this questionnaire. Appears below the title on the first page only.';
 //$string['subject']                                  = 'Subject';
 //$string['summary']                                  = 'Summary';
 //$string['surveynotexists']                          = 'questionnaire does not exist.';
 //$string['surveyowner']                              = 'You must be a questionnaire owner to perform this operation.';
-//$string['surveyresponse']                           = 'Response from questionnaire';
 //
 //$string['template']                                 = 'Template';
 //$string['templatenotviewable']                      = 'Template questionnaires are not viewable.';
@@ -525,7 +530,6 @@ $string['tblyear']                                  = 'School Year';
 //$string['textbox_help']                             = 'For the Text Box question type, enter the Input Box length and the Maximum text length of text to be entered by respondent.
 //Default values are 20 characters for the Input Box width and 25 characters for the maximum length of text entered.';
 //$string['textdownloadoptions']                      = 'Options for text download (CSV)';
-//$string['thank_head']                               = 'Thank you for completing this Questionnaire.';
 //$string['theme']                                    = 'Theme';
 //$string['thismonth']                                = 'this month';
 //$string['thisresponse']                             = 'This response';
@@ -564,8 +568,6 @@ $string['tblyear']                                  = 'School Year';
 //$string['wronganswers']                             = 'There is something wrong with your answers (see below)';
 //$string['wrongdateformat']                          = 'The date entered: <strong>{$a}</strong> does not correspond to the format shown in the example.';
 //$string['wrongdaterange']                           = 'ERROR! The year must be set in the 1902 to 2037 range.';
-//$string['wrongformat']                              = 'There is something wrong with your answer to question:&nbsp;';
-//$string['wrongformats']                             = 'There is something wrong with your answer to questions:&nbsp;';
 //
 //$string['yesno']                                    = 'Yes/No';
 //$string['yesno_help']                               = 'Simple Yes/No question.';

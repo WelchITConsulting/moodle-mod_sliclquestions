@@ -30,6 +30,7 @@ $SESSION->sliclquestions->current_tab = 'view';
 
 $id  = optional_param('id', null, PARAM_INT);       // Course module ID
 $a   = optional_param('a',  null, PARAM_INT);       // SLiCL questions ID
+$pid = optional_param('pid', null, PARAM_INT);      // Pupil ID
 $act = optional_param('act', null, PARAM_ALPHA);    // Action to perform
 
 if ($id) {
@@ -73,6 +74,9 @@ if ($id) {
     $params['id'] = $id;
 } elseif ($a) {
     $params['a'] = $a;
+}
+if ($pid) {
+    $params['pid'] = $pid;
 }
 $url = new moodle_url('/mod/sliclquestions/view.php', $params);
 if ($act) {

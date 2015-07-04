@@ -22,17 +22,17 @@
 
 class sliclquestions_student
 {
-    private $id         = 0;
-    private $survey_id  = 0;
-    private $teacher_id = 0;
-    private $forename   = '';
-    private $surname    = '';
-    private $sex        = 'm';
-    private $year_id    = 3;
-    private $class_id   = '';
-    private $kpi_level  = 2;
-    private $deleteflag = 0;
-    private $context;
+    public $id         = 0;
+    public $survey_id  = 0;
+    public $teacher_id = 0;
+    public $forename   = '';
+    public $surname    = '';
+    public $sex        = 'm';
+    public $year_id    = 3;
+    public $class_id   = '';
+    public $kpi_level  = 2;
+    public $deleteflag = 0;
+    public $context;
 
     public function __construct($id = 0, $student = null, $context = null)
     {
