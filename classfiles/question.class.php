@@ -334,7 +334,7 @@ class sliclquestions_question
 
     private function render_start($qnum, $formdata = '')
     {
-        global $PAGE, $SESSION;
+        global $OUTPUT, $PAGE, $SESSION;
 
         $currenttab      = $SESSION->sliclquestions->current_tab;
         $pagetype        = $PAGE->pagetype;
