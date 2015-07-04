@@ -61,20 +61,21 @@ class sliclquestions_pupil_assessment
                               'center',
                               'center',
                               'center');
-        $sql = 'SELECT * FROM {sliclquestions_students} WHERE survey_id=? '
-             . 'AND teacher_id=? AND deleteflag=0 ORDER BY sex DESC, kpi_level '
-             . 'ASC, surname ASC, forename ASC';
+        $sql = 'SELECT s.*, r.id as responded FROM {sliclquestions_students} s'
+             . ' LEFT OUTER JOIN {sliclquestions_response} r ON r.pupilid = s.id'
+             . ' WHERE s.survey_id=? AND s.teacher_id=? AND s.deleteflag=0'
+             . ' ORDER BY sex DESC, kpi_level ASC, surname ASC, forename ASC';
         $pupils = $DB->get_records_sql($sql, array($survey->register, $USER->id));
         if ($pupils) {
             foreach($pupils as $pupil) {
-                $pupilobj = new sliclquestions_student(0, $pupil, $survey->context);
-                if ($pupilobj->is_assessed($survey->id)) {
-                    $assessbtn = get_string('complete', 'sliclquestions');
-                } else {
-                    $assessurl = $url;
+                if (empty($pupil->responded)) {
+                    $params['pid'] = $pupil->id;
+                    $assessurl = new moodle_url('/mod/sliclquestions/complete.php');
                     $assessurl->params(array('act' => 'assess',
                                              'pid' => $pupil->id));
                     $assessbtn = '<a href="' . $assessurl . '">' . get_string('assess', 'sliclquestions') . '</a>';
+                } else {
+                    $assessbtn = get_string('complete', 'sliclquestions');
                 }
                 $table->data[] = array($pupil->forename . ' ' . $pupil->surname,
                                        ($pupil->sex == 'm' ? get_string('male', 'sliclquestions')
