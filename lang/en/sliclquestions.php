@@ -83,6 +83,8 @@ $string['printintro']                               = 'Display survey intro';
 $string['printintroexplain']                        = 'Display survey intro above content?';
 $string['pupilsfemale']                             = 'Female pupils';
 $string['pupilsmale']                               = 'Male pupils';
+$string['pupilregister']                            = 'Pupil register';
+$string['pupilregister_help']                       = 'The register of pupils to be assessed using this questionnaire';
 $string['pupilsregistered']                         = 'Total number of pupils registered';
 $string['pupilstotal']                              = 'Total pupils';
 

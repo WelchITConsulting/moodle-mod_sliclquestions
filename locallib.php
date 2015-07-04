@@ -113,7 +113,7 @@ function sliclquestions_registers()
 
     $sql = 'SELECT id, name FROM {sliclquestions}'
          . ' WHERE questype=? ORDER by name';
-    return $DB->get_results_sql($sql, array(SLICLQUESTIONS_PUPILREGISTRATION));
+    return $DB->get_records_sql($sql, array(SLICLQUESTIONS_PUPILREGISTRATION));
 }
 
 

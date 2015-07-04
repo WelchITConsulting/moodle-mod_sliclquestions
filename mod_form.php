@@ -56,7 +56,8 @@ class mod_sliclquestions_mod_form extends moodleform_mod
         $mform->addRule('questype', get_string('nonzeroerror', 'sliclquestions'), 'nonzero', null, 'client');
         $mform->addElement('select', 'register', get_string('pupilregister', 'sliclquestions'), sliclquestions_registers());
         $mform->setType('questype', PARAM_INT);
-        $mform->addRule('questype', get_string('nonzeroerror', 'sliclquestions'), 'nonzero', null, 'client');
+        $mform->addHelpButton('register', 'pupilregister');
+        $mform->disabledIf('register', 'questype', 'neq', SLICLQUESTIONS_PUPILASSESSMENT);
         $mform->addElement('editor', 'page', get_string('content', 'sliclquestions'), null, sliclquestions_editor_options($this->context));
         $mform->addRule('page', get_string('required'), 'required', null, 'client');
 
