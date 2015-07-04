@@ -522,7 +522,7 @@ class sliclquestions
             $a           = new stdClass();
             $a->page     = $section;
             $a->totpages = $numsections;
-            echo html_writer::div(get_string('pageof', 'sliclquestions'), 'surveypage');
+            echo html_writer::div(get_string('pageof', 'sliclquestions', $a), 'surveypage');
         }
     }
 
