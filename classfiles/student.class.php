@@ -39,7 +39,7 @@ class sliclquestions_student
         global $DB;
 
         if ($id) {
-            $student = $DB->get_records('sliclquestions_student', array('id' => $id));
+            $student = $DB->get_records('sliclquestions_students', array('id' => $id));
         }
         if (is_object($student)) {
             $this->id         = $student->id;
