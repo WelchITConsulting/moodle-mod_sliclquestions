@@ -336,11 +336,96 @@ class sliclquestions_question
     {
         global $PAGE, $SESSION;
 
-        $currenttab = $SESSION->sliclquestions->current_tab;
-        $pagetype = $PAGE->pagetype;
+        $currenttab      = $SESSION->sliclquestions->current_tab;
+        $pagetype        = $PAGE->pagetype;
         $skippedquestion = false;
-        $skppedclass = '';
-
+        $skippedclass    = '';
+        if ((($pagetype == 'mod-sliclquestions-myreport') || ($pagetype == 'mod-sliclquestions-report')) &&
+                $formdata && ($this->dependquestion != 0) && !array_key_exists('q' . $this->id, $formdata)) {
+            $skippedquestion = true;
+            $skippedclass    = 'unselected';
+            $qnum = '<span class="' . $skippedclass . '">(' . $qnum . ')</span>';
+        }
+        $displayclass = 'qn-container';
+        if ($pagetype == 'mod-sliclquestions-preview') {
+            $parent = sliclquestions_get_parent($this);
+            if ($parent) {
+                $dependquestion = $parent[$this->id]['qdependquestion'];
+                $dependchoice   = $parent[$this->id]['qdependchoice'];
+                $parenttype     = $parent[$this->id]['parenttype'];
+                $displayclass   = 'hidependquestion';
+                if (isset($formdata->{'q' . $this->id}) && $formdata->{'q' . $this->id}) {
+                    $displayclass = 'qn-container';
+                }
+                if ($this->type_id == SLICLQUESRATE) {
+                    foreach($this->choices as $k => $choice) {
+                        if (isset($formdata->{'q' . $this->id . '_' . $k})) {
+                            $displayclass = 'qn-container';
+                            break;
+                        }
+                    }
+                }
+                if (isset($formdata->$dependquestion) && ($formdata->$dependquestion == $dependchoice)) {
+                    $displayclass = 'qn-container';
+                }
+                if ($pagetype == SLICLQUESDROP) {
+                    $qnid = preg_quote('qn-' . $this->id, '/');
+                    if (isset($formdata->$depenquestion) && preg_match('/' . $qnid . '/', $formdata->$dependquestion)) {
+                        $displayclass = 'qn-container';
+                    }
+                }
+            }
+        }
+        echo html_writer::start_tag('fieldset', array('class' => $displayclass,
+                                                      'id'    => 'qn-' . $this->id))
+           . html_writer::start_tag('legend', array('class' => 'qn-legend'));
+        if ($this->type_id != SLICLQUESSECTIONTEXT) {
+            echo html_writer::start_div('qn-info')
+               . html_writer::start_div('acesshide')
+               . get_string('questionnum', 'sliclquestions')
+               . html_writer::end_div()
+               . html_writer::tag('h2', $qnum, array('class' => 'qn-number'))
+               . html_writer::end_div();
+            if ($this->required) {
+                $req = get_string('required', 'sliclquestions');
+                echo html_writer::div($req, 'accesshide')
+                   . html_writer::empty_tag('img', array('class' => 'req',
+                                                         'title' => $req,
+                                                         'alt'   => $req,
+                                                         'src'   => $OUTPUT->pix_url('req')));
+            }
+        }
+        if ($this->content == '<p>  </p>') {
+            $this->content = '';
+        }
+        echo html_writer::end_tag('legend')
+           . html_writer::start_div('qn-content')
+           . html_writer::start_div('qn-question' . $skippedclass);
+        if (($this->type_id == SLICLQUESNUMERIC) || ($this->type_id == SLICLQUESTEXT) ||
+                ($this->type_id == SLICLQUESDROP)) {
+            echo html_writer::start_tag('label', array('for' => $this->type . $this->id));
+        }
+        if ($this->type_id == SLICLQUESESSAY) {
+            echo html_writer::start_tag('label', array('for' => 'edit-q' . $this->id));
+        }
+        echo format_text(file_rewrite_pluginfile_urls($this->content,
+                                                      'pluginfile.php',
+                                                      $this->context->id,
+                                                      'mod_sliclquestions',
+                                                      'question',
+                                                      $this->id),
+                         FORMAT_HTML,
+                         array('noclean'     => true,
+                               'para'        => false,
+                               'filter'      => true,
+                               'context'     => $this->context,
+                               'overflowdiv' => true));
+        if (($this->type_id == SLICLQUESNUMERIC) || ($this->type_id == SLICLQUESTEXT) ||
+                ($this->type_id == SLICLQUESDROP) || ($this->type_id == SLICLQUESESSAY)) {
+            echo html_writer::end_tag('label');
+        }
+        echo html_writer::end_div()
+           . html_writer::start_div('qn-answer');
     }
 
     private function render_end()

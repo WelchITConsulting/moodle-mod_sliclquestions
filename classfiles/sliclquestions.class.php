@@ -345,6 +345,7 @@ class sliclquestions
            . html_writer::start_tag('form', array('id'     => 'phpesp_response',
                                                   'method' => 'post',
                                                   'action' => $action))
+           . html_writer::start_div()
            . html_writer::empty_tag('input', array('type'  => 'hidden',
                                                    'name'  => 'referer',
                                                    'value' => (!empty($formdata->referer) ? htmlspecialchars($formdata->referer) : '')))
