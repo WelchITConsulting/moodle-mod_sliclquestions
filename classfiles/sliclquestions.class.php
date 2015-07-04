@@ -259,7 +259,7 @@ class sliclquestions
 
     private function print_survey($userid = false)
     {
-        global $CFG, $OUTPUT, $SESSION;
+        global $CFG, $DB, $OUTPUT, $SESSION;
 
         $formdata = new stdClass();
         if (data_submitted() && confirm_sesskey()) {
