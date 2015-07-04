@@ -604,6 +604,7 @@ die('<pre>' . print_r($this, true) . '</pre>');
                     . ' AND userid = ' . $userid
                     . (isset($this->student) ? ' AND pupilid=' . $this->student->id : '')
                     . ' AND complete = \'n\'';
+echo '<pre>Select: ' . $select . '</pre>';
             return (($DB->get_record_select('sliclquestions_response', $select, null, $fields) !== false) ? $rid : '');
         }
         $select = 'survey_id = ' . $this->id . ' AND complete = \'n\' AND userid = ' . $userid;
