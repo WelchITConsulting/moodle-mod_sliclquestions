@@ -70,9 +70,9 @@ class sliclquestions_pupil_assessment
             foreach($pupils as $pupil) {
                 if (empty($pupil->responded)) {
                     $params['pid'] = $pupil->id;
-                    $assessurl = new moodle_url('/mod/sliclquestions/complete.php');
-                    $assessurl->params(array('act' => 'assess',
-                                             'pid' => $pupil->id));
+                    $assessurl = new moodle_url('/mod/sliclquestions/complete.php', $params);
+//                    $assessurl->params(array('act' => 'assess',
+//                                             'pid' => $pupil->id));
                     $assessbtn = '<a href="' . $assessurl . '">' . get_string('assess', 'sliclquestions') . '</a>';
                 } else {
                     $assessbtn = get_string('complete', 'sliclquestions');
