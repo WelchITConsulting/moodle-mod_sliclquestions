@@ -68,17 +68,17 @@ function xmldb_sliclquestions_upgrade($oldversion=0)
         $field->set_attributes(XMLDB_TYPE_TEXT, '32');
         $dbman->rename_field($table, $field, 'responsetable');
 
-        $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_bool', array('id' => 1));
-        $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_text', array('id' => 2));
-        $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_text', array('id' => 3));
-        $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_single', array('id' => 4));
-        $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_multiple', array('id' => 5));
-        $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_single', array('id' => 6));
-        $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_rank', array('id' => 8));
-        $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_date', array('id' => 9));
-        $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_text', array('id' => 10));
-        $DB->set_field('sliclquestions_quest_type', 'responsetable', '', array('id' => 99));
-        $DB->set_field('sliclquestions_quest_type', 'responsetable', '', array('id' => 100));
+        $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_bool', array('typeid' => 1));
+        $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_text', array('typeid' => 2));
+        $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_text', array('typeid' => 3));
+        $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_single', array('typeid' => 4));
+        $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_multiple', array('typeid' => 5));
+        $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_single', array('typeid' => 6));
+        $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_rank', array('typeid' => 8));
+        $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_date', array('typeid' => 9));
+        $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_text', array('typeid' => 10));
+        $DB->set_field('sliclquestions_quest_type', 'responsetable', '', array('typeid' => 99));
+        $DB->set_field('sliclquestions_quest_type', 'responsetable', '', array('typeid' => 100));
         upgrade_mod_savepoint(true, 20150070401, 'sliclquestions');
     }
 
