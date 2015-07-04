@@ -366,6 +366,7 @@ class sliclquestions
                                                        'name'  => 'sesskey',
                                                        'value' => $this->student->id));
         }
+        echo html_writer::end_div();
         if (isset($this->questions) && $numsections) {
             //********************* Add code from survey_render function as only called from here
             $this->usehtmleditor = null;
@@ -492,26 +493,26 @@ class sliclquestions
                . html_writer::end_div();
         }
         echo html_writer::tag('h3', format_text($this->name, FORMAT_HTML), array('class' => 'surveytitle'));
-        if ($this->capabilities->printblank && $blankquestionnaire && ($section == 1)) {
+//        if ($this->capabilities->printblank && $blankquestionnaire && ($section == 1)) {
 
-            $link = new moodle_url('/mod/sliclquestions/print.php', array('qid'      => $this->id,
-                                                                          'rid'      => 0,
-                                                                          'courseid' => $this->course->id,
-                                                                          'sec'      => 1));
-            $title = get_string('printblanktooltip', 'sliclquestions');
-            echo $OUTPUT->action_link($link,
-                                      '&nbsp' . get_string('printblank', 'sliclquestions'),
-                                      new popup_action('click', $link, 'popup', array('menubar'    => true,
-                                                                                      'location'   => false,
-                                                                                      'scrollbars' => true,
-                                                                                      'resizable'  => true,
-                                                                                      'height'     => 600,
-                                                                                      'width'      => 800,
-                                                                                      'title'      => $title)),
-                                      array('class' => 'floatprinticon',
-                                            'title' => $title),
-                                      new pix_icon('t/print', $title));
-        }
+//            $link = new moodle_url('/mod/sliclquestions/print.php', array('qid'      => $this->id,
+//                                                                          'rid'      => 0,
+//                                                                          'courseid' => $this->course->id,
+//                                                                          'sec'      => 1));
+//            $title = get_string('printblanktooltip', 'sliclquestions');
+//            echo $OUTPUT->action_link($link,
+//                                      '&nbsp' . get_string('printblank', 'sliclquestions'),
+//                                      new popup_action('click', $link, 'popup', array('menubar'    => true,
+//                                                                                      'location'   => false,
+//                                                                                      'scrollbars' => true,
+//                                                                                      'resizable'  => true,
+//                                                                                      'height'     => 600,
+//                                                                                      'width'      => 800,
+//                                                                                      'title'      => $title)),
+//                                      array('class' => 'floatprinticon',
+//                                            'title' => $title),
+//                                      new pix_icon('t/print', $title));
+//        }
         if ($msg) {
             echo html_writer::div($msg, 'notifyproblem');
         }

@@ -431,6 +431,7 @@ class sliclquestions_question
     private function render_end()
     {
         echo html_writer::end_div()
+           . html_writer::end_div()
            . html_writer::end_tag('fieldset');
     }
 
