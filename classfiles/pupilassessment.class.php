@@ -69,7 +69,7 @@ class sliclquestions_pupil_assessment
             foreach($pupils as $pupil) {
                 $pupilobj = new sliclquestions_student(0, $pupil, $survey->context);
                 if ($pupilobj->is_assessed($survey->id)) {
-                    $assessbtn = get_string('assessed', 'sliclquestions');
+                    $assessbtn = get_string('complete', 'sliclquestions');
                 } else {
                     $assessurl = $url;
                     $assessurl->params(array('act' => 'assess',
