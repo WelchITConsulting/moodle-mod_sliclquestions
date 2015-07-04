@@ -22,8 +22,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2015070403;
+$plugin->version   = 2015070404;
 $plugin->requires  = 2015051100;
 $plugin->maturiy   = MATURITY_BETA;
-$plugin->release   = 2015070403;
+$plugin->release   = 2015070404;
 $plugin->component = 'mod_sliclquestions';

@@ -67,10 +67,15 @@ class sliclquestions_pupil_assessment
         $pupils = $DB->get_records_sql($sql, array($survey->register, $USER->id));
         if ($pupils) {
             foreach($pupils as $pupil) {
-                $assessurl = $url;
-                $assessurl->params(array('act' => 'assess',
-                                         'pid' => $pupil->id));
-                $assessbtn = '<a href="' . $assessurl . '">' . get_string('edit') . '</a>';
+                $pupilobj = new sliclquestions_student(0, $pupil, $survey->context);
+                if ($pupilobj->is_assessed($survey->id)) {
+                    $assessbtn = get_string('assessed', 'sliclquestions');
+                } else {
+                    $assessurl = $url;
+                    $assessurl->params(array('act' => 'assess',
+                                             'pid' => $pupil->id));
+                    $assessbtn = '<a href="' . $assessurl . '">' . get_string('edit') . '</a>';
+                }
                 $table->data[] = array($pupil->forename . ' ' . $pupil->surname,
                                        ($pupil->sex == 'm' ? get_string('male', 'sliclquestions')
                                                            : get_string('female', 'sliclquestions')),

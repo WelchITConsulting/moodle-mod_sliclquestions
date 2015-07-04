@@ -35,6 +35,7 @@ $string['closedate']                                = 'Use Close Date';
 $string['closeson']                                 = 'Questionnaire closes on {$a}';
 $string['closed']                                   = 'The questionnaire was closed on {$a}. Thanks.';
 $string['closedate_help']                           = 'You can specify a date to close the questionnaire here. Check the check box, and select the date and time you want. Users will not be able to fill out the questionnaire after that date. If this is not selected, it will never be closed.';
+$string['complete']                                 = 'Complete';
 $string['contentheader']                            = 'Page content';
 
 $string['displayoptions']                           = 'Display options';
