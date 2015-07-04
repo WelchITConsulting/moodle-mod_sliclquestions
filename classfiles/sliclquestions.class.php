@@ -864,4 +864,20 @@ die('<pre>' . print_r($this, true) . '</pre>');
         }
         return $msg;
     }
+
+    private function response_import_sec($rid, $sec, &$formdata)
+    {
+        if (($sec < 1) || !isset($this->questionsbysec[$sec])) {
+            return;
+        }
+        $vals = $this->response_select($rid, 'content');
+        reset($vals);
+        foreach($vals as $id => $arr) {
+            if (isset($arr[0]) && is_array($arr[0])) {
+                $formdata->{'q' . $id} = array_map('array_pop', $arr);
+            } else {
+                $formdata->{'q' . $id} = array_pop($arr);
+            }
+        }
+    }
 }
