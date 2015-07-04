@@ -880,4 +880,19 @@ die('<pre>' . print_r($this, true) . '</pre>');
             }
         }
     }
+
+    private function response_select($rid, $col = '', $csvexport = false, $choicecodes = 0, $choicetext = 1)
+    {
+        global $DB;
+
+        $values = array();
+        if (!is_array($col) && !empty($col)) {
+            $col = explode(',', preg_replace('/\s/', '', $col));
+        }
+        if (is_array($col) && (count($col) > 0)) {
+            $col = implode(',', array_map(create_function('$a', 'return "q.$a'), $col));
+        }
+
+        return $values;
+    }
 }
