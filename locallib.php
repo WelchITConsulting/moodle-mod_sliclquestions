@@ -110,10 +110,18 @@ function sliclquestions_choice_values($content)
 function sliclquestions_registers()
 {
     global $DB;
-
+    $registers = array();
     $sql = 'SELECT id, name FROM {sliclquestions}'
          . ' WHERE questype=? ORDER by name';
-    return $DB->get_records_sql($sql, array(SLICLQUESTIONS_PUPILREGISTRATION));
+    $res = $DB->get_records_sql($sql, array(SLICLQUESTIONS_PUPILREGISTRATION));
+    if ($res) {
+        foreach($res as $result) {
+            $registers[$result->id] = $result->name;
+        }
+    } else {
+        $registers[-1] = get_string('noregisters', 'sliclquestions');
+    }
+    return  $registers;
 }
 
 

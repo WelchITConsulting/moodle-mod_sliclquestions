@@ -57,6 +57,7 @@ $string['name']                                     = 'Questionnaire Name';
 $string['nextpage']                                 = 'Next Page';
 $string['noneinuse']                                = 'This questionnaire does not contain any questions.';
 $string['nonzeroerror']                             = 'You must select the type of survey to create';
+$string['noregisters']                              = 'You must create a pupil regoster before creating a pupil assessment';
 $string['notapplicable']                            = 'N/A';
 $string['noteligible']                              = 'You are not eligible to take this questionnaire.';
 $string['notopen']                                  = 'This questionnaire will not open until {$a}.';
