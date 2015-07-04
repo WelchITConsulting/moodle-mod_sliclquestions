@@ -266,7 +266,6 @@ class sliclquestions
             $formdata = data_submitted();
         }
         $formdata->rid = $this->get_response($userid);
-echo '<pre>' . print_r($formdata, true) . '</pre>';
         if (!empty($formdata->rid) && (empty($formdata->sec) || (intval($formdata->sec) < 1))) {
             $pos = 0;
             foreach(array('resp_bool', 'resp_single', 'resp_multiple', 'resp_rank',
@@ -609,7 +608,6 @@ die('<pre>' . print_r($this, true) . '</pre>');
         $select = 'survey_id = ' . $this->id
                 . (isset($this->student) ? ' AND pupilid=' . $this->student->id : '')
                 . ' AND complete = \'n\' AND userid = ' . $userid;
-echo '<pre>Select: ' . $select . '</pre>';
         if ($recs = $DB->get_records_select('sliclquestions_response', $select, null, 'submitted DESC', 'id,survey_id', 0, 1)) {
             $rec = reset($recs);
             return $rec->id;
