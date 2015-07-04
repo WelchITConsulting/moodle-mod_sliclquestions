@@ -79,7 +79,7 @@ class sliclquestions_pupil_assessment
                                        $assessbtn);
             }
         } else {
-            // No pupils registered
+            $table->data[] = array('None registered', ''. ''. ''. '');
         }
 
         $options = (empty($survey->displayoptions) ? array() : unserialize($survey->displayoptions));

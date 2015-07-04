@@ -61,5 +61,26 @@ function xmldb_sliclquestions_upgrade($oldversion=0)
         upgrade_mod_savepoint(true, 2015062900, 'sliclquestions');
     }
 
+    if ($oldversion < 2015070401) {
+
+        $table = new xmldb_table('sliclquestions_quest_type');
+        $field = new xmldb_field('response_table');
+        $field->set_attributes(XMLDB_TYPE_TEXT, 32, null, XMLDB_NOTNULL, null, 0);
+        $dbman->rename_field($table, $field, 'responsetable');
+
+        $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_bool', array('id' => 1));
+        $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_text', array('id' => 2));
+        $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_text', array('id' => 3));
+        $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_single', array('id' => 4));
+        $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_multiple', array('id' => 5));
+        $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_single', array('id' => 6));
+        $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_rank', array('id' => 8));
+        $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_date', array('id' => 9));
+        $DB->set_field('sliclquestions_quest_type', 'responsetable', 'resp_text', array('id' => 10));
+        $DB->set_field('sliclquestions_quest_type', 'responsetable', '', array('id' => 99));
+        $DB->set_field('sliclquestions_quest_type', 'responsetable', '', array('id' => 100));
+        upgrade_mod_savepoint(true, 20150070401, 'sliclquestions');
+    }
+
     return true;
 }
