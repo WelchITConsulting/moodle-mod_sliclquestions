@@ -272,8 +272,8 @@ class sliclquestions
                           'resp_text', 'resp_other', 'resp_date') as $tbl) {
                 $sql = 'SELECT MAX(q.position) as num FROM {sliclquestions_'
                      . $tbl
-                     . '} a, {sliclquestions_question} q WHERE q.id=a.question_id'
-                     . ' AND q.survey_id=? AND q.deleted=\'n\' AND a.response_id=?';
+                     . '} a, {sliclquestions_question} q WHERE q.id=a.questionid'
+                     . ' AND q.survey_id=? AND q.deleted=\'n\' AND a.responseid=?';
                 if ($record = $DB->get_record_sql($sql, array($this->id, $formdata->rid))) {
                     $newmax = (int)$record->num;
                     if ($newmax > $pos) {
