@@ -496,6 +496,8 @@ class sliclquestions_question
 
     private function render_rate($data, $descendantdata, $blankquestionnaire = false)
     {
+echo '<pre>' . print_r($data, true) . '</pre>';
+echo '<pre>' . print_r($this->choices, true) . '</pre>';
         $name = 'q' . $this->id;
         if (!empty($data) && (!isset($data->$name) || !is_array($data->name))) {
             $data->$name = array();
