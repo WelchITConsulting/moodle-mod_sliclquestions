@@ -48,7 +48,7 @@ class sliclquestions_survey
             if ($survey->questions) {
                 notice(get_string('noteligible', 'sliclquestions'), $url);
             }
-        } else {
+        } elseif ($survey->user_can_take($USER->id)) {
             $select = 'survey_id = ' . $survey->id
                     . ' AND userid = ' . $USER->id;
             $resume = $DB->get_record_select('sliclquestions_response', $select, null) !== false;
@@ -63,6 +63,8 @@ class sliclquestions_survey
                                        $complete);
             }
             echo $OUTPUT->footer();
+        } else {
+            notice(get_string('alreadyfilled', 'sliclquestions'), $url);
         }
         if (!$survey->questions) {
             echo html_writer::tag('p', get_string('noneinuse', 'sliclquestions'));

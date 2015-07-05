@@ -24,7 +24,7 @@ $string['addpupil']                                 = 'Add pupil';
 $string['additionalinfo']                           = 'Additional Info';
 $string['additionalinfo_help']                      = 'Text to be displayed at the top of the first page of this questionnaire. (i.e. instructions, background info, etc.)';
 $string['addquestions']                             = 'Add questions';
-$string['alreadyfilled']                            = 'You have already filled out this questionnaire for us{$a}. Thank you.';
+$string['alreadyfilled']                            = 'You have already filled out this questionnaire for us. Thank you.';
 $string['answerquestions']                          = 'Answer the questions...';
 $string['assess']                                   = 'Assess';
 
