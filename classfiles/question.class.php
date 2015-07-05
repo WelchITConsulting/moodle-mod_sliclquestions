@@ -233,7 +233,7 @@ echo '<pre>Method exists</pre>';
     {
         global $DB;
         $obj->response_id = $rid;
-        $rec->question_id = $this->id;
+        $obj->question_id = $this->id;
         return $DB->insert_record('sliclquestions_' . $this->responsetable, $obj);
     }
 
