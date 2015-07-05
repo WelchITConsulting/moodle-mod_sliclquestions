@@ -30,7 +30,7 @@ class sliclquestions_assessment_form extends moodleform
     {
         $mform =& $this->_form;
 
-        $mform->addElement('html', html_writer::div('Pupil:' . $sliclstudent->name));
+        $mform->addElement('html', html_writer::tag('h4', 'Pupil:'/* . $sliclstudent->name*/));
         $mform->addElement('html', html_writer::start_tag('fieldset', array('class' => 'slicl-container',
                                                                             'id'    => 'slicl-1')));
         $mform->addElement('html', html_writer::start_tag('legend', array('class' => 'slicl-legend')));
