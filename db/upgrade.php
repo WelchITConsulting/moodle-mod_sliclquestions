@@ -94,11 +94,6 @@ function xmldb_sliclquestions_upgrade($oldversion=0)
                                null, 0, 'questype');
         $dbman->add_field($table, $field);
 
-        upgrade_mod_savepoint(true, 2015070402, 'sliclquestions');
-    }
-
-    if ($oldversion < 2015070405) {
-
         $table = new xmldb_table('sliclquestions_response');
 
         $field = new xmldb_field('pupilid');
@@ -106,7 +101,7 @@ function xmldb_sliclquestions_upgrade($oldversion=0)
                                null, 0, 'userid');
         $dbman->add_field($table, $field);
 
-        upgrade_mod_savepoint(true, 2015070405, 'sliclquestions');
+        upgrade_mod_savepoint(true, 2015070402, 'sliclquestions');
     }
 
     if ($oldversion < 2015070500) {
