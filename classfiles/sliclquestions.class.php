@@ -556,8 +556,8 @@ class sliclquestions
             $params = array();
         }
         $select = 'response_id = \'' . $rid . '\' ' . $qsql;
-        foreach(array('reponse_bool', 'resp_single', 'resp_multiple', 'response_rank',
-                      'response_text', 'response_other', 'response_date') as $tbl) {
+        foreach(array('resp_bool', 'resp_single', 'resp_multiple', 'resp_rank',
+                      'resp_text', 'resp_other', 'resp_date') as $tbl) {
             $DB->delete_records_select('sliclquestions_' . $tbl, $select, $params);
         }
     }
@@ -586,7 +586,7 @@ class sliclquestions
 //        }
         if (!empty($this->questionsbysec[$sec])) {
             foreach($this->questionsbysec[$sec] as $question) {
-echo '<pre>' . print_r($this, true) . '</pre>';
+echo '<pre>' . print_r($question, true) . '</pre>';
                 $question->insert_response($rid);
             }
         }
