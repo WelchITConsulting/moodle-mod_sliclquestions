@@ -69,6 +69,7 @@ class sliclquestions_pupil_assessment
         if ($mform->is_cancelled()) {
             redirect($url);
         } elseif ($sdata = $mform->get_data()) {
+            die('<pre>' . print_r($sdata, true) . '</pre>');
             // Process the results
         } else {
             echo $OUTPUT->header()
