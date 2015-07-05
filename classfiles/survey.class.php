@@ -64,15 +64,7 @@ class sliclquestions_survey
             }
             echo $OUTPUT->footer();
         } else {
-            notice(get_string('alreadyfilled', 'sliclquestions'), $url);
-        }
-        if (!$survey->questions) {
-            echo html_writer::tag('p', get_string('noneinuse', 'sliclquestions'));
-        }
-        if ($survey->capabilities->editquestions && !$survey->questions) {
-            $str = html_writer::tag('strong', get_string('addquestions', 'sliclquestions'));
-            echo html_writer::link(new moodle_url('/mod/sliclquestions/questions.php', array('id' => $survey->cm->id)),
-                                   $str);
+            notify(get_string('alreadyfilled', 'sliclquestions'), $url);
         }
     }
 }
