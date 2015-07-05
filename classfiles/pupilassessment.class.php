@@ -26,7 +26,7 @@ require_once($CFG->dirroot . '/mod/sliclquestions/classfiles/student.class.php')
 class sliclquestions_pupil_assessment
 {
     static private $_instance;
-§
+
     static public function get_instance(&$course, &$context, sliclquestions &$survey, &$url, &$params)
     {
         if (empty(self::$_instance)) {
