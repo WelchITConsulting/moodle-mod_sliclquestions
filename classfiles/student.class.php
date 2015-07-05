@@ -37,10 +37,11 @@ class sliclquestions_student
     public function __construct($id = 0, $student = null, $context = null)
     {
         global $DB;
-
+echo '<pre>ID: ' . $id . '<pre>';
         if ($id) {
             $student = $DB->get_records('sliclquestions_students', array('id' => $id));
-        }
+echo '<pre>Student: ' . print_r($student, true) . '<pre>';
+            }
         if (is_object($student)) {
             $this->id         = $student->id;
             $this->survey_id  = $student->survey_id;
