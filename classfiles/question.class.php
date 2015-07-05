@@ -71,7 +71,7 @@ class sliclquestions_question
 
         if (is_null($qtypes)) {
             $qtypes = $DB->get_records('sliclquestions_quest_type', array(), 'typeid',
-                                       'typeid, type, has_choices, responsetable');
+                                       'typeid, type, haschoices, responsetable');
         }
         if ($id) {
             $question = $DB->get_record('sliclquestions_question', array('id' => $id));
@@ -90,7 +90,7 @@ class sliclquestions_question
             $this->type_id        = $question->type_id;
             $this->type           = $qtypes[$this->type_id];
             $this->responsetable  = $qtypes[$this->type_id]->responsetable;
-            if ($qtypes[$this->type_id]->has_choices) {
+            if ($qtypes[$this->type_id]->haschoices) {
                 $this->get_choices();
             }
         }
