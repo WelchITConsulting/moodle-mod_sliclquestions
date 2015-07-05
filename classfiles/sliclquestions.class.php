@@ -658,7 +658,8 @@ class sliclquestions
             global $OUTPUT;
 
             echo html_writer::tag('h3', get_string('thankhead', 'sliclquestions'))
-               . $OUTPUT->single_button(get_string('continue'), '/mod/sliclquestions/view.php?id=' . $this->cm->id)
+               . $OUTPUT->single_button('/mod/sliclquestions/view.php?id=' . $this->cm->id,
+                                        get_string('continue'))
                . $OUTPUT->footer();
         }
 //        global $OUTPUT;
