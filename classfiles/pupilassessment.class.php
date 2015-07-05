@@ -42,10 +42,12 @@ class sliclquestions_pupil_assessment
             $survey->render_page_header();
             notify(get_string('notopen', 'sliclquestions', userdate($survey->opendate)));
             echo $OUTPUT->footer();
+            exit();
         } elseif ($survey->is_closed()) {
             $survey->render_page_header();
             notify(get_string('closed', 'sliclquestions', userdate($survey->closedate)));
             echo $OUTPUT->footer();
+            exit();
         }
         if (!empty($params['act'])) {
             $this->do_action($context, $survey, $url, $paraams);

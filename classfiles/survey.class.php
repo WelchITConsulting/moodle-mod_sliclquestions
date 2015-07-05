@@ -42,9 +42,11 @@ class sliclquestions_survey
         if (!$survey->is_open()) {
             $survey->render_page_header();
             notify(get_string('notopen', 'sliclquestions', userdate($survey->opendate)));
+            echo $OUTPUT->footer();
         } elseif ($survey->is_closed()) {
             $survey->render_page_header();
             notify(get_string('closed', 'sliclquestions', userdate($survey->closedate)));
+            echo $OUTPUT->footer();
         } elseif (!$survey->user_is_eligible($USER->id)) {
             if ($survey->questions) {
                 notice(get_string('noteligible', 'sliclquestions'), $url);
@@ -64,8 +66,9 @@ class sliclquestions_survey
                                        $complete);
             }
         } else {
+            $survey->render_page_header();
             notify(get_string('alreadyfilled', 'sliclquestions'));
+            echo $OUTPUT->footer();
         }
-        echo $OUTPUT->footer();
     }
 }
