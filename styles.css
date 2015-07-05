@@ -64,6 +64,7 @@
 #page-mod-sliclquestions-view .fitem {
     display: block;
     float: none;
+    vertical-align: bottom;
 }
 #page-mod-sliclquestions-view .fitem .fitemtitle {
     border: 1px solid red;
