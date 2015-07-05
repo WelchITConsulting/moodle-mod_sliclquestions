@@ -26,7 +26,7 @@ require_once($CFG->dirroot . '/mod/sliclquestions/classfiles/student.class.php')
 class sliclquestions_pupil_assessment
 {
     static private $_instance;
-
+§
     static public function get_instance(&$course, &$context, sliclquestions &$survey, &$url, &$params)
     {
         if (empty(self::$_instance)) {
@@ -42,10 +42,11 @@ class sliclquestions_pupil_assessment
         } elseif ($survey->is_closed()) {
             notice(get_string('closed', 'sliclquestions', userdate($survey->closedate)), $url);
         }
-die('<pre>Params: ' .print_r($params, true) . '<pre>');
         if (!empty($param['act'])) {
+die('<pre>Valid<pre>');
             $this->do_action($context, $survey, $url, $paraams);
         } else {
+die('<pre>Invalid<pre>');
             $this->display_pupils($survey, $url, $params);
         }
     }
