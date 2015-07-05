@@ -29,6 +29,7 @@ class sliclquestions_pupil_assessment
 
     static public function get_instance(&$course, &$context, sliclquestions &$survey, &$url, &$params)
     {
+echo '<pre>Params: ' . print_r($params, true) . '</pre>';
         if (empty(self::$_instance)) {
             self::$_instance = new sliclquestions_pupil_assessment($course, $context, $survey, $url, $params);
         }
@@ -59,7 +60,7 @@ class sliclquestions_pupil_assessment
     private function do_action(&$context, &$survey, &$url, &$params)
     {
         global $CFG, $OUTPUT, $PAGE;
-echo '<pre>Params: ' . print_r($params, true) . '</pre>';
+
         $PAGE->requires->js('/mod/sliclquestions/module.js');
         $pid = required_param('pid', PARAM_INT);
         $student = new sliclquestions_student($pid, null, $context);
