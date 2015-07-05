@@ -89,6 +89,7 @@ $string['printheading']                             = 'Display survey name';
 $string['printheadingexplain']                      = 'Display survey name above content';
 $string['printintro']                               = 'Display survey intro';
 $string['printintroexplain']                        = 'Display survey intro above content?';
+$string['pupilname']                                = 'Pupil:';
 $string['pupilsfemale']                             = 'Female pupils';
 $string['pupilsmale']                               = 'Male pupils';
 $string['pupilregister']                            = 'Pupil register';
