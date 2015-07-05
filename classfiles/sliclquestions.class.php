@@ -653,25 +653,17 @@ class sliclquestions
     private function response_goto_thankyou()
     {
         if ($this->questype == SLICLQUESTIONS_PUPILASSESSMENT) {
-            die('Results submitted - returning to pupil list');
+            redirect('/mod/sliclquestions/view.php?id=' . $this->cm->id);
         } else {
             global $OUTPUT;
 
-            echo html_writer::tag('h3', get_string('thankhead', 'sliclquestions'))
+            echo $OUTPUT->header()
+               . html_writer::tag('h3', get_string('thankhead', 'sliclquestions'))
+               . get_string('thankbody', 'sliclquestions')
                . $OUTPUT->single_button('/mod/sliclquestions/view.php?id=' . $this->cm->id,
                                         get_string('continue'))
                . $OUTPUT->footer();
         }
-//        global $OUTPUT;
-//        echo $OUTPUT->header()
-//           . html_writer::tag('h3', get_string('thankhead', 'sliclquestions'))
-//           . format_text(file_rewrite_pluginfile_urls($text, 'pluginfile.php',
-//                                                      $this->context->id,
-//                                                      'mod_sliclquestions',
-//                                                      'thankbody', $this->id),
-//                         FORMAT_HTML)
-//           . $OUTPUT->footer();
-
     }
 
     private function response_check_format($sec, $formdata, $checkmissing = true, $checkwrongformat = true)

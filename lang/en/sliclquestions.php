@@ -132,7 +132,7 @@ $string['sliclquestions:viewstatistics']            = 'View the module statistic
 $string['stats_content']                            = '<p>This page displays a list of all of the Creative Enquirers registered on the SLiCL project with the number of pupils, both male and female, they have registered on the project.</p>';
 $string['strfdate']                                 = '%d/%m/%Y';
 $string['submitted']                                = 'Submitted on:';
-$string['submitsurvey']                             = 'Submit questionnaire';
+$string['submitsurvey']                             = 'Submit';
 $string['surveyresponse']                           = 'Response from questionnaire';
 
 $string['tblclass']                                 = 'Class';
@@ -141,6 +141,7 @@ $string['tblkpilevel']                              = 'KPI level';
 $string['tblname']                                  = 'First name / Surname';
 $string['tblsex']                                   = 'Sex';
 $string['tblyear']                                  = 'School Year';
+$string['thankbody']                                = '';
 $string['thankhead']                                = 'Thank you for completing this SLiCL Questions questionnaire.';
 
 $string['wrongformat']                              = 'There is something wrong with your answer to question:&nbsp;';
