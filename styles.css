@@ -70,6 +70,7 @@ h3.slicl-legend {
     float: none;
     display: block;
     width: 100%;
+    font-size: 1.2em;
 }
 .slicl-question p {
     margin-bottom: 0.6em;
