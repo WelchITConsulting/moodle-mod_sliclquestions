@@ -232,8 +232,8 @@ echo '<pre>Method exists</pre>';
     private function insert_response_to_database($rid, $obj)
     {
         global $DB;
-        $obj->response_id = $rid;
-        $obj->question_id = $this->id;
+        $obj->responseid = $rid;
+        $obj->questionid = $this->id;
         return $DB->insert_record('sliclquestions_' . $this->responsetable, $obj);
     }
 
