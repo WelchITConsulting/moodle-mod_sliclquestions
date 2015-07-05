@@ -42,6 +42,7 @@ class sliclquestions_pupil_assessment
         } elseif ($survey->is_closed()) {
             notice(get_string('closed', 'sliclquestions', userdate($survey->closedate)), $url);
         }
+die('<pre>Params: ' .print_r($params, true) . '<pre>');
         if (!empty($param['act'])) {
             $this->do_action($context, $survey, $url, $paraams);
         } else {
