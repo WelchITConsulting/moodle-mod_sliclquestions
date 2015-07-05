@@ -49,6 +49,7 @@ class sliclquestions_pupil_assessment
             echo $OUTPUT->footer();
             exit();
         }
+
         if (!empty($params['act'])) {
             $this->do_action($context, $survey, $url, $params);
         } else {
@@ -65,7 +66,7 @@ class sliclquestions_pupil_assessment
         $student = new sliclquestions_student($pid, null, $context);
         $data = new stdClass();
         $data->id      = $params['id'];
-        $data->action  = 'save';
+        $data->act     = 'save';
         $data->pid     = $student->id;
         $data->name    = $student->forename . ' ' . $student->surname;
         $data->kpi_level = $student->kpi_level;
@@ -75,7 +76,7 @@ class sliclquestions_pupil_assessment
         if ($mform->is_cancelled()) {
             redirect($url);
         } elseif ($sdata = $mform->get_data()) {
-            die('<pre>' . print_r($sdata, true) . '</pre>');
+die('<pre>' . print_r($sdata, true) . '</pre>');
             // Process the results
         } else {
             echo $OUTPUT->header()

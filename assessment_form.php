@@ -30,7 +30,9 @@ class sliclquestions_assessment_form extends moodleform
     {
         $mform =& $this->_form;
 
-        $mform->addElement('html', html_writer::tag('h3', 'Pupil:'/* . $sliclstudent->name*/));
+        $mform->addElement('html', html_writer::start_tag('h3', 'Pupil:'/* . $sliclstudent->name*/));
+        $mform->addElement('static', 'name');
+        $mform->addElement('html', html_writer::end_tag('h3'));
         $mform->addElement('html', html_writer::start_tag('fieldset', array('class' => 'slicl-container',
                                                                             'id'    => 'slicl-1')));
         $mform->addElement('html', html_writer::start_tag('legend', array('class' => 'slicl-legend')));
@@ -484,8 +486,8 @@ class sliclquestions_assessment_form extends moodleform
         $mform->setType('id', PARAM_INT);
         $mform->addElement('hidden', 'pid');
         $mform->setType('pid', PARAM_INT);
-        $mform->addElement('hidden', 'action');
-        $mform->setType('action', PARAM_ALPHA);
+        $mform->addElement('hidden', 'act');
+        $mform->setType('act', PARAM_ALPHA);
 
         $this->add_action_buttons(true, get_string('submitsurvey', 'sliclquestions'));
     }
