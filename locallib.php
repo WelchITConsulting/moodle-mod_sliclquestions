@@ -80,7 +80,7 @@ function sliclquestions_choice_values($content)
     $contents->image   = '';
     $contents->modname = '';
     $contents->title   = '';
-    if ($count = preg_match('/[<img)\s .*(src="(.[^"]{1,})")/isxmU', $content, $matches)) {
+    if ($count = preg_match('/(<img)\s .*(src="(.[^"]{1,})")/isxmU', $content, $matches)) {
         $contents->image = $matches[0];
         $imageurl = $matches[3];
         if (preg_match('/(title=.)([^"]{1,})/', $content, $matches) ||
