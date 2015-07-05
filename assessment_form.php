@@ -45,10 +45,11 @@ class sliclquestions_assessment_form extends moodleform
         $mform->addElement('html', html_writer::end_div());
         $mform->addElement('html', html_writer::start_div('slicl-answer'));
 
-        $kpiarr = array(&$mform->createElement('radio', 'kpi_level', '', '1', 1),
-                        &$mform->createElement('radio', 'kpi_level', '', '2', 2),
-                        &$mform->createElement('radio', 'kpi_level', '', '3', 3),
-                        &$mform->createElement('radio', 'kpi_level', '', '4', 4));
+        $kpiarr = array();
+        $kpiarr[] = &$mform->createElement('radio', 'kpi_level', '', '1', 1);
+        $kpiarr[] = &$mform->createElement('radio', 'kpi_level', '', '2', 2);
+        $kpiarr[] = &$mform->createElement('radio', 'kpi_level', '', '3', 3);
+        $kpiarr[] = &$mform->createElement('radio', 'kpi_level', '', '4', 4);
         $mform->addGroup($kpiarr);
 
         $mform->addElement('html', html_writer::end_div());
