@@ -55,6 +55,7 @@ class sliclquestions_pupil_assessment
 
         $PAGE->requires->js('/mod/sliclquestions/module.js');
         $pid = required_param('pid', PARAM_INT);
+echo '<pre>PID: ' . $pid . '</pre>';
         $student = new sliclquestions_student($pid, null, $context);
 die('<pre>' . print_r($student, true) . '</pre>');
         $data = new stdClass();
