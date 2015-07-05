@@ -50,7 +50,7 @@ class sliclquestions_assessment_form extends moodleform
         $kpiarr[] = &$mform->createElement('radio', 'kpi_level', '', '2', 2);
         $kpiarr[] = &$mform->createElement('radio', 'kpi_level', '', '3', 3);
         $kpiarr[] = &$mform->createElement('radio', 'kpi_level', '', '4', 4);
-        $mform->addGroup($kpiarr, 'kpi_level_group');
+        $mform->addGroup($kpiarr);
 
         $mform->addElement('html', html_writer::end_div());
         $mform->addElement('html', html_writer::end_tag('fieldset'));
@@ -94,7 +94,7 @@ class sliclquestions_assessment_form extends moodleform
         $kpiarr[] =& $mform->createElement('radio', 'kpi1_1', '', '', 1);
         $kpiarr[] =& $mform->createElement('radio', 'kpi1_1', '', '', 2);
         $kpiarr[] =& $mform->createElement('radio', 'kpi1_1', '', '', 3);
-        $mform->addGroup($kpiarr, 'kpi1_1_grp');
+        $mform->addGroup($kpiarr);
         $mform->addElement('html', html_writer::end_div());
 
         $mform->addElement('html', html_writer::start_div('slicl-row'));
@@ -103,7 +103,7 @@ class sliclquestions_assessment_form extends moodleform
         $kpiarr[] =& $mform->createElement('radio', 'kpi1_2', '', '', 1);
         $kpiarr[] =& $mform->createElement('radio', 'kpi1_2', '', '', 2);
         $kpiarr[] =& $mform->createElement('radio', 'kpi1_2', '', '', 3);
-        $mform->addGroup($kpiarr, 'kpi1_2_grp');
+        $mform->addGroup($kpiarr);
         $mform->addElement('html', html_writer::end_div());
 
         $mform->addElement('html', html_writer::start_div('slicl-row'));
@@ -112,7 +112,7 @@ class sliclquestions_assessment_form extends moodleform
         $kpiarr[] =& $mform->createElement('radio', 'kpi1_3', '', '', 1);
         $kpiarr[] =& $mform->createElement('radio', 'kpi1_3', '', '', 2);
         $kpiarr[] =& $mform->createElement('radio', 'kpi1_3', '', '', 3);
-        $mform->addGroup($kpiarr, 'kpi1_3_grp');
+        $mform->addGroup($kpiarr);
         $mform->addElement('html', html_writer::end_div());
 
         $mform->addElement('html', html_writer::start_div('slicl-row'));
