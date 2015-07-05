@@ -29,7 +29,6 @@ class sliclquestions_pupil_assessment
 
     static public function get_instance(&$course, &$context, sliclquestions &$survey, &$url, &$params)
     {
-echo '<pre>Params: ' . print_r($params, true) . '</pre>';
         if (empty(self::$_instance)) {
             self::$_instance = new sliclquestions_pupil_assessment($course, $context, $survey, $url, $params);
         }
@@ -51,7 +50,7 @@ echo '<pre>Params: ' . print_r($params, true) . '</pre>';
             exit();
         }
         if (!empty($params['act'])) {
-            $this->do_action($context, $survey, $url, $paraams);
+            $this->do_action($context, $survey, $url, $params);
         } else {
             $this->display_pupils($survey, $url, $params);
         }
@@ -71,7 +70,6 @@ echo '<pre>Params: ' . print_r($params, true) . '</pre>';
         $data->name    = $student->forename . ' ' . $student->surname;
         $data->kpi_level = $student->kpi_level;
         $data->kpi       = optional_param('kpi', 0, PARAM_INT);
-die('<pre>Data: ' . print_r($data, true) . '</pre>');
         require_once($CFG->dirroot . '/mod/sliclquestions/assessment_form.php');
         $mform = new sliclquestions_assessment_form();
         if ($mform->is_cancelled()) {
