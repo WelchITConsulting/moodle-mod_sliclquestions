@@ -51,19 +51,20 @@ class sliclquestions_pupil_assessment
 
     private function do_action(&$context, &$survey, &$url, &$params)
     {
-        global $OUTPUT, $PAGE;
+        global $CFG, $OUTPUT, $PAGE;
 
         $PAGE->requires->js('/mod/sliclquestions/module.js');
         $pid = required_param('pid', PARAM_INT);
-        $student = new sliclquestions_student($id, null, $context);
+        $student = new sliclquestions_student($pid, null, $context);
         $data = new stdClass();
         $data->id      = $params['id'];
         $data->action  = 'save';
         $data->pid     = $student->id;
+        define('SLICLSTUDENTNAME', $student->forename . ' ' . $student->surname);
         $data->name    = $student->forename . ' ' . $student->surname;
         $data->kpi_level = $student->kpi_level;
         $data->kpi       = optional_param('kpi', 0, PARAM_INT);
-        require_once('/mod/sliclquestions/assessment_form.php');
+        require_once($CFG->dirroot . '/mod/sliclquestions/assessment_form.php');
         $mform = new sliclquestions_assessment_form();
         if ($mform->is_cancelled()) {
             redirect($url);
