@@ -66,6 +66,11 @@
      font-size:inherit;
      width: auto;
 }
+h4.slicl-legend {
+    float: none;
+    display: block;
+    width: 100%;
+}
 .slicl-question p {
     margin-bottom: 0.6em;
     margin-top: 0.5em;
