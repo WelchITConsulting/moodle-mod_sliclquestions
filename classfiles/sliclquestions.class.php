@@ -586,11 +586,9 @@ class sliclquestions
 //        }
         if (!empty($this->questionsbysec[$sec])) {
             foreach($this->questionsbysec[$sec] as $question) {
-echo '<pre>' . print_r($question, true) . '</pre>';
                 $question->insert_response($rid);
             }
         }
-die('<pre>' . print_r($this, true) . '</pre>');
         return $rid;
     }
 
