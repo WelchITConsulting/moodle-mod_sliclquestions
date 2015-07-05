@@ -314,6 +314,7 @@ class sliclquestions
             return;
         }
         if (!empty($formdata->next)) {
+            $this->response_delete($formdata->rid, $formdata->sec);
 
 
 
