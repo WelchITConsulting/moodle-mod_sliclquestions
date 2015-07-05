@@ -28,9 +28,11 @@ class sliclquestions_assessment_form extends moodleform
 {
     public function definition()
     {
+        global $sliclstudent;
+
         $mform =& $this->_form;
 
-        $mform->addElement('html', html_writer::tag('legend', 'Pupil:' . SLICLSTUDENTNAME));
+        $mform->addElement('html', html_writer::tag('legend', 'Pupil:' . $sliclstudet->forname . ' ' . $sliclstudent->surname));
         $mform->addElement('html', html_writer::start_tag('fieldset', array('class' => 'slicl-container',
                                                                             'id'    => 'slicl-1')));
         $mform->addElement('html', html_writer::start_tag('legend', array('class' => 'slicl-legend')));
