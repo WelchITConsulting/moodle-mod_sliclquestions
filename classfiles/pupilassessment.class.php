@@ -75,7 +75,7 @@ class sliclquestions_pupil_assessment
                . $OUTPUT->heading(format_text($survey->name));
             $mform->set_data($data);
             $mform->display();
-            $OUTPUT->footer();
+            echo $OUTPUT->footer();
         }
     }
 
