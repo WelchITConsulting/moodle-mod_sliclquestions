@@ -59,7 +59,7 @@ class sliclquestions_pupil_assessment
     private function do_action(&$context, &$survey, &$url, &$params)
     {
         global $CFG, $OUTPUT, $PAGE;
-
+echo '<pre>Params: ' . print_r($params, true) . '</pre>';
         $PAGE->requires->js('/mod/sliclquestions/module.js');
         $pid = required_param('pid', PARAM_INT);
         $student = new sliclquestions_student($pid, null, $context);
@@ -70,7 +70,7 @@ class sliclquestions_pupil_assessment
         $data->name    = $student->forename . ' ' . $student->surname;
         $data->kpi_level = $student->kpi_level;
         $data->kpi       = optional_param('kpi', 0, PARAM_INT);
-
+die('<pre>Data: ' . print_r($data, true) . '</pre>');
         require_once($CFG->dirroot . '/mod/sliclquestions/assessment_form.php');
         $mform = new sliclquestions_assessment_form();
         if ($mform->is_cancelled()) {
