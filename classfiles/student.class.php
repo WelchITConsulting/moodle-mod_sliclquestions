@@ -37,13 +37,11 @@ class sliclquestions_student
     public function __construct($id = 0, $student = null, $context = null)
     {
         global $DB;
-echo '<pre>ID: ' . $id . '<pre>';
+
         if ($id) {
             $student = $DB->get_records('sliclquestions_students', array('id' => $id));
-echo '<pre>Student: ' . print_r($student, true) . '<pre>';
             }
-        if (is_object($student)) {
-echo '<pre>Is object: ' . print_r($student, true) . '<pre>';
+        if (!is_null($student)) {
             $this->id         = $student->id;
             $this->survey_id  = $student->survey_id;
             $this->teacher_id = $student->teacher_id;
@@ -56,7 +54,6 @@ echo '<pre>Is object: ' . print_r($student, true) . '<pre>';
             $this->deleteflag = $student->deleteflag;
         }
         $this->context = $context;
-echo '<pre>this: ' . print_r($this, true) . '<pre>';
     }
 
     public function is_assessed($sid)
