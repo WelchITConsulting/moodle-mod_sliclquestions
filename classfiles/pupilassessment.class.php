@@ -42,7 +42,40 @@ class sliclquestions_pupil_assessment
         } elseif ($survey->is_closed()) {
             notice(get_string('closed', 'sliclquestions', userdate($survey->closedate)), $url);
         }
-        $this->display_pupils($survey, $url, $params);
+        if (!empty($paraam->action)) {
+            $this->do_action($context, $survey, $url, $paraams);
+        } else {
+            $this->display_pupils($survey, $url, $params);
+        }
+    }
+
+    private function do_action(&$context, &$survey, &$url, &$params)
+    {
+        global $OUTPUT, $PAGE;
+
+        $PAGE->requires->js('/mod/sliclquestions/module.js');
+        $pid = required_param('pid', PARAM_INT);
+        $student = new sliclquestions_student($id, null, $context);
+        $data = new stdClass();
+        $data->id      = $params['id'];
+        $data->action  = 'save';
+        $data->pid     = $student->id;
+        $data->name    = $student->forename . ' ' . $student->surname;
+        $data->kpi_level = $student->kpi_level;
+        $data->kpi       = optional_param('kpi', 0, PARAM_INT);
+        require_once('/mod/sliclquestions/assessment_form.php');
+        $mform = new sliclquestions_assessment_form();
+        if ($mform->is_cancelled()) {
+            redirect($url);
+        } elseif ($sdata = $mform->get_data()) {
+            // Process the results
+        } else {
+            echo $OUTPUT->header()
+               . $OUTPUT->heading(format_text($survey->name));
+            $mform->set_data($data);
+            $mform->display();
+            $OUTPUT->footer();
+        }
     }
 
     private function display_pupils(&$survey, &$url, &$params)
