@@ -61,6 +61,10 @@
     width: 60%;
     float: left;
 }
+#page-mod-sliclquestions-view .fitem {
+    display: block;
+    float: none;
+}
 .slicl-legend {
      float: left;
      font-size:inherit;
