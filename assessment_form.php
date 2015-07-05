@@ -28,11 +28,9 @@ class sliclquestions_assessment_form extends moodleform
 {
     public function definition()
     {
-        global $sliclstudent;
-
         $mform =& $this->_form;
 
-        $mform->addElement('html', html_writer::tag('legend', 'Pupil:' . $sliclstudent->forename . ' ' . $sliclstudent->surname));
+        $mform->addElement('html', html_writer::div('Pupil:' . $sliclstudent->name));
         $mform->addElement('html', html_writer::start_tag('fieldset', array('class' => 'slicl-container',
                                                                             'id'    => 'slicl-1')));
         $mform->addElement('html', html_writer::start_tag('legend', array('class' => 'slicl-legend')));
@@ -55,8 +53,8 @@ class sliclquestions_assessment_form extends moodleform
         $mform->addGroup($kpiarr);
 
         $mform->addElement('html', html_writer::end_div());
-        $mform->addElement('html', html_writer::end_div());
         $mform->addElement('html', html_writer::end_tag('fieldset'));
+        $mform->addElement('html', html_writer::end_div());
 
         $mform->addElement('html', html_writer::tag('legend', get_string('kpi1', 'sliclquestions'), array('class' => 'kpi-1')));
         $mform->addElement('html', html_writer::tag('legend', get_string('kpi2', 'sliclquestions'), array('class' => 'kpi-2')));
