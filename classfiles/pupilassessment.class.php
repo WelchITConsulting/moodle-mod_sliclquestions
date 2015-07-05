@@ -38,9 +38,11 @@ class sliclquestions_pupil_assessment
     public function __construct(&$course, &$context, &$survey, &$url, &$params)
     {
         if (!$survey->is_open()) {
-            notice(get_string('notopen', 'sliclquestions', userdate($survey->opendate)), $url);
+            $survey->render_page_header();
+            notify(get_string('notopen', 'sliclquestions', userdate($survey->opendate)));
         } elseif ($survey->is_closed()) {
-            notice(get_string('closed', 'sliclquestions', userdate($survey->closedate)), $url);
+            $survey->render_page_header();
+            notify(get_string('closed', 'sliclquestions', userdate($survey->closedate)));
         }
         if (!empty($params['act'])) {
             $this->do_action($context, $survey, $url, $paraams);
@@ -63,6 +65,7 @@ class sliclquestions_pupil_assessment
         $data->name    = $student->forename . ' ' . $student->surname;
         $data->kpi_level = $student->kpi_level;
         $data->kpi       = optional_param('kpi', 0, PARAM_INT);
+
         require_once($CFG->dirroot . '/mod/sliclquestions/assessment_form.php');
         $mform = new sliclquestions_assessment_form();
         if ($mform->is_cancelled()) {

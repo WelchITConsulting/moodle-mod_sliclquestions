@@ -39,11 +39,12 @@ class sliclquestions_survey
     {
         global $DB, $OUTPUT, $USER;
 
-        $survey->render_page_header();
         if (!$survey->is_open()) {
-            notice(get_string('notopen', 'sliclquestions', userdate($survey->opendate)), $url);
+            $survey->render_page_header();
+            notify(get_string('notopen', 'sliclquestions', userdate($survey->opendate)));
         } elseif ($survey->is_closed()) {
-            notice(get_string('closed', 'sliclquestions', userdate($survey->closedate)), $url);
+            $survey->render_page_header();
+            notify(get_string('closed', 'sliclquestions', userdate($survey->closedate)));
         } elseif (!$survey->user_is_eligible($USER->id)) {
             if ($survey->questions) {
                 notice(get_string('noteligible', 'sliclquestions'), $url);
