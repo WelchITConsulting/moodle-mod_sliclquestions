@@ -20,7 +20,7 @@ Author   : John Welch <jwelch@welchitconsulting.co.uk>
 Created  : 09 Jun 2015
 -->
 
-<XMLDB PATH="mod/sliclquestions" VERSION="2015070405" COMMENT="XMLDB file for Moodle mod/sliclquestions"
+<XMLDB PATH="mod/sliclquestions" VERSION="2015070500" COMMENT="XMLDB file for Moodle mod/sliclquestions"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="../../lib/xmldb/xmldb.xsd">
     <TABLES>
@@ -107,7 +107,7 @@ Created  : 09 Jun 2015
                 <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
                 <FIELD NAME="typeid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
                 <FIELD NAME="type" TYPE="char" LENGTH="32" NOTNULL="true" SEQUENCE="false"/>
-                <FIELD NAME="has_choices" TYPE="char" LENGTH="1" NOTNULL="true" DEFAULT="y" SEQUENCE="false"/>
+                <FIELD NAME="haschoices" TYPE="char" LENGTH="1" NOTNULL="true" DEFAULT="y" SEQUENCE="false"/>
                 <FIELD NAME="responsetable" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false"/>
             </FIELDS>
             <KEYS>

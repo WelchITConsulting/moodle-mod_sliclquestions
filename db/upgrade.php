@@ -108,5 +108,28 @@ function xmldb_sliclquestions_upgrade($oldversion=0)
 
         upgrade_mod_savepoint(true, 2015070405, 'sliclquestions');
     }
+
+    if ($oldversion < 2015070500) {
+
+        $table = new xmldb_table('sliclquestions_quest_type');
+        $field = new xmldb_field('has_choices');
+        $field->set_attributes(XMLDB_TYPE_TEXT, '32');
+        $dbman->rename_field($table, $field, 'haschoices');
+
+        $DB->set_field('sliclquestions_quest_type', 'haschoices', 'n', array('typeid' => 1));
+        $DB->set_field('sliclquestions_quest_type', 'haschoices', 'n', array('typeid' => 2));
+        $DB->set_field('sliclquestions_quest_type', 'haschoices', 'n', array('typeid' => 3));
+        $DB->set_field('sliclquestions_quest_type', 'haschoices', 'y', array('typeid' => 4));
+        $DB->set_field('sliclquestions_quest_type', 'haschoices', 'y', array('typeid' => 5));
+        $DB->set_field('sliclquestions_quest_type', 'haschoices', 'y', array('typeid' => 6));
+        $DB->set_field('sliclquestions_quest_type', 'haschoices', 'y', array('typeid' => 8));
+        $DB->set_field('sliclquestions_quest_type', 'haschoices', 'n', array('typeid' => 9));
+        $DB->set_field('sliclquestions_quest_type', 'haschoices', 'n', array('typeid' => 10));
+        $DB->set_field('sliclquestions_quest_type', 'haschoices', 'n', array('typeid' => 99));
+        $DB->set_field('sliclquestions_quest_type', 'haschoices', 'n', array('typeid' => 100));
+
+        upgrade_mod_savepoint(true, 2015070500, 'sliclquestions');
+    }
+
     return true;
 }
