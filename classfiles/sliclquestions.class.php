@@ -655,7 +655,11 @@ class sliclquestions
         if ($this->questype == SLICLQUESTIONS_PUPILASSESSMENT) {
             die('Results submitted - returning to pupil list');
         } else {
-            die('THanks for the submission');
+            global $OUTPUT;
+
+            echo html_writer::tag('h3', get_string('thankhead', 'sliclquestions'))
+               . $OUTPUT->single_button(get_string('continue'), '/mod/sliclquestions/view.php?id=' . $this->cm->id)
+               . $OUTPUT->footer();
         }
 //        global $OUTPUT;
 //        echo $OUTPUT->header()
@@ -665,7 +669,6 @@ class sliclquestions
 //                                                      'mod_sliclquestions',
 //                                                      'thankbody', $this->id),
 //                         FORMAT_HTML)
-//           . $OUTPUT->single_button(get_string('continue'), '/mod/sliclquestions/view.php?id=' . $this->cm->id)
 //           . $OUTPUT->footer();
 
     }
