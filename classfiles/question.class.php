@@ -110,9 +110,7 @@ class sliclquestions_question
     {
         global $qtypenames;
         $method = 'render_' . $qtypenames[$this->type_id];
-echo '<pre>Method: ' . $method . '</pre>';
         if (method_exists($this, $method)) {
-echo '<pre>Method exists</pre>';
             $this->render_start($qnum, $formdata, $descendantsdata);
             $this->$method($formdata, $descendantsdata, $blankquestionnaire);
             $this->render_end();
@@ -473,7 +471,7 @@ echo '<pre>Method exists</pre>';
                                              'maxfiles' => -1, 'context' => $this->context,
                                              'noclean' => 0, 'trusttext' => 0));
         }
-        echo html_writer::tag('textarea',
+        echo html_writer::tag('textaredependenta',
                               (isset($data->$name) ? $data->$name : ''),
                               array('name' => $name,
                                     'id'   => $name,
@@ -483,7 +481,124 @@ echo '<pre>Method exists</pre>';
 
     private function render_radio($data, $descendantdata, $blankquestionnaire = false)
     {
+        global $idcounter;
 
+        $otherempty = false;
+        $fieldname = 'q' . $this->id;
+        if (isset($data->$fieldname)) {
+            $checked = $data->$fieldname;
+        } else {
+            $checked = '';
+        }
+        $horizontal = $this->length;
+        $ischecked  = false;
+        $onclickdepend = array();
+        if ($descendantdata) {
+            $descendants = implode(',', $descendantdata['descendants']);
+            foreach($descendantdata['choices'] as $k => $choice) {
+                $onclickdepend[$k] = 'depend(\'' . $descendants . '\', \'' . implode(',', $choice) . '\')';
+            }
+        }
+        foreach($this->choices as $id => $choice) {
+            $other = strpos($choice->content, '!other');
+            if ($horizontal) {
+                echo html_writer::start_tag('span', array('style' => 'white-space:nowrap'));
+            }
+            $onclick = '';
+            if ($onclickdepend) {
+                if (isset($onclickdepend[$id])) {
+                    $onclick = $onclickdepend[$id];
+                } else {
+                    $onclick = 'depend(\'' . $descendants . '\', \'\')';
+                }
+            } else {
+                $onclick = 'other_check_empty(name, value)';
+            }
+            if ($other !== 0) {
+                $htmlid = 'auto-rb' . sprintf('%04d', ++$idcounter);
+                $params = array('name'    => $fieldname,
+                                'id'      => $htmlid,
+                                'type'    => 'radio',
+                                'value'   => $id,
+                                'onclick' => $onclick);
+                if ($id == $checked) {
+                    $params['checked'] = 'checked';
+                    $ischecked         = true;
+                }
+                $value = '';
+                if ($blankquestionnaire) {
+                    $params['disabled'] = 'disabled';
+                    $value              = ' (' . $choice->value . ')';
+                }
+                $contents = sliclquestions_choice_values($choice->content);
+                echo html_writer::empty_tag('input', $params)
+                   . html_writer::tag('label',
+                                      $value . format_text($contents->text, FORMAT_HTML) . $contents->image,
+                                      array('for' => $htmlid));
+            } else {
+                $othertext = preg_replace(array('/^!other=/', '/^!other/'),
+                                          array('', get_string('other', 'sliclquestions')),
+                                          $choice->content);
+                $cid = $fieldname . '_' . $id;
+                $otherempty = false;
+                if (substr($checked, 0, 6) == 'other_') {
+                    $checked = substr($checked, 6);
+                }
+                $htmlid = 'auto-rb' . sprintf('%04d', ++$idcounter);
+                $params = array('name'    => $fieldname,
+                                'id'      => $htmlid,
+                                'type'    => 'radio',
+                                'value'   => 'other_' . $id,
+                                'onclick' => $onclick);
+                if (($id == $checked) || !empty($data->$cid)) {
+                    $params['checked'] = 'checked';
+                    $ischecked = true;
+                    if (!$data->cid) {
+                        $otherempty = true;
+                    }
+                }
+                $params2 = array('name'    => $cid,
+                                 'type'    => 'text',
+                                 'onclick' => 'other_check(name)',
+                                 'size'    => '25');
+                if (isset($data->$cid)) {
+                    $params2['value'] = stripslashes($data->$cid);
+                }
+                echo html_writer::empty_tag('input', $params)
+                   . html_writer::tag('label', format_text($othertext, FORMAT_HTML),
+                                      array('for' => $htmlid))
+                   . html_writer::empty_tag('input', $params2);
+            }
+            if ($horizontal) {
+                echo html_writer::end_tag('span');
+            } else {
+                echo html_writer::empty_tag('br');
+            }
+        }
+        if ($this->required == 'n') {
+            $htmlid = 'auto-rb' . sprintf('%04d', ++$idcounter);
+            if ($horizontal) {
+                echo html_writer::start_tag('span', array('style' => 'white-space:nowrap'));
+            }
+            $params = array('name'  => $fieldname,
+                            'id'    => $htmlid,
+                            'type'  => 'radio',
+                            'value' => '');
+            if ($onclickdepend) {
+                $params['onclick'] = 'depend((\'' . $descendants . '\', \'\')';
+            } else {
+                $params['onclick'] = 'other_check_empty(name, value)';
+            }
+            if (!$ischecked && !$blankquestionnaire) {
+                $params['checked'] = 'checked';
+            }
+            echo html_writer::empty_tag('input', $params)
+               . html_writer::tag('label', format_text(get_string('noanswer', 'sliclquestions'), FORMAT_HTML))
+               . ($horizontal ? html_writer::end_tag('span') : html_writer::empty_tag('br'));
+        }
+        if ($otherempty) {
+            notify(get_string('otherempty', 'sliclquestions'));
+        }
     }
 
     private function render_check($data, $descendantdata, $blankquestionnaire = false)
