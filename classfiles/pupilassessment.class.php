@@ -37,12 +37,15 @@ class sliclquestions_pupil_assessment
 
     public function __construct(&$course, &$context, &$survey, &$url, &$params)
     {
+        global $OUTPUT;
         if (!$survey->is_open()) {
             $survey->render_page_header();
             notify(get_string('notopen', 'sliclquestions', userdate($survey->opendate)));
+            echo $OUTPUT->footer();
         } elseif ($survey->is_closed()) {
             $survey->render_page_header();
             notify(get_string('closed', 'sliclquestions', userdate($survey->closedate)));
+            echo $OUTPUT->footer();
         }
         if (!empty($params['act'])) {
             $this->do_action($context, $survey, $url, $paraams);
@@ -79,6 +82,7 @@ class sliclquestions_pupil_assessment
             $mform->set_data($data);
             $mform->display();
             echo $OUTPUT->footer();
+            exit();
         }
     }
 
