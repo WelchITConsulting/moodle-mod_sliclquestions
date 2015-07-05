@@ -43,6 +43,7 @@ echo '<pre>ID: ' . $id . '<pre>';
 echo '<pre>Student: ' . print_r($student, true) . '<pre>';
             }
         if (is_object($student)) {
+echo '<pre>Is object: ' . print_r($student, true) . '<pre>';
             $this->id         = $student->id;
             $this->survey_id  = $student->survey_id;
             $this->teacher_id = $student->teacher_id;
@@ -55,7 +56,7 @@ echo '<pre>Student: ' . print_r($student, true) . '<pre>';
             $this->deleteflag = $student->deleteflag;
         }
         $this->context = $context;
-echo '<pre>Student: ' . print_r($this, true) . '<pre>';
+echo '<pre>this: ' . print_r($this, true) . '<pre>';
     }
 
     public function is_assessed($sid)
