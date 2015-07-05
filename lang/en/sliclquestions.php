@@ -48,6 +48,10 @@ $string['female']                                   = 'Female';
 $string['finished']                                 = 'You have answered all the questions in this questionnaire!';
 
 $string['kpilevel']                                 = 'KPI level';
+$string['kpi1']                                     = 'KPI level 1 questions';
+$string['kpi2']                                     = 'KPI level 2 questions';
+$string['kpi3']                                     = 'KPI level 3 questions';
+$string['kpi4']                                     = 'KPI level 4 questions';
 
 $string['male']                                     = 'Male';
 $string['missingquestion']                          = 'Please answer required question ';

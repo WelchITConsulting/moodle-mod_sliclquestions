@@ -1,352 +1,125 @@
 /** Question editing **/
 
 /* !important is needed in moodle 2.6 to override the display block when window width is reduced. */
-#page-mod-sliclquestions-questions .qcontainer .fitemtitle,
-#page-mod-sliclquestions-questions #id_questionhdr .fitemtitle {
-    display: none!important;
+#page-mod-sliclquestions-view fieldset {
+    margin-bottom: 0px!important;
 }
-
-#page-mod-sliclquestions-questions .qcontainer .qnums {
-    font-weight: bold;
+#page-mod-sliclquestions-view .qn-elem-head,
+#page-mod-sliclquestions-view .fitem {
+    margin: 0;
+    display: inline-block;
+    width: 40%;
+    float: right;
+}
+#page-mod-sliclquestions-view .fitem_ftextarea,
+#page-mod-sliclquestions-view .ftextarea {
+    width: 100%;
+}
+#page-mod-sliclquestions-view .personality .qn-elem-head,
+#page-mod-sliclquestions-view .personality .fitem {
+    width: 60%;
+}
+#page-mod-sliclquestions-view .fgroup {
+    width: 100%;
+}
+#page-mod-sliclquestions-view .fitem_actionbuttons {
+    clear: both;
+    width: 100%;
+    margin-top: 20px;
+}
+#page-mod-sliclquestions-view .qn-elem-head-3,
+#page-mod-sliclquestions-view .fgroup span {
+    display: inline-block;
+    width: 30%;
+    text-align: center;
+}
+#page-mod-sliclquestions-view #fgroup_id_group_1 .fgroup span {
+    width: 20%;
+}
+#page-mod-sliclquestions-view .qn-elem-head-5,
+#page-mod-sliclquestions-view .personality .fgroup span {
+    display: inline-block;
+    width: 19%;
+    text-align: center;
+}
+#page-mod-sliclquestions-view .slicl-answer .question {
+    width: 59%;
+}
+#page-mod-sliclquestions-view .slicl-answer .personality .question {
+    width: 39%;
+}
+#page-mod-sliclquestions-view .fgroup input[type='radio'] {
+    margin: 0;
+}
+#page-mod-sliclquestions-view .slicl-row {
+    clear: both;
+}
+#page-mod-sliclquestions-view .qn-elem-head {
+    padding: 0 15px;
+}
+#page-mod-sliclquestions-view #fgroup_id_group_1 {
+    width: 60%;
     float: left;
-    color: gray;
 }
-
-#page-mod-sliclquestions-questions .qcontainer .fstatic {
-    width: 97%;
-    margin-right: 1em;
-    margin-left: 5px;
-    /* Set a negative margin-bottom to save some vertical space! */
-    margin-bottom: -10px;
-}
-
-#page-mod-sliclquestions-questions .mform .fitem fieldset.felement {
-    margin-left: 0%;
-    padding-left: 1%;
-    margin-bottom: 0px!important;
-}
-
-#page-mod-sliclquestions-preview fieldset,
-#page-mod-sliclquestions-complete fieldset {
-    margin-bottom: 0px!important;
-}
-
-#page-mod-sliclquestions-questions .mform .fitem .fitemtitle {
-    text-align: left;
-    margin-left: 10px;
-    margin-bottom: 0px!important;
-}
-
-#page-mod-sliclquestions-questions .moving {
-    border: medium dotted maroon;
-}
-
-div.qoptcontainer div.ftextarea {
-    clear: all;
-    float: none;
-    width: 600px;
-    margin: 0pt auto 10px;
-}
-
-div.qoptcontainer div.ftextarea textarea.qopts {
-    width: 600px;
-    height: 10em;
-    margin-left: 1px;
-}
-
-.response span.selected,
-.generalboxcontent span.selected {
-    font-weight:bold;
-}
-
-td.selected {
-    background-color: #e4f1fa;
-    border: 1px solid gray;
-}
-
-#page-mod-sliclquestions-myreport div.respdate {
-    font-size: 0.8em;
-    font-weight:bold;
-    margin-bottom: 6px;
-    padding-top: 6px;
-    border-bottom: 1px dashed gray;
-}
-
-#page-mod-sliclquestions-complete .message,
-#page-mod-sliclquestions-complete .notifyproblem,
-#page-mod-sliclquestions-preview .message,
-#page-mod-sliclquestions-preview .notifyproblem,
-#page-mod-sliclquestions-complete .thankbody,
-#page-mod-sliclquestions-complete .thankhead {
-    background-color:#FFFFFF;
-    border-style: solid;
-    border-width: 2px;
-    margin-bottom:10px;
-    padding:5px;
-}
-
-#page-mod-sliclquestions-complete .notifyproblem,
-#page-mod-sliclquestions-preview .notifyproblem {
-    border-color: red;
-}
-
-#page-mod-sliclquestions-fbsections .notifyproblem {
-    text-align: left;
-    padding: 0px;
-}
-
-#page-mod-sliclquestions-complete .message,
-#page-mod-sliclquestions-preview .message,
-#page-mod-sliclquestions-complete .thankbody,
-#page-mod-sliclquestions-complete .thankhead {
-    border-color: blue;
-}
-
-#page-mod-sliclquestions-complete .surveyTitle,
-#page-mod-sliclquestions-complete .surveySubtitle,
-#page-mod-sliclquestions-complete .addInfo {
-    clear:both;
-    margin:0px;
-    margin-bottom:4px;
-    padding:10px;
-}
-
-.surveyPage {
-    background-color: #eee;
-    border-bottom-color:#000000;
-    border-bottom-style: solid;
-    border-bottom-width:1px;
-    clear:right;
-    padding:3px;
-    margin-bottom:5px;
-    margin-top:0px;
-}
-
-/* alternate columns formatting */
-
-#page-mod-sliclquestions-complete .c0,
-#page-mod-sliclquestions-preview .c0,
-#page-mod-sliclquestions-print .c0,
-#page-mod-sliclquestions-report .individual .c0,
-#page-mod-sliclquestions-myreport .individual .c0 {
-    background-color: #fafafa;
-    border: 1px solid silver;
-    padding-left:5px;
-    padding-right:5px;
-}
-
-#page-mod-sliclquestions-complete .raterow:hover,
-#page-mod-sliclquestions-preview .raterow:hover {
-    background-color: #e4f1fa;
-}
-
-#page-mod-sliclquestions-complete td.raterow:hover,
-#page-mod-sliclquestions-preview td.raterow:hover {
-    border: 1px solid navy;
-}
-
-#page-mod-sliclquestions-complete td.notanswered,
-#page-mod-sliclquestions-preview td.notanswered {
-    /* border: none; */
-    background-color: #fafafa;;
-}
-
-#page-mod-sliclquestions-complete td.notcompleted,
-#page-mod-sliclquestions-preview td.notcompleted {
-    border: 2px solid red;
-    background-color: #fafafa;
-}
-
-#page-mod-sliclquestions-complete .c1,
-#page-mod-sliclquestions-preview .c1,
-#page-mod-sliclquestions-print .c1,
-#page-mod-sliclquestions-report .individual .c1,
-#page-mod-sliclquestions-myreport .individual .c1 {
-    background-color: #eee;
-    border: 1px solid silver;
-    padding-left:5px;
-    padding-right:5px;
-}
-
-#page-mod-sliclquestions-myreport .individualresp,
-#page-mod-sliclquestions-preview .individualresp,
-#page-mod-sliclquestions-print .individualresp {
-    border: #c0c0c0 1px solid;
-    padding-left:5px;
-    padding-right:5px;
-    padding-top:5px;
-    padding-bottom:0px;
-    margin-bottom: 10px;
-    margin-top: 10px;
-}
-
-#page-mod-sliclquestions-complete .notice .buttons div,
-#page-mod-sliclquestions-complete .notice .buttons form {
-    display:inline;
-}
-
-.floatprinticon {
-    margin-top:-30px;
-    float:right;
-}
-
-.qn-legend {
+.slicl-legend {
      float: left;
      font-size:inherit;
      width: auto;
 }
-
-/* format paragraph top and bottom margins for better vertical positioning in questions text */
-.qn-question p {
+.slicl-question p {
     margin-bottom: 0.6em;
     margin-top: 0.5em;
 }
-
-.qn-question {
+.slicl-question {
     padding-left: 5px;
     padding-right: 5px;
     padding-bottom: 0.1em;
     padding-top: 0.1em;
-    /* make background same color as quiz question text */
     background-color: #e4f1fa;
 }
-
-#page-mod-sliclquestions-questions .qn-question {
-    margin-left: 40px;
-}
-
-.unselected {
-    color: gray;
-}
-
-/*respondents list feature*/
-
-#respondentscolumn {
-    float:left;
-    margin-left:20px;
-}
-.respondentsnavbar {
-    text-align:center;
-    padding-bottom:5px;
-    padding-top:5px;
-    margin-bottom:5px;
-    background-color: #F2F2F2;
-}
-
-/* new quiz-like formatting for 2.5 */
-
-#page-mod-sliclquestions-questions .qn-container {
-    border: 1px dotted gray;
-    margin-bottom: 1em;
-}
-
-.dir-rtl .qn-container {
+.dir-rtl .slicl-container {
     text-align: right;
 }
-.qn-info {
+.slicl-info {
     float: left;
     width: auto;
     padding: 7px;
     background: #eee;
     font-weight: bold;
 }
-
-.qn-info h2.qn-number {
+.slicl-info h2.slicl-number {
     margin: 0px;
     font-size: 1.5em;
     line-height: 1.2em;
 }
-
-.qn-question,
-.qn-answer {
+.slicl-question {
     margin: 0 0 0.5em;
     overflow:auto;
 }
-
-#notice .qn-question {
-    margin: 0;
-}
-
-.req {
-    font-size: x-small;
-}
-
-.qdepend {
-    color: red;
-    padding-left:5px;
-    margin-bottom: 5px;
-}
-
-.qn-content {
+.slicl-content {
     margin-bottom: 10px;
     margin-left: 55px;
 }
-
-/* move horizontal radio buttons closer to their labels */
-.qn-answer input[type="radio"],
-.qn-answer input[type="checkbox"] {
-    margin-right: 3px;
-}
-
-#page-mod-sliclquestions-show_nonrespondents input[type="radio"] {
-    margin-right: 1px;
-}
-
-.qn-answer label,
-#page-mod-sliclquestions-show_nonrespondents label {
-    margin-right: 0.6em;
-}
-
-.hidedependquestion {
-    color:red;
-    display: none;
-}
-.qn-container {
+.slicl-container {
     color:black;
     display: inherit;
     margin-left: 10px;
 }
-
-#page-mod-sliclquestions-fbsections .c0,
-#page-mod-sliclquestions-fbsections .c1 {
-    border: 1px solid silver;
-    padding-left:4px;
-    padding-right: 4px;
+.slicl-answer {
+    font-size: 12px;
+    display: block;
+    width: 90%;
+    margin: 0 auto;
+}
+.slicl-answer .slicl-row {
+    border-bottom: 1px solid rgb(229,229,229);
+    padding: 5px;
+}
+.slicl-answer .fitemtitle {
+    display: none;
+}
+.slicl-answer .question {
+    display: inline-block;
+    width: 59%;
 }
 
-#page-mod-sliclquestions-fbsections .c0 {
-    background-color: #fafafa;
-}
-
-#page-mod-sliclquestions-fbsections .c1 {
-    background-color: #eee;
-}
-
-#page-mod-sliclquestions-fbsections input[type="radio"] {
-    margin-right: 0px;
-}
-
-#page-mod-sliclquestions-fbsections .qn-legend {
-    padding-left: 8px;
-}
-
-#page-mod-sliclquestions-fbsections .qcontainer.qcontent {
-    margin-bottom:-5em;
-}
-#page-mod-sliclquestions-report div.chart {
-    overflow: auto;
-    margin-left: -40px;
-}
-
-#page-mod-sliclquestions-report .generaltable.questionnairereport td {
-    border: 1px solid silver;
-}
-
-.qn-container .smalltext {font-size: 0.75em;}
-
-/* !important is needed in moodle 2.6 to override the display block when window width is reduced. */
-#page-mod-sliclquestions-questions #region-main .mform .fitem .felement {
-    margin-bottom: 0px;
-    margin-left: 5px;
-    width: 97%;
-}

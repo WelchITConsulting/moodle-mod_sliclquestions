@@ -56,10 +56,10 @@ class sliclquestions_assessment_form extends moodleform
         $mform->addElement('html', html_writer::end_div());
         $mform->addElement('html', html_writer::end_tag('fieldset'));
 
-        $mform->addElement('html', html_writer::tag('legend', get_string('kpi1', 'sliclquestionnaire'), array('class' => 'kpi-1')));
-        $mform->addElement('html', html_writer::tag('legend', get_string('kpi2', 'sliclquestionnaire'), array('class' => 'kpi-2')));
-        $mform->addElement('html', html_writer::tag('legend', get_string('kpi3', 'sliclquestionnaire'), array('class' => 'kpi-3')));
-        $mform->addElement('html', html_writer::tag('legend', get_string('kpi4', 'sliclquestionnaire'), array('class' => 'kpi-4')));
+        $mform->addElement('html', html_writer::tag('legend', get_string('kpi1', 'sliclquestions'), array('class' => 'kpi-1')));
+        $mform->addElement('html', html_writer::tag('legend', get_string('kpi2', 'sliclquestions'), array('class' => 'kpi-2')));
+        $mform->addElement('html', html_writer::tag('legend', get_string('kpi3', 'sliclquestions'), array('class' => 'kpi-3')));
+        $mform->addElement('html', html_writer::tag('legend', get_string('kpi4', 'sliclquestions'), array('class' => 'kpi-4')));
         $mform->addElement('html', html_writer::start_tag('fieldset', array('class' => 'slicl-container',
                                                                             'id'    => 'slicl-2')));
         $mform->addElement('html', html_writer::start_tag('legend', array('class' => 'slicl-legend')));
