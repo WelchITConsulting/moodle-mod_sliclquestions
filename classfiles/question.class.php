@@ -150,7 +150,7 @@ echo '<pre>Method exists</pre>';
         }
     }
 
-    private function insert_response_bool($rid)
+    private function insert_resp_bool($rid)
     {
         $val = optional_param('q' . $this->id, '', PARAM_ALPHANUMEXT);
         if (!empty($val)) {
@@ -161,7 +161,7 @@ echo '<pre>Method exists</pre>';
         return false;
     }
 
-    private function insert_response_text($rid)
+    private function insert_resp_text($rid)
     {
         $val = optional_param('q' . $this->id, '', PARAM_CLEAN);
         if (!empty($val)) {
@@ -172,7 +172,7 @@ echo '<pre>Method exists</pre>';
         return false;
     }
 
-    private function insert_response_date($rid)
+    private function insert_resp_date($rid)
     {
         $val = optional_param('q' . $this->id, '', PARAM_CLEAN);
         if ($val = $this->check_date($val)) {
@@ -205,7 +205,7 @@ echo '<pre>Method exists</pre>';
         return false;
     }
 
-    private function insert_response_rank($rid)
+    private function insert_resp_rank($rid)
     {
         $resid = false;
         foreach($this->choices as $cid => $choice) {
