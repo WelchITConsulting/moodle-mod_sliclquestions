@@ -55,6 +55,8 @@ class sliclquestions_assessment_form extends moodleform
         $mform->addElement('html', html_writer::end_div());
         $mform->addElement('html', html_writer::end_tag('fieldset'));
         $mform->addElement('html', html_writer::end_div());
+        $mform->addElement('html', html_writer::end_div());
+        $mform->addElement('html', html_writer::end_tag('fieldset'));
 
         $mform->addElement('html', html_writer::tag('legend', get_string('kpi1', 'sliclquestions'), array('class' => 'kpi-1')));
         $mform->addElement('html', html_writer::tag('legend', get_string('kpi2', 'sliclquestions'), array('class' => 'kpi-2')));
