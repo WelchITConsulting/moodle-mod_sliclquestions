@@ -52,6 +52,7 @@ class sliclquestions_survey
                 notice(get_string('noteligible', 'sliclquestions'), $url);
             }
         } elseif ($survey->user_can_take($USER->id)) {
+            $survey->render_page_header();
             $select = 'survey_id = ' . $survey->id
                     . ' AND userid = ' . $USER->id;
             $resume = $DB->get_record_select('sliclquestions_response', $select, null) !== false;
@@ -64,7 +65,10 @@ class sliclquestions_survey
                 $complete = html_writer::tag('strong', $complete);
                 echo html_writer::link(new moodle_url('/mod/sliclquestions/complete.php', array('id' => $survey->cm->id)),
                                        $complete);
+            } else {
+                notify(get_string('noneinuse', 'sliclquestions'));
             }
+            echo $OUTPUT->footer();
         } else {
             $survey->render_page_header();
             notify(get_string('alreadyfilled', 'sliclquestions'));
