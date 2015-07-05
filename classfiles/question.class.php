@@ -110,7 +110,9 @@ class sliclquestions_question
     {
         global $qtypenames;
         $method = 'render_' . $qtypenames[$this->type_id];
+echo '<pre>Method: ' . $method . '</pre>';
         if (method_exists($this, $method)) {
+echo '<pre>Method exists</pre>';
             $this->render_start($qnum, $formdata, $descendantsdata);
             $this->$method($formdata, $descendantsdata, $blankquestionnaire);
             $this->render_end();
@@ -496,8 +498,6 @@ class sliclquestions_question
 
     private function render_rate($data, $descendantdata, $blankquestionnaire = false)
     {
-echo '<pre>' . print_r($data, true) . '</pre>';
-echo '<pre>' . print_r($this->choices, true) . '</pre>';
         $name = 'q' . $this->id;
         if (!empty($data) && (!isset($data->$name) || !is_array($data->name))) {
             $data->$name = array();
