@@ -63,4 +63,4 @@ Y.all('input[name=kpi_level').on('change', function(e){
     e.preventDefault();
     depends('input[name=kpi_level]:checked');
 });
-depends('input[kpi_level]:checked');
+depends('input[name=kpi_level]:checked');
