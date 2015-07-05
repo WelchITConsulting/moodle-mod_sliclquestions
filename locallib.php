@@ -124,6 +124,17 @@ function sliclquestions_registers()
     return  $registers;
 }
 
+// Check if current sliclquestions contains child questions.
+function sliclquestions_has_dependencies($questions)
+{
+    foreach ($questions as $question) {
+        if ($question->dependquestion != 0) {
+            return true;
+            break;
+        }
+    }
+    return false;
+}
 
 //// Constants.
 //
@@ -784,36 +795,6 @@ function sliclquestions_registers()
 //    );
 //}
 //
-//// Skip logic: we need to find out how many questions will actually be displayed on next page/section.
-//function sliclquestions_nb_questions_on_page ($questionsinsliclquestions, $questionsinsection, $rid) {
-//    global $DB;
-//    $questionstodisplay = array();
-//    foreach ($questionsinsection as $question) {
-//        if ($question->dependquestion != 0) {
-//            switch ($questionsinsliclquestions[$question->dependquestion]->type_id) {
-//                case SLICLQUESYESNO:
-//                    if ($question->dependchoice == 0) {
-//                        $questiondependchoice = "'y'";
-//                    } else {
-//                        $questiondependchoice = "'n'";
-//                    }
-//                    $responsetable = 'response_bool';
-//                    break;
-//                default:
-//                    $questiondependchoice = $question->dependchoice;
-//                    $responsetable = 'resp_single';
-//            }
-//            $sql = 'SELECT * FROM {sliclquestions}_'.$responsetable.' WHERE response_id = '.$rid.
-//            ' AND question_id = '.$question->dependquestion.' AND choice_id = '.$questiondependchoice;
-//            if ($DB->get_record_sql($sql)) {
-//                $questionstodisplay [] = $question->id;
-//            }
-//        } else {
-//            $questionstodisplay [] = $question->id;
-//        }
-//    }
-//    return $questionstodisplay;
-//}
 //
 //function sliclquestions_get_dependencies($questions, $position) {
 //    $dependencies = array();
@@ -926,16 +907,6 @@ function sliclquestions_registers()
 //    return $childpositions;
 //}
 //
-//// Check if current sliclquestions contains child questions.
-//function sliclquestions_has_dependencies($questions) {
-//    foreach ($questions as $question) {
-//        if ($question->dependquestion != 0) {
-//            return true;
-//            break;
-//        }
-//    }
-//    return false;
-//}
 //
 //// Check that the needed page breaks are present to separate child questions.
 //function sliclquestions_check_page_breaks($sliclquestions) {

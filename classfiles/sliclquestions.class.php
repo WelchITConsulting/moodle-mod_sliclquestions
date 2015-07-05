@@ -315,17 +315,57 @@ class sliclquestions
         }
         if (!empty($formdata->next)) {
             $this->response_delete($formdata->rid, $formdata->sec);
-
-
-
-
+            $formdata->rid = $this->response_insert($this->id, $formdata->sec, $formdata->rid, $USER->id);
+            $msg = $this->response_check_format($formdata->sec, $formdata);
+            if ($msg) {
+                $formdata->next = '';
+            } else {
+                $formdata->sec++;
+                if (sliclquestions_has_dependencies($this->question)) {
+                    $nbquestionsonpage = $this->nb_questions_on_page($this->questions,
+                                                                     $this->questionsbysec[$formdata->sec],
+                                                                     $formdata->rid);
+                    while(count($nbquestionsonpage) == 0) {
+                        $this->response_delete($formdata->rid);
+                        $formdata->sec++;
+                        if ($formdata->sec > $numsections) {
+                            $SESSION->sliclquestions->end = true;
+                            break;
+                        }
+                        $nbquestionsonpage = $this->nb_questions_on_page($this->questions,
+                                                                         $this->questionsbysec[$formdata->sec],
+                                                                         $formdata->rid);
+                    }
+                    $SESSION->sliclquestions->nbquestionsonppage = $nbquestionsonpage;
+                }
+            }
         }
         if (!empty($formdata->prev)) {
+            $this->response_delete($formdata->rid, $formdata->sec);
+            if (isset($SESSION->sliclquestions->end) && ($SESSION->sliclquestions->end == true)) {
+                $SESSION->sliclquestions->end = false;
+                $formdata->sec--;
+            }
 
-
-
-
-
+            $formdata->rid = $this->response_insert($this->id, $formdata->sec, $formdata->rid, $USER->id);
+            $msg = $this->response_check_format($formdata->sec, $formdata, $checkmissing = false, $checkwrongformat = true);
+            if ($msg) {
+                $formdata->prev = '';
+            } else {
+                $formdata->sec--;
+                if (sliclquestions_has_dependencies($this->question)) {
+                    $nbquestionsonpage = $this->nb_questions_on_page($this->questions,
+                                                                     $this->questionsbysec[$formdata->sec],
+                                                                     $formdata->rid);
+                    while(count($nbquestionsonpage) == 0) {
+                        $formdata->sec--;
+                        $nbquestionsonpage = $this->nb_questions_on_page($this->questions,
+                                                                         $this->questionsbysec[$formdata->sec],
+                                                                         $formdata->rid);
+                    }
+                    $SESSION->sliclquestions->nbquestionsonppage = $nbquestionsonpage;
+                }
+            }
         }
         if (!empty($formdata->rid)) {
             if (($formdata->sec >= 1) && isset($this->questionsbysec[$formdata->sec])) {
@@ -887,5 +927,43 @@ class sliclquestions
         }
 
         return $values;
+    }
+
+    // Skip logic: we need to find out how many questions will actually be displayed on next page/section.
+    private function nb_questions_on_page ($questionsinsliclquestions, $questionsinsection, $rid)
+    {
+        global $DB;
+        $questionstodisplay = array();
+        foreach ($questionsinsection as $question) {
+            if ($question->dependquestion != 0) {
+                switch ($questionsinsliclquestions[$question->dependquestion]->type_id) {
+                    case SLICLQUESYESNO:
+                        if ($question->dependchoice == 0) {
+                            $questiondependchoice = "'y'";
+                        } else {
+                            $questiondependchoice = "'n'";
+                        }
+                        $responsetable = 'response_bool';
+                        break;
+                    default:
+                        $questiondependchoice = $question->dependchoice;
+                        $responsetable = 'resp_single';
+                }
+                $sql = 'SELECT * FROM {sliclquestions}_'
+                     . $responsetable
+                     . ' WHERE response_id = '
+                     . $rid
+                     . ' AND question_id = '
+                     . $question->dependquestion
+                     . ' AND choice_id = '
+                     . $questiondependchoice;
+                if ($DB->get_record_sql($sql)) {
+                    $questionstodisplay [] = $question->id;
+                }
+            } else {
+                $questionstodisplay [] = $question->id;
+            }
+        }
+        return $questionstodisplay;
     }
 }
