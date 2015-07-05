@@ -65,6 +65,12 @@
     display: block;
     float: none;
 }
+#page-mod-sliclquestions-view .fitem .fitemtitle {
+    border: 1px solid red;
+}
+#page-mod-sliclquestions-view .fitem .felement {
+    border: 1px solid green;
+}
 .slicl-legend {
      float: left;
      font-size:inherit;
