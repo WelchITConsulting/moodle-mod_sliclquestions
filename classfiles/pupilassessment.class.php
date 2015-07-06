@@ -82,7 +82,7 @@ class sliclquestions_pupil_assessment
             $d->survey_id = $survey->id;
             $d->userid    = $USER->id;
             $d->pupilid   = $sdata->pid;
-            $d->submitted = 'y';
+            $d->submitted = time();
             $d->complete  = 'y';
             $rid = $DB->insert_record('sliclquestions_response', $d);
 
