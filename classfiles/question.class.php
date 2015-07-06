@@ -100,7 +100,6 @@ class sliclquestions_question
     public function insert_response($rid)
     {
         $method = 'insert_' . $this->responsetable;
-echo '<pre>' . $method . '</pre>';
         if (method_exists($this, $method)) {
             return $this->$method($rid);
         }
@@ -163,6 +162,7 @@ echo '<pre>' . $method . '</pre>';
     private function insert_resp_text($rid)
     {
         $val = optional_param('q' . $this->id, '', PARAM_CLEAN);
+echo '<pre>' . $val . '</pre>';
         if (!empty($val)) {
             $rec = new stdClass();
             $rec->response = $val;
