@@ -54,6 +54,8 @@ $string['kpi3']                                     = 'KPI level 3 questions';
 $string['kpi4']                                     = 'KPI level 4 questions';
 
 $string['male']                                     = 'Male';
+$string['missingkpi']                               = 'Please answer all the KPI Level questions';
+$string['missingpersonality']                       = 'Please answer all the Personality questions';
 $string['missingquestion']                          = 'Please answer required question ';
 $string['missingquestions']                         = 'Please answer required questions: ';
 $string['modulename']                               = 'SLiCL Questions';
