@@ -168,3 +168,17 @@ h3.slicl-legend {
 #page-mod-sliclquestions-view .qn-question {
     margin-left: 40px;
 }
+.qn-question,
+.qn-answer {
+    margin: 0 0 .5em;
+    overflow: auto;
+}
+.qn-content {
+    margin-bottom: 10px;
+    margin-left: 55px;
+}
+.qn-container {
+    color: #000;
+    display: inherit;
+    margin-left: 10px;
+}
