@@ -61,13 +61,18 @@
     width: 60%;
     float: left;
 }
+#page-mod-sliclquestions-view .fitem .fstaticlabel,
+#page-mod-sliclquestions-view .fitem .fstatic {
+    color: #959595;
+    margin: 0;
+    padding: 0;
+    font-size: 1.2em;
+}
 #page-mod-sliclquestions-view .fitem .fstaticlabel {
-    border: 1px solid red;
-    vertical-align: baseline;
+    width: 18%;
 }
 #page-mod-sliclquestions-view .fitem .fstatic {
-    border: 1px solid green;
-    vertical-align: baseline;
+    width: 80%;
 }
 .slicl-legend {
      float: left;
