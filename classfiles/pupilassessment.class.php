@@ -68,7 +68,8 @@ class sliclquestions_pupil_assessment
         $data->id      = $params['id'];
         $data->act     = 'save';
         $data->pid     = $student->id;
-        $data->name    = $student->forename . ' ' . $student->surname;
+        $data->name    = get_string('pupilname', 'sliclquestions')
+                       . $student->forename . ' ' . $student->surname;
         $data->kpi_level = $student->kpi_level;
         $data->kpi       = optional_param('kpi', 0, PARAM_INT);
         require_once($CFG->dirroot . '/mod/sliclquestions/assessment_form.php');

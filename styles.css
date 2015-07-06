@@ -140,4 +140,31 @@ h3.slicl-legend {
     display: inline-block;
     width: 59%;
 }
-
+.qn-info {
+    float: left;
+    width: auto;
+    padding: 7px;
+    background: #eee;
+    font-weight: bold;
+}
+.qn-info h2.qn-number {
+    margin: 0;
+    font-size: 1.5em;
+    line-height: 1.2em;
+}
+.qn-legend {
+    float: left;
+    font-size: inherit;
+    width: auto;
+}
+.qn-question p {
+    margin-bottom: .6em;
+    margin-top: .5em;
+}
+.qn-question {
+    padding: .1em 5px;
+    background-color: #e41f1fa;
+}
+#page-mod-sliclquestions-view .qn-question {
+    margin-left: 40px;
+}
