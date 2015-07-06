@@ -69,6 +69,7 @@ class sliclquestions_pupil_assessment
         $data->act     = 'save';
         $data->pid     = $student->id;
         $data->name    = get_string('pupilname', 'sliclquestions')
+                       . '&nbsp;'
                        . $student->forename . ' ' . $student->surname;
         $data->kpi_level = $student->kpi_level;
         $data->kpi       = optional_param('kpi', 0, PARAM_INT);

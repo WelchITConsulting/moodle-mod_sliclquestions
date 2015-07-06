@@ -100,6 +100,7 @@ class sliclquestions_question
     public function insert_response($rid)
     {
         $method = 'insert_' . $this->responsetable;
+echo '<pre>' . $method . '</pre>';
         if (method_exists($this, $method)) {
             return $this->$method($rid);
         }
