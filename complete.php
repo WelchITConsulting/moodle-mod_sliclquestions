@@ -106,8 +106,8 @@ if (!$sliclquestions->is_open()) {
 } elseif (!$sliclquestions->user_is_eligible()) {
     notice(get_string('noteligible', 'sliclquestions'), $url);
 } elseif ($sliclquestions->user_can_take($USER->id)) {
-    $sliclquestions->render_page_header();
-//    echo $OUTPUT->header();
+//    $sliclquestions->render_page_header();
+    echo $OUTPUT->header();
     $sliclquestions->view($url);
     echo $OUTPUT->footer();
 } else {
