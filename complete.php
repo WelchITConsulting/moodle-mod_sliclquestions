@@ -100,15 +100,16 @@ if (!groups_is_member($currentgroupid, $USER->id)) {
     $currentgroupid = 0;
 }
 if (!$sliclquestions->is_open()) {
-    notify(get_string('notopen', 'sliclquestions', $sliclquestions->opendate));
+    notice(get_string('notopen', 'sliclquestions', $sliclquestions->opendate), $url);
 } elseif ($sliclquestions->is_closed()) {
-    notify(get_string('closed', 'sliclquestions', $sliclquestions->closedate));
+    notice(get_string('closed', 'sliclquestions', $sliclquestions->closedate), $url);
 } elseif (!$sliclquestions->user_is_eligible()) {
     notice(get_string('noteligible', 'sliclquestions'), $url);
 } elseif ($sliclquestions->user_can_take($USER->id)) {
 //    $sliclquestions->render_page_header();
+    echo $OUTPUT->header();
     $sliclquestions->view($url);
+    echo $OUTPUT->footer();
 } else {
-    notify(get_string('alreadyfilled', 'sliclquestions'), $url);
+    notice(get_string('alreadyfilled', 'sliclquestions'), $url);
 }
-echo $OUTPUT->footer();
