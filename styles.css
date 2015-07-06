@@ -61,23 +61,14 @@
     width: 60%;
     float: left;
 }
-#page-mod-sliclquestions-view .fitem .fstaticlabel,
+#page-mod-sliclquestions-view .fitem .fstaticlabel {
+    display: none;
+}
 #page-mod-sliclquestions-view .fitem .fstatic {
-    color: #959595;
     margin: 0;
     padding: 0;
-    font-size: 1.2em;
-    display: inline-block;
-    left: 0;
-}
-#page-mod-sliclquestions-view .fitem .fstaticlabel {
-    clear: left;
-    width: 18%;
-    border: 1px solid red;
-}
-#page-mod-sliclquestions-view .fitem .fstatic {
-    width: 80%;
-    border: 1px solid blue;
+    font-size: 1.5em;
+    display: block;
 }
 #slicl-1 {
     clear: both;
