@@ -698,12 +698,10 @@ class sliclquestions
         } else {
             global $OUTPUT;
 
-            echo $OUTPUT->header()
-               . html_writer::tag('h3', get_string('thankhead', 'sliclquestions'))
+            echo html_writer::tag('h3', get_string('thankhead', 'sliclquestions'))
                . get_string('thankbody', 'sliclquestions')
                . $OUTPUT->single_button('/mod/sliclquestions/view.php?id=' . $this->cm->id,
-                                        get_string('continue'))
-               . $OUTPUT->footer();
+                                        get_string('continue'));
         }
     }
 
