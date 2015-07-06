@@ -267,6 +267,14 @@ class sliclquestions_pupil_assessment
                 $d->rank       = $sdata->kpi3_6;
                 $DB->insert_record('sliclquestions_resp_rank', $d);
             }
+            if (isset($sdata->kpi3_7)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 18;
+                $d->response   = 62;
+                $d->rank       = $sdata->kpi3_6;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
 
             // KPI Level 4
             if (isset($sdata->kpi4_1)) {
@@ -315,14 +323,6 @@ class sliclquestions_pupil_assessment
                 $d->questionid = 20;
                 $d->response   = 68;
                 $d->rank       = $sdata->kpi4_6;
-                $DB->insert_record('sliclquestions_resp_rank', $d);
-            }
-            if (isset($sdata->kpi4_7)) {
-                $d = new stdClass();
-                $d->responseid = $rid;
-                $d->questionid = 20;
-                $d->response   = 69;
-                $d->rank       = $sdata->kpi4_7;
                 $DB->insert_record('sliclquestions_resp_rank', $d);
             }
 

@@ -61,16 +61,13 @@
     width: 60%;
     float: left;
 }
-#page-mod-sliclquestions-view .fitem {
-    display: block;
-    float: none;
-    vertical-align: bottom;
-}
-#page-mod-sliclquestions-view .fitem .fitemtitle {
+#page-mod-sliclquestions-view .fitem .fstaticlabel {
     border: 1px solid red;
+    vertical-align: baseline;
 }
-#page-mod-sliclquestions-view .fitem .felement {
+#page-mod-sliclquestions-view .fitem .fstatic {
     border: 1px solid green;
+    vertical-align: baseline;
 }
 .slicl-legend {
      float: left;
