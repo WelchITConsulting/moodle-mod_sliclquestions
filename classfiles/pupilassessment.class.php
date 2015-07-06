@@ -344,7 +344,7 @@ class sliclquestions_pupil_assessment
                 $d->rank       = $sdata->personality_2;
                 $DB->insert_record('sliclquestions_resp_rank', $d);
             }
-            if (isset($sdata->personality_2)) {
+            if (isset($sdata->personality_3)) {
                 $d = new stdClass();
                 $d->responseid = $rid;
                 $d->questionid = 22;
@@ -352,7 +352,7 @@ class sliclquestions_pupil_assessment
                 $d->rank       = $sdata->personality_3;
                 $DB->insert_record('sliclquestions_resp_rank', $d);
             }
-            if (isset($sdata->personality_2)) {
+            if (isset($sdata->personality_4)) {
                 $d = new stdClass();
                 $d->responseid = $rid;
                 $d->questionid = 22;
@@ -360,7 +360,7 @@ class sliclquestions_pupil_assessment
                 $d->rank       = $sdata->personality_4;
                 $DB->insert_record('sliclquestions_resp_rank', $d);
             }
-            if (isset($sdata->personality_2)) {
+            if (isset($sdata->personality_5)) {
                 $d = new stdClass();
                 $d->responseid = $rid;
                 $d->questionid = 22;

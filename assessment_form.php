@@ -489,4 +489,48 @@ class sliclquestions_assessment_form extends moodleform
 
         $this->add_action_buttons(true, get_string('submitsurvey', 'sliclquestions'));
     }
+
+    public function validation($data, $files)
+    {
+        $errors = array();
+        if ($data['kpi_level'] == 1) {
+            if (empty($data['kpi1_1'])) { $errors['kpi1_1'] = get_string('missingkpi', 'sliclquestions'); }
+            if (empty($data['kpi1_2'])) { $errors['kpi1_2'] = get_string('missingkpi', 'sliclquestions'); }
+            if (empty($data['kpi1_3'])) { $errors['kpi1_3'] = get_string('missingkpi', 'sliclquestions'); }
+            if (empty($data['kpi1_4'])) { $errors['kpi1_4'] = get_string('missingkpi', 'sliclquestions'); }
+            if (empty($data['kpi1_5'])) { $errors['kpi1_5'] = get_string('missingkpi', 'sliclquestions'); }
+            if (empty($data['kpi1_6'])) { $errors['kpi1_6'] = get_string('missingkpi', 'sliclquestions'); }
+        } elseif ($data['kpi_level'] == 2) {
+            if (empty($data['kpi2_1'])) { $errors['kpi2_1'] = get_string('missingkpi', 'sliclquestions'); }
+            if (empty($data['kpi2_2'])) { $errors['kpi2_2'] = get_string('missingkpi', 'sliclquestions'); }
+            if (empty($data['kpi2_3'])) { $errors['kpi2_3'] = get_string('missingkpi', 'sliclquestions'); }
+            if (empty($data['kpi2_4'])) { $errors['kpi2_4'] = get_string('missingkpi', 'sliclquestions'); }
+            if (empty($data['kpi2_5'])) { $errors['kpi2_5'] = get_string('missingkpi', 'sliclquestions'); }
+            if (empty($data['kpi2_6'])) { $errors['kpi2_6'] = get_string('missingkpi', 'sliclquestions'); }
+            if (empty($data['kpi2_7'])) { $errors['kpi2_7'] = get_string('missingkpi', 'sliclquestions'); }
+            if (empty($data['kpi2_8'])) { $errors['kpi2_8'] = get_string('missingkpi', 'sliclquestions'); }
+            if (empty($data['kpi2_9'])) { $errors['kpi2_9'] = get_string('missingkpi', 'sliclquestions'); }
+        } elseif ($data['kpi_level'] == 3) {
+            if (empty($data['kpi3_1'])) { $errors['kpi3_1'] = get_string('missingkpi', 'sliclquestions'); }
+            if (empty($data['kpi3_2'])) { $errors['kpi3_2'] = get_string('missingkpi', 'sliclquestions'); }
+            if (empty($data['kpi3_3'])) { $errors['kpi3_3'] = get_string('missingkpi', 'sliclquestions'); }
+            if (empty($data['kpi3_4'])) { $errors['kpi3_4'] = get_string('missingkpi', 'sliclquestions'); }
+            if (empty($data['kpi3_5'])) { $errors['kpi3_5'] = get_string('missingkpi', 'sliclquestions'); }
+            if (empty($data['kpi3_6'])) { $errors['kpi3_6'] = get_string('missingkpi', 'sliclquestions'); }
+            if (empty($data['kpi3_7'])) { $errors['kpi3_7'] = get_string('missingkpi', 'sliclquestions'); }
+        } elseif ($data['kpi_level'] == 4) {
+            if (empty($data['kpi4_1'])) { $errors['kpi4_1'] = get_string('missingkpi', 'sliclquestions'); }
+            if (empty($data['kpi4_2'])) { $errors['kpi4_2'] = get_string('missingkpi', 'sliclquestions'); }
+            if (empty($data['kpi4_3'])) { $errors['kpi4_3'] = get_string('missingkpi', 'sliclquestions'); }
+            if (empty($data['kpi4_4'])) { $errors['kpi4_4'] = get_string('missingkpi', 'sliclquestions'); }
+            if (empty($data['kpi4_5'])) { $errors['kpi4_5'] = get_string('missingkpi', 'sliclquestions'); }
+            if (empty($data['kpi4_6'])) { $errors['kpi4_6'] = get_string('missingkpi', 'sliclquestions'); }
+        }
+        if (empty($data['personality_1'])) { $errors['personality_1'] = get_string('missingpersonality', 'sliclquestions'); }
+        if (empty($data['personality_2'])) { $errors['personality_2'] = get_string('missingpersonality', 'sliclquestions'); }
+        if (empty($data['personality_3'])) { $errors['personality_3'] = get_string('missingpersonality', 'sliclquestions'); }
+        if (empty($data['personality_4'])) { $errors['personality_4'] = get_string('missingpersonality', 'sliclquestions'); }
+        if (empty($data['personality_5'])) { $errors['personality_5'] = get_string('missingpersonality', 'sliclquestions'); }
+        return $errors;
+    }
 }
