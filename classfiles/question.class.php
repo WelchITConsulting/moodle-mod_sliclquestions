@@ -162,7 +162,7 @@ class sliclquestions_question
     private function insert_resp_text($rid)
     {
         $val = optional_param('q' . $this->id, '', PARAM_CLEAN);
-echo '<pre>' . $val . '</pre>';
+echo '<pre>Val: ' . $val . '</pre>';
         if (!empty($val)) {
             $rec = new stdClass();
             $rec->response = $val;
