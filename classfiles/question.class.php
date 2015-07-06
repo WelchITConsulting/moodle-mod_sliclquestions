@@ -162,7 +162,6 @@ class sliclquestions_question
     private function insert_resp_text($rid)
     {
         $val = optional_param('q' . $this->id, '', PARAM_CLEAN);
-echo '<pre>Val: ' . $val . '</pre>';
         if (!empty($val)) {
             $rec = new stdClass();
             $rec->response = $val;
@@ -472,7 +471,7 @@ echo '<pre>Val: ' . $val . '</pre>';
                                              'maxfiles' => -1, 'context' => $this->context,
                                              'noclean' => 0, 'trusttext' => 0));
         }
-        echo html_writer::tag('textaredependenta',
+        echo html_writer::tag('textarea',
                               (isset($data->$name) ? $data->$name : ''),
                               array('name' => $name,
                                     'id'   => $name,
