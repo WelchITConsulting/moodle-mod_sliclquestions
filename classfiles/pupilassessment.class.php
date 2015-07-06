@@ -59,7 +59,7 @@ class sliclquestions_pupil_assessment
 
     private function do_action(&$context, &$survey, &$url, &$params)
     {
-        global $CFG, $OUTPUT, $PAGE;
+        global $CFG, $DB, $OUTPUT, $PAGE, $USER;
 
         $PAGE->requires->js('/mod/sliclquestions/module.js');
         $pid = required_param('pid', PARAM_INT);
@@ -76,8 +76,307 @@ class sliclquestions_pupil_assessment
         if ($mform->is_cancelled()) {
             redirect($url);
         } elseif ($sdata = $mform->get_data()) {
-die('<pre>' . print_r($sdata, true) . '</pre>');
-            // Process the results
+
+            // Create the response record
+            $d = new stdClass();
+            $d->survey_id = $survey->id;
+            $d->userid    = $USER->id;
+            $d->pupilid   = $sdata->pid;
+            $d->submitted = 'y';
+            $d->complete  = 'y';
+            $rid = $DB->insert_record('sliclquestions_response', $d);
+
+            // Question 1 = KPI Level
+            $d = new stdClass();
+            $d->responseid = $rid;
+            $d->questionid = 13;
+            $d->response   = $sdata->kpi_level;
+            $DB->insert_record('sliclquestions_resp_single', $d);
+
+            // Question 2
+            // KPI Level 1
+            if (isset($sdata->kpi1_1)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 14;
+                $d->response   = 42;
+                $d->rank       = $sdata->kpi1_1;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+            if (isset($sdata->kpi1_2)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 14;
+                $d->response   = 43;
+                $d->rank       = $sdata->kpi1_2;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+            if (isset($sdata->kpi1_3)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 14;
+                $d->response   = 44;
+                $d->rank       = $sdata->kpi1_3;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+            if (isset($sdata->kpi1_4)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 14;
+                $d->response   = 45;
+                $d->rank       = $sdata->kpi1_4;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+            if (isset($sdata->kpi1_5)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 14;
+                $d->response   = 46;
+                $d->rank       = $sdata->kpi1_5;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+            if (isset($sdata->kpi1_6)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 14;
+                $d->response   = 47;
+                $d->rank       = $sdata->kpi1_6;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+
+            // KPI Level 2
+            if (isset($sdata->kpi2_1)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 16;
+                $d->response   = 48;
+                $d->rank       = $sdata->kpi2_1;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+            if (isset($sdata->kpi2_2)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 16;
+                $d->response   = 49;
+                $d->rank       = $sdata->kpi2_2;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+            if (isset($sdata->kpi2_3)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 16;
+                $d->response   = 50;
+                $d->rank       = $sdata->kpi2_3;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+            if (isset($sdata->kpi2_4)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 16;
+                $d->response   = 51;
+                $d->rank       = $sdata->kpi2_4;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+            if (isset($sdata->kpi2_5)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 16;
+                $d->response   = 52;
+                $d->rank       = $sdata->kpi2_5;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+            if (isset($sdata->kpi2_6)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 16;
+                $d->response   = 53;
+                $d->rank       = $sdata->kpi2_6;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+            if (isset($sdata->kpi2_7)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 16;
+                $d->response   = 54;
+                $d->rank       = $sdata->kpi2_7;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+            if (isset($sdata->kpi2_8)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 16;
+                $d->response   = 55;
+                $d->rank       = $sdata->kpi2_8;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+            if (isset($sdata->kpi2_9)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 16;
+                $d->response   = 56;
+                $d->rank       = $sdata->kpi2_9;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+
+            // KPI Level 3
+            if (isset($sdata->kpi3_1)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 18;
+                $d->response   = 57;
+                $d->rank       = $sdata->kpi3_1;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+            if (isset($sdata->kpi3_2)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 18;
+                $d->response   = 58;
+                $d->rank       = $sdata->kpi3_2;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+            if (isset($sdata->kpi3_3)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 18;
+                $d->response   = 59;
+                $d->rank       = $sdata->kpi3_3;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+            if (isset($sdata->kpi3_4)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 18;
+                $d->response   = 60;
+                $d->rank       = $sdata->kpi3_4;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+            if (isset($sdata->kpi3_5)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 18;
+                $d->response   = 61;
+                $d->rank       = $sdata->kpi3_5;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+            if (isset($sdata->kpi3_6)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 18;
+                $d->response   = 62;
+                $d->rank       = $sdata->kpi3_6;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+
+            // KPI Level 4
+            if (isset($sdata->kpi4_1)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 20;
+                $d->response   = 63;
+                $d->rank       = $sdata->kpi4_1;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+            if (isset($sdata->kpi4_2)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 20;
+                $d->response   = 64;
+                $d->rank       = $sdata->kpi4_2;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+            if (isset($sdata->kpi4_3)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 20;
+                $d->response   = 65;
+                $d->rank       = $sdata->kpi4_3;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+            if (isset($sdata->kpi4_4)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 20;
+                $d->response   = 66;
+                $d->rank       = $sdata->kpi4_4;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+            if (isset($sdata->kpi4_5)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 20;
+                $d->response   = 67;
+                $d->rank       = $sdata->kpi4_5;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+            if (isset($sdata->kpi4_6)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 20;
+                $d->response   = 68;
+                $d->rank       = $sdata->kpi4_6;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+            if (isset($sdata->kpi4_7)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 20;
+                $d->response   = 69;
+                $d->rank       = $sdata->kpi4_7;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+
+            // Question 3
+            if (isset($sdata->personality_1)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 22;
+                $d->response   = 70;
+                $d->rank       = $sdata->personality_1;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+            if (isset($sdata->personality_2)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 22;
+                $d->response   = 71;
+                $d->rank       = $sdata->personality_2;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+            if (isset($sdata->personality_2)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 22;
+                $d->response   = 72;
+                $d->rank       = $sdata->personality_3;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+            if (isset($sdata->personality_2)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 22;
+                $d->response   = 73;
+                $d->rank       = $sdata->personality_4;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+            if (isset($sdata->personality_2)) {
+                $d = new stdClass();
+                $d->responseid = $rid;
+                $d->questionid = 22;
+                $d->response   = 74;
+                $d->rank       = $sdata->personality_5;
+                $DB->insert_record('sliclquestions_resp_rank', $d);
+            }
+
+            // Question 4
+            $d = new stdClass();
+            $d->responseid = $rid;
+            $d->questionid = 24;
+            $d->response   = (empty($sdata->q4) ? '' : $sdata->q4);
+            $DB->insert_record('sliclquestions_resp_text', $d);
+
+            redirect('/mod/sliclquestions/view.php?id=' . $sdata->id);
+
         } else {
             echo $OUTPUT->header()
                . $OUTPUT->heading(format_text($survey->name));
