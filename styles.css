@@ -69,10 +69,13 @@
     font-size: 1.2em;
 }
 #page-mod-sliclquestions-view .fitem .fstaticlabel {
+    clear: left;
     width: 18%;
+    border: 1px solid red;
 }
 #page-mod-sliclquestions-view .fitem .fstatic {
     width: 80%;
+    border: 1px solid blue;
 }
 .slicl-legend {
      float: left;
