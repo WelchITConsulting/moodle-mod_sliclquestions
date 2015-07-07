@@ -136,7 +136,7 @@ class mod_sliclquestions_management_console
         // Output the list of pupils
         echo $survey->render_page_header()
            . $OUTPUT->box_start('generalbox center clearfix')
-           . html_writer::tag('p', get_string('stats_content', 'sliclquestions'))
+           . html_writer::tag('p', get_string('statsregisteredcontent', 'sliclquestions'))
            . html_writer::start_div('slicl-registered-pupils')
            . html_writer::table($totaltable)
            . html_writer::end_div()
@@ -234,7 +234,7 @@ class mod_sliclquestions_management_console
         // Output the list of pupils
         echo $survey->render_page_header()
            . $OUTPUT->box_start('generalbox center clearfix')
-           . html_writer::tag('p', get_string('stats_content', 'sliclquestions'))
+           . html_writer::tag('p', get_string('statsassessedcontent', 'sliclquestions'))
            . html_writer::start_div('slicl-registered-pupils')
            . html_writer::table($totaltable)
            . html_writer::end_div()
