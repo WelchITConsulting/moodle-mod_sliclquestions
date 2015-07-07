@@ -46,7 +46,7 @@ class mod_sliclquestions_management_console
         } elseif ($survey->questype == SLICLQUESTIONS_SURVEY) {
             $this->display_statistics();
         } else {
-            notice(get_string('invalidquesttype', 'sliclquestions'), $url);
+            notice(get_string('invalidquesttype', 'sliclquestions', $survey->questype), $url);
         }
     }
 

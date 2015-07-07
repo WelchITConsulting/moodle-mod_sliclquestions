@@ -47,7 +47,7 @@ $string['event_previed_desc']                       = 'The user with id \'$d\' p
 $string['female']                                   = 'Female';
 $string['finished']                                 = 'You have answered all the questions in this questionnaire!';
 
-$string['invalidquesttype']                         = 'Invalid questionnaire type code';
+$string['invalidquesttype']                         = 'Invalid questionnaire type code: {$a}';
 
 $string['kpilevel']                                 = 'KPI level';
 $string['kpi1']                                     = 'KPI level 1 questions';
