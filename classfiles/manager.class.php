@@ -150,7 +150,7 @@ class mod_sliclquestions_management_console
             foreach($nonrespondents as $nonrespondent) {
                 $user = $DB->get_record('user', array('id' => $nonrespondent));
                 $profilelink = html_writer::start_tag('strong')
-                             . html_writer::tag('input',
+                             . html_writer::tag('a',
                                                 fullname($user),
                                                 array('href' => $CFG->wwwroot
                                                               . '/user/view.php?id='
@@ -210,7 +210,7 @@ class mod_sliclquestions_management_console
                                         array(), 'showall');
             }
             if ($survey->capabilities->message) {
-                echo $OUPTPUT->box_start('mdl-align')
+                echo $OUTPUT->box_start('mdl-align')
                    . html_writer::start_div('buttons')
                    . html_writer::empty_tag('input', array('type' => 'button',
                                                            'id'   => 'checkall',
@@ -224,6 +224,8 @@ class mod_sliclquestions_management_console
                                                                             : '');
             }
         }
+        echo $OUTPUT->footer();
+        exit();
     }
 
     private function get_non_respondents()
