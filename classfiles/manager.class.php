@@ -39,11 +39,11 @@ class mod_sliclquestions_management_console
 
     public function __construct(&$course, &$context, &$survey, &$url, &$params)
     {
-        if ($survey->questtype == SLICLQUESTIONS_PUPILREGISTRATION) {
+        if ($survey->questype == SLICLQUESTIONS_PUPILREGISTRATION) {
             $this->pupil_registration_statistics($survey, $course, $context, $url);
-        } elseif ($survey->questtype == SLICLQUESTIONS_PUPILREGISTRATION) {
+        } elseif ($survey->questype == SLICLQUESTIONS_PUPILREGISTRATION) {
             $this->pupil_assessment_statistics($survey, $course, $context, $url);
-        } elseif ($survey->questtype == SLICLQUESTIONS_SURVEY) {
+        } elseif ($survey->questype == SLICLQUESTIONS_SURVEY) {
             $this->display_statistics();
         } else {
             notice(get_text('invalidquesttype', 'sliclquestions'), $url);
