@@ -117,7 +117,7 @@ class mod_sliclquestions_management_console
         } else {
             $usedgroupid = false;
         }
-        $nonrespondents      = $this->get_incomplete_users($survey->cm, $survey->id. $usedgroupid);
+        $nonrespondents      = $this->get_incomplete_users($context, $survey->id. $usedgroupid);
         $countnonrespondents  = count($nonrespondents);
         $table->initialbars(false);
         if ($showall) {
@@ -128,7 +128,7 @@ class mod_sliclquestions_management_console
             $startpage = $table->get_page_start();
             $pagecount = $table->get_page_size();
         }
-        $nonrespondents = $this->get_incomplete_users($survey->cm, $survey->id, $usedgroupid, $sort, $startpage, $pagecount);
+        $nonrespondents = $this->get_incomplete_users($context, $survey->id, $usedgroupid, $sort, $startpage, $pagecount);
         echo (isset($groupselect) ? $groupselect : '')
            . html_writer::div('', 'clearer')
            . $OUTPUT->box_start('left-align');
@@ -409,5 +409,31 @@ class mod_sliclquestions_management_console
            . $OUTPUT->box_end()
            . $OUTPUT->footer();
         exit();
+    }
+
+
+
+
+    private function get_incomplete_users(&$context, $id, $group = false, $sort = '', $startpage = false, $pagecount = false)
+    {
+        global $DB;
+
+        if (!$allusers = get_users_by_capability($context, 'mod/sliclquestions:submit',
+                                                 'u.id,u.username', $sort, '', '',
+                                                 $group, '', true)) {
+            return false;
+        }
+        $allusers = array_keys($allusers);
+        $sql = 'SELECT DISTINCT userid FROM {sliclquestions_response}'
+             . ' WHERE survey_id=? AND complete=\'y\'';
+        if (!$completedusers = $DB->get_records_sql($sql, array($id))) {
+            return $allusers;
+        }
+        $completedusers = array_keys($completedusers);
+        $allusers       = array_diff($allusers, $completedusers);
+        if (($startpage !== false) && ($pagecount !== false)) {
+            $allusers = array_slice($allusers, $startpage, $pagecount);
+        }
+        return $allusers;
     }
 }
