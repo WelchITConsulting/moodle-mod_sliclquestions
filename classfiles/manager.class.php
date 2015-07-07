@@ -41,7 +41,7 @@ class mod_sliclquestions_management_console
     {
         if ($survey->questype == SLICLQUESTIONS_PUPILREGISTRATION) {
             $this->pupil_registration_statistics($survey, $course, $context, $url);
-        } elseif ($survey->questype == SLICLQUESTIONS_PUPILREGISTRATION) {
+        } elseif ($survey->questype == SLICLQUESTIONS_PUPILASSESSMENT) {
             $this->pupil_assessment_statistics($survey, $course, $context, $url);
         } elseif ($survey->questype == SLICLQUESTIONS_SURVEY) {
             $this->display_statistics();
