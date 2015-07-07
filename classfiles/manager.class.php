@@ -204,7 +204,7 @@ class mod_sliclquestions_management_console
             $assessed = (int)$DB->count_records_sql($sql, array($record->id, $survey->id, $record->sex));
 
             if (!array_key_exists($record->id, $data)) {
-                $data[$record->id] = array($record->firstname . ' ' . $record->lastname, 0, 0);
+                $data[$record->id] = array($record->firstname . ' ' . $record->lastname, '', '');
             }
             if ($record->sex == 'm') {
                 $data[$record->id][2]   = html_writer::tag('strong', $assessed, array('style' => 'color:#2fa4e7'))
