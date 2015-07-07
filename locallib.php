@@ -30,6 +30,8 @@ define('SLICLQUESTIONS_SURVEY', 1);
 define('SLICLQUESTIONS_PUPILREGISTRATION', 2);
 define('SLICLQUESTIONS_PUPILASSESSMENT', 3);
 
+define('SLICLQUESTIONS_DEFAULT_PER_PAGE', 25);
+
 global $sliclquestions_types;
 
 $sliclquestions_types = array(0                                => get_string('choosequestiontype', 'sliclquestions'),

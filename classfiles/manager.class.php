@@ -44,15 +44,182 @@ class mod_sliclquestions_management_console
         } elseif ($survey->questype == SLICLQUESTIONS_PUPILASSESSMENT) {
             $this->pupil_assessment_statistics($survey, $course, $context, $url);
         } elseif ($survey->questype == SLICLQUESTIONS_SURVEY) {
-            $this->display_statistics();
+            $this->display_statistics($course, $context, $survey, $url, $params);
         } else {
             notice(get_string('invalidquesttype', 'sliclquestions', $survey->questype), $url);
         }
     }
 
-    private function display_statistics()
+    private function display_statistics(&$course, &$context, &$survey, &$url, &$params)
     {
+        $showall        = optional_param('showall', false, PARAM_INT);
+        $currentgroupid = optional_param('grp', 0, PARAM_INT);
 
+        if (isset($survey->cm->groupmode) && empty($course->groupmodeforce)) {
+            $groupmode = $survey->cm->groupmode;
+        } else {
+            $groupmode = $course->groupmode;
+        }
+        $groupselect = groups_print_activity_menu($survey->cm, $url->out(), true);
+        $mygroupid   = groups_get_activity_group($survey->cm);
+        $baseurl     = new moodle_url('/mod/sliclquestions/view.php');
+        $baseurl->params(array('id'      => $survey->cm->id,
+                               'showall' => $showall));
+        $tablecolumns = array('userpic', 'fullname');
+        $extrafields  = get_extra_user_fields($context);
+        $tableheaders = array(get_string('userpic'), get_string('fullnameuser'));
+        if (in_array('email', $extrafields) || has_capability('moodle/course:viewhiddenuserfields', $context)) {
+            $tablecolumns[] = 'email';
+            $tableheaders[] = get_string('email');
+        }
+        if (!isset($hiddenfields['city'])) {
+            $tablecolumns[] = 'city';
+            $tableheaders[] = get_string('city');
+        }
+        if (!isset($hiddenfields['country'])) {
+            $tablecolumns[] = 'country';
+            $tableheaders[] = get_string('country');
+        }
+        if (!isset($hiddenfields['lastaccess'])) {
+            $tablecolumns[] = 'lastaccess';
+            $tableheaders[] = get_string('lastaccess');
+        }
+        if ($survey->capabilities->message) {
+            $tablecolumns[] = 'select';
+            $tableheaders[] = get_string('select');
+        }
+        $table = new flexible_table('sliclquestions-shownonrespondents-' . $course->id);
+        $table->define_columns($tablecolumns);
+        $table->define_headers($tableheaders);
+        $table->baseurl($baseurl);
+        $table->sortable(true, 'lastname', SORT_DESC);
+        $table->set_attribute('cellspacing', '0');
+        $table->set_attribute('id', 'showentrytable');
+        $table->set_attribute('class', 'flexible generaltable generalbox');
+        $table->set_control_variables(array(TABLE_VAR_SORT   => 'ssort',
+                                            TABLE_VAR_IFIRST => 'sifirst',
+                                            TABLE_VAR_ILAST  => 'silast',
+                                            TABLE_VAR_PAGE   => 'spage'));
+        $table->no_sorting('status');
+        $table->no_sorting('select');
+        $table->setup();
+        if ($table->get_sql_sort()) {
+            $sort = $table->get_sql_sort();
+        } else {
+            $sort = '';
+        }
+        if ($groupmode > 0) {
+            if ($mygroupid > 0) {
+                $usedgroupid = $mygroupid;
+            } else {
+                $usedgroupid = false;
+            }
+        } else {
+            $usedgroupid = false;
+        }
+        $nonrespondents      = $this->get_incomplete_users($survey->cm, $survey->id. $usedgroupid);
+        $countnonrespondents  = count($nonrespondents);
+        $table->initialbars(false);
+        if ($showall) {
+            $startpage = false;
+            $pagecount = false;
+        } else {
+            $table->pagesize($perpage, $countnonrespondents);
+            $startpage = $table->get_page_start();
+            $pagecount = $table->get_page_size();
+        }
+        $nonrespondents = $this->get_incomplete_users($survey->cm, $survey->id, $usedgroupid, $sort, $startpage, $pagecount);
+        echo (isset($groupselect) ? $groupselect : '')
+           . html_writer::div('', 'clearer')
+           . $OUTPUT->box_start('left-align');
+        if (!$nonrespondents) {
+            echo $OUTPUT->notification(get_string('noexistingparticipants', 'enrol'));
+        } else {
+            echo print_string('nonrespondents', 'sliclquestionnaire')
+               . ' ('
+               . $countnonrespondents
+               . ')'
+               . html_writer::start_tag('form', array('class'  => 'mform',
+                                                      'action' => '/mod/sliclquestions/view.php',
+                                                      'method' => 'post',
+                                                      'id'     => 'sliclquestions_sendmessageform'));
+            foreach($nonrespondents as $nonrespondent) {
+                $user = $DB->get_record('user', array('id' => $nonrespondent));
+                $profilelink = html_writer::start_tag('strong')
+                             . html_writer::tag('input',
+                                                fullname($user),
+                                                array('href' => $CFG->wwwroot
+                                                              . '/user/view.php?id='
+                                                              . $user->id
+                                                              . '&amp;course='
+                                                              . $course->id))
+                             . html_writer::end_tag('strong');
+                $data = array($OUTPUT->user_picture($user, array('courseid' => $course->id)),
+                              $profilelink);
+                if (in_array('email', $tablecolumns)) {
+                    $data[] = $user->email;
+                }
+                if (!isset($hiddenfields['city'])) {
+                    $data[] = $user->city;
+                }
+                $countries = get_string_manager()->get_list_of_countries();
+                if (!isset($hidddenfields['country'])) {
+                    $data[] = (!empty($user->country) ? $countries[$user->country] : '');
+                }
+                $datestring = new stdClass();
+                $datestring->year  = get_string('year');
+                $datestring->years = get_string('years');
+                $datestring->day   = get_string('day');
+                $datestring->days  = get_string('days');
+                $datestring->hour  = get_string('hour');
+                $datestring->hours = get_string('hours');
+                $datestring->min   = get_string('nin');
+                $datestring->mins  = get_string('mins');
+                $datestring->sec   = get_string('sec');
+                $datestring->secs  = get_string('secs');
+                if ($user->lastaccess) {
+                    $lastaccess = format_time(time() - $user->lastaccess, $datestring);
+                } else {
+                    $lastaccess = get_string('never');
+                }
+                $data[] = $lastaccess;
+                if ($survey->capabilities->message) {
+                    $data[] = html_writer::empty_tag('input', array('type'  => 'checkbox',
+                                                                    'class' => 'usercheckbox',
+                                                                    'name'  => 'messageuser[]',
+                                                                    'value' => $user->id,
+                                                                    'alt'   => ''));
+                }
+                $table->add_data($data);
+            }
+            echo html_writer::table($table);
+            $allurl = new moodle_url($baseurl);
+            if ($showall) {
+                $allurl->param('showall', 0);
+                echo $OUTPUT->container(html_writer::link($allurl,
+                                                          get_string('showperpage', '', SLICLQUESTIONS_DEFAULT_PER_PAGE)),
+                                        array(), 'showall');
+            } elseif (($countnonrespondents > 0) && ($perpage < $countnonrespondents)) {
+                $allurl->param('showall', 1);
+                echo $OUTPUT->container(html_writer::link($allurl,
+                                                          get_string('showall', '', $countnonrespondents)),
+                                        array(), 'showall');
+            }
+            if ($survey->capabilities->message) {
+                echo $OUPTPUT->box_start('mdl-align')
+                   . html_writer::start_div('buttons')
+                   . html_writer::empty_tag('input', array('type' => 'button',
+                                                           'id'   => 'checkall',
+                                                           'value' => get_string('selectall')))
+                   . html_writer::empty_tag('input', array('type' => 'button',
+                                                           'id'   => 'checknone',
+                                                           'value' => get_string('deselectall')))
+                   . html_writer::end_div()
+                   . $OUTPUT->box_end()
+                   . (($action == 'sendmessage') && !is_array($messageuser) ? $OUTPUT->notification(get_string('nouserselected', 'sliclquestions'))
+                                                                            : '');
+            }
+        }
     }
 
     private function get_non_respondents()

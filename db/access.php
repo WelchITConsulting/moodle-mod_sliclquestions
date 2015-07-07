@@ -223,15 +223,14 @@ $capabilities = array(
 //        )
 //    ),
 
-//    // Ability to message students from a questionnaire
-//    'mod/sliclquestions:message' => array(
-//        'riskbit'            => RISK_SPAM,
-//        'captype'            => 'write',
-//        'contextlevel'       => CONTEXT_MODULE,
-//        'archtypes'          => array(
-//            'teacher'        => CAP_ALLOW,
-//            'editingteacher' => CAP_ALLOW,
-//            'manager'        => CAP_ALLOW
-//        )
-//    )
+    // Ability to message students from a questionnaire
+    'mod/sliclquestions:message' => array(
+        'riskbit'            => RISK_SPAM,
+        'captype'            => 'write',
+        'contextlevel'       => CONTEXT_MODULE,
+        'archtypes'          => array(
+            'editingteacher' => CAP_ALLOW,
+            'manager'        => CAP_ALLOW
+        )
+    )
 );
