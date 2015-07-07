@@ -91,7 +91,7 @@ class mod_sliclquestions_management_console
         $table = new flexible_table('sliclquestions-shownonrespondents-' . $course->id);
         $table->define_columns($tablecolumns);
         $table->define_headers($tableheaders);
-        $table->baseurl($baseurl);
+        $table->define_baseurl($baseurl);
         $table->sortable(true, 'lastname', SORT_DESC);
         $table->set_attribute('cellspacing', '0');
         $table->set_attribute('id', 'showentrytable');
