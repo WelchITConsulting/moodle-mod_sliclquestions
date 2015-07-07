@@ -22,13 +22,14 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+require_once($CFG->dirroot . '/mod/sliclquestions/locallib.php');
 require_once($CFG->dirroot . '/mod/sliclquestions/classfiles/sliclquestions.class.php');
 
 class mod_sliclquestions_management_console
 {
     static private $_instance;
 
-    static public function get_instance($course, $context, $survey, $url, $params)
+    static public function get_instance(&$course, &$context, &$survey, &$url, &$params)
     {
         if (empty(self::$_instance)) {
             self::$_instance = new mod_sliclquestions_management_console($course, $context, $survey, $url, $params);
@@ -36,9 +37,17 @@ class mod_sliclquestions_management_console
         return self::$_instance;
     }
 
-    public function __construct($course, $context, $survey, $url, $params)
+    public function __construct(&$course, &$context, &$survey, &$url, &$params)
     {
-//        echo "Management Console";
+        if ($survey->questtype == SLICLQUESTIONS_PUPILREGISTRATION) {
+            $this->pupil_registration_statistics($survey, $course, $context, $url);
+        } elseif ($survey->questtype == SLICLQUESTIONS_PUPILREGISTRATION) {
+            $this->pupil_assessment_statistics($survey, $course, $context, $url);
+        } elseif ($survey->questtype == SLICLQUESTIONS_SURVEY) {
+            $this->display_statistics();
+        } else {
+            notice(get_text('invalidquesttype', 'sliclquestions'), $url);
+        }
     }
 
     private function display_statistics()
@@ -54,6 +63,7 @@ class mod_sliclquestions_management_console
     private function pupil_registration_statistics(&$survey, &$course, $context, $url)
     {
         global $CFG, $DB, $OUTPUT;
+
         $sort  = optional_param('s', 'lastname', PARAM_ALPHA);
         $order = optional_param('o', 'ASC', PARAM_ALPHA);
         $firstnamesort = array('s' => 'firstname');
@@ -134,5 +144,6 @@ class mod_sliclquestions_management_console
            . html_writer::table($table)
            . $OUTPUT->box_end()
            . $OUTPUT->footer();
+        exit();
     }
 }
