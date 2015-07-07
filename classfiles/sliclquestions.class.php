@@ -232,7 +232,7 @@ class sliclquestions
 //            $cb->readownresponses        = has_capability('mod/sliclquestions:readownresponses', $this->context);
 //            $cb->readallresponses        = has_capability('mod/sliclquestions:readallresponses', $this->context);
 //            $cb->readallresponsesanytime = has_capability('mod/sliclquestions:readallresponsesanytime', $this->context);
-            $cb->message                 = has_capability('mod/sliclquestions:message', $context);
+            $cb->message                 = has_capability('mod/sliclquestions:message', $this->context);
 
             $cb->viewhiddenactivities    = has_capability('moodle/course:viewhiddenactivities', $this->context);
         }
