@@ -134,8 +134,7 @@ class mod_sliclquestions_management_console
                                     ($totalfemales + $totalmales));
 
         // Output the list of pupils
-        echo $OUTPUT->header()
-           . $survey->render_page_header()
+        echo $survey->render_page_header()
            . $OUTPUT->box_start('generalbox center clearfix')
            . html_writer::tag('p', get_string('stats_content', 'sliclquestions'))
            . html_writer::start_div('slicl-registered-pupils')
