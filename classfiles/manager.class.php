@@ -220,7 +220,7 @@ class mod_sliclquestions_management_console
                                                            'value' => get_string('deselectall')))
                    . html_writer::end_div()
                    . $OUTPUT->box_end()
-                   . (($action == 'sendmessage') && !is_array($messageuser) ? $OUTPUT->notification(get_string('nouserselected', 'sliclquestions'))
+                   . (($params['action'] == 'sendmessage') && !is_array($messageuser) ? $OUTPUT->notification(get_string('nouserselected', 'sliclquestions'))
                                                                             : '');
             }
         }
