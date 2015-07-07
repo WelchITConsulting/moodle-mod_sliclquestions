@@ -46,13 +46,13 @@ class mod_sliclquestions_management_console
         } elseif ($survey->questype == SLICLQUESTIONS_SURVEY) {
             $this->display_statistics($course, $context, $survey, $url, $params);
         } else {
-            notice(get_string('invalidquesttype', 'sliclquestions', $survey->questype), $url);
+            notice(get_string('invalidquesttype', 'sliclquestions'), $url);
         }
     }
 
     private function display_statistics(&$course, &$context, &$survey, &$url, &$params)
     {
-        global $OUTPUT;
+        global $DB, $OUTPUT;
 
         $showall        = optional_param('showall', false, PARAM_INT);
         $currentgroupid = optional_param('grp', 0, PARAM_INT);
@@ -132,7 +132,8 @@ class mod_sliclquestions_management_console
             $pagecount = $table->get_page_size();
         }
         $nonrespondents = $this->get_incomplete_users($context, $survey->id, $usedgroupid, $sort, $startpage, $pagecount);
-        echo (isset($groupselect) ? $groupselect : '')
+        echo $survey->render_page_header()
+           . (isset($groupselect) ? $groupselect : '')
            . html_writer::div('', 'clearer')
            . $OUTPUT->box_start('left-align');
         if (!$nonrespondents) {

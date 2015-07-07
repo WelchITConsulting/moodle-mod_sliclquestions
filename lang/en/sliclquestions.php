@@ -47,7 +47,7 @@ $string['event_previed_desc']                       = 'The user with id \'$d\' p
 $string['female']                                   = 'Female';
 $string['finished']                                 = 'You have answered all the questions in this questionnaire!';
 
-$string['invalidquesttype']                         = 'Invalid questionnaire type code: {$a}';
+$string['invalidquesttype']                         = 'Invalid questionnaire type code';
 
 $string['kpilevel']                                 = 'KPI level';
 $string['kpi1']                                     = 'KPI level 1 questions';
@@ -67,6 +67,7 @@ $string['modulenameplural']                         = 'SLiCL Questionnaires';
 $string['name']                                     = 'Questionnaire Name';
 $string['nextpage']                                 = 'Next Page';
 $string['noneinuse']                                = 'This questionnaire does not contain any questions.';
+$string['nonrespondents']                           = 'Users who have not yet submitted their responses to this questionnaire';
 $string['nonzeroerror']                             = 'You must select the type of survey to create';
 $string['noregisters']                              = 'You must create a pupil regoster before creating a pupil assessment';
 $string['notapplicable']                            = 'N/A';
@@ -369,7 +370,6 @@ $string['wrongformats']                             = 'There is something wrong 
 //$string['noduplicates']                             = 'No duplicate choices';
 //$string['noduplicateschoiceserror']                 = 'You must enter at least 2 Possible answers for the "No duplicate choices" option!';
 //$string['notenoughscaleitems']                      = 'You must enter a minimum value of 2 scale items!';
-//$string['non_respondents']                          = 'Users who have not yet submitted their responses to this questionnaire';
 //$string['nopublicsurveys']                          = 'No public questionnaires.';
 //$string['noresponsedata']                           = 'No responses for this question.';
 //$string['noresponses']                              = 'No responses';
