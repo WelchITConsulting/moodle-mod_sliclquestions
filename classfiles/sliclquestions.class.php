@@ -20,6 +20,7 @@
  * Created  : 25 Jun 2015
  */
 
+require_once($CFG->libdir . '/tablelib.php');
 require_once($CFG->dirroot . '/mod/sliclquestions/classfiles/question.class.php');
 require_once($CFG->dirroot . '/mod/sliclquestions/classfiles/student.class.php');
 
