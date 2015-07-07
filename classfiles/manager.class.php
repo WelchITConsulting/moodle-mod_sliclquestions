@@ -201,21 +201,21 @@ class mod_sliclquestions_management_console
             $sql = 'SELECT COUNT(r.id) AS assessed'
                  . ' FROM {sliclquestions_response} r, {sliclquestions_students} s'
                  . ' WHERE s.id=r.pupilid AND s.deleteflag=0 AND r.userid=? AND r.survey_id=? AND s.sex=?';
-            $assessed = $DB->count_records_sql($sql, array($record->id, $survey->id, $record->sex));
+            $assessed = (int)$DB->count_records_sql($sql, array($record->id, $survey->id, $record->sex));
 
             if (!array_key_exists($record->id, $data)) {
                 $data[$record->id] = array($record->firstname . ' ' . $record->lastname, 0, 0);
             }
             if ($record->sex == 'm') {
-                $data[$record->id][2]   = html_writer::tag('strong', $assessed->numrec)
+                $data[$record->id][2]   = html_writer::tag('strong', $assessed)
                                         . '(' .$record->numrec . ')';
                 $totalmales             += $record->numrec;
-                $totalassessedmales     += $assessed->numrec;
+                $totalassessedmales     += $assessed;
             } elseif ($record->sex == 'f') {
-                $data[$record->id][1]   = html_writer::tag('strong', $assessed->numrec)
+                $data[$record->id][1]   = html_writer::tag('strong', $assessed)
                                         . '(' .$record->numrec . ')';
                 $totalfemales           += $record->numrec;
-                $totalassessedfemales   += $assessed->numrec;
+                $totalassessedfemales   += $assessed;
             }
         }
         $table->data = $data;
