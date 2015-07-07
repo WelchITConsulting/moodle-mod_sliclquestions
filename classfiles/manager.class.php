@@ -52,8 +52,11 @@ class mod_sliclquestions_management_console
 
     private function display_statistics(&$course, &$context, &$survey, &$url, &$params)
     {
+        global $OUTPUT;
+
         $showall        = optional_param('showall', false, PARAM_INT);
         $currentgroupid = optional_param('grp', 0, PARAM_INT);
+        $perpage        = optional_param('perpage', SLICLQUESTIONS_DEFAULT_PER_PAGE, PARAM_INT);
 
         if (isset($survey->cm->groupmode) && empty($course->groupmodeforce)) {
             $groupmode = $survey->cm->groupmode;
