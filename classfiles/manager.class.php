@@ -173,8 +173,10 @@ class mod_sliclquestions_management_console
                              get_string('pupilsfemale', 'sliclquestions'),
                              get_string('pupilsmale', 'sliclquestions'));
         $table->align = array('left', 'center', 'center');
-        $totalmales = 0;
-        $totalfemales = 0;
+        $totalmales           = 0;
+        $totalassessedmales   = 0;
+        $totalfemales         = 0;
+        $totalassessedfemales = 0;
         $sql = 'SELECT DISTINCT CONCAT(ce.id,sr.sex) AS ind, ce.id, ce.firstname, ce.lastname, sr.sex, count(*) AS numrec'
              . ' FROM (SELECT u.id, u.firstname, u.lastname FROM {user} u, {role_assignments} ra,'
              . ' {role} r WHERE u.id = ra.userid AND ra.roleid = r.id'
@@ -196,15 +198,24 @@ class mod_sliclquestions_management_console
                                                     $context->id));
         $data = array();
         foreach($results as $record) {
+            $sql = 'SELECT COUNT(r.id) AS assessed'
+                 . ' FROM {sliclquestions_response} r, {sliclquestions_students s'
+                 . ' WHERE s.id=r.pupilid AND s.deleteflag=0 AND s.teacher_id=? AND r.survey_id=? AND s.sex=?';
+            $assessed = $DB->count_records_sql($sql, array($record->id, $survey->id, $record->sex));
+
             if (!array_key_exists($record->id, $data)) {
                 $data[$record->id] = array($record->firstname . ' ' . $record->lastname, 0, 0);
             }
             if ($record->sex == 'm') {
-                $data[$record->id][2] = $record->numrec;
-                $totalmales += $record->numrec;
+                $data[$record->id][2]   = html_writer::tag('strong', $assessed->numrec)
+                                        . '(' .$record->numrec . ')';
+                $totalmales             += $record->numrec;
+                $totalassessedmales     += $assessed->numrec;
             } elseif ($record->sex == 'f') {
-                $data[$record->id][1] = $record->numrec;
-                $totalfemales += $record->numrec;
+                $data[$record->id][1]   = html_writer::tag('strong', $assessed->numrec)
+                                        . '(' .$record->numrec . ')';
+                $totalfemales           += $record->numrec;
+                $totalassessedfemales   += $assessed->numrec;
             }
         }
         $table->data = $data;
@@ -215,9 +226,10 @@ class mod_sliclquestions_management_console
                                     get_string('pupilstotal', 'sliclquestions'));
         $totaltable->align  = array('left', 'center', 'center', 'center');
         $totaltable->data[] = array(get_string('pupilsregistered', 'sliclquestions'),
-                                    $totalfemales,
-                                    $totalmales,
-                                    ($totalfemales + $totalmales));
+                                    html_writer::tag('strong', $totalassessedfemales) . '(' . $totalfemales . ')',
+                                    html_writer::tag('strong', $totalassessedmales) . '(' . $totalmales . ')',
+                                    html_writer::tag('strong', ($totalassessedfemales + $totalassessedmales))
+                                    . '(' . ($totalfemales + $totalmales) . ')');
 
         // Output the list of pupils
         echo $survey->render_page_header()
