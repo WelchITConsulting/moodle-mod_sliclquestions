@@ -52,7 +52,7 @@ class mod_sliclquestions_management_console
 
     private function display_statistics(&$course, &$context, &$survey, &$url, &$params)
     {
-        global $DB, $OUTPUT;
+        global $DB, $CFG, $OUTPUT;
 
         $showall        = optional_param('showall', false, PARAM_INT);
         $currentgroupid = optional_param('grp', 0, PARAM_INT);
@@ -139,7 +139,7 @@ class mod_sliclquestions_management_console
         if (!$nonrespondents) {
             echo $OUTPUT->notification(get_string('noexistingparticipants', 'enrol'));
         } else {
-            echo print_string('nonrespondents', 'sliclquestionnaire')
+            echo print_string('nonrespondents', 'sliclquestions')
                . ' ('
                . $countnonrespondents
                . ')'
@@ -177,7 +177,7 @@ class mod_sliclquestions_management_console
                 $datestring->days  = get_string('days');
                 $datestring->hour  = get_string('hour');
                 $datestring->hours = get_string('hours');
-                $datestring->min   = get_string('nin');
+                $datestring->min   = get_string('min');
                 $datestring->mins  = get_string('mins');
                 $datestring->sec   = get_string('sec');
                 $datestring->secs  = get_string('secs');
@@ -196,7 +196,7 @@ class mod_sliclquestions_management_console
                 }
                 $table->add_data($data);
             }
-            echo html_writer::table($table);
+            $table->print_html();
             $allurl = new moodle_url($baseurl);
             if ($showall) {
                 $allurl->param('showall', 0);
