@@ -208,12 +208,12 @@ class mod_sliclquestions_management_console
             }
             if ($record->sex == 'm') {
                 $data[$record->id][2]   = html_writer::tag('strong', $assessed)
-                                        . '(' .$record->numrec . ')';
+                                        . ' (' .$record->numrec . ')';
                 $totalmales             += $record->numrec;
                 $totalassessedmales     += $assessed;
             } elseif ($record->sex == 'f') {
                 $data[$record->id][1]   = html_writer::tag('strong', $assessed)
-                                        . '(' .$record->numrec . ')';
+                                        . ' (' .$record->numrec . ')';
                 $totalfemales           += $record->numrec;
                 $totalassessedfemales   += $assessed;
             }
@@ -226,10 +226,10 @@ class mod_sliclquestions_management_console
                                     get_string('pupilstotal', 'sliclquestions'));
         $totaltable->align  = array('left', 'center', 'center', 'center');
         $totaltable->data[] = array(get_string('pupilsregistered', 'sliclquestions'),
-                                    html_writer::tag('strong', $totalassessedfemales) . '(' . $totalfemales . ')',
-                                    html_writer::tag('strong', $totalassessedmales) . '(' . $totalmales . ')',
+                                    html_writer::tag('strong', $totalassessedfemales) . ' (' . $totalfemales . ')',
+                                    html_writer::tag('strong', $totalassessedmales) . ' (' . $totalmales . ')',
                                     html_writer::tag('strong', ($totalassessedfemales + $totalassessedmales))
-                                    . '(' . ($totalfemales + $totalmales) . ')');
+                                    . ' (' . ($totalfemales + $totalmales) . ')');
 
         // Output the list of pupils
         echo $survey->render_page_header()
