@@ -225,10 +225,10 @@ class mod_sliclquestions_management_console
                                     get_string('pupilsmale', 'sliclquestions'),
                                     get_string('pupilstotal', 'sliclquestions'));
         $totaltable->align  = array('left', 'center', 'center', 'center');
-        $totaltable->data[] = array(get_string('pupilsregistered', 'sliclquestions'),
+        $totaltable->data[] = array(get_string('pupilsassessed', 'sliclquestions'),
                                     html_writer::tag('strong', $totalassessedfemales, array('style' => 'color:#2fa4e7')) . ' (' . $totalfemales . ')',
                                     html_writer::tag('strong', $totalassessedmales, array('style' => 'color:#2fa4e7')) . ' (' . $totalmales . ')',
-                                    html_writer::tag('strong', ($totalassessedfemales + $totalassessedmales))
+                                    html_writer::tag('strong', ($totalassessedfemales + $totalassessedmales), array('style' => 'color:#2fa4e7'))
                                     . ' (' . ($totalfemales + $totalmales) . ')');
 
         // Output the list of pupils
