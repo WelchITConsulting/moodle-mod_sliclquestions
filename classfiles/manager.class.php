@@ -199,7 +199,7 @@ class mod_sliclquestions_management_console
         $data = array();
         foreach($results as $record) {
             $sql = 'SELECT COUNT(r.id) AS assessed'
-                 . ' FROM {sliclquestions_response} r, {sliclquestions_students s'
+                 . ' FROM {sliclquestions_response} r, {sliclquestions_students} s'
                  . ' WHERE s.id=r.pupilid AND s.deleteflag=0 AND r.userid=? AND r.survey_id=? AND s.sex=?';
             $assessed = $DB->count_records_sql($sql, array($record->id, $survey->id, $record->sex));
 
