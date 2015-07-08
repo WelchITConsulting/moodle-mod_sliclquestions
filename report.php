@@ -52,7 +52,7 @@ if ($id) {
     print_error('missingparameter');
 }
 require_course_login($course, true, $cm);
-$survey = new sliclquestions(0, $survey, $course, $cm);
+$survey = new sliclquestions($course, $cm, 0, $survey);
 
 $context = context_module::instance($cm->id);
 $PAGE->set_context($context);
