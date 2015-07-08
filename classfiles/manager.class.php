@@ -50,11 +50,46 @@ class mod_sliclquestions_management_console
         }
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private function display_statistics(&$course, &$context, &$survey, &$url, &$params)
     {
-//        global $DB;
+        global $OUTPUT;
+
+        echo $survey->render_page_header()
+           . $OUTPUT->footer();
+        exit();
+    }
+
+    private function show_response(&$uid, &$survey)
+    {
+//        global $OUPTUT, $PAGE;
 //
-//
+//        $user = $DB->get_record('user', array('id' => $uid));
+//        $sql = 'SELECT r.id AS rid, r.userid AS uid, '
+//        $response = $DB->get_record_sql('sliclquestions_response')
+//        $PAGE->set_pagelayout('popup');
+//        echo $OUTPUT->header()
+//           . $OUTPUT->box_start('sliclquestions-quote')
+//           . html_writer::start_div('quote')
+//           . html_writer::tag('h2', fullname($user))
+//           . html_writer::end_div()
+//           . html_writer::start_div('quoted-text')
+//           . html_writer::end_div()
+//           . $OUTPUT->box_end()
+//           . $OUTPUT->footer();
 //    }
 //
 //    private function show_non_respondents()
@@ -66,6 +101,7 @@ class mod_sliclquestions_management_console
         $perpage        = optional_param('perpage', SLICLQUESTIONS_DEFAULT_PER_PAGE, PARAM_INT);
         $subject        = optional_param('subject', '', PARAM_CLEANHTML);
         $message        = optional_param('message', '', PARAM_CLEANHTML);
+        $messageuser    = optional_param('messageuser', false, PARAM_INT);
         if (!isset($params['act'])) {
             $params['act'] = '';
         }
@@ -231,7 +267,7 @@ class mod_sliclquestions_management_console
                                                            'value' => get_string('deselectall')))
                    . html_writer::end_div()
                    . $OUTPUT->box_end()
-                   . (($params['act'] == 'sendmessage') && !is_array($messageuser) ? $OUTPUT->notification(get_string('nouserselected', 'sliclquestions'))
+                   . (($params['act'] == 'sendmessage') && !is_array($messageuser) ? $OUTPUT->notification(get_string('nousersselected', 'sliclquestions'))
                                                                                    : '');
             }
         }
