@@ -23,10 +23,11 @@
 require_once('../../config.php');
 require_once($CFG->dirroot . '/mod/sliclquestions/classfiles/sliclquestions.class.php');
 
-$id   = optional_param('id', false, PARAM_INT);     //
-$sid  = optional_param('sid', false, PARAM_INT);    // SLiCL Questions ID
-$act  = optional_param('act', 'vall', PARAM_ALPHA); // Action to perform
-$rid  = optional_param('rid', false, PARAM_INT);    // Response ID
+$id             = optional_param('id', false, PARAM_INT);       //
+$sid            = optional_param('sid', false, PARAM_INT);      // SLiCL Questions ID
+$act            = optional_param('act', 'vall', PARAM_ALPHA);   // Action to perform
+$rid            = optional_param('rid', false, PARAM_INT);      // Response ID
+$currentgroupid = optional_param('group', 0, PARAM_INT);        // Group
 
 if ($id) {
     if (!$cm = get_coursemodule_from_id('sliclquestions', $id)) {
