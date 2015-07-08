@@ -259,9 +259,9 @@ class mod_sliclquestions_management_console
                . html_writer::tag('legend',
                                   get_string('sendmessage', 'sliclquestions'),
                                   array('class' => 'ftoggler'))
-               . html_writer::tag('input', array('type' => 'hidden',
-                                                 'name' => 'format',
-                                                 'value' => FORMAT_HTML))
+               . html_writer::empty_tag('input', array('type' => 'hidden',
+                                                       'name' => 'format',
+                                                       'value' => FORMAT_HTML))
                . html_writer::table($table)
                . $OUTPUT->box_start('mdl-left')
                . html_writer::start_div('buttons')
