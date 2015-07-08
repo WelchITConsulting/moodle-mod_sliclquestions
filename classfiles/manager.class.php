@@ -64,8 +64,8 @@ class mod_sliclquestions_management_console
         $showall        = optional_param('showall', false, PARAM_INT);
         $currentgroupid = optional_param('grp', 0, PARAM_INT);
         $perpage        = optional_param('perpage', SLICLQUESTIONS_DEFAULT_PER_PAGE, PARAM_INT);
-        $subject        = optional_param('subject', '', CLEAN_HTML);
-        $message        = optional_param('message', '', CLEAN_HTML);
+        $subject        = optional_param('subject', '', PARAM_CLEANHTML);
+        $message        = optional_param('message', '', PARAM_CLEANHTML);
         if (!isset($params['act'])) {
             $params['act'] = '';
         }
@@ -244,7 +244,7 @@ class mod_sliclquestions_management_console
                                                                                         'cols' => '60')));
             $table = new html_table();
             $table->align = array('left', 'left');
-            $table->data[] = array(html_writer::tag('strong', get_string('subject', 'sliclquestionnaire')),
+            $table->data[] = array(html_writer::tag('strong', get_string('subject', 'sliclquestions')),
                                    html_writer::empty_tag('input', array('type'      => 'text',
                                                                          'id'        => 'sliclquestions_subject',
                                                                          'name'      => 'subject',
@@ -267,7 +267,7 @@ class mod_sliclquestions_management_console
                . html_writer::start_div('buttons')
                . html_writer::empty_tag('input', array('type'  => 'submit',
                                                        'name'  => 'send_message',
-                                                       'value' => get_text('send', 'sliclquestions')))
+                                                       'value' => get_string('send', 'sliclquestions')))
                . html_writer::end_div()
                . $OUTPUT->box_end()
                . html_writer::empty_tag('input', array('type'  => 'hidden',
