@@ -231,7 +231,8 @@ class mod_sliclquestions_management_console
                                                                             : '');
             }
         }
-        echo $OUTPUT->footer();
+        echo $OUTPUT->box_end()
+           . $OUTPUT->footer();
         exit();
     }
 
