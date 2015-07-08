@@ -28,6 +28,7 @@ $capabilities = array(
         'captype'            => 'write',
         'contextlevel'       => CONTEXT_COURSE,
         'archetypes'         => array(
+            'editingteacher' => CAP_ALLOW,
             'manager'        => CAP_ALLOW
         ),
         'clonepermissionsfrom' => 'moodle/course:manageactivities'
@@ -137,6 +138,7 @@ $capabilities = array(
         'captype'            => 'read',
         'contextlevel'       => CONTEXT_MODULE,
         'legacy'             => array(
+            'editingteacher' => CAP_ALLOW,
             'manager'        => CAP_ALLOW
         )
     ),
@@ -146,6 +148,7 @@ $capabilities = array(
         'captype'            => 'write',
         'contextlevel'       => CONTEXT_MODULE,
         'legacy'             => array(
+            'editingteacher' => CAP_ALLOW,
             'manager'        => CAP_ALLOW
         )
     ),
@@ -155,28 +158,10 @@ $capabilities = array(
         'captype'            => 'write',
         'contextlevel'       => CONTEXT_MODULE,
         'legacy'             => array(
+            'editingteacher' => CAP_ALLOW,
             'manager'        => CAP_ALLOW
         )
     ),
-
-//    // Ability to create template questionnaires which can be copied, but not used
-//    'mod/sliclquestions:createtemplates' => array(
-//        'captype'            => 'write',
-//        'contextlevel'       => CONTEXT_MODULE,
-//        'legacy'             => array(
-//            'manager'        => CAP_ALLOW
-//        )
-//    ),
-//
-//    // Ability to create public surveys which can be accessed from multiple places
-//    'mod/sliclquestions:createpublic' => array(
-//        'captype'            => 'write',
-//        'contextlevel'       => CONTEXT_MODULE,
-//        'legacy'             => array(
-//            'coursecreator'  => CAP_ALLOW,
-//            'manager'        => CAP_ALLOW
-//        )
-//    ),
 
     // Ability to read others previous responses to a questionnaire
     // Subject to the constraints on whether reponses can be viewed whilst the
@@ -185,6 +170,7 @@ $capabilities = array(
         'captype'            => 'read',
         'contextlevel'       => CONTEXT_MODULE,
         'legacy'             => array(
+            'editingteacher' => CAP_ALLOW,
             'manager'        => CAP_ALLOW
         )
     ),
@@ -201,15 +187,6 @@ $capabilities = array(
             'manager'        => CAP_ALLOW
         )
     ),
-
-//    // Ability to read others responses without the above checks
-//    'mod/sliclquestions:readallresponseanytime' => array(
-//        'captype'            => 'read',
-//        'contextlevel'       => CONTEXT_MODULE,
-//        'legacy'             => array(
-//            'manager'        => CAP_ALLOW
-//        )
-//    ),
 
     // Ability to message students from a questionnaire
     'mod/sliclquestions:message' => array(
