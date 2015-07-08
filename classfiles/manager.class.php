@@ -52,6 +52,13 @@ class mod_sliclquestions_management_console
 
     private function display_statistics(&$course, &$context, &$survey, &$url, &$params)
     {
+//        global $DB;
+//
+//
+//    }
+//
+//    private function show_non_respondents()
+//    {
         global $DB, $CFG, $OUTPUT;
 
         $showall        = optional_param('showall', false, PARAM_INT);
@@ -220,17 +227,12 @@ class mod_sliclquestions_management_console
                                                            'value' => get_string('deselectall')))
                    . html_writer::end_div()
                    . $OUTPUT->box_end()
-                   . (($params['action'] == 'sendmessage') && !is_array($messageuser) ? $OUTPUT->notification(get_string('nouserselected', 'sliclquestions'))
+                   . (($params['act'] == 'sendmessage') && !is_array($messageuser) ? $OUTPUT->notification(get_string('nouserselected', 'sliclquestions'))
                                                                             : '');
             }
         }
         echo $OUTPUT->footer();
         exit();
-    }
-
-    private function get_non_respondents()
-    {
-
     }
 
     private function pupil_registration_statistics(&$survey, &$course, $context, $url)
@@ -431,7 +433,7 @@ class mod_sliclquestions_management_console
         }
         $allusers = array_keys($allusers);
         $sql = 'SELECT DISTINCT userid FROM {sliclquestions_response}'
-             . ' WHERE survey_id=? AND complete=\'y\'';
+             . ' WHERE survey_id=?';
         if (!$completedusers = $DB->get_records_sql($sql, array($id))) {
             return $allusers;
         }
@@ -441,5 +443,29 @@ class mod_sliclquestions_management_console
             $allusers = array_slice($allusers, $startpage, $pagecount);
         }
         return $allusers;
+    }
+
+    private function get_creative_enquirers($context, $id, $group = false, $sort = '', $startpage = false, $pagecount = false)
+    {
+        global $DB;
+
+        $sql = 'SELECT u.id, u.firstname, u.lastname FROM {user} u, {role_assignments} ra,'
+             . ' {role} r WHERE u.id = ra.userid AND ra.roleid = r.id'
+             . ' AND r.shortname=? AND ra.contextid=?';
+        if (!$ces = $DB->get_records_sql($sql, array('sbenquirer', $context->id))) {
+            return false;
+        }
+        $ces = array_keys($ces);
+        $sql = 'SELECT DISTINCT userid FROM {sliclquestions_response}'
+             . ' WHERE survey_id=?';
+        if (!$completed = $DB->get_records_sql($sql, array($id))) {
+            return $ces;
+        }
+        $completed = array_keys($completed);
+        $ces       = array_diff($ces, $completed);
+        if (($startpage !== false) && ($pagecount !== false)) {
+            $ces = array_slice($ces, $startpage, $pagecount);
+        }
+        return $ces;
     }
 }
