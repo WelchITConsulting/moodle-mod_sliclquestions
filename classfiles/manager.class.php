@@ -101,7 +101,7 @@ class mod_sliclquestions_management_console
         $perpage        = optional_param('perpage', SLICLQUESTIONS_DEFAULT_PER_PAGE, PARAM_INT);
         $subject        = optional_param('subject', '', PARAM_CLEANHTML);
         $message        = optional_param('message', '', PARAM_CLEANHTML);
-        $messageuser    = optional_param('messageuser', false, PARAM_INT);
+        $messageuser    = optional_param_array('messageuser', false, PARAM_INT);
         if (!isset($params['act'])) {
             $params['act'] = '';
         }
