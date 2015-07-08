@@ -59,12 +59,16 @@ class mod_sliclquestions_management_console
 //
 //    private function show_non_respondents()
 //    {
-        global $DB, $CFG, $OUTPUT;
+        global $DB, $CFG, $PAGE, $OUTPUT;
 
         $showall        = optional_param('showall', false, PARAM_INT);
         $currentgroupid = optional_param('grp', 0, PARAM_INT);
         $perpage        = optional_param('perpage', SLICLQUESTIONS_DEFAULT_PER_PAGE, PARAM_INT);
-
+        $subject        = optional_param('subject', '', CLEAN_HTML);
+        $message        = optional_param('message', '', CLEAN_HTML);
+        if (!isset($params['act'])) {
+            $params['act'] = '';
+        }
         if (isset($survey->cm->groupmode) && empty($course->groupmodeforce)) {
             $groupmode = $survey->cm->groupmode;
         } else {
@@ -227,10 +231,61 @@ class mod_sliclquestions_management_console
                                                            'value' => get_string('deselectall')))
                    . html_writer::end_div()
                    . $OUTPUT->box_end()
-. '<pre>' . print_r($params, true) . '</pre>'
                    . (($params['act'] == 'sendmessage') && !is_array($messageuser) ? $OUTPUT->notification(get_string('nouserselected', 'sliclquestions'))
-                                                                            : '');
+                                                                                   : '');
             }
+        }
+        if ($survey->capabilities->message) {
+            $editor = editors_get_preferred_editor();
+            $editor->use_editor('message_id', sliclquestions_editor_options($context));
+            $texteditor = html_writer::div(html_writer::tag('textarea', $message, array('id'   => 'message_id',
+                                                                                        'name' => 'message',
+                                                                                        'rows' => '10',
+                                                                                        'cols' => '60')));
+            $table = new html_table();
+            $table->align = array('left', 'left');
+            $table->data[] = array(html_writer::tag('strong', get_string('subject', 'sliclquestionnaire')),
+                                   html_writer::empty_tag('input', array('type'      => 'text',
+                                                                         'id'        => 'sliclquestions_subject',
+                                                                         'name'      => 'subject',
+                                                                         'size'      => '65',
+                                                                         'maxlength' => '255',
+                                                                         'value'     => $subject)));
+            $table->data[] = array(html_writer::tag('strong', get_string('messagebody')),
+                                   $texteditor);
+            echo html_writer::start_tag('fieldset', array('class' => 'clearfix'))
+               . (($params['act'] == 'sendmessage') && (empty($subject) || empty($message)) ? $OUTPUT->notification(get_string('allfieldsrequired'))
+                                                                                            : '')
+               . html_writer::tag('legend',
+                                  get_string('sendmessage', 'sliclquestions'),
+                                  array('class' => 'ftoggler'))
+               . html_writer::tag('input', array('type' => 'hidden',
+                                                 'name' => 'format',
+                                                 'value' => FORMAT_HTML))
+               . html_writer::table($table)
+               . $OUTPUT->box_start('mdl-left')
+               . html_writer::start_div('buttons')
+               . html_writer::empty_tag('input', array('type'  => 'submit',
+                                                       'name'  => 'send_message',
+                                                       'value' => get_text('send', 'sliclquestions')))
+               . html_writer::end_div()
+               . $OUTPUT->box_end()
+               . html_writer::empty_tag('input', array('type'  => 'hidden',
+                                                       'name'  => 'sesskey',
+                                                       'value' => sesskey()))
+               . html_writer::empty_tag('input', array('type'  => 'hidden',
+                                                       'name'  => 'act',
+                                                       'value' => 'sendmessage'))
+               . html_writer::empty_tag('input', array('type'  => 'hidden',
+                                                       'name'  => 'id',
+                                                       'value' => $survey->cm->id))
+               . html_writer::end_tag('fieldset')
+               . html_writer::end_tag('form');
+            $PAGE->requires->js_init_call('M.mod_sliclquestions.init_sendmessage',
+                                          null,
+                                          false,
+                                          array('name'     => 'mod_sliclquestions',
+                                                'fullpath' => '/mod/sliclquestions/module.js'));
         }
         echo $OUTPUT->box_end()
            . $OUTPUT->footer();
