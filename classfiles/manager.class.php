@@ -66,15 +66,15 @@ class mod_sliclquestions_management_console
 
     private function display_statistics(&$course, &$context, &$survey, &$url, &$params)
     {
-        global $OUTPUT;
-
-        echo $survey->render_page_header()
-           . $OUTPUT->footer();
-        exit();
-    }
-
-    private function show_response(&$uid, &$survey)
-    {
+//        global $OUTPUT;
+//
+//        echo $survey->render_page_header()
+//           . $OUTPUT->footer();
+//        exit();
+//    }
+//
+//    private function show_response(&$uid, &$survey)
+//    {
 //        global $OUPTUT, $PAGE;
 //
 //        $user = $DB->get_record('user', array('id' => $uid));
