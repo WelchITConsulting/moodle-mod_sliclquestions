@@ -224,14 +224,13 @@ class sliclquestions
             $cb->registerpupils          = has_capability('mod/sliclquestions:registerpupils', $this->context);
             $cb->viewstatistics          = has_capability('mod/sliclquestions:viewstatistics', $this->context);
 //            $cb->viewsingleresponse      = has_capability('mod/sliclquestions:viewsingleresponse', $this->context);
-//            $cb->downloadresponses       = has_capability('mod/sliclquestions:downloadresponses', $this->context);
-//            $cb->deleteresponses         = has_capability('mod/sliclquestions:deleteresponses', $this->context);
-//            $cb->manage                  = has_capability('mod/sliclquestions:readallresponses', $this->context);
+            $cb->downloadresponses       = has_capability('mod/sliclquestions:downloadresponses', $this->context);
+            $cb->deleteresponses         = has_capability('mod/sliclquestions:deleteresponses', $this->context);
             $cb->editquestions           = has_capability('mod/sliclquestions:editquestions', $this->context);
 //            $cb->createtemplates         = has_capability('mod/sliclquestions:createtemplates', $this->context);
 //            $cb->createpublic            = has_capability('mod/sliclquestions:createpublic', $this->context);
-//            $cb->readownresponses        = has_capability('mod/sliclquestions:readownresponses', $this->context);
-//            $cb->readallresponses        = has_capability('mod/sliclquestions:readallresponses', $this->context);
+            $cb->viewownresponses        = has_capability('mod/sliclquestions:viewownresponses', $this->context);
+            $cb->viewallresponses        = has_capability('mod/sliclquestions:viewallresponses', $this->context);
 //            $cb->readallresponsesanytime = has_capability('mod/sliclquestions:readallresponsesanytime', $this->context);
             $cb->message                 = has_capability('mod/sliclquestions:message', $this->context);
 

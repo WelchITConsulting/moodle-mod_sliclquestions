@@ -135,25 +135,25 @@ $capabilities = array(
         )
     ),
 
-//    // Ability to download responses in a CSV file
-//    'mod/sliclquestions:downloadresponses' => array(
-//
-//        'captype'            => 'write',
-//        'contextlevel'       => CONTEXT_MODULE,
-//        'legacy'             => array(
-//            'manager'        => CAP_ALLOW
-//        )
-//    ),
-//
-//    // Ability to delete someone's (or own) previous responses
-//    'mod/sliclquestions:deleteresponses' => array(
-//
-//        'captype'            => 'write',
-//        'contextlevel'       => CONTEXT_MODULE,
-//        'legacy'             => array(
-//            'manager'        => CAP_ALLOW
-//        )
-//    ),
+    // Ability to download responses in a CSV file
+    'mod/sliclquestions:downloadresponses' => array(
+
+        'captype'            => 'write',
+        'contextlevel'       => CONTEXT_MODULE,
+        'legacy'             => array(
+            'manager'        => CAP_ALLOW
+        )
+    ),
+
+    // Ability to delete someone's (or own) previous responses
+    'mod/sliclquestions:deleteresponses' => array(
+
+        'captype'            => 'write',
+        'contextlevel'       => CONTEXT_MODULE,
+        'legacy'             => array(
+            'manager'        => CAP_ALLOW
+        )
+    ),
 
     // Ability to edit questionnaire questions
     'mod/sliclquestions:editquestions' => array(
@@ -185,34 +185,31 @@ $capabilities = array(
 //            'manager'        => CAP_ALLOW
 //        )
 //    ),
-//
-//    // Ability to read own responses to a questionnaire
-//    'mod/sliclquestions:readownresponses' => array(
-//
-//        'captype'            => 'read',
-//        'contextlevel'       => CONTEXT_MODULE,
-//        'legacy'             => array(
-//            'student'        => CAP_ALLOW,
-//            'manager'        => CAP_ALLOW
-//        )
-//    ),
-//
-//    // Ability to read others previous responses to a questionnaire
-//    // Subject to the constraints on whether reponses can be viewed whilst the
-//    // questionnaire is still open or user has not yet responded themselves
-//    'mod/sliclquestions:readallresponses' => array(
-//
-//        'captype'            => 'read',
-//        'contextlevel'       => CONTEXT_MODULE,
-//        'legacy'             => array(
-//            'student'        => CAP_ALLOW,
-//            'teacher'        => CAP_ALLOW,
-//            'editingteacher' => CAP_ALLOW,
-//            'coursecreator'  => CAP_ALLOW,
-//            'manager'        => CAP_ALLOW
-//        )
-//    ),
-//
+
+    // Ability to read others previous responses to a questionnaire
+    // Subject to the constraints on whether reponses can be viewed whilst the
+    // questionnaire is still open or user has not yet responded themselves
+    'mod/sliclquestions:viewallresponses' => array(
+        'captype'            => 'read',
+        'contextlevel'       => CONTEXT_MODULE,
+        'legacy'             => array(
+            'manager'        => CAP_ALLOW
+        )
+    ),
+
+    // Ability to read own responses to a questionnaire
+    'mod/sliclquestions:viewownresponses' => array(
+        'captype'            => 'read',
+        'contextlevel'       => CONTEXT_MODULE,
+        'legacy'             => array(
+            'student'        => CAP_ALLOW,
+            'teacher'        => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+            'coursecreator'  => CAP_ALLOW,
+            'manager'        => CAP_ALLOW
+        )
+    ),
+
 //    // Ability to read others responses without the above checks
 //    'mod/sliclquestions:readallresponseanytime' => array(
 //
