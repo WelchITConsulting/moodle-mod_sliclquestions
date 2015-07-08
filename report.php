@@ -58,9 +58,9 @@ $context = context_module::instance($cm->id);
 $PAGE->set_context($context);
 
 // Check permissions to view report
-if (!has_capability('mod/sliclquestions:viewallreponses', $context) &&
+if (!has_capability('mod/sliclquestions:viewallresponses', $context) &&
         !has_capability('mod/sliclquestions:viewownresponses', $context)) {
-    notice(get_string('noviewpermissions', 'sliclquestions'));
+    notice(get_string('noviewpermission', 'sliclquestions'));
 }
 
 $params = array();

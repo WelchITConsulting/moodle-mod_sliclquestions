@@ -24,7 +24,6 @@ $capabilities = array(
 
     // Ability to add a new questionnaire instance
     'mod/sliclquestions:addinstance' => array(
-
         'riskbitmask'        => RISK_XSS,
         'captype'            => 'write',
         'contextlevel'       => CONTEXT_COURSE,
@@ -36,7 +35,6 @@ $capabilities = array(
 
     // Ability to view the module contents
     'mod/sliclquestions:view' => array(
-
         'captype'            => 'read',
         'contextlevel'       => CONTEXT_MODULE,
         'legacy'             => array(
@@ -50,7 +48,7 @@ $capabilities = array(
 
     // Ability to submit completed questionnaires
     'mod/sliclquestions:submit' => array(
-
+        'riskbitmask'        => RISK_SPAM | RISK_XSS,
         'captype'            => 'write',
         'contextlevel'       => CONTEXT_MODULE,
         'legacy'             => array(
@@ -64,7 +62,6 @@ $capabilities = array(
 
     // Ability to print a blank questionnaire
     'mod/sliclquestions:printblank' => array(
-
         'captype'            => 'read',
         'contextlevel'       => CONTEXT_MODULE,
         'legacy'             => array(
@@ -90,7 +87,7 @@ $capabilities = array(
 
     // Ability to create and edit questionnairea
     'mod/sliclquestions:manage' => array(
-
+        'riskbitmask'        => RISK_SPAM | RISK_XSS,
         'captype'            => 'write',
         'contextlevel'       => CONTEXT_MODULE,
         'legacy'             => array(
@@ -137,8 +134,7 @@ $capabilities = array(
 
     // Ability to download responses in a CSV file
     'mod/sliclquestions:downloadresponses' => array(
-
-        'captype'            => 'write',
+        'captype'            => 'read',
         'contextlevel'       => CONTEXT_MODULE,
         'legacy'             => array(
             'manager'        => CAP_ALLOW
@@ -147,7 +143,6 @@ $capabilities = array(
 
     // Ability to delete someone's (or own) previous responses
     'mod/sliclquestions:deleteresponses' => array(
-
         'captype'            => 'write',
         'contextlevel'       => CONTEXT_MODULE,
         'legacy'             => array(
@@ -157,7 +152,6 @@ $capabilities = array(
 
     // Ability to edit questionnaire questions
     'mod/sliclquestions:editquestions' => array(
-
         'captype'            => 'write',
         'contextlevel'       => CONTEXT_MODULE,
         'legacy'             => array(
@@ -167,7 +161,6 @@ $capabilities = array(
 
 //    // Ability to create template questionnaires which can be copied, but not used
 //    'mod/sliclquestions:createtemplates' => array(
-//
 //        'captype'            => 'write',
 //        'contextlevel'       => CONTEXT_MODULE,
 //        'legacy'             => array(
@@ -177,7 +170,6 @@ $capabilities = array(
 //
 //    // Ability to create public surveys which can be accessed from multiple places
 //    'mod/sliclquestions:createpublic' => array(
-//
 //        'captype'            => 'write',
 //        'contextlevel'       => CONTEXT_MODULE,
 //        'legacy'             => array(
@@ -212,7 +204,6 @@ $capabilities = array(
 
 //    // Ability to read others responses without the above checks
 //    'mod/sliclquestions:readallresponseanytime' => array(
-//
 //        'captype'            => 'read',
 //        'contextlevel'       => CONTEXT_MODULE,
 //        'legacy'             => array(
