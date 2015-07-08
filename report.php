@@ -95,7 +95,7 @@ if ($groupmode > 0) {
     if ($groupmode == 1) {
         $sliclquestionsgroups = groups_get_all_groupings($course->id, $USER->id);
     }
-    if ($groupmode == 2 || $survey->canviewallgroups) {
+    if ($groupmode == 2 || $survey->capabilities->canviewallgroups) {
         $sliclquestionsgroups = groups_get_all_groupings($course->id);
     }
     if (!empty($sliclquestionsgroups)) {
@@ -107,7 +107,7 @@ if ($groupmode > 0) {
         if (($groupscount == 0) && ($groupmode == 1)) {
             $currentgroupid = 0;
         }
-        if (($groupmode == 1) && !$sliclquestions->canviewallgroups &&
+        if (($groupmode == 1) && !$survey->capabilities->canviewallgroups &&
                 ($currentgroupid == 0)) {
             $currentgroupid = $firstgroupid;
         }
@@ -119,7 +119,7 @@ if ($groupmode > 0) {
         }
         $SESSION->sliclquestions->numcurrentgroupresps = count($currentgroupresps);
     } else {
-        if (!$survey->canviewallgroups) {
+        if (!$survey->capabilites->canviewallgroups) {
             $currentgroupid = 0;
         }
     }

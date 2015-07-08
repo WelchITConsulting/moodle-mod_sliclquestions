@@ -235,6 +235,7 @@ class sliclquestions
             $cb->message                 = has_capability('mod/sliclquestions:message', $this->context);
 
             $cb->viewhiddenactivities    = has_capability('moodle/course:viewhiddenactivities', $this->context);
+            $cb->canviewallgroups        = has_capability('moodle/site:accessallgroups', $this->context);
         }
         return $cb;
     }
