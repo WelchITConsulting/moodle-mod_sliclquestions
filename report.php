@@ -119,7 +119,7 @@ if ($groupmode > 0) {
         }
         $SESSION->sliclquestions->numcurrentgroupresps = count($currentgroupresps);
     } else {
-        if (!$survey->capabilites->canviewallgroups) {
+        if (!$survey->capabilities->canviewallgroups) {
             $currentgroupid = 0;
         }
     }
