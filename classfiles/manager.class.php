@@ -637,44 +637,37 @@ class mod_sliclquestions_management_console
     {
         global $DB;
 
-        $querytext = 'Results for: '
+        $querytext = '<strong>Results for:</strong> '
                    . ($params['x'] == 'b' ? ' All pupils : ' : '')
                    . ($params['x'] == 'm' ? ' Male pupils only : ' : '')
                    . ($params['x'] == 'f' ? ' Female pupils only : ' : '')
                    . ($params['y'] == 0 ? ' Year 3 / 4' : 'Year' . $params['y']);
-        $htmloutput = html_writer::tag('h3', 'Results:')
-                    . html_writer::tag('h5', $querytext)
-                    . html_writer::tag('h4', 'Filters:')
-                    . html_writer::tag('p', 'Use the following filters to update the reports contents')
-                    . html_writer::start_tag('form', array('action' => $url,
-                                                           'method' => 'get',
-                                                           'name'   => 'sliclfilters'))
-                    . html_writer::start_div('pupil-sex')
-                    . html_writer::tag('h4', 'Sex')
-                    . html_writer::start_tag('label')
-                    . html_writer::empty_tag('input', array('type' => 'radio',
-                                                            'name' => 'x',
-                                                            'id'   => 'pupils-male',
-                                                            'value' => 'm'))
-                    . get_string('male', 'sliclquestions')
-                    . html_writer::end_tag('label')
-                    . html_writer::start_tag('label')
-                    . html_writer::empty_tag('input', array('type' => 'radio',
-                                                            'name' => 'x',
-                                                            'id'   => 'pupils-female',
-                                                            'value' => 'f'))
-                    . get_string('female', 'sliclquestions')
-                    . html_writer::end_tag('label')
-                    . html_writer::start_tag('label')
-                    . html_writer::empty_tag('input', array('type' => 'radio',
-                                                            'name' => 'x',
-                                                            'id'   => 'pupils-both',
-                                                            'value' => 'b'))
-                    . get_string('pupilsboth', 'sliclquestions')
-                    . html_writer::end_tag('label')
-                    . html_writer::end_div()
-                    . html_writer::end_tag('form');
-        return $htmloutput;
+
+        $out = html_writer::tag('h3', 'Results:')
+             . html_writer::tag('h5', $querytext)
+             . html_writer::tag('h4', 'Filters:')
+             . html_writer::tag('p', 'Use the following filters to update the reports contents')
+             . html_writer::start_tag('form', array('action' => $url,
+                                                    'method' => 'get',
+                                                    'name'   => 'sliclfilters'))
+             . html_writer::start_div('pupil-sex')
+             . html_writer::tag('h4', 'Sex');
+        foreach(array('m', 'f', 'b') as $sex) {
+            $inpparams = array('type' => 'radio',
+                               'name' => 'x',
+                               'id'   => 'pupils-' . ($sex == 'b' ? 'both' : ($psex == 'm' ? 'm' : 'f')),
+                               'value' => $sex);
+            if ($params['x'] == $sex) {
+                $inpparams['checked'] = 'checked';
+            }
+            $out .= html_writer::start_tag('label')
+                  . html_writer::empty_tag('input', $params)
+                  . get_string('male', 'sliclquestions')
+                  . html_writer::end_tag('label');
+        }
+        $out = html_writer::end_div()
+             . html_writer::end_tag('form');
+        return $out;
     }
 
     private function display_report_footer()
@@ -692,16 +685,12 @@ class mod_sliclquestions_management_console
         return $out;
     }
 
-    private function get_kpi_totals($surveyid, &$url, $params)
+    private function get_kpi_totals(&$survey, &$url, $params)
     {
         global $DB;
 
         $sql = 'SELECT '
              . ' FROM {sliclquestions_students} s';
-
-
-
-
 
 
 
