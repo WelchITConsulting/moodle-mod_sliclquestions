@@ -92,7 +92,7 @@ class mod_sliclquestions_management_console
             }
         } else {
             // Display a list of those who have responded
-            $this->show_respondents();
+            $this->show_respondents($survey, $params);
         }
     }
 
