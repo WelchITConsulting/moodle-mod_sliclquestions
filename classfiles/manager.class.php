@@ -63,7 +63,7 @@ class mod_sliclquestions_management_console
         global $OUTPUT, $PAGE;
 
         echo $survey->render_page_header()
-           . $this->display_report_header($url, $params)
+           . $this->display_report_header($survey, $url, $params)
            . $this->display_report_body()
            . $this->display_report_footer()
            . $OUTPUT->footer($course);
@@ -629,17 +629,66 @@ class mod_sliclquestions_management_console
         return $ces;
     }
 
-    private function display_report_header(&$url, &$params)
+    private function display_report_header(&$survey, &$url, &$params)
     {
-//        $table = new html_table();
-//        $table->head = array('',
-//                             '',
-//                             '');
-//        $table->align = array('', '', '');
+        global $DB;
 
+        $males   = array();
+        $females = array();
+        $totalmales   = array(3 => 0, 4 => 0);
+        $totalfemales = array(3 => 0, 4 => 0);
+        // Number of pupils in assessment
+        $table = new html_table();
+        $table->head = array('School Year',
+                             'KPI 1',
+                             'KPI 2',
+                             'KPI 3',
+                             'KPI 4',
+                             get_string('pupilstotal', 'sliclquestions'));
+        $table->align = array('left', 'center', 'center', 'center', 'center', 'center');
+        $sql = 'SELECT s.sex, COUNT(s.id) AS numrec'
+             . ' FROM {sliclquestions_student} s, {sliclquestions_reponse} r'
+             . ' WHERE s.id=r.id AND s.deleteflag=0 AND r.survey_id=?'
+             . '  ABD s.year=? AND s.kpi_level=?';
+        for($y = 3; $y <= 4; $y++) {
+            for($k = 1; $k <= 4; $k++) {
+                $recs = $DB->get_records_sql($sql, array($survey->id, $y, $k));
+                if ($recs) {
+                    foreach($recs as $rec) {
+                        if ($rec->sex == 'm') {
+                            $males[$y][$k] = (int)$rec->numrec;
+                            $totalmales[$y] += (int)$rec->numrec;
+                        } else {
+                            $females[$y][$k] = (int)$rec->numrec;
+                            $totalfemales[$y] += (int)$rec->numrec;
+                        }
+                    }
+                }
+            }
+            $table->data[] = array('3',
+                                   $males[3][1] . ' / ' . $females[3][1],
+                                   $males[3][2] . ' / ' . $females[3][2],
+                                   $males[3][3] . ' / ' . $females[3][3],
+                                   $males[3][4] . ' / ' . $females[3][4],
+                                   $totalmales[3] . ' / ' . $totalfemales[3]);
+            $table->data[] = array('4',
+                                   $males[4][1] . ' / ' . $females[4][1],
+                                   $males[4][2] . ' / ' . $females[4][2],
+                                   $males[4][3] . ' / ' . $females[4][3],
+                                   $males[4][4] . ' / ' . $females[4][4],
+                                   $totalmales[4] . ' / ' . $totalfemales[4]);
+            $table->data[] = array('totals',
+                                   ($males[3][1] + $males[4][1]) . ' / ' . ($females[3][1] + $females[4][1]),
+                                   ($males[3][1] + $males[4][1]) . ' / ' . ($females[3][1] + $females[4][1]),
+                                   ($males[3][1] + $males[4][1]) . ' / ' . ($females[3][1] + $females[4][1]),
+                                   ($males[3][1] + $males[4][1]) . ' / ' . ($females[3][1] + $females[4][1]),
+                                   ($totalmales[3] + $totalmales[4]) . ' / ' . ($totalfemales[3] + $totalfemales[4]));
+            $table->data[] = array('', '', '', '', '', ($totalmales[3] + $totalmales[4] + $totalfemales[3] + $totalfemales[4]))
+        }
         $htmloutput = html_writer::tag('h3', 'Results:')
                      . html_writer::start_div('students')
-//                     . html_writer::table(table)
+                     . html_writer::tag('p', 'Number of pupils (male / female) participating in the SLiCL project.')
+                     . html_writer::table(table)
                      . html_writer::end_div()
                      . html_writer::start_tag('form', array('action' => $url,
                                                             'method' => 'get',
