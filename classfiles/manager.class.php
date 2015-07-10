@@ -663,9 +663,9 @@ class mod_sliclquestions_management_console
             $out .= '<pre>' . print_r($params, true) . '</pre>'
                   . html_writer::start_tag('label')
                   . html_writer::empty_tag('input', $inpparams)
-                  . ($params['x'] == 'b' ? get_string('pupilsboth', 'sliclquestions') : '')
-                  . ($params['x'] == 'm' ? get_string('male', 'sliclquestions') : '')
-                  . ($params['x'] == 'f' ? get_string('female', 'sliclquestions') : '')
+                  . ($sex == 'b' ? get_string('pupilsboth', 'sliclquestions') : '')
+                  . ($sex == 'm' ? get_string('male', 'sliclquestions') : '')
+                  . ($sex == 'f' ? get_string('female', 'sliclquestions') : '')
                   . html_writer::end_tag('label');
         }
         $out .= html_writer::end_div()
