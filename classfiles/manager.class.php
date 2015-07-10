@@ -62,9 +62,13 @@ class mod_sliclquestions_management_console
     {
         global $OUTPUT, $PAGE;
 
+        $params['x'] = optional_param('x', 'm', PARAM_ALPHA);
+        $params['y'] = optional_param('y', 0, PARAM_INT);
+        $params['k'] = optional_param('k', 0, PARAM_INT);
+
         echo $survey->render_page_header()
            . $this->display_report_header($survey, $url, $params)
-           . $this->display_report_body()
+           . $this->display_report_body($survey, $url, $params)
            . $this->display_report_footer()
            . $OUTPUT->footer($course);
         exit();
@@ -633,6 +637,77 @@ class mod_sliclquestions_management_console
     {
         global $DB;
 
+        $querytext = 'Results for: '
+                   . ($params['x'] == 'b' ? ' All pupils : ' : '')
+                   . ($params['x'] == 'm' ? ' Male pupils only : ' : '')
+                   . ($params['x'] == 'f' ? ' Female pupils only : ' : '')
+                   . ($params['y'] == 0 ? ' Year 3 / 4' : 'Year' . $params['y']);
+        $htmloutput = html_writer::tag('h3', 'Results:')
+                    . html_writer::tag('h5', $querytext)
+                    . html_writer::tag('h4', 'Filters:')
+                    . html_writer::tag('p', 'Use the following filters to update the reports contents')
+                    . html_writer::start_tag('form', array('action' => $url,
+                                                           'method' => 'get',
+                                                           'name'   => 'sliclfilters'))
+                    . html_writer::start_div('pupil-sex')
+                    . html_writer::tag('h4', 'Sex')
+                    . html_writer::start_tag('label')
+                    . html_writer::empty_tag('input', array('type' => 'radio',
+                                                            'name' => 'x',
+                                                            'id'   => 'pupils-male',
+                                                            'value' => 'm'))
+                    . get_string('male', 'sliclquestions')
+                    . html_writer::end_tag('label')
+                    . html_writer::start_tag('label')
+                    . html_writer::empty_tag('input', array('type' => 'radio',
+                                                            'name' => 'x',
+                                                            'id'   => 'pupils-female',
+                                                            'value' => 'f'))
+                    . get_string('female', 'sliclquestions')
+                    . html_writer::end_tag('label')
+                    . html_writer::start_tag('label')
+                    . html_writer::empty_tag('input', array('type' => 'radio',
+                                                            'name' => 'x',
+                                                            'id'   => 'pupils-both',
+                                                            'value' => 'b'))
+                    . get_string('pupilsboth', 'sliclquestions')
+                    . html_writer::end_tag('label')
+                    . html_writer::end_div()
+                    . html_writer::end_tag('form');
+        return $htmloutput;
+    }
+
+    private function display_report_footer()
+    {
+        return '<p>Display Report footer</p>';
+    }
+
+    private function display_report_body(&$survey, &$url, &$params)
+    {
+        $out = html_writer:: start_div('totals')
+             . html_writer::tag('h3', 'KPI Levels')
+             . html_writer::tag('p', 'The following table displays the nunber of pupils at the various KPI levels:')
+             . html_writer::table($this->get_kpi_totals($survey->id, $url, $params))
+             . html_writer::end_div();
+        return $out;
+    }
+
+    private function get_kpi_totals($surveyid, &$url, $params)
+    {
+        global $DB;
+
+        $sql = 'SELECT '
+             . ' FROM {sliclquestions_students} s'
+
+
+
+
+
+
+
+
+
+
         $males   = array(3 => array(1 => 0, 2 => 0, 3 => 0, 4 => 0),
                          4 => array(1 => 0, 2 => 0, 3 => 0, 4 => 0));
         $females = array(3 => array(1 => 0, 2 => 0, 3 => 0, 4 => 0),
@@ -668,8 +743,6 @@ class mod_sliclquestions_management_console
                 }
             }
         }
-        echo '<pre>' . print_r($males, true) . '</pre>';
-        echo '<pre>' . print_r($females, true) . '</pre>';
         $table->data[] = array('3',
                                $males[3][1] . ' / ' . $females[3][1],
                                $males[3][2] . ' / ' . $females[3][2],
@@ -689,57 +762,6 @@ class mod_sliclquestions_management_console
                                ($males[3][1] + $males[4][1]) . ' / ' . ($females[3][1] + $females[4][1]),
                                ($totalmales[3] + $totalmales[4]) . ' / ' . ($totalfemales[3] + $totalfemales[4]));
         $table->data[] = array('', '', '', '', '', ($totalmales[3] + $totalmales[4] + $totalfemales[3] + $totalfemales[4]));
-        $htmloutput = html_writer::tag('h3', 'Results:')
-                     . html_writer::start_div('students')
-                     . html_writer::tag('p', 'Number of pupils (male / female) participating in the SLiCL project.')
-                     . html_writer::table($table)
-                     . html_writer::end_div()
-                     . html_writer::start_tag('form', array('action' => $url,
-                                                            'method' => 'get',
-                                                            'name'   => 'sliclfilters'))
-                     . html_writer::start_div('pupil-sex')
-                     . html_writer::tag('h4', 'Sex')
-                     . html_writer::start_tag('label')
-                     . html_writer::empty_tag('input', array('type' => 'radio',
-                                                             'name' => 'sx',
-                                                             'id'   => 'pupils-male',
-                                                             'value' => 'm'))
-                     . get_string('male', 'sliclquestions')
-                     . html_writer::end_tag('label')
-                     . html_writer::start_tag('label')
-                     . html_writer::empty_tag('input', array('type' => 'radio',
-                                                             'name' => 'sx',
-                                                             'id'   => 'pupils-female',
-                                                             'value' => 'f'))
-                     . get_string('female', 'sliclquestions')
-                     . html_writer::end_tag('label')
-                     . html_writer::start_tag('label')
-                     . html_writer::empty_tag('input', array('type' => 'radio',
-                                                             'name' => 'sx',
-                                                             'id'   => 'pupils-both',
-                                                             'value' => 'b'))
-                     . get_string('pupilsboth', 'sliclquestions')
-                     . html_writer::end_tag('label')
-                     . html_writer::end_div()
-                     . html_writer::end_tag('form');
-        return $htmloutput;
-    }
-
-    private function display_report_footer()
-    {
-        return '<p>Display Report footer</p>';
-    }
-
-    private function display_report_body()
-    {
-        return '<p>Display Report Body</p>';
-    }
-
-    private function get_totals($surveyid, $url, $uid = false)
-    {
-        global $DB;
-
-//        $sql = 'SELECT '
-//             . ' FROM {sliclquestions_'
+        return $table;
     }
 }
