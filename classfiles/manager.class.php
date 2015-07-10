@@ -103,8 +103,9 @@ class mod_sliclquestions_management_console
         $user = $DB->get_record('user', array('id' => $uid));
         $response = $DB->get_record('sliclquestions_response', array('survey_id' => $survey->id,
                                                                      'userid'    => $user->id));
-        $question = $DB->get_record('sliclquestions_question', array('id' => $response->questionid));
-        $answer = $DB->get_record('sliclquestions_resp_text', array('responseid' => $response->id));
+        $question = $DB->get_record('sliclquestions_question', array('surveyid' => $response->survey_id));
+        $answer = $DB->get_record('sliclquestions_resp_text', array('responseid' => $response->id,
+                                                                    'questionid' => $question->id));
 //        $PAGE->set_pagelayout('popup');
         echo $survey->render_page_header()
            . $OUTPUT->box_start('sliclquestions-question')
