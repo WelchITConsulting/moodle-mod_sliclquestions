@@ -96,23 +96,28 @@ class mod_sliclquestions_management_console
         }
     }
 
-    private function show_response(&$uid, &$survey)
+    private function show_response($uid, &$survey)
     {
-        global $OUPTUT, $PAGE;
+        global $DB, $OUPUT, $PAGE;
 
         $user = $DB->get_record('user', array('id' => $uid));
-        $sql = 'SELECT r.id AS rid, r.userid AS uid, ';
-        $response = $DB->get_record_sql('sliclquestions_response');
-        $PAGE->set_pagelayout('popup');
-        echo $OUTPUT->header()
-           . $OUTPUT->box_start('sliclquestions-quote')
+        $response = $DB->get_record('sliclquestions_response', array('survey_id' => $survey->id,
+                                                                     'userid'    => $user->id));
+        $question = $DB->get_record('sliclquestions_question', array('id' => $response->questionid));
+        $answer = $DB->get_record('sliclquestions_resp_text', array('responseid' => $response->id));
+//        $PAGE->set_pagelayout('popup');
+        echo $survey->render_page_header()
+           . $OUTPUT->box_start('sliclquestions-question')
+           . html_writer::div($question->content)
+           . $OUTPUT->box_end()
+           . $OUTPUT->box_start('sliclquestions-answer')
            . html_writer::start_div('quote')
            . html_writer::tag('h2', fullname($user))
            . html_writer::end_div()
-           . html_writer::start_div('quoted-text')
-           . html_writer::end_div()
+           . html_writer::div($answer->response, 'quoted-text')
            . $OUTPUT->box_end()
            . $OUTPUT->footer();
+        exit();
     }
 
     private function show_non_respondents()
