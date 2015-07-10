@@ -691,13 +691,23 @@ class mod_sliclquestions_management_console
     {
         global $DB;
 
-        $sql = 'SELECT '
-             . ' FROM {sliclquestions_students} s';
+        $sql = 'SELECT s.sex, COUNT(s.id)'
+             . ' FROM {sliclquestions_students} s, {sliclquestions_response} r,'
+             . '      {sliclquestions_resp_single} rs'
+             . ' WHERE s.id = r.pupilid AND r.id=rs.surveyid AND rs.questionid=13'
+             . '       AND r.survey_id=?';
+        $sqlparams = array($survey->id);
 
-
-
-
-
+        if ($params['x'] != 'b') {
+            $sql .= ' AND s.sex=\'' . $params['x'] . '\'';
+            $sqlparams[] = $params['x'];
+        }
+        if ($params['y'] != 0) {
+            $sql .= ' AND s.year=' . $params['y'];
+            $sqlparams[] = $params['y'];
+        }
+        $results = $DB->get_results->sql($sql, $sqlparams);
+        return '<pre>' . print_r($results, true) . '</pre>';
 /*
         $males   = array(3 => array(1 => 0, 2 => 0, 3 => 0, 4 => 0),
                          4 => array(1 => 0, 2 => 0, 3 => 0, 4 => 0));
