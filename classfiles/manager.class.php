@@ -739,7 +739,7 @@ class mod_sliclquestions_management_console
     {
         global $DB;
 
-        $sql = 'SELECT '
-             . ' FROM {sliclquestions_'
+//        $sql = 'SELECT '
+//             . ' FROM {sliclquestions_'
     }
 }
