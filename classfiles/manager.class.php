@@ -644,7 +644,7 @@ class mod_sliclquestions_management_console
                    . ($params['y'] == 0 ? ' Year 3 / 4' : 'Year' . $params['y']);
 
         $out = html_writer::tag('h3', 'Results:')
-             . html_writer::tag('h5', $querytext)
+             . html_writer::tag('p', $querytext)
              . html_writer::tag('h4', 'Filters:')
              . html_writer::tag('p', 'Use the following filters to update the reports contents')
              . html_writer::start_tag('form', array('action' => $url,
@@ -660,7 +660,8 @@ class mod_sliclquestions_management_console
             if ($params['x'] == $sex) {
                 $inpparams['checked'] = 'checked';
             }
-            $out .= html_writer::start_tag('label')
+            $out .= '<pre>' . print_r($params, true) . '</pre>'
+                  . html_writer::start_tag('label')
                   . html_writer::empty_tag('input', $inpparams)
                   . ($params['x'] == 'b' ? get_string('pupilsboth', 'sliclquestions') : '')
                   . ($params['x'] == 'm' ? get_string('male', 'sliclquestions') : '')
