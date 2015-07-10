@@ -666,6 +666,8 @@ class mod_sliclquestions_management_console
                 }
             }
         }
+        echo '<pre>' . print_r($males, true) . '</pre>';
+        echo '<pre>' . print_r($females, true) . '</pre>';
         $table->data[] = array('3',
                                $males[3][1] . ' / ' . $females[3][1],
                                $males[3][2] . ' / ' . $females[3][2],
@@ -688,7 +690,7 @@ class mod_sliclquestions_management_console
         $htmloutput = html_writer::tag('h3', 'Results:')
                      . html_writer::start_div('students')
                      . html_writer::tag('p', 'Number of pupils (male / female) participating in the SLiCL project.')
-                     . html_writer::table(table)
+                     . html_writer::table($table)
                      . html_writer::end_div()
                      . html_writer::start_tag('form', array('action' => $url,
                                                             'method' => 'get',
