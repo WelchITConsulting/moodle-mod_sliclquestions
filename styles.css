@@ -206,13 +206,13 @@ h3.slicl-legend {
 }
 #page-mod-sliclquestions-view .sliclquestions-answer .quoted-text p {
     font-style: italic;
-    margin-left: 30px;
+    margin-left: 50px;
 }
 #page-mod-sliclquestions-view .sliclquestions-answer .quoted-text:before {
     content: '\201C';
     font-size: 6em;
     float: left;
     position: relative;
-    top: -15px;
+    top: -25px;
     color: #eee;
 }
