@@ -655,7 +655,7 @@ class mod_sliclquestions_management_console
         foreach(array('m', 'f', 'b') as $sex) {
             $inpparams = array('type' => 'radio',
                                'name' => 'x',
-                               'id'   => 'pupils-' . ($sex == 'b' ? 'both' : ($psex == 'm' ? 'm' : 'f')),
+                               'id'   => 'pupils-' . ($sex == 'b' ? 'both' : ($sex == 'm' ? 'm' : 'f')),
                                'value' => $sex);
             if ($params['x'] == $sex) {
                 $inpparams['checked'] = 'checked';
