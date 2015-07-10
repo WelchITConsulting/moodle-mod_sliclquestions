@@ -183,10 +183,22 @@ switch($act) {
                        . get_string('submitted', 'sliclquestions')
                        . '&nbsp;'
                        . userdate($resp->submitted);
-        $urlyes = '';
-        $urlno  = '';
-        $buttonyes = '';
-        $buttonno  = '';
+        $msg = html_writer::div(get_string('confirmdelresp', 'sliclquestions', $ruser . $timesubmitted),
+                                'warning centerpara');
+        $buttonyes = new single_button(new moodle_url('report.php', array('action'             => 'dvresp',
+                                                                          'rid'                => $rid,
+                                                                          'individualresponse' => 1,
+                                                                          'instance'           => $id,
+                                                                          'group'              => $currentgroupid)),
+                                       get_string('yes'),
+                                       'post');
+        $buttonno  = new single_button(new moodle_url('report.php', array('action'             => 'vresp',
+                                                                          'rid'                => $rid,
+                                                                          'individualresponse' => 1,
+                                                                          'instance'           => $id,
+                                                                          'group'              => $currentgroupid)),
+                                       get_string('no'),
+                                       'get');
         echo html_writer::tag('p', '&nbsp;')
            . html_writer::div(get_string('confirmdekeeed', 'sliclquestions'), 'warning centerpara')
            . $OUTPUT->confirm($msg, $buttonyes, $buttonno)
@@ -221,6 +233,25 @@ switch($act) {
 
     case 'vresp':           // View by reponse
     default:
-
+        if (empty($survey)) {
+            print_error('surveynotexists', 'sliclquestions');
+        } elseif ($survey->course != $course->id) {
+            print_error('surveyowner', 'sliclquestions');
+        }
+        $ruser = false;
+        $noresponses = false;
+        if ($byresponse || $rid) {
+            if ($groupmode > 0) {
+                switch($currentgroupid) {
+                    case 0:
+                        $resps = $respsallparticipants;
+                        break;
+                    default:
+                        $sql = 'SELECT r.*'
+                             . ' FROM {sliclquestions_response} r, {group_members} g'
+                             . ' WHERE r.userid=g.userid AND r.survey_id=? AND g.groupid=?';
+                }
+            }
+        }
         break;
 }
