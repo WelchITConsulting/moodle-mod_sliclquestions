@@ -707,7 +707,7 @@ class mod_sliclquestions_management_console
             $sql .= ' AND s.year=' . $params['y'];
             $sqlparams[] = $params['y'];
         }
-        $results = $DB->get_results->sql($sql, $sqlparams);
+        $results = $DB->get_results_sql($sql, $sqlparams);
         return '<pre>' . print_r($results, true) . '</pre>';
 /*
         $males   = array(3 => array(1 => 0, 2 => 0, 3 => 0, 4 => 0),
