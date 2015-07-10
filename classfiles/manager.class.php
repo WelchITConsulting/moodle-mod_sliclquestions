@@ -694,34 +694,29 @@ class mod_sliclquestions_management_console
         $data   = array(array('3', '0', '0', '0', '0'),
                         array('4', '0', '0', '0', '0'));
 
-        $sql = 'SELECT s.sex, COUNT(s.id)'
+        $sql = 'SELECT s.sex, s.year_id, COUNT(s.id) AS numrec'
              . ' FROM {sliclquestions_students} s, {sliclquestions_response} r,'
              . '      {sliclquestions_resp_single} rs'
              . ' WHERE s.id = r.pupilid AND r.id=rs.responseid AND rs.questionid=13'
              . '       AND r.survey_id=? AND rs.response=?';
-        $sqlparams = array($surveyid, 3);
-
         if ($params['x'] != 'b') {
             $sql .= ' AND s.sex=\'' . $params['x'] . '\'';
-            $sqlparams[] = $params['x'];
         }
         if ($params['y'] != 0) {
             $sql .= ' AND s.year=' . $params['y'];
-            $sqlparams[] = $params['y'];
         }
-        $results = $DB->get_records_sql($sql, $sqlparams);
+        for ($i = 1;$i < 5;$i++) {
+            $results = $DB->get_records_sql($sql, array($surveyid, $i));
+            if ($results) {
+                foreach($results as $result) {
+                    if ($result->year_id == '3') {
+                        $data[0][$i] += $result->numrec;
+                    }
+                }
+            }
+        }
 
-
-
-
-        echo '<pre>' . print_r($results, true) . '</pre><pre>SQL: ' . $sql . '</pre><pre>Params: ' . print_r($sqlparams, true) . '</pre>';
-
-
-
-
-
-
-// Number of pupils in assessment
+        // Number of pupils in assessment
         $table = new html_table();
         $table->head = array('School Year',
                              'KPI 1',
