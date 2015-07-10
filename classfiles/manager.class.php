@@ -98,7 +98,7 @@ class mod_sliclquestions_management_console
 
     private function show_response($uid, &$survey)
     {
-        global $DB, $OUPUT, $PAGE;
+        global $DB, $OUTPUT, $PAGE;
 
         $user = $DB->get_record('user', array('id' => $uid));
         $response = $DB->get_record('sliclquestions_response', array('survey_id' => $survey->id,
