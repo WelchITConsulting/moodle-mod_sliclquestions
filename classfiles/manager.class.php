@@ -633,8 +633,10 @@ class mod_sliclquestions_management_console
     {
         global $DB;
 
-        $males   = array();
-        $females = array();
+        $males   = array(3 => array(1 => 0, 2 => 0, 3 => 0, 4 => 0),
+                         4 => array(1 => 0, 2 => 0, 3 => 0, 4 => 0));
+        $females = array(3 => array(1 => 0, 2 => 0, 3 => 0, 4 => 0),
+                         4 => array(1 => 0, 2 => 0, 3 => 0, 4 => 0));
         $totalmales   = array(3 => 0, 4 => 0);
         $totalfemales = array(3 => 0, 4 => 0);
         // Number of pupils in assessment
@@ -656,10 +658,10 @@ class mod_sliclquestions_management_console
                 if ($recs) {
                     foreach($recs as $rec) {
                         if ($rec->sex == 'm') {
-                            $males[$y][$k] = (int)$rec->numrec;
+                            $males[$y][$k] += (int)$rec->numrec;
                             $totalmales[$y] += (int)$rec->numrec;
                         } else {
-                            $females[$y][$k] = (int)$rec->numrec;
+                            $females[$y][$k] += (int)$rec->numrec;
                             $totalfemales[$y] += (int)$rec->numrec;
                         }
                     }
@@ -723,7 +725,7 @@ class mod_sliclquestions_management_console
         return $htmloutput;
     }
 
-    private function display_report_footer(&$survey, &$url, &$params)
+    private function display_report_footer()
     {
         return '<p>Display Report footer</p>';
     }
@@ -731,5 +733,13 @@ class mod_sliclquestions_management_console
     private function display_report_body()
     {
         return '<p>Display Report Body</p>';
+    }
+
+    private function get_totals($surveyid, $url, $uid = false)
+    {
+        global $DB;
+
+        $sql = 'SELECT '
+             . ' FROM {sliclquestions_'
     }
 }
