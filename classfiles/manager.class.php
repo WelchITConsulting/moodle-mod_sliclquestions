@@ -637,7 +637,7 @@ class mod_sliclquestions_management_console
 //                             '');
 //        $table->align = array('', '', '');
 
-        $htmloutput .= html_writer::tag('h3', 'Results:')
+        $htmloutput = html_writer::tag('h3', 'Results:')
                      . html_writer::start_div('students')
 //                     . html_writer::table(table)
                      . html_writer::end_div()
@@ -651,14 +651,14 @@ class mod_sliclquestions_management_console
                                                              'name' => 'sx',
                                                              'id'   => 'pupils-male',
                                                              'value' => 'm'))
-                     . get_string('pupilsmale', 'sliclquestions')
+                     . get_string('male', 'sliclquestions')
                      . html_writer::end_tag('label')
                      . html_writer::start_tag('label')
                      . html_writer::empty_tag('input', array('type' => 'radio',
                                                              'name' => 'sx',
                                                              'id'   => 'pupils-female',
                                                              'value' => 'f'))
-                     . get_string('pupilsfemale', 'sliclquestions')
+                     . get_string('female', 'sliclquestions')
                      . html_writer::end_tag('label')
                      . html_writer::start_tag('label')
                      . html_writer::empty_tag('input', array('type' => 'radio',
