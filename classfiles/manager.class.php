@@ -63,7 +63,7 @@ class mod_sliclquestions_management_console
         global $OUTPUT, $PAGE;
 
         echo $survey->render_page_header()
-           . $this->display_report_header()
+           . $this->display_report_header(&$url, &$params)
            . $this->display_report_body()
            . $this->display_report_footer()
            . $OUTPUT->footer($course);
