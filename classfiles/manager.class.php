@@ -681,7 +681,7 @@ class mod_sliclquestions_management_console
     {
         $out = html_writer:: start_div('totals')
              . html_writer::tag('h3', 'KPI Levels')
-             . html_writer::tag('p', 'The following table displays the nunber of pupils at the various KPI levels:')
+             . html_writer::tag('p', 'The following table displays the nunber of pupils at the various KPI levels, (current total / previous total):')
              . html_writer::table($this->get_kpi_totals($survey->id, $url, $params))
              . html_writer::end_div();
         return $out;
@@ -697,7 +697,7 @@ class mod_sliclquestions_management_console
         $sql = 'SELECT CONCAT(s.sex, s.year_id) AS id, s.sex, s.year_id, COUNT(s.id) AS numrec'
              . ' FROM {sliclquestions_students} s, {sliclquestions_response} r,'
              . '      {sliclquestions_resp_single} rs'
-             . ' WHERE s.id = r.pupilid AND r.id=rs.responseid AND rs.questionid=13'
+             . ' WHERE s.id = r.pupilid AND r.id=rs.responseid AND rs.questionid=?'
              . '       AND r.survey_id=? AND rs.response=?';
         if ($params['x'] != 'b') {
             $sql .= ' AND s.sex=\'' . $params['x'] . '\'';
@@ -707,10 +707,16 @@ class mod_sliclquestions_management_console
         }
         $sql .= ' GROUP BY s.sex, s.year_id';
         for ($i = 1;$i < 5;$i++) {
-            $results = $DB->get_records_sql($sql, array($surveyid, $i));
+            $results = $DB->get_records_sql($sql, array(13, $surveyid, $i));
             if ($results) {
                 foreach($results as $result) {
-                    $data[$result->year_id - 3][$i] += $result->numrec;
+                    $data[$result->year_id - 3][$i] = html_writer::tag('strong', $result->numrec);
+                }
+            }
+            $results = $DB->get_records_sql($sql, array(1, $surveyid, $i));
+            if ($results) {
+                foreach($results as $result) {
+                    $data[$result->year_id - 3][$i] .=  ' / ' . $result->numrec;
                 }
             }
         }
