@@ -364,14 +364,14 @@ class mod_sliclquestions_management_console
             $table = new html_table();
             $table->head = array(get_string('respondents', 'sliclquestions'),
                                  get_string('dateresponded', 'sliclquestions'));
-            $table->align = array(left, left);
+            $table->align = array('left', 'left');
             foreach($responses as $response) {
                 $user = $DB->get_record('user', array('id' => $response->userid));
                 $params['uid'] = $user->id;
                 $params['act'] = 'resp';
                 $userlink = html_writer::tag('a',
                                              fullname($user),
-                                             array('href' => new moodleurl('/mod/sliclquestions/view.php', $params)));
+                                             array('href' => new moodle_url('/mod/sliclquestions/view.php', $params)));
                 $table->data[] = array($userlink,
                                        userdate($$response->submitted));
             }

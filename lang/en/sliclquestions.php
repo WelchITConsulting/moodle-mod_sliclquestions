@@ -39,6 +39,7 @@ $string['closedate_help']                           = 'You can specify a date to
 $string['complete']                                 = 'Complete';
 $string['contentheader']                            = 'Page content';
 
+$string['dateresponded']                            = 'Date responded';
 $string['displayoptions']                           = 'Display options';
 
 $string['event_previed']                            = 'SLiCL questionnaire previewed';
@@ -117,6 +118,7 @@ $string['questype_survey']                          = 'Standard survey';
 
 $string['required']                                 = 'Response is required';
 $string['respondent']                               = 'Respondent';
+$string['respondents']                              = 'Respondents';
 $string['responses']                                = 'Responses';
 $string['resumesurvey']                             = 'Resume questionnaire';
 
@@ -479,7 +481,6 @@ $string['wrongformats']                             = 'There is something wrong 
 //$string['respondenteligibleall']                    = 'all';
 //$string['respondenteligiblestudents']               = 'students only';
 //$string['respondenteligibleteachers']               = 'teachers only';
-//$string['respondents']                              = 'Respondents';
 //$string['respondenttype']                           = 'Respondent Type';
 //$string['respondenttype_help']                      = 'You can display your users\' full names with each response by setting this to "fullname". You can hide your users\' identities from the responses by setting this to "anonymous".';
 //$string['respondenttype_link']                      = 'mod/sliclquestions/mod#Respondent_Type';
