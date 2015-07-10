@@ -359,13 +359,13 @@ class mod_sliclquestions_management_console
         if (!$survey->capabilities->viewallresponses) {
             $select .= ' AND userid=' . $USER->id;
         }
-        $reponses = $DB->get_records_select('sliclquestions_response', $select);
-        if ($respomses) {
+        $responses = $DB->get_records_select('sliclquestions_response', $select);
+        if ($responses) {
             $table = new html_table();
             $table->head = array(get_string('respondents', 'sliclquestions'),
                                  get_string('dateresponded', 'sliclquestions'));
             $table->align = array(left, left);
-            foreach($respomses as $response) {
+            foreach($responses as $response) {
                 $user = $DB->get_record('user', array('id' => $response->userid));
                 $params['uid'] = $user->id;
                 $params['act'] = 'resp';
