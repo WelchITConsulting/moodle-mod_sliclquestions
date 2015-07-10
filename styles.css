@@ -206,7 +206,7 @@ h3.slicl-legend {
 }
 #page-mod-sliclquestions-view .sliclquestions-answer .quoted-text p {
     font-style: italic;
-    margin-left: 20px;
+    margin-left: 30px;
 }
 #page-mod-sliclquestions-view .sliclquestions-answer .quoted-text:before {
     content: '\201C';
