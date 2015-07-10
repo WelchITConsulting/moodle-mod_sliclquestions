@@ -109,11 +109,11 @@ class mod_sliclquestions_management_console
 //        $PAGE->set_pagelayout('popup');
         echo $survey->render_page_header()
            . $OUTPUT->box_start('sliclquestions-question')
-           . html_writer::div($question->content)
+           . html_writer::tag('p' ,$question->content)
            . $OUTPUT->box_end()
            . $OUTPUT->box_start('sliclquestions-answer')
            . html_writer::start_div('quote')
-           . html_writer::tag('h2', fullname($user))
+           . html_writer::tag('h3', fullname($user) . '-')
            . html_writer::end_div()
            . html_writer::div((isset($answer->response) ? $answer->response : get_string('noresponse', 'sliclquestions')),
                               'quoted-text')
