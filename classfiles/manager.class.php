@@ -674,7 +674,7 @@ class mod_sliclquestions_management_console
 
     private function display_report_footer()
     {
-        return '<p>Display Report footer</p>';
+        return '<!-- Display Report footer -->';
     }
 
     private function display_report_body(&$survey, &$url, &$params)
@@ -691,8 +691,8 @@ class mod_sliclquestions_management_console
     {
         global $DB;
 
-        $data   = array(array('3', '0', '0', '0', '0'),
-                        array('4', '0', '0', '0', '0'));
+        $data   = array(array('3', '0', '0', '0', '0', '0'),
+                        array('4', '0', '0', '0', '0', '0'));
 
         $sql = 'SELECT s.sex, s.year_id, COUNT(s.id) AS numrec'
              . ' FROM {sliclquestions_students} s, {sliclquestions_response} r,'
@@ -715,6 +715,7 @@ class mod_sliclquestions_management_console
                 }
             }
         }
+
 
         // Number of pupils in assessment
         $table = new html_table();
