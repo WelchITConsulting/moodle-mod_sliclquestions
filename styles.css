@@ -187,12 +187,16 @@ h3.slicl-legend {
     margin: 10px 30px;
     border-radius: 20px;
     padding: 20px;
-    color: #fff;
-    font-size: 1.1em;
 }
 #page-mod-sliclquestions-view .sliclquestions-question p {
     padding: 0;
     margin: 0;
+    color: #fff;
+    font-size: 1.2em;
+}
+#page-mod-sliclquestions-view .sliclquestions-question p:before {
+    content: '\201C';
+    font-size: 4em;
 }
 #page-mod-sliclquestions-view .sliclquestions-answer {
     background-color: #a1d6f4;
