@@ -639,7 +639,7 @@ class mod_sliclquestions_management_console
 
         $htmloutput .= html_writer::tag('h3', 'Results:')
                      . html_writer::start_div('students')
-                     . html_writer::table(table)
+//                     . html_writer::table(table)
                      . html_writer::end_div()
                      . html_writer::start_tag('form', array('action' => $url,
                                                             'method' => 'get',
