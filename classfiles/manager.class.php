@@ -665,8 +665,8 @@ class mod_sliclquestions_management_console
                   . get_string('male', 'sliclquestions')
                   . html_writer::end_tag('label');
         }
-        $out = html_writer::end_div()
-             . html_writer::end_tag('form');
+        $out .= html_writer::end_div()
+              . html_writer::end_tag('form');
         return $out;
     }
 
@@ -696,7 +696,7 @@ class mod_sliclquestions_management_console
 
 
 
-
+/*
         $males   = array(3 => array(1 => 0, 2 => 0, 3 => 0, 4 => 0),
                          4 => array(1 => 0, 2 => 0, 3 => 0, 4 => 0));
         $females = array(3 => array(1 => 0, 2 => 0, 3 => 0, 4 => 0),
@@ -752,5 +752,5 @@ class mod_sliclquestions_management_console
                                ($totalmales[3] + $totalmales[4]) . ' / ' . ($totalfemales[3] + $totalfemales[4]));
         $table->data[] = array('', '', '', '', '', ($totalmales[3] + $totalmales[4] + $totalfemales[3] + $totalfemales[4]));
         return $table;
-    }
+*/    }
 }
