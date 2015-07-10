@@ -713,7 +713,7 @@ class mod_sliclquestions_management_console
                     $data[$result->year_id - 3][$i] = html_writer::tag('strong', $result->numrec);
                 }
             }
-            $results = $DB->get_records_sql($sql, array(1, $surveyid, $i));
+            $results = $DB->get_records_sql($sql, array(1, 2, $i));
             if ($results) {
                 foreach($results as $result) {
                     $data[$result->year_id - 3][$i] .=  ' / ' . $result->numrec;
