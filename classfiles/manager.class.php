@@ -629,18 +629,57 @@ class mod_sliclquestions_management_console
         return $ces;
     }
 
-    private function display_report_header()
+    private function display_report_header(&$url, &$params)
     {
-        echo '<p>Report Header</p>';
+        $htmloutput = '';
+        $table = new html_table();
+        $table->head = array('',
+                             '',
+                             '');
+        $table->align = array('', '', '');
+
+        $htmloutput .= html_writer::tag('h3', 'Results:')
+                     . html_writer::start_div('students')
+                     . html_writer::table(table)
+                     . html_writer::end_div()
+                     . html_writer::start_tag('form', array('action' => $url,
+                                                            'method' => 'get',
+                                                            'name'   => 'sliclfilters'))
+                     . html_writer::start_div('pupil-sex')
+                     . html_writer::tag('h4', 'Sex')
+                     . html_writer::start_tag('label')
+                     . html_writer::empty_tag('input', array('type' => 'radio',
+                                                             'name' => 'sx',
+                                                             'id'   => 'pupils-male',
+                                                             'value' => 'm'))
+                     . get_string('pupilsmale', 'sliclquestions')
+                     . html_writer::end_tag('label')
+                     . html_writer::start_tag('label')
+                     . html_writer::empty_tag('input', array('type' => 'radio',
+                                                             'name' => 'sx',
+                                                             'id'   => 'pupils-female',
+                                                             'value' => 'f'))
+                     . get_string('pupilsfemale', 'sliclquestions')
+                     . html_writer::end_tag('label')
+                     . html_writer::start_tag('label')
+                     . html_writer::empty_tag('input', array('type' => 'radio',
+                                                             'name' => 'sx',
+                                                             'id'   => 'pupils-both',
+                                                             'value' => 'b'))
+                     . get_string('pupilsboth', 'sliclquestions')
+                     . html_writer::end_tag('label')
+                     . html_writer::end_div()
+                     . html_writer::end_tag('form');
+        return $htmloutput;
     }
 
-    private function display_report_footer()
+    private function display_report_footer(&$survey, &$url, &$params)
     {
-        echo '<p>Report footer</p>';
+        return '<p>Report footer</p>';
     }
 
     private function display_report_body()
     {
-        echo '<p>Report Body</p>';
+        return '<p>Report Body</p>';
     }
 }
