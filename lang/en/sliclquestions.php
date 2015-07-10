@@ -71,6 +71,7 @@ $string['noneinuse']                                = 'This questionnaire does n
 $string['nonrespondents']                           = 'Users who have not yet submitted their responses to this questionnaire';
 $string['nonzeroerror']                             = 'You must select the type of survey to create';
 $string['noregisters']                              = 'You must create a pupil regoster before creating a pupil assessment';
+$string['noresponse']                               = 'Invalid response';
 $string['notapplicable']                            = 'N/A';
 $string['noteligible']                              = 'You are not eligible to take this questionnaire.';
 $string['notopen']                                  = 'This questionnaire will not open until {$a}.';
