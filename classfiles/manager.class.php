@@ -42,9 +42,9 @@ class mod_sliclquestions_management_console
         if ($survey->questype == SLICLQUESTIONS_PUPILREGISTRATION) {
             $this->pupil_registration_statistics($survey, $course, $context, $url);
         } elseif ($survey->questype == SLICLQUESTIONS_PUPILASSESSMENT) {
-            $this->pupil_assessment_statistics($survey, $course, $context, $url);
+            $this->pupil_assessment($survey, $course, $context, $url);
         } elseif ($survey->questype == SLICLQUESTIONS_SURVEY) {
-            $this->display_statistics($course, $context, $survey, $url, $params);
+            $this->display_survey($course, $context, $survey, $url, $params);
         } else {
             notice(get_string('invalidquesttype', 'sliclquestions'), $url);
         }
@@ -58,42 +58,65 @@ class mod_sliclquestions_management_console
 
 
 
-
-
-
-
-
-
-    private function display_statistics(&$course, &$context, &$survey, &$url, &$params)
+    private function pupil_assessment(&$course, &$context, &$survey, &$url, &$params)
     {
-//        global $OUTPUT;
-//
-//        echo $survey->render_page_header()
-//           . $OUTPUT->footer();
-//        exit();
-//    }
-//
-//    private function show_response(&$uid, &$survey)
-//    {
-//        global $OUPTUT, $PAGE;
-//
-//        $user = $DB->get_record('user', array('id' => $uid));
-//        $sql = 'SELECT r.id AS rid, r.userid AS uid, '
-//        $response = $DB->get_record_sql('sliclquestions_response')
-//        $PAGE->set_pagelayout('popup');
-//        echo $OUTPUT->header()
-//           . $OUTPUT->box_start('sliclquestions-quote')
-//           . html_writer::start_div('quote')
-//           . html_writer::tag('h2', fullname($user))
-//           . html_writer::end_div()
-//           . html_writer::start_div('quoted-text')
-//           . html_writer::end_div()
-//           . $OUTPUT->box_end()
-//           . $OUTPUT->footer();
-//    }
-//
-//    private function show_non_respondents()
-//    {
+        if ($survey->capabilities->viewallresponse) {
+
+        } elseif ($survey->capabilitis->viewownresponses) {
+
+        }
+    }
+
+    private function display_survey(&$course, &$context, &$survey, &$url, &$params)
+    {
+        global $OUTPUT;
+
+        if (!empty($params['act'])) {
+            switch($params['act']) {
+
+                // Display response
+                case 'resp':
+                    $uid = required_param('uid', PARAM_INT);
+                    $this->show_response($uid, $survey);
+                    break;
+
+                // Display the non-respondents for the survey
+                case 'noresp':
+                    $this->show_non_respondents();
+                    break;
+
+                // Display a list of those who have responded
+                default:
+                    $this->show_respondents();
+                    break;
+            }
+        } else {
+            // Display a list of those who have responded
+            $this->show_respondents();
+        }
+    }
+
+    private function show_response(&$uid, &$survey)
+    {
+        global $OUPTUT, $PAGE;
+
+        $user = $DB->get_record('user', array('id' => $uid));
+        $sql = 'SELECT r.id AS rid, r.userid AS uid, ';
+        $response = $DB->get_record_sql('sliclquestions_response');
+        $PAGE->set_pagelayout('popup');
+        echo $OUTPUT->header()
+           . $OUTPUT->box_start('sliclquestions-quote')
+           . html_writer::start_div('quote')
+           . html_writer::tag('h2', fullname($user))
+           . html_writer::end_div()
+           . html_writer::start_div('quoted-text')
+           . html_writer::end_div()
+           . $OUTPUT->box_end()
+           . $OUTPUT->footer();
+    }
+
+    private function show_non_respondents()
+    {
         global $DB, $CFG, $PAGE, $OUTPUT;
 
         $showall        = optional_param('showall', false, PARAM_INT);
@@ -324,6 +347,39 @@ class mod_sliclquestions_management_console
                                                 'fullpath' => '/mod/sliclquestions/module.js'));
         }
         echo $OUTPUT->box_end()
+           . $OUTPUT->footer();
+        exit();
+    }
+
+    private function show_respondents(&$survey, &$params)
+    {
+        global $DB, $PAGE, $OUTPUT;
+
+        $select = 'survey_id=' . $survey->id;
+        if ($survey->capabilitis->viewownresponses) {
+            $select .= ' AND userid=' . $USER->id;
+        }
+        $reponses = $DB->get_records_select('sliclquestions_response', $select);
+        if ($respomses) {
+            $table = new html_table();
+            $table->head = array(get_string('respondents', 'sliclquestions'),
+                                 get_string('dateresponded', 'sliclquestions'));
+            $table->align = array(left, left);
+            foreach($respomses as $response) {
+                $user = $DB->get_record('user', array('id' => $response->userid));
+                $params['uid'] = $user->id;
+                $params['act'] = 'resp';
+                $userlink = html_writer::tag('a',
+                                             fullname($user),
+                                             array('href' => new moodleurl('/mod/sliclquestions/view.php', $params)));
+                $table->data[] = array($userlink,
+                                       userdate($$response->submitted));
+            }
+        }
+        echo $survey->render_page_header()
+           . $OUTPUT->box_start('generalbox center clearfix')
+           . html_writer::table($table)
+           . $OUTPUT->box_end()
            . $OUTPUT->footer();
         exit();
     }
