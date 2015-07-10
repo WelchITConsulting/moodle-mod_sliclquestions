@@ -660,8 +660,7 @@ class mod_sliclquestions_management_console
             if ($params['x'] == $sex) {
                 $inpparams['checked'] = 'checked';
             }
-            $out .= '<pre>' . print_r($params, true) . '</pre>'
-                  . html_writer::start_tag('label')
+            $out .= html_writer::start_tag('label', array('class' => 'sliclques-filter-radio'))
                   . html_writer::empty_tag('input', $inpparams)
                   . ($sex == 'b' ? get_string('pupilsboth', 'sliclquestions') : '')
                   . ($sex == 'm' ? get_string('male', 'sliclquestions') : '')
