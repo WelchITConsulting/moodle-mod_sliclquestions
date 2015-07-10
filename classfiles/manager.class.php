@@ -647,9 +647,9 @@ class mod_sliclquestions_management_console
                              get_string('pupilstotal', 'sliclquestions'));
         $table->align = array('left', 'center', 'center', 'center', 'center', 'center');
         $sql = 'SELECT s.sex, COUNT(s.id) AS numrec'
-             . ' FROM {sliclquestions_student} s, {sliclquestions_reponse} r'
-             . ' WHERE s.id=r.id AND s.deleteflag=0 AND r.survey_id=?'
-             . '  ABD s.year=? AND s.kpi_level=?';
+             . ' FROM {sliclquestions_students} s, {sliclquestions_response} r'
+             . ' WHERE s.id=r.pupilid AND s.deleteflag=0 AND r.survey_id=?'
+             . '  AND s.year_id=? AND s.kpi_level=?';
         for($y = 3; $y <= 4; $y++) {
             for($k = 1; $k <= 4; $k++) {
                 $recs = $DB->get_records_sql($sql, array($survey->id, $y, $k));
