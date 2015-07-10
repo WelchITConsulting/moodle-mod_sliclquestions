@@ -200,13 +200,16 @@ h3.slicl-legend {
     border-radius: 20px;
     padding: 20px 20px 10px;
 }
-#page-mod-sliclquestions-view .sliclquestions-answer h3 {
+#page-mod-sliclquestions-view .sliclquestions-answer h4 {
     padding: 0;
     margin: 0 0 15px 0;
 }
 #page-mod-sliclquestions-view .sliclquestions-answer .quoted-text p {
     font-style: italic;
     margin-left: 30px;
+}
+#page-mod-sliclquestions-view .sliclquestions-answer .quoted-text {
+    padding-top: 20px;
 }
 #page-mod-sliclquestions-view .sliclquestions-answer .quoted-text:before {
     content: '\201C';
