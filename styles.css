@@ -204,11 +204,10 @@ h3.slicl-legend {
     padding: 0;
     margin: 0 0 15px 0;
 }
-#page-mod-sliclquestions-view .sliclquestions-answer p {
-    vertical-align: top;
-    margin-left: 20px;
+#page-mod-sliclquestions-view .sliclquestions-answer quoted-text {
+    font-style: italic;
 }
-#page-mod-sliclquestions-view .sliclquestions-answer p:before {
+#page-mod-sliclquestions-view .sliclquestions-answer quoted-text:before {
     content: '\201C';
     font-size: 4em;
 }
