@@ -680,7 +680,7 @@ class mod_sliclquestions_management_console
         $out = html_writer:: start_div('totals')
              . html_writer::tag('h3', 'KPI Levels')
              . html_writer::tag('p', 'The following table displays the nunber of pupils at the various KPI levels:')
-             . html_writer::table($this->get_kpi_totals($survey->id, $url, $params))
+//             . html_writer::table($this->get_kpi_totals($survey->id, $url, $params))
              . html_writer::end_div();
         return $out;
     }
