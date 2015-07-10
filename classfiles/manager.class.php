@@ -682,8 +682,7 @@ class mod_sliclquestions_management_console
         $out = html_writer:: start_div('totals')
              . html_writer::tag('h3', 'KPI Levels')
              . html_writer::tag('p', 'The following table displays the nunber of pupils at the various KPI levels:')
-//             . html_writer::table($this->get_kpi_totals($survey->id, $url, $params))
-                . $this->get_kpi_totals($survey, $url, $params)
+             . html_writer::table($this->get_kpi_totals($survey->id, $url, $params))
              . html_writer::end_div();
         return $out;
     }
@@ -691,6 +690,13 @@ class mod_sliclquestions_management_console
     private function get_kpi_totals(&$survey, &$url, $params)
     {
         global $DB;
+
+        $males   = array(3 => array(1 => 0, 2 => 0, 3 => 0, 4 => 0),
+                         4 => array(1 => 0, 2 => 0, 3 => 0, 4 => 0));
+        $females = array(3 => array(1 => 0, 2 => 0, 3 => 0, 4 => 0),
+                         4 => array(1 => 0, 2 => 0, 3 => 0, 4 => 0));
+        $totalmales   = array(3 => 0, 4 => 0);
+        $totalfemales = array(3 => 0, 4 => 0);
 
         $sql = 'SELECT s.sex, COUNT(s.id)'
              . ' FROM {sliclquestions_students} s, {sliclquestions_response} r,'
@@ -708,15 +714,14 @@ class mod_sliclquestions_management_console
             $sqlparams[] = $params['y'];
         }
         $results = $DB->get_records_sql($sql, $sqlparams);
-        return '<pre>' . print_r($results, true) . '</pre>';
-/*
-        $males   = array(3 => array(1 => 0, 2 => 0, 3 => 0, 4 => 0),
-                         4 => array(1 => 0, 2 => 0, 3 => 0, 4 => 0));
-        $females = array(3 => array(1 => 0, 2 => 0, 3 => 0, 4 => 0),
-                         4 => array(1 => 0, 2 => 0, 3 => 0, 4 => 0));
-        $totalmales   = array(3 => 0, 4 => 0);
-        $totalfemales = array(3 => 0, 4 => 0);
-        // Number of pupils in assessment
+        echo '<pre>' . print_r($results, true) . '</pre><pre>SQL: ' . $sql . '</pre><pre>Params: ' . print_r($sqlparams, true) . '</pre>';
+
+
+
+
+
+
+// Number of pupils in assessment
         $table = new html_table();
         $table->head = array('School Year',
                              'KPI 1',
@@ -725,45 +730,22 @@ class mod_sliclquestions_management_console
                              'KPI 4',
                              get_string('pupilstotal', 'sliclquestions'));
         $table->align = array('left', 'center', 'center', 'center', 'center', 'center');
-        $sql = 'SELECT s.sex, COUNT(s.id) AS numrec'
-             . ' FROM {sliclquestions_students} s, {sliclquestions_response} r'
-             . ' WHERE s.id=r.pupilid AND s.deleteflag=0 AND r.survey_id=?'
-             . '  AND s.year_id=? AND s.kpi_level=?';
-        for($y = 3; $y <= 4; $y++) {
-            for($k = 1; $k <= 4; $k++) {
-                $recs = $DB->get_records_sql($sql, array($survey->id, $y, $k));
-                if ($recs) {
-                    foreach($recs as $rec) {
-                        if ($rec->sex == 'm') {
-                            $males[$y][$k] += (int)$rec->numrec;
-                            $totalmales[$y] += (int)$rec->numrec;
-                        } else {
-                            $females[$y][$k] += (int)$rec->numrec;
-                            $totalfemales[$y] += (int)$rec->numrec;
-                        }
-                    }
-                }
-            }
+        if (($params['y'] == 3) || ($params['y'] == 0)) {
+            $table->data[] = array('3',
+                                   ($males[3][1] . ' / ' . $females[3][1]),
+                                   ($males[3][2] . ' / ' . $females[3][2]),
+                                   ($males[3][3] . ' / ' . $females[3][3]),
+                                   ($males[3][4] . ' / ' . $females[3][4]),
+                                   ($totalmales[3] . ' / ' . $totalfemales[3]));
         }
-        $table->data[] = array('3',
-                               $males[3][1] . ' / ' . $females[3][1],
-                               $males[3][2] . ' / ' . $females[3][2],
-                               $males[3][3] . ' / ' . $females[3][3],
-                               $males[3][4] . ' / ' . $females[3][4],
-                               $totalmales[3] . ' / ' . $totalfemales[3]);
-        $table->data[] = array('4',
-                               $males[4][1] . ' / ' . $females[4][1],
-                               $males[4][2] . ' / ' . $females[4][2],
-                               $males[4][3] . ' / ' . $females[4][3],
-                               $males[4][4] . ' / ' . $females[4][4],
-                               $totalmales[4] . ' / ' . $totalfemales[4]);
-        $table->data[] = array('totals',
-                               ($males[3][1] + $males[4][1]) . ' / ' . ($females[3][1] + $females[4][1]),
-                               ($males[3][1] + $males[4][1]) . ' / ' . ($females[3][1] + $females[4][1]),
-                               ($males[3][1] + $males[4][1]) . ' / ' . ($females[3][1] + $females[4][1]),
-                               ($males[3][1] + $males[4][1]) . ' / ' . ($females[3][1] + $females[4][1]),
-                               ($totalmales[3] + $totalmales[4]) . ' / ' . ($totalfemales[3] + $totalfemales[4]));
-        $table->data[] = array('', '', '', '', '', ($totalmales[3] + $totalmales[4] + $totalfemales[3] + $totalfemales[4]));
+        if (($params['y'] == 4) || ($params['y'] == 0)) {
+            $table->data[] = array('3',
+                                   ($males[4][1] . ' / ' . $females[4][1]),
+                                   ($males[4][2] . ' / ' . $females[4][2]),
+                                   ($males[4][3] . ' / ' . $females[4][3]),
+                                   ($males[4][4] . ' / ' . $females[4][4]),
+                                   ($totalmales[4] . ' / ' . $totalfemales[4]));
+        }
         return $table;
-*/    }
+    }
 }
