@@ -211,4 +211,5 @@ h3.slicl-legend {
 #page-mod-sliclquestions-view .sliclquestions-answer .quoted-text:before {
     content: '\201C';
     font-size: 4em;
+    float: left;
 }
