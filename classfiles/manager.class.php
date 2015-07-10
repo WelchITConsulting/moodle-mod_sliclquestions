@@ -694,7 +694,7 @@ class mod_sliclquestions_management_console
         $data   = array(array('3', '0', '0', '0', '0', '0'),
                         array('4', '0', '0', '0', '0', '0'));
 
-        $sql = 'SELECT s.sex, s.year_id, COUNT(s.id) AS numrec'
+        $sql = 'SELECT CONCAT(s.sex, s.year_id) AS id, s.sex, s.year_id, COUNT(s.id) AS numrec'
              . ' FROM {sliclquestions_students} s, {sliclquestions_response} r,'
              . '      {sliclquestions_resp_single} rs'
              . ' WHERE s.id = r.pupilid AND r.id=rs.responseid AND rs.questionid=13'
