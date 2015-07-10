@@ -695,7 +695,7 @@ class mod_sliclquestions_management_console
         $sql = 'SELECT s.sex, COUNT(s.id)'
              . ' FROM {sliclquestions_students} s, {sliclquestions_response} r,'
              . '      {sliclquestions_resp_single} rs'
-             . ' WHERE s.id = r.pupilid AND r.id=rs.surveyid AND rs.questionid=13'
+             . ' WHERE s.id = r.pupilid AND r.id=rs.responseid AND rs.questionid=13'
              . '       AND r.survey_id=?';
         $sqlparams = array($survey->id);
 
