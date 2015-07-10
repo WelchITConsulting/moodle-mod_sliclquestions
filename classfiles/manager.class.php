@@ -87,7 +87,7 @@ class mod_sliclquestions_management_console
 
                 // Display a list of those who have responded
                 default:
-                    $this->show_respondents();
+                    $this->show_respondents($survey, $params);
                     break;
             }
         } else {
@@ -356,7 +356,7 @@ class mod_sliclquestions_management_console
         global $DB, $PAGE, $OUTPUT, $USER;
 
         $select = 'survey_id=' . $survey->id;
-        if (!$survey->capabilitis->viewallresponses) {
+        if (!$survey->capabilities->viewallresponses) {
             $select .= ' AND userid=' . $USER->id;
         }
         $reponses = $DB->get_records_select('sliclquestions_response', $select);
