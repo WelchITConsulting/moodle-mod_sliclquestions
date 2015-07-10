@@ -210,8 +210,9 @@ h3.slicl-legend {
 }
 #page-mod-sliclquestions-view .sliclquestions-answer .quoted-text:before {
     content: '\201C';
-    font-size: 4em;
+    font-size: 6em;
     float: left;
     position: relative;
     top: -15px;
+    color: #eee;
 }
