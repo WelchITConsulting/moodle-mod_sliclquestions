@@ -665,26 +665,26 @@ class mod_sliclquestions_management_console
                     }
                 }
             }
-            $table->data[] = array('3',
-                                   $males[3][1] . ' / ' . $females[3][1],
-                                   $males[3][2] . ' / ' . $females[3][2],
-                                   $males[3][3] . ' / ' . $females[3][3],
-                                   $males[3][4] . ' / ' . $females[3][4],
-                                   $totalmales[3] . ' / ' . $totalfemales[3]);
-            $table->data[] = array('4',
-                                   $males[4][1] . ' / ' . $females[4][1],
-                                   $males[4][2] . ' / ' . $females[4][2],
-                                   $males[4][3] . ' / ' . $females[4][3],
-                                   $males[4][4] . ' / ' . $females[4][4],
-                                   $totalmales[4] . ' / ' . $totalfemales[4]);
-            $table->data[] = array('totals',
-                                   ($males[3][1] + $males[4][1]) . ' / ' . ($females[3][1] + $females[4][1]),
-                                   ($males[3][1] + $males[4][1]) . ' / ' . ($females[3][1] + $females[4][1]),
-                                   ($males[3][1] + $males[4][1]) . ' / ' . ($females[3][1] + $females[4][1]),
-                                   ($males[3][1] + $males[4][1]) . ' / ' . ($females[3][1] + $females[4][1]),
-                                   ($totalmales[3] + $totalmales[4]) . ' / ' . ($totalfemales[3] + $totalfemales[4]));
-            $table->data[] = array('', '', '', '', '', ($totalmales[3] + $totalmales[4] + $totalfemales[3] + $totalfemales[4]))
         }
+        $table->data[] = array('3',
+                               $males[3][1] . ' / ' . $females[3][1],
+                               $males[3][2] . ' / ' . $females[3][2],
+                               $males[3][3] . ' / ' . $females[3][3],
+                               $males[3][4] . ' / ' . $females[3][4],
+                               $totalmales[3] . ' / ' . $totalfemales[3]);
+        $table->data[] = array('4',
+                               $males[4][1] . ' / ' . $females[4][1],
+                               $males[4][2] . ' / ' . $females[4][2],
+                               $males[4][3] . ' / ' . $females[4][3],
+                               $males[4][4] . ' / ' . $females[4][4],
+                               $totalmales[4] . ' / ' . $totalfemales[4]);
+        $table->data[] = array('totals',
+                               ($males[3][1] + $males[4][1]) . ' / ' . ($females[3][1] + $females[4][1]),
+                               ($males[3][1] + $males[4][1]) . ' / ' . ($females[3][1] + $females[4][1]),
+                               ($males[3][1] + $males[4][1]) . ' / ' . ($females[3][1] + $females[4][1]),
+                               ($males[3][1] + $males[4][1]) . ' / ' . ($females[3][1] + $females[4][1]),
+                               ($totalmales[3] + $totalmales[4]) . ' / ' . ($totalfemales[3] + $totalfemales[4]));
+        $table->data[] = array('', '', '', '', '', ($totalmales[3] + $totalmales[4] + $totalfemales[3] + $totalfemales[4]));
         $htmloutput = html_writer::tag('h3', 'Results:')
                      . html_writer::start_div('students')
                      . html_writer::tag('p', 'Number of pupils (male / female) participating in the SLiCL project.')
