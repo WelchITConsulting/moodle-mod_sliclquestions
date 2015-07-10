@@ -373,7 +373,7 @@ class mod_sliclquestions_management_console
                                              fullname($user),
                                              array('href' => new moodle_url('/mod/sliclquestions/view.php', $params)));
                 $table->data[] = array($userlink,
-                                       userdate($$response->submitted));
+                                       userdate($response->submitted));
             }
         }
         echo $survey->render_page_header()
