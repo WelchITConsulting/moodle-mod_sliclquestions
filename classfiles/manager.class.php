@@ -42,7 +42,7 @@ class mod_sliclquestions_management_console
         if ($survey->questype == SLICLQUESTIONS_PUPILREGISTRATION) {
             $this->pupil_registration_statistics($survey, $course, $context, $url);
         } elseif ($survey->questype == SLICLQUESTIONS_PUPILASSESSMENT) {
-            $this->pupil_assessment($survey, $course, $context, $url);
+            $this->pupil_assessment($survey, $course, $context, $url, $params);
         } elseif ($survey->questype == SLICLQUESTIONS_SURVEY) {
             $this->display_survey($course, $context, $survey, $url, $params);
         } else {
@@ -60,11 +60,15 @@ class mod_sliclquestions_management_console
 
     private function pupil_assessment(&$course, &$context, &$survey, &$url, &$params)
     {
-        if ($survey->capabilities->viewallresponse) {
+        global $OUTPUT, $PAGE;
 
-        } elseif ($survey->capabilitis->viewownresponses) {
+        echo $survey->render_page_header()
+           . $this->display_report_header()
+           . $this->display_report_body()
+           . $this->display_report_footer()
+           . $OUTPUT->footer($course);
+        exit();
 
-        }
     }
 
     private function display_survey(&$course, &$context, &$survey, &$url, &$params)
@@ -623,5 +627,20 @@ class mod_sliclquestions_management_console
             $ces = array_slice($ces, $startpage, $pagecount);
         }
         return $ces;
+    }
+
+    private function display_report_header()
+    {
+        echo '<p>Report Header</p>';
+    }
+
+    private function display_report_footer()
+    {
+        echo '<p>Report footer</p>';
+    }
+
+    private function display_report_body()
+    {
+        echo '<p>Report Body</p>';
     }
 }
