@@ -697,7 +697,7 @@ class mod_sliclquestions_management_console
         global $DB;
 
         $sql = 'SELECT '
-             . ' FROM {sliclquestions_students} s'
+             . ' FROM {sliclquestions_students} s';
 
 
 
