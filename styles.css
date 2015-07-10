@@ -182,3 +182,13 @@ h3.slicl-legend {
     display: inherit;
     margin-left: 10px;
 }
+#page-mod-sliclquestions-view .slicl-question {
+    background-color: #2fa4e7;
+    margin: 10px 30px;
+    border-radius: 20px;
+}
+#page-mod-sliclquestions-view .slicl-answer {
+    background-color: #a1d6f4;
+    margin: 10px 30px;
+    border-radius: 20px;
+}
