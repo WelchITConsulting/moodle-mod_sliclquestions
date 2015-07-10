@@ -661,8 +661,10 @@ class mod_sliclquestions_management_console
                 $inpparams['checked'] = 'checked';
             }
             $out .= html_writer::start_tag('label')
-                  . html_writer::empty_tag('input', $params)
-                  . get_string('male', 'sliclquestions')
+                  . html_writer::empty_tag('input', $inpparams)
+                  . ($params['x'] == 'b' ? get_string('pupilsboth', 'sliclquestions') : '')
+                  . ($params['x'] == 'm' ? get_string('male', 'sliclquestions') : '')
+                  . ($params['x'] == 'f' ? get_string('female', 'sliclquestions') : '')
                   . html_writer::end_tag('label');
         }
         $out .= html_writer::end_div()
