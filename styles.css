@@ -190,9 +190,20 @@ h3.slicl-legend {
     color: #fff;
     font-size: 1.1em;
 }
+#page-mod-sliclquestions-view .sliclquestions-question p {
+    padding: 0;
+    margin: 0;
+}
 #page-mod-sliclquestions-view .sliclquestions-answer {
     background-color: #a1d6f4;
     margin: 10px 30px;
     border-radius: 20px;
-    padding: 20px;
+    padding: 20px 20px 10px;
+}
+#page-mod-sliclquestions-view .sliclquestions-answer h2 {
+    padding: 0;
+    margin: 0 0 15px 0;
+}
+#page-mod-sliclquestions-view .sliclquestions-answer p {
+
 }
