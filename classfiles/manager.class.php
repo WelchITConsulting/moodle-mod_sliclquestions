@@ -63,7 +63,7 @@ class mod_sliclquestions_management_console
         global $OUTPUT, $PAGE;
 
         echo $survey->render_page_header()
-           . $this->display_report_header(&$url, &$params)
+           . $this->display_report_header($url, $params)
            . $this->display_report_body()
            . $this->display_report_footer()
            . $OUTPUT->footer($course);
@@ -631,12 +631,11 @@ class mod_sliclquestions_management_console
 
     private function display_report_header(&$url, &$params)
     {
-        $htmloutput = '';
-        $table = new html_table();
-        $table->head = array('',
-                             '',
-                             '');
-        $table->align = array('', '', '');
+//        $table = new html_table();
+//        $table->head = array('',
+//                             '',
+//                             '');
+//        $table->align = array('', '', '');
 
         $htmloutput .= html_writer::tag('h3', 'Results:')
                      . html_writer::start_div('students')
@@ -675,11 +674,11 @@ class mod_sliclquestions_management_console
 
     private function display_report_footer(&$survey, &$url, &$params)
     {
-        return '<p>Report footer</p>';
+        return '<p>Display Report footer</p>';
     }
 
     private function display_report_body()
     {
-        return '<p>Report Body</p>';
+        return '<p>Display Report Body</p>';
     }
 }
