@@ -353,10 +353,10 @@ class mod_sliclquestions_management_console
 
     private function show_respondents(&$survey, &$params)
     {
-        global $DB, $PAGE, $OUTPUT;
+        global $DB, $PAGE, $OUTPUT, $USER;
 
         $select = 'survey_id=' . $survey->id;
-        if ($survey->capabilitis->viewownresponses) {
+        if (!$survey->capabilitis->viewallresponses) {
             $select .= ' AND userid=' . $USER->id;
         }
         $reponses = $DB->get_records_select('sliclquestions_response', $select);
