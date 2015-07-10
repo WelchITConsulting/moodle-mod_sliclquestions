@@ -687,23 +687,19 @@ class mod_sliclquestions_management_console
         return $out;
     }
 
-    private function get_kpi_totals(&$survey, &$url, $params)
+    private function get_kpi_totals($surveyid, &$url, $params)
     {
         global $DB;
 
-        $males   = array(3 => array(1 => 0, 2 => 0, 3 => 0, 4 => 0),
-                         4 => array(1 => 0, 2 => 0, 3 => 0, 4 => 0));
-        $females = array(3 => array(1 => 0, 2 => 0, 3 => 0, 4 => 0),
-                         4 => array(1 => 0, 2 => 0, 3 => 0, 4 => 0));
-        $totalmales   = array(3 => 0, 4 => 0);
-        $totalfemales = array(3 => 0, 4 => 0);
+        $data   = array(array('3', '0', '0', '0', '0'),
+                        array('4', '0', '0', '0', '0'));
 
         $sql = 'SELECT s.sex, COUNT(s.id)'
              . ' FROM {sliclquestions_students} s, {sliclquestions_response} r,'
              . '      {sliclquestions_resp_single} rs'
              . ' WHERE s.id = r.pupilid AND r.id=rs.responseid AND rs.questionid=13'
-             . '       AND r.survey_id=?';
-        $sqlparams = array($survey->id);
+             . '       AND r.survey_id=? AND rs.response=?';
+        $sqlparams = array($surveyid, 3);
 
         if ($params['x'] != 'b') {
             $sql .= ' AND s.sex=\'' . $params['x'] . '\'';
@@ -714,6 +710,10 @@ class mod_sliclquestions_management_console
             $sqlparams[] = $params['y'];
         }
         $results = $DB->get_records_sql($sql, $sqlparams);
+
+
+
+
         echo '<pre>' . print_r($results, true) . '</pre><pre>SQL: ' . $sql . '</pre><pre>Params: ' . print_r($sqlparams, true) . '</pre>';
 
 
@@ -730,22 +730,7 @@ class mod_sliclquestions_management_console
                              'KPI 4',
                              get_string('pupilstotal', 'sliclquestions'));
         $table->align = array('left', 'center', 'center', 'center', 'center', 'center');
-        if (($params['y'] == 3) || ($params['y'] == 0)) {
-            $table->data[] = array('3',
-                                   ($males[3][1] . ' / ' . $females[3][1]),
-                                   ($males[3][2] . ' / ' . $females[3][2]),
-                                   ($males[3][3] . ' / ' . $females[3][3]),
-                                   ($males[3][4] . ' / ' . $females[3][4]),
-                                   ($totalmales[3] . ' / ' . $totalfemales[3]));
-        }
-        if (($params['y'] == 4) || ($params['y'] == 0)) {
-            $table->data[] = array('3',
-                                   ($males[4][1] . ' / ' . $females[4][1]),
-                                   ($males[4][2] . ' / ' . $females[4][2]),
-                                   ($males[4][3] . ' / ' . $females[4][3]),
-                                   ($males[4][4] . ' / ' . $females[4][4]),
-                                   ($totalmales[4] . ' / ' . $totalfemales[4]));
-        }
+        $table->data = $data;
         return $table;
     }
 }
