@@ -115,7 +115,7 @@ class mod_sliclquestions_management_console
            . html_writer::start_div('quote')
            . html_writer::tag('h2', fullname($user))
            . html_writer::end_div()
-           . html_writer::div((!empty($answer->response) ? $answer->response : ''),
+           . html_writer::div((isset($answer->response) ? $answer->response : get_text('noresponse', 'sliclquestions')),
                               'quoted-text')
            . $OUTPUT->box_end()
            . $OUTPUT->footer();
