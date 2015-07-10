@@ -705,13 +705,12 @@ class mod_sliclquestions_management_console
         if ($params['y'] != 0) {
             $sql .= ' AND s.year=' . $params['y'];
         }
+        $sql .= ' GROUP BY s.sex, s.year_id';
         for ($i = 1;$i < 5;$i++) {
             $results = $DB->get_records_sql($sql, array($surveyid, $i));
             if ($results) {
                 foreach($results as $result) {
-                    if ($result->year_id == '3') {
-                        $data[0][$i] += $result->numrec;
-                    }
+                    $data[$result->year_id - 3][$i] += $result->numrec;
                 }
             }
         }
