@@ -725,7 +725,7 @@ class mod_sliclquestions_management_console
             if ($results) {
                 foreach($results as $result) {
                     $data[$result->year_id - 3][$i] .=  ' / ' . $result->numrec;
-                    $total1 += (int)$result->numrec;
+                    $total1[$result->year_id] += (int)$result->numrec;
                 }
             }
         }
