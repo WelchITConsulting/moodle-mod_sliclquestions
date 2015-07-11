@@ -683,10 +683,10 @@ class mod_sliclquestions_management_console
     {
         $out = html_writer:: start_div('totals')
              . html_writer::tag('h3', 'KPI Levels')
-             . html_writer::tag('p', 'The following table displays the nunber of pupils at the various KPI levels,<br>(<strong>Final assessment values</strong> / Initial assessment values):')
+             . html_writer::tag('p', 'The following table displays the nunber of pupils at the various KPI levels:<br>(<strong>Final assessment values</strong> / Initial assessment values):')
              . html_writer::table($this->get_kpi_totals($survey->id, $url, $params))
-             . html_writer::tag('h3', '')
-             . html_writer::tag('p', '')
+             . html_writer::tag('h3', 'Pupils Behaviour')
+             . html_writer::tag('p', '<strong>Final assessment values</strong> / Initial assessment values')
              . html_writer::table($this->display_behaviour_results())
              . html_writer::end_div();
         return $out;
@@ -761,11 +761,11 @@ class mod_sliclquestions_management_console
     {
         global $DB;
 
-        $question = $DB->get_record('sliclquestions_question', array('id' => 10));
-        $choices = $DB->get_records('sliclquestions_quest_choice', array('question_id', $question->id));
+        $question = $DB->get_record('sliclquestions_question', array('id' => '10'));
+        $choices = $DB->get_records('sliclquestions_quest_choice', array('question_id' => $question->id));
 
         $table = new html_table();
-        $table->header   = array($question->content);
+        $table->head     = array($question->content);
         $table->headspan = array(6);
         $table->align    = array('left', 'center', 'center', 'center', 'center', 'center');
 
