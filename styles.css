@@ -220,12 +220,17 @@ h3.slicl-legend {
     margin-right: 30px;
 }
 .slicl-behaviour th {
-    color: #fff;
     font-weight: 400;
     padding: 10px;
-    border: 1px dotted #eee;
+    border: 1px dotted #ccc;
+}
+.slicl-behaviour th ol {
+    margin-left: 30px;
 }
 .slicl-behaviour tr {
-    border-left: 1px dotted #eee;
-    border-right: 1px dotted #eee;
+    border-left: 1px dotted #ccc;
+    border-right: 1px dotted #ccc;
+}
+.slicl-behaviour tr.lastrow {
+    border-bottom: 1px dotted #ccc;
 }
