@@ -225,6 +225,7 @@ h3.slicl-legend {
 }
 .slicl-behaviour th ol {
     margin-left: 45px;
+    display: none;
 }
 .slicl-behaviour table {
     border: 1px dotted #000;

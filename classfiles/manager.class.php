@@ -788,7 +788,19 @@ class mod_sliclquestions_management_console
         $table->align    = array('left', 'center', 'center', 'center', 'center', 'center');
 
         $row = new html_table_row();
-        $row->cells = array('', '1', '2', '3', '4', '5');
+        $row->cells = array();
+        $row->cells[0] = new html_table_cell('');
+        $row->cells[0]->header = true;
+        $row->cells[1] = new html_table_cell('Very poor');
+        $row->cells[1]->header = true;
+        $row->cells[2] = new html_table_cell('Poor');
+        $row->cells[2]->header = true;
+        $row->cells[3] = new html_table_cell('Neutral');
+        $row->cells[3]->header = true;
+        $row->cells[4] = new html_table_cell('Good');
+        $row->cells[4]->header = true;
+        $row->cells[5] = new html_table_cell('Very good');
+        $row->cells[5]->header = true;
         $table->data[] = $row;
         foreach($choices as $choice) {
             $table->data[] = array($choice->content,
