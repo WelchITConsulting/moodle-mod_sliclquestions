@@ -711,21 +711,33 @@ class mod_sliclquestions_management_console
             $sql .= ' AND s.year=' . $params['y'];
         }
         $sql .= ' GROUP BY s.sex, s.year_id';
+        $total1 = array(3 => 0, 4 => 0);
+        $total2 = array(3 => 0, 4 => 0);
         for ($i = 1;$i < 5;$i++) {
             $results = $DB->get_records_sql($sql, array(13, $surveyid, $i));
             if ($results) {
                 foreach($results as $result) {
                     $data[$result->year_id - 3][$i] = html_writer::tag('strong', $result->numrec);
+                    $total2[$result->year_id] += (int)$result->numrec;
                 }
             }
             $results = $DB->get_records_sql($sql, array(1, 2, $i));
             if ($results) {
                 foreach($results as $result) {
                     $data[$result->year_id - 3][$i] .=  ' / ' . $result->numrec;
+                    $total1 += (int)$result->numrec;
                 }
             }
         }
-
+        $data[0][5] = html_writer::tag('strong', $total2[3]) . ' / ' . $total1[3];
+        $data[1][5] = html_writer::tag('strong', $total2[4]) . ' / ' . $total1[4];
+        for($y = 0; $y < count($data); $y++) {
+            for($x =0; $x < count($data[$y]); $x++) {
+                if (strpos($data[$y][$x], ' / ') === false) {
+                    $data[$y][$x] .= ' / 0';
+                }
+            }
+        }
 
         // Number of pupils in assessment
         $table = new html_table();
