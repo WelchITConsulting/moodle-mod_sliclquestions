@@ -222,17 +222,11 @@ h3.slicl-legend {
 .slicl-behaviour th {
     font-weight: 400;
     padding: 10px;
-    border-top: 1px dotted #333;
-    border-left: 1px dotted #333;
-    border-right: 1px dotted #333;
 }
 .slicl-behaviour th ol {
     margin-left: 30px;
+    border: 1px solid red;
 }
-.slicl-behaviour tr {
-    border-left: 1px dotted #ccc;
-    border-right: 1px dotted #ccc;
-}
-.slicl-behaviour tr.lastrow {
-    border-bottom: 1px dotted #ccc;
+.slicl-behaviour table {
+    border: 1px dotted #000;
 }
