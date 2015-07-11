@@ -687,7 +687,7 @@ class mod_sliclquestions_management_console
              . html_writer::table($this->get_kpi_totals($survey->id, $url, $params))
              . html_writer::tag('h3', '')
              . html_writer::tag('p', '')
-             . html_writer::table($this->get_behaviour_results())
+             . html_writer::table($this->display_behaviour_results())
              . html_writer::end_div();
         return $out;
     }
@@ -757,24 +757,27 @@ class mod_sliclquestions_management_console
         return $table;
     }
 
-    private function display_behaviour_results($survey)
+    private function display_behaviour_results()
     {
         global $DB;
 
         $question = $DB->get_record('sliclquestions_question', array('id' => 10));
         $choices = $DB->get_records('sliclquestions_quest_choice', array('question_id', $question->id));
 
-        $questtable = new html_table();
-        $questtable->header   = array($question->content);
-        $questtable->headspan = array(6);
-        $questtable->align    = array('left', 'center', 'center', 'center', 'center', 'center');
+        $table = new html_table();
+        $table->header   = array($question->content);
+        $table->headspan = array(6);
+        $table->align    = array('left', 'center', 'center', 'center', 'center', 'center');
 
         foreach($choices as $choice) {
-
+            $table->data[] = array($choice->content,
+                                   '<strong>0%</strong> / 0%',
+                                   '<strong>0%</strong> / 0%',
+                                   '<strong>0%</strong> / 0%',
+                                   '<strong>0%</strong> / 0%',
+                                   '<strong>0%</strong> / 0%');
         }
-        $out .= html_writer::end_div()
-              . html_writer::end_div();
-        return $out;
+        return $table;
     }
 
     private function get_pupilids()
@@ -790,17 +793,17 @@ class mod_sliclquestions_management_console
     {
         global $DB;
 
-        $sql = 'SELECT *'
-             . ' FROM {sliclquestions_response} r'
-             . ' WHERE '
-             . ' AND ';
-        if ($pupilids = $this->get_pupilids()) {
-            $sql .= ' AND r.pupilid IN ('
-                  . implode(',', $pupilids)
-                  . ')';
-        }
-        $initialresponses = $DB->get_records_sql($sql, array('survey_id' => 2));
-        $currentresponses = $DB->get_records_sql($sql, array('survey_id' => 3,
-                                                             ''));
+//        $sql = 'SELECT *'
+//             . ' FROM {sliclquestions_response} r'
+//             . ' WHERE '
+//             . ' AND ';
+//        if ($pupilids = $this->get_pupilids()) {
+//            $sql .= ' AND r.pupilid IN ('
+//                  . implode(',', $pupilids)
+//                  . ')';
+//        }
+//        $initialresponses = $DB->get_records_sql($sql, array('survey_id' => 2));
+//        $currentresponses = $DB->get_records_sql($sql, array('survey_id' => 3,
+//                                                             ''));
     }
 }
