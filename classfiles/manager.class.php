@@ -787,6 +787,9 @@ class mod_sliclquestions_management_console
         $table->headspan = array(6);
         $table->align    = array('left', 'center', 'center', 'center', 'center', 'center');
 
+        $row = new html_table_row();
+        $row->cells = array('', '1', '2', '3', '4', '5');
+        $table->data[] = $row;
         foreach($choices as $choice) {
             $table->data[] = array($choice->content,
                                    '<strong>0%</strong> / 0%',
