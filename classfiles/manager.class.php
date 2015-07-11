@@ -731,7 +731,7 @@ class mod_sliclquestions_management_console
             $sql .= ' AND s.sex=\'' . $params['x'] . '\'';
         }
         if ($params['y'] != 0) {
-            $sql .= ' AND s.year=' . $params['y'];
+            $sql .= ' AND s.year_id=' . $params['y'];
         }
         $sql .= ' GROUP BY s.sex, s.year_id';
         $total1 = array(3 => 0, 4 => 0);
