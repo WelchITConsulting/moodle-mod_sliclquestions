@@ -66,7 +66,8 @@ class mod_sliclquestions_management_console
         $params['y'] = optional_param('y', 0, PARAM_INT);
         $params['k'] = optional_param('k', 0, PARAM_INT);
 
-        echo $survey->render_page_header()
+        echo $OUTPUT->header()
+           . $OUTPUT->heading(format_string($survey->name))
            . $this->display_report_header($survey, $url, $params)
            . $this->display_report_body($survey, $url, $params)
            . $this->display_report_footer()
@@ -115,7 +116,8 @@ class mod_sliclquestions_management_console
         $answer = $DB->get_record('sliclquestions_resp_text', array('responseid' => $response->id,
                                                                     'questionid' => $question->id));
 //        $PAGE->set_pagelayout('popup');
-        echo $survey->render_page_header()
+        echo $OUTPUT->header()
+           . $OUTPUT->heading(format_string($survey->name))
            . $OUTPUT->box_start('sliclquestions-question')
            . html_writer::tag('p' ,$question->content)
            . $OUTPUT->box_end()
@@ -683,6 +685,9 @@ class mod_sliclquestions_management_console
              . html_writer::tag('h3', 'KPI Levels')
              . html_writer::tag('p', 'The following table displays the nunber of pupils at the various KPI levels,<br>(<strong>Final assessment values</strong> / Initial assessment values):')
              . html_writer::table($this->get_kpi_totals($survey->id, $url, $params))
+             . html_writer::tag('h3', '')
+             . html_writer::tag('p', '')
+             . html_writer::table($this->get_behaviour_results())
              . html_writer::end_div();
         return $out;
     }
@@ -732,7 +737,7 @@ class mod_sliclquestions_management_console
         $data[0][5] = html_writer::tag('strong', $total2[3]) . ' / ' . $total1[3];
         $data[1][5] = html_writer::tag('strong', $total2[4]) . ' / ' . $total1[4];
         for($y = 0; $y < count($data); $y++) {
-            for($x =0; $x < count($data[$y]); $x++) {
+            for($x =1; $x < count($data[$y]); $x++) {
                 if (strpos($data[$y][$x], ' / ') === false) {
                     $data[$y][$x] .= ' / 0';
                 }
