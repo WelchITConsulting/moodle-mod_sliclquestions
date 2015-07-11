@@ -220,14 +220,12 @@ h3.slicl-legend {
     margin-right: 30px;
 }
 .slicl-behaviour th {
-    background-color: #2fa4e7;
     color: #fff;
     font-weight: 400;
     padding: 10px;
+    border: 1px dotted #eee;
 }
-.slicl-behaviour table > tbody > tr:nth-of-type(odd) {
-    background-color: #6666ff;
-}
-.slicl-behaviour table > tbody > tr:nth-of-type(even) {
-    background-color: #a1d6f4;
+.slicl-behaviour tr {
+    border-left: 1px dotted #eee;
+    border-right: 1px dotted #eee;
 }
