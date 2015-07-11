@@ -699,6 +699,11 @@ class mod_sliclquestions_management_console
              . '      {sliclquestions_resp_single} rs'
              . ' WHERE s.id = r.pupilid AND r.id=rs.responseid AND rs.questionid=?'
              . '       AND r.survey_id=? AND rs.response=?';
+        if ($pupilids = $this->get_pupilids()) {
+            $sql .= ' AND r.pupilid IN ('
+                  . implode(',', $pupilids)
+                  . ')';
+        }
         if ($params['x'] != 'b') {
             $sql .= ' AND s.sex=\'' . $params['x'] . '\'';
         }
@@ -733,5 +738,52 @@ class mod_sliclquestions_management_console
         $table->align = array('left', 'center', 'center', 'center', 'center', 'center');
         $table->data = $data;
         return $table;
+    }
+
+    private function display_behaviour_results($survey)
+    {
+        global $DB;
+
+        $question = $DB->get_record('sliclquestions_question', array('id' => 10));
+        $choices = $DB->get_records('sliclquestions_quest_choice', array('question_id', $question->id));
+
+        $questtable = new html_table();
+        $questtable->header   = array($question->content);
+        $questtable->headspan = array(6);
+        $questtable->align    = array('left', 'center', 'center', 'center', 'center', 'center');
+
+        foreach($choices as $choice) {
+
+        }
+        $out .= html_writer::end_div()
+              . html_writer::end_div();
+        return $out;
+    }
+
+    private function get_pupilids()
+    {
+        global $DB;
+
+        return $DB->get_fieldset_select('sliclquestions_responses',
+                                        'pupilid',
+                                        'survey_id=3');
+    }
+
+    private function get_behaviour_results()
+    {
+        global $DB;
+
+        $sql = 'SELECT *'
+             . ' FROM {sliclquestions_response} r'
+             . ' WHERE '
+             . ' AND ';
+        if ($pupilids = $this->get_pupilids()) {
+            $sql .= ' AND r.pupilid IN ('
+                  . implode(',', $pupilids)
+                  . ')';
+        }
+        $initialresponses = $DB->get_records_sql($sql, array('survey_id' => 2));
+        $currentresponses = $DB->get_records_sql($sql, array('survey_id' => 3,
+                                                             ''));
     }
 }
