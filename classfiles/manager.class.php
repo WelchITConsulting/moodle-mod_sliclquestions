@@ -764,7 +764,7 @@ class mod_sliclquestions_management_console
     {
         global $DB;
 
-        return $DB->get_fieldset_select('sliclquestions_responses',
+        return $DB->get_fieldset_select('sliclquestions_response',
                                         'pupilid',
                                         'survey_id=3');
     }
