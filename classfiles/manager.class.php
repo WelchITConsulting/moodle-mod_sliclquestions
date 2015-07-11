@@ -640,10 +640,10 @@ class mod_sliclquestions_management_console
         global $DB;
 
         $querytext = '<strong>Results for:</strong> '
-                   . ($params['x'] == 'b' ? ' All pupils : ' : '')
-                   . ($params['x'] == 'm' ? ' Male pupils only : ' : '')
-                   . ($params['x'] == 'f' ? ' Female pupils only : ' : '')
-                   . ($params['y'] == 0 ? ' Year 3 / 4' : 'Year' . $params['y']);
+                   . ($params['x'] == 'b' ? 'All pupils : ' : '')
+                   . ($params['x'] == 'm' ? 'Male pupils only : ' : '')
+                   . ($params['x'] == 'f' ? 'Female pupils only : ' : '')
+                   . ($params['y'] == 0 ? get_string('yearboth', 'sliclquestions') : get_string('year' . $params['y'], 'sliclquestions'));
 
         $out = html_writer::tag('h3', 'Results:')
              . html_writer::tag('p', $querytext)
@@ -652,8 +652,7 @@ class mod_sliclquestions_management_console
              . html_writer::start_tag('form', array('action' => $url,
                                                     'method' => 'get',
                                                     'name'   => 'sliclfilters'))
-             . html_writer::start_div('pupil-sex')
-             . html_writer::tag('h4', 'Sex');
+             . html_writer::start_div('pupil-sex');
         foreach(array('m', 'f', 'b') as $sex) {
             $inpparams = array('type' => 'radio',
                                'name' => 'x',
@@ -667,6 +666,23 @@ class mod_sliclquestions_management_console
                   . ($sex == 'b' ? get_string('pupilsboth', 'sliclquestions') : '')
                   . ($sex == 'm' ? get_string('male', 'sliclquestions') : '')
                   . ($sex == 'f' ? get_string('female', 'sliclquestions') : '')
+                  . html_writer::end_tag('label');
+        }
+        $out .= html_writer::end_div()
+              . html_writer::start_div('school-year');
+        foreach(array(0, 3, 4) as $yearid) {
+            $inpparams = array('type' => 'radio',
+                               'name' => 'y',
+                               'id'   => 'yearid-' . ($yearid == 0 ? 'both' : $yearid),
+                               'value' => $yearid);
+            if ($params['y'] == $yearid) {
+                $inpparams['checked'] = 'checked';
+            }
+            $out .= html_writer::start_tag('label', array('class' => 'sliclques-filter-radio'))
+                  . html_writer::empty_tag('input', $inpparams)
+                  . ($yearid == 0 ? get_string('yearboth', 'sliclquestions') : '')
+                  . ($yearid == 3 ? get_string('year3', 'sliclquestions') : '')
+                  . ($yearid == 4 ? get_string('year4', 'sliclquestions') : '')
                   . html_writer::end_tag('label');
         }
         $out .= html_writer::end_div()
@@ -785,10 +801,14 @@ class mod_sliclquestions_management_console
     private function get_pupilids()
     {
         global $DB;
+        static $pupilids = null;
 
-        return $DB->get_fieldset_select('sliclquestions_response',
-                                        'pupilid',
-                                        'survey_id=3');
+        if (empty($pupilids)) {
+            $pupilids = $DB->get_fieldset_select('sliclquestions_response',
+                                                 'pupilid',
+                                                 'survey_id=3');
+        }
+        return $pupilids;
     }
 
     private function get_behaviour_results()

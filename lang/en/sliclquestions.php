@@ -167,6 +167,9 @@ $string['thankhead']                                = 'Thank you for completing 
 $string['wrongformat']                              = 'There is something wrong with your answer to question:&nbsp;';
 $string['wrongformats']                             = 'There is something wrong with your answer to questions:&nbsp;';
 
+$string['year3']                                    = 'Year 3 only';
+$string['year4']                                    = 'Year 4 only';
+$string['yearboth']                                 = 'All years';
 
 
 //$string['action']                                   = 'Action';
