@@ -222,7 +222,9 @@ h3.slicl-legend {
 .slicl-behaviour th {
     font-weight: 400;
     padding: 10px;
-    border: 1px dotted #ccc;
+    border-top: 1px dotted #333;
+    border-left: 1px dotted #333;
+    border-right: 1px dotted #333;
 }
 .slicl-behaviour th ol {
     margin-left: 30px;
