@@ -782,11 +782,6 @@ class mod_sliclquestions_management_console
         $question = $DB->get_record('sliclquestions_question', array('id' => '10'));
         $choices = $DB->get_records('sliclquestions_quest_choice', array('question_id' => $question->id));
 
-        $table = new html_table();
-        $table->head     = array($question->content);
-        $table->headspan = array(6);
-        $table->align    = array('left', 'center', 'center', 'center', 'center', 'center');
-
         $row = new html_table_row();
         $row->cells = array();
         $row->cells[0] = new html_table_cell('');
@@ -801,7 +796,16 @@ class mod_sliclquestions_management_console
         $row->cells[4]->header = true;
         $row->cells[5] = new html_table_cell('Very good');
         $row->cells[5]->header = true;
-        $table->data[] = $row;
+
+        $headerrow = new html_table_row();
+        $headerrow->cells = array(new html_table_cell($question->content));
+        $headerrow->cells[0]->header  = true;
+        $headerrow->cells[0]->colspan = 6;
+
+        $table = new html_table();
+        $table->head     = array($headerrow,
+                                 $row);
+        $table->align    = array('left', 'center', 'center', 'center', 'center', 'center');
         foreach($choices as $choice) {
             $table->data[] = array($choice->content,
                                    '<strong>0%</strong> / 0%',
