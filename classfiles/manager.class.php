@@ -874,7 +874,9 @@ class mod_sliclquestions_management_console
 
         $results = array(0, 0, 0, 0);
 
-        $sql = 'SELECT id, year_id, sex FROM {sliclquestions_students} WHERE deleteflag=0'
+        $sql = 'SELECT s.id, s.year_id, s.sex'
+             . ' FROM {sliclquestions_students} s, {sliclquestions_response} r'
+             . ' WHERE s.id=r.pupilid AND s.deleteflag=0'
              . $this->get_pupilids()
              . ($params['x'] != 'b' ? ' AND sex=\'' . $params['x'] . '\'' : '')
              . ($params['y'] != 0 ? ' AND year_id=' . $params['y'] : '');
