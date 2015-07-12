@@ -874,7 +874,7 @@ class mod_sliclquestions_management_console
             . " 'Forward more than one point'],\nshadow:{\noffsetx:0,\noffsety:0,\nblur:15\n},\n"
             . "strokestyle:'transparent',\nexploded:[0,0,10,15],\ntooltips:['"
              . str_replace(',', "','", $data)
-            . "\'],\ntooltips.event:'onmousemove'\n}\n});\n}\n</script>";
+            . "'],\ntooltips.event:'onmousemove'\n}\n});\n}\n</script>";
     }
 
     private function get_behavioural_graph_data(&$params)
