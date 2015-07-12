@@ -637,7 +637,7 @@ class mod_sliclquestions_management_console
 
     private function display_report_header(&$survey, &$url, &$params)
     {
-        global $DB;
+        global $DB, $PAGE;
 
         $querytext = ($params['x'] == 'b' ? 'All pupils : ' : '')
                    . ($params['x'] == 'm' ? 'Male pupils only : ' : '')
@@ -687,6 +687,11 @@ class mod_sliclquestions_management_console
         }
         $out .= html_writer::end_div()
               . html_writer::end_tag('form');
+        $PAGE->requires->js_init_call('M.mod_sliclquestions.init_reportfilters',
+                                      null,
+                                      false,
+                                      array('name'     => 'mod_sliclquestions',
+                                            'fullpath' => '/mod/sliclquestions/module.js'));
         return $out;
     }
 
