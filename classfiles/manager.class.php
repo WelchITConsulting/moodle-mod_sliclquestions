@@ -871,10 +871,10 @@ class mod_sliclquestions_management_console
              . "<script>\nwindow.onload = function(){\nvar chart = new RGraph.Pie({\nid:'cvs',\ndata:["
              . $data
             . "],\noptions:{\nlabels:['Moved backwards', 'No change', 'Forward one point',"
-            . " \'Forward more than one point\'],shadow:{offsetx:0,offsety:0,blur:15},"
-            . "strokestyle:\'transparent\',exploded:[0,0,10,15],tooltips:[\'"
+            . " 'Forward more than one point'],\nshadow:{\noffsetx:0,\noffsety:0,\nblur:15\n},\n"
+            . "strokestyle:'transparent',\nexploded:[0,0,10,15],\ntooltips:['"
              . str_replace(',', "','", $data)
-            . "\'],\ntooltips.event:\'onmousemove\'\n}\n});\n}\n</script>";
+            . "\'],\ntooltips.event:'onmousemove'\n}\n});\n}\n</script>";
     }
 
     private function get_behavioural_graph_data(&$params)
