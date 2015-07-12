@@ -701,7 +701,7 @@ class mod_sliclquestions_management_console
              . html_writer::tag('h3', 'KPI Levels')
              . html_writer::tag('p', 'The following table displays the nunber of pupils at the various KPI levels:<br>(<strong>Final assessment values</strong> / Initial assessment values):')
              . html_writer::table($this->get_kpi_totals($survey->id, $url, $params))
-             . html_writer::tag('h3', 'Social and Development')
+             . html_writer::tag('h3', 'Social and Emmotional Development')
              . html_writer::tag('p', '<strong>Final assessment values</strong> / Initial assessment values')
              . html_writer::start_div('slicl-behaviour')
              . html_writer::table($this->display_behaviour_results())
