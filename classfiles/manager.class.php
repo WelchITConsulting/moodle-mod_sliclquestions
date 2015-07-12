@@ -866,9 +866,10 @@ class mod_sliclquestions_management_console
     {
         global $PAGE;
 
-        $PAGE->requires->js('https://www.google.com/jsapi/');
+//        $PAGE->requires->js('https://www.google.com/jsapi/');
         return '<div id="chart_div"></div>'
-. "<script>
+. "<script src=\"https://www.google.com/jsapi\"></script>
+<script>
     google.load('visualization', '1.0', {'packages':['corechart']});
     google.setOnLoadCallback(drawChart);
     function drawChart() {
