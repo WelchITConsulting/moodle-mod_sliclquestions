@@ -798,13 +798,21 @@ class mod_sliclquestions_management_console
         $row->cells[5] = new html_table_cell('Very good');
         $row->cells[5]->header = true;
         $table->data[] = $row;
+        $newchoice = 70;
         foreach($choices as $choice) {
+
             $table->data[] = array($choice->content,
-                                   '<strong>' . $this->get_behaviour_result_count(3, 22, 70, 1, $params['x']) . '</strong> / ' . $this->get_behaviour_result_count(2, 10, $choice->id, 1, $params['x']),
-                                   '<strong>' . $this->get_behaviour_result_count(3, 22, 71, 2, $params['x']) . '</strong> / ' . $this->get_behaviour_result_count(2, 10, $choice->id, 2, $params['x']),
-                                   '<strong>' . $this->get_behaviour_result_count(3, 22, 72, 3, $params['x']) . '</strong> / ' . $this->get_behaviour_result_count(2, 10, $choice->id, 3, $params['x']),
-                                   '<strong>' . $this->get_behaviour_result_count(3, 22, 73, 4, $params['x']) . '</strong> / ' . $this->get_behaviour_result_count(2, 10, $choice->id, 4, $params['x']),
-                                   '<strong>' . $this->get_behaviour_result_count(3, 22, 74, 5, $params['x']) . '</strong> / ' . $this->get_behaviour_result_count(2, 10, $choice->id, 5, $params['x']));
+                                   '<strong>' . $this->get_behaviour_result_count(3, 22, $newchoice, 1, $params['x']) . '</strong> / '
+                                 . $this->get_behaviour_result_count(2, 10, $choice->id, 1, $params['x']),
+                                   '<strong>' . $this->get_behaviour_result_count(3, 22, $newchoice, 2, $params['x']) . '</strong> / '
+                                 . $this->get_behaviour_result_count(2, 10, $choice->id, 2, $params['x']),
+                                   '<strong>' . $this->get_behaviour_result_count(3, 22, $newchoice, 3, $params['x']) . '</strong> / '
+                                 . $this->get_behaviour_result_count(2, 10, $choice->id, 3, $params['x']),
+                                   '<strong>' . $this->get_behaviour_result_count(3, 22, $newchoice, 4, $params['x']) . '</strong> / '
+                                 . $this->get_behaviour_result_count(2, 10, $choice->id, 4, $params['x']),
+                                   '<strong>' . $this->get_behaviour_result_count(3, 22, $newchoice, 5, $params['x']) . '</strong> / '
+                                 . $this->get_behaviour_result_count(2, 10, $choice->id, 5, $params['x']));
+            $newchoice++;
         }
         return $table;
     }
@@ -841,7 +849,6 @@ class mod_sliclquestions_management_console
             $sql .= ' AND s.sex=?';
             $params[] = $sex;
         }
-echo '<pre>SQL:' . $sql . '<br>params: ' . print_r($params, true) . '</pre>';
         return $DB->count_records_sql($sql, $params);
     }
 }
