@@ -104,4 +104,5 @@ M.mod_sliclquestions.init_reportfilters = function(Y) {
     Y.one('.school-year').delegate('click', function(e){
         alert(e.target.get('value'));
     });
+    alert('Loaded events');
 }

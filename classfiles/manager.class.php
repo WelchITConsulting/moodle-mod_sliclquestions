@@ -645,7 +645,7 @@ class mod_sliclquestions_management_console
                    . ($params['y'] == 0 ? get_string('yearboth', 'sliclquestions') : get_string('year' . $params['y'], 'sliclquestions'));
 
         $out = html_writer::tag('h3', 'Results')
-             . html_writer::tag('h4', 'Filters:' . $querytext)
+             . html_writer::tag('h4', 'Filters: ' . $querytext)
              . html_writer::tag('p', 'Use the following filters to update the reports contents')
              . html_writer::start_tag('form', array('action' => $url,
                                                     'method' => 'get',
@@ -773,7 +773,11 @@ class mod_sliclquestions_management_console
                              'KPI 4',
                              get_string('pupilstotal', 'sliclquestions'));
         $table->align = array('left', 'center', 'center', 'center', 'center', 'center');
-        $table->data = $data;
+        if ($params['y'] == 0) {
+            $table->data = $data;
+        } else {
+            $table->data = $data[$params['y'] = 3];
+        }
         return $table;
     }
 
@@ -891,6 +895,7 @@ class mod_sliclquestions_management_console
              . ($params['x'] != 'b' ? ' AND sex=\'' . $params['x'] . '\'' : '')
              . ($params['y'] != 0 ? ' AND year_id=' . $params['y'] : '');
         $pupils = $DB->get_records_sql($sql);
+echo '<pre>' . print_r($pupils, true) . '</pre>';
         if ($pupils) {
             $sql = 'SELECT rr.response, rr.rank'
                  . ' FROM {sliclquestions_resp_rank} rr, {sliclquestions_response} r'
