@@ -857,7 +857,7 @@ class mod_sliclquestions_management_console
     {
         global $PAGE;
 
-        $PAGE->required->jquery();
+//        $PAGE->required->jquery();
         $PAGE->requires->js('/mod/sliclquestions/javascript/RGraph/RGraph.common.core.js');
         $PAGE->requires->js('/mod/sliclquestions/javascript/RGraph/RGraph.common.dynamic.js');
         $PAGE->requires->js('/mod/sliclquestions/javascript/RGraph/RGraph.common.tooltips.js');
