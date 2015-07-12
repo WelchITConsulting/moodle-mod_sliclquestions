@@ -871,10 +871,10 @@ class mod_sliclquestions_management_console
              . '<script>window.onload = function(){var chart = new RGraph.Pie({id:\'cvs\',data:['
              . $data
             . '],options:{labels:[\'Moved backwards\', \'No change\', \'Forward one point\','
-            . ' \'Forward more than one point\'],shadow:{offsetx:0;offsety:0;blur:15},'
+            . ' \'Forward more than one point\'],shadow:{offsetx:0,offsety:0,blur:15},'
             . 'strokestyle:\'transparent\',exploded:[0,0,10,15],tooltips:[\''
              . str_replace(',', '\',\'', $data)
-            . '\']tooltips.event:\'onmousemove\'}});}</script>';
+            . '\'],tooltips.event:\'onmousemove\'}});}</script>';
     }
 
     private function get_behavioural_graph_data(&$params)
