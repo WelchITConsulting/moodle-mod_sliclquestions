@@ -644,8 +644,8 @@ class mod_sliclquestions_management_console
                    . ($params['x'] == 'f' ? 'Female pupils only : ' : '')
                    . ($params['y'] == 0 ? get_string('yearboth', 'sliclquestions') : get_string('year' . $params['y'], 'sliclquestions'));
 
-        $out = html_writer::tag('h3', 'Results: ' . $querytext)
-             . html_writer::tag('h4', 'Filters:')
+        $out = html_writer::tag('h3', 'Results')
+             . html_writer::tag('h4', 'Filters:' . $querytext)
              . html_writer::tag('p', 'Use the following filters to update the reports contents')
              . html_writer::start_tag('form', array('action' => $url,
                                                     'method' => 'get',
@@ -862,22 +862,19 @@ class mod_sliclquestions_management_console
     {
         global $PAGE;
 
-//        $PAGE->required->jquery();
         $PAGE->requires->js('/mod/sliclquestions/javascript/RGraph/RGraph.common.core.js');
         $PAGE->requires->js('/mod/sliclquestions/javascript/RGraph/RGraph.common.dynamic.js');
         $PAGE->requires->js('/mod/sliclquestions/javascript/RGraph/RGraph.common.tooltips.js');
         $PAGE->requires->js('/mod/sliclquestions/javascript/RGraph/RGraph.pie.js');
         $data = $this->get_behavioural_graph_data($params);
         return '<canvas id="cvs" width="350" height="250">[No canvas support]</canvas>'
-             . '<script>${document).ready(function(){ var pie=new RGraph.Pie({'
-             . 'id:\'cvs\',data:['
+             . '<script>window.onload = function(){var chart = new RGraph.Pie({id:\'cvs\',data:['
              . $data
-             . '],options:{labels:[\'Moved backwards\',\'Remained the same\','
-             . '\'Moved forward one place\',\'Moved forward more than one place\'],'
-             . 'shadow:{offsetx:0,offsety:0,blur:15},strokestyle:\'transparent\','
-             . 'exploded:[0,0,10,15],tooltips:['
-             . $data
-             . '],tooltips.event:onmousemove}}).draw();});</script>';
+            . '],options:{labels:[\'Moved backwards\', \'No change\', \'Forward one point\','
+            . ' \'Forward more than one point\'],shadow:{offsetx:0;offsety:0;blur:15},'
+            . 'strokestyle:\'transparent\',exploded:[0,0,10,15],tooltips:[\''
+             . str_replace(',', '\',\'', $data)
+            . '\']tooltips.event:\'onmousemove\'}});}</script>';
     }
 
     private function get_behavioural_graph_data(&$params)
