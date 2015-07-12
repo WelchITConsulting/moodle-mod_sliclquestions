@@ -737,14 +737,14 @@ class mod_sliclquestions_management_console
             $results = $DB->get_records_sql($sql, array(1, 2, $i));
             if ($results) {
                 foreach($results as $result) {
-                    $data[$result->year_id - 3][$i] .=  $result->numrec;
+                    $data[$result->year_id - 3][$i] =  $result->numrec;
                     $total1[$result->year_id] += (int)$result->numrec;
                 }
             }
             $results = $DB->get_records_sql($sql, array(13, $surveyid, $i));
             if ($results) {
                 foreach($results as $result) {
-                    $data[$result->year_id - 3][$i] = ' / ' . html_writer::tag('strong', $result->numrec);
+                    $data[$result->year_id - 3][$i] .= ' / ' . html_writer::tag('strong', $result->numrec);
                     $total2[$result->year_id] += (int)$result->numrec;
                 }
             }
@@ -752,7 +752,7 @@ class mod_sliclquestions_management_console
         $data[0][5] = html_writer::tag('strong', $total2[3]);
         $data[1][5] = html_writer::tag('strong', $total2[4]);
         for($y = 0; $y < count($data); $y++) {
-            for($x =1; $x < count($data[$y]); $x++) {
+            for($x =1; $x < count($data[$y]) - 1; $x++) {
                 if (strpos($data[$y][$x], ' / ') === false) {
                     $data[$y][$x] .= ' / <strong>0</strong>';
                 }

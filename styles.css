@@ -230,7 +230,7 @@ h3.slicl-legend {
 .slicl-behaviour table {
     border: 1px dotted #000;
 }
-.slicl-filters label {
+.sliclfilters label {
     width: 150px;
     text-align: left;
 }
