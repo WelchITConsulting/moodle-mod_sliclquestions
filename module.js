@@ -97,3 +97,11 @@ M.mod_sliclquestions.init_sendmessage = function(Y) {
         });
     }, '#checkstarted');
 }
+M.mod_sliclquestions.init_reportfilters = function(Y) {
+    Y.one('.pupil-sex').delegate('click', function(e){
+        alert(e.target.get('value'));
+    });
+    Y.one('.school-year').delegate('click', function(e){
+        alert(e.target.get('value'));
+    });
+}

@@ -639,25 +639,24 @@ class mod_sliclquestions_management_console
     {
         global $DB;
 
-        $querytext = '<strong>Results for:</strong> '
-                   . ($params['x'] == 'b' ? 'All pupils : ' : '')
+        $querytext = ($params['x'] == 'b' ? 'All pupils : ' : '')
                    . ($params['x'] == 'm' ? 'Male pupils only : ' : '')
                    . ($params['x'] == 'f' ? 'Female pupils only : ' : '')
                    . ($params['y'] == 0 ? get_string('yearboth', 'sliclquestions') : get_string('year' . $params['y'], 'sliclquestions'));
 
-        $out = html_writer::tag('h3', 'Results:')
-             . html_writer::tag('p', $querytext)
+        $out = html_writer::tag('h3', 'Results: ' . $querytext)
              . html_writer::tag('h4', 'Filters:')
              . html_writer::tag('p', 'Use the following filters to update the reports contents')
              . html_writer::start_tag('form', array('action' => $url,
                                                     'method' => 'get',
                                                     'name'   => 'sliclfilters'))
              . html_writer::start_div('pupil-sex');
-        foreach(array('m', 'f', 'b') as $sex) {
-            $inpparams = array('type' => 'radio',
-                               'name' => 'x',
-                               'id'   => 'pupils-' . ($sex == 'b' ? 'both' : ($sex == 'm' ? 'm' : 'f')),
-                               'value' => $sex);
+        foreach(array('b', 'm', 'f') as $sex) {
+            $inpparams = array('type'  => 'radio',
+                               'name'  => 'x',
+                               'id'    => 'pupils-' . ($sex == 'b' ? 'both' : ($sex == 'm' ? 'm' : 'f')),
+                               'value' => $sex,
+                              'class'  => 'slicl-filters');
             if ($params['x'] == $sex) {
                 $inpparams['checked'] = 'checked';
             }
@@ -671,10 +670,11 @@ class mod_sliclquestions_management_console
         $out .= html_writer::end_div()
               . html_writer::start_div('school-year');
         foreach(array(0, 3, 4) as $yearid) {
-            $inpparams = array('type' => 'radio',
-                               'name' => 'y',
-                               'id'   => 'yearid-' . ($yearid == 0 ? 'both' : $yearid),
-                               'value' => $yearid);
+            $inpparams = array('type'  => 'radio',
+                               'name'  => 'y',
+                               'id'    => 'yearid-' . ($yearid == 0 ? 'both' : $yearid),
+                               'value' => $yearid,
+                              'class'  => 'slicl-filters');
             if ($params['y'] == $yearid) {
                 $inpparams['checked'] = 'checked';
             }
@@ -699,11 +699,11 @@ class mod_sliclquestions_management_console
     {
         $out = html_writer:: start_div('totals')
              . html_writer::tag('h3', 'KPI Levels')
-             . html_writer::tag('p', 'The following table displays the nunber of pupils at the various KPI levels:<br>(<strong>Final assessment values</strong> / Initial assessment values):')
+             . html_writer::tag('p', 'The following table displays the nunber of pupils at the various KPI levels:<br>Initial assessment values / <strong>Final assessment values</strong>:')
              . html_writer::table($this->get_kpi_totals($survey->id, $url, $params))
              . html_writer::tag('h3', 'Social and Emotional Development')
              . $this->display_rgraph($params)
-             . html_writer::tag('p', '<strong>Final assessment values</strong> / Initial assessment values')
+             . html_writer::tag('p', 'Initial assessment values / <strong>Final assessment values</strong>')
              . html_writer::start_div('slicl-behaviour')
              . html_writer::table($this->display_behaviour_results($params))
              . html_writer::end_div()
@@ -734,27 +734,27 @@ class mod_sliclquestions_management_console
         $total1 = array(3 => 0, 4 => 0);
         $total2 = array(3 => 0, 4 => 0);
         for ($i = 1;$i < 5;$i++) {
-            $results = $DB->get_records_sql($sql, array(13, $surveyid, $i));
-            if ($results) {
-                foreach($results as $result) {
-                    $data[$result->year_id - 3][$i] = html_writer::tag('strong', $result->numrec);
-                    $total2[$result->year_id] += (int)$result->numrec;
-                }
-            }
             $results = $DB->get_records_sql($sql, array(1, 2, $i));
             if ($results) {
                 foreach($results as $result) {
-                    $data[$result->year_id - 3][$i] .=  ' / ' . $result->numrec;
+                    $data[$result->year_id - 3][$i] .=  $result->numrec;
                     $total1[$result->year_id] += (int)$result->numrec;
                 }
             }
+            $results = $DB->get_records_sql($sql, array(13, $surveyid, $i));
+            if ($results) {
+                foreach($results as $result) {
+                    $data[$result->year_id - 3][$i] = ' / ' . html_writer::tag('strong', $result->numrec);
+                    $total2[$result->year_id] += (int)$result->numrec;
+                }
+            }
         }
-        $data[0][5] = html_writer::tag('strong', $total2[3]) . ' / ' . $total1[3];
-        $data[1][5] = html_writer::tag('strong', $total2[4]) . ' / ' . $total1[4];
+        $data[0][5] = html_writer::tag('strong', $total2[3]);
+        $data[1][5] = html_writer::tag('strong', $total2[4]);
         for($y = 0; $y < count($data); $y++) {
             for($x =1; $x < count($data[$y]); $x++) {
                 if (strpos($data[$y][$x], ' / ') === false) {
-                    $data[$y][$x] .= ' / 0';
+                    $data[$y][$x] .= ' / <strong>0</strong>';
                 }
             }
         }
@@ -803,16 +803,16 @@ class mod_sliclquestions_management_console
         foreach($choices as $choice) {
 
             $table->data[] = array($choice->content,
-                                   '<strong>' . $this->get_behaviour_result_count(3, 22, $newchoice, 1, $params['x']) . '</strong> / '
-                                 . $this->get_behaviour_result_count(2, 10, $choice->id, 1, $params['x']),
-                                   '<strong>' . $this->get_behaviour_result_count(3, 22, $newchoice, 2, $params['x']) . '</strong> / '
-                                 . $this->get_behaviour_result_count(2, 10, $choice->id, 2, $params['x']),
-                                   '<strong>' . $this->get_behaviour_result_count(3, 22, $newchoice, 3, $params['x']) . '</strong> / '
-                                 . $this->get_behaviour_result_count(2, 10, $choice->id, 3, $params['x']),
-                                   '<strong>' . $this->get_behaviour_result_count(3, 22, $newchoice, 4, $params['x']) . '</strong> / '
-                                 . $this->get_behaviour_result_count(2, 10, $choice->id, 4, $params['x']),
-                                   '<strong>' . $this->get_behaviour_result_count(3, 22, $newchoice, 5, $params['x']) . '</strong> / '
-                                 . $this->get_behaviour_result_count(2, 10, $choice->id, 5, $params['x']));
+                                   $this->get_behaviour_result_count(2, 10, $choice->id, 1, $params['x'])
+                                 . ' / <strong>' . $this->get_behaviour_result_count(3, 22, $newchoice, 1, $params['x']) . '</strong>',
+                                   $this->get_behaviour_result_count(2, 10, $choice->id, 2, $params['x'])
+                                 . ' / <strong>' . $this->get_behaviour_result_count(3, 22, $newchoice, 2, $params['x']) . '</strong>',
+                                   $this->get_behaviour_result_count(2, 10, $choice->id, 3, $params['x'])
+                                 . ' / <strong>' . $this->get_behaviour_result_count(3, 22, $newchoice, 3, $params['x']) . '</strong>',
+                                   $this->get_behaviour_result_count(2, 10, $choice->id, 4, $params['x'])
+                                 . ' / <strong>' . $this->get_behaviour_result_count(3, 22, $newchoice, 4, $params['x']) . '</strong>',
+                                   $this->get_behaviour_result_count(2, 10, $choice->id, 5, $params['x'])
+                                 . ' / <strong>' . $this->get_behaviour_result_count(3, 22, $newchoice, 5, $params['x']) . '</strong>');
             $newchoice++;
         }
         return $table;
