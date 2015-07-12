@@ -895,7 +895,6 @@ class mod_sliclquestions_management_console
              . ($params['x'] != 'b' ? ' AND sex=\'' . $params['x'] . '\'' : '')
              . ($params['y'] != 0 ? ' AND year_id=' . $params['y'] : '');
         $pupils = $DB->get_records_sql($sql);
-echo '<pre>' . print_r($pupils, true) . '</pre>';
         if ($pupils) {
             $sql = 'SELECT rr.response, rr.rank'
                  . ' FROM {sliclquestions_resp_rank} rr, {sliclquestions_response} r'
@@ -904,6 +903,8 @@ echo '<pre>' . print_r($pupils, true) . '</pre>';
             foreach($pupils as $pupil) {
                 $oldresult  = $DB->get_records_sql($sql, array(2, $pupil->id, 10));
                 $newresults = $DB->get_records_sql($sql, array(3, $pupil->id, 22));
+echo '<pre>' . print_r($oldresult, true) . '</pre>';
+echo '<pre>' . print_r($newresult, true) . '</pre>';
                 for($i = 0; $i < 5; $i++) {
                     $result = $newresults[$i]->rank - $oldresult[$i]->rank;
                     if ($result == 0) {
