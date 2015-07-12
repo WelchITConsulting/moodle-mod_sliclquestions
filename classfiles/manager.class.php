@@ -836,9 +836,12 @@ class mod_sliclquestions_management_console
              . ' WHERE r.id=rr.responseid AND r.pupilid=s.id AND r.survey_id=?'
              . ' AND rr.questionid=? AND rr.response=? AND rr.rank=?'
              . $this->get_pupilids();
+        $params = array($surveyid, $questionid, $choiceid, $responseid);
         if ($sex != 'b') {
-            $sql .= ' AND s.sex=\'' . $sex . '\'';
+            $sql .= ' AND s.sex=?';
+            $params[] = $sex;
         }
-        return $DB->count_records_sql($sql, array($surveyid, $questionid, $choiceid, $responseid));
+echo '<pre>SQL:' . $sql . '<br>params: ' . print_r($params, true) . '</pre>';
+        return $DB->count_records_sql($sql, $params);
     }
 }
