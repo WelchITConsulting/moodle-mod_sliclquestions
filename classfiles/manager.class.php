@@ -856,16 +856,16 @@ class mod_sliclquestions_management_console
     private function display_rgraph(&$params)
     {
         $data = $this->get_behavioural_graph_data($params);
-        echo '<canvas id="cvs" width="350" height="250">[No canvas support]</canvas>'
-           . '<script>${document).ready(function(){ var pie=new RGraph.Pie({'
-           . 'id:\'cvs\',data:['
-           . $data
-           . '],options:{labels:[\'Moved backwards\',\'Remained the same\','
-           . '\'Moved forward one place\',\'Moved forward more than one place\'],'
-           . 'shadow:{offsetx:0,offsety:0,blur:15},strokestyle:\'transparent\','
-           . 'exploded:[15,15],tooltips:['
-           . $data
-           . ']}}).draw();});</script>';
+        return '<canvas id="cvs" width="350" height="250">[No canvas support]</canvas>'
+             . '<script>${document).ready(function(){ var pie=new RGraph.Pie({'
+             . 'id:\'cvs\',data:['
+             . $data
+             . '],options:{labels:[\'Moved backwards\',\'Remained the same\','
+             . '\'Moved forward one place\',\'Moved forward more than one place\'],'
+             . 'shadow:{offsetx:0,offsety:0,blur:15},strokestyle:\'transparent\','
+             . 'exploded:[15,15],tooltips:['
+             . $data
+             . ']}}).draw();});</script>';
     }
 
     private function get_behavioural_graph_data(&$params)
