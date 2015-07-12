@@ -704,7 +704,7 @@ class mod_sliclquestions_management_console
              . html_writer::tag('h3', 'Social and Emotional Development')
              . html_writer::tag('p', '<strong>Final assessment values</strong> / Initial assessment values')
              . html_writer::start_div('slicl-behaviour')
-             . html_writer::table($this->display_behaviour_results())
+             . html_writer::table($this->display_behaviour_results($params))
              . html_writer::end_div()
              . html_writer::end_div();
         return $out;
