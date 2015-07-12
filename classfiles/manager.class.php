@@ -831,8 +831,8 @@ class mod_sliclquestions_management_console
     {
         global $DB;
 
-        $sql = 'SELECT COUNT(id) AS numrec'
-             . ' FROM {sliclquestions_response} r, {sliclquestions_resp_rate} rr'
+        $sql = 'SELECT COUNT(r.id) AS numrec'
+             . ' FROM {sliclquestions_response} r, {sliclquestions_resp_rank} rr'
              . ' WHERE r.id=rr.responseid AND r.survey_id=?'
              . ' AND rr.response=?'
              . $this->get_pupilids();
