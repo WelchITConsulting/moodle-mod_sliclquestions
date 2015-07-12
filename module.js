@@ -106,22 +106,28 @@ M.mod_sliclquestions.init_reportfilters = function(Y) {
         alert(e.target.get('value'));
     }, 'input[type=radio]');
 }
-define(['jquery'], function($){
-    $(document).ready(function(){
-        var pie = new RGraph.Pie({
-            id: 'cvs',
-            data: [7, 1, 254],
-            options: {
-                gutter: {
-                    left: 50,
-                    right: 50
-                },
-                linewidth: 0,
-                strokestyle: 'transparent',
-                labels: ['Backwards', 'Remained Same', 'Moved Forward'],
-                tooltips: ['7', '1', '254'],
-                explode: [0, 0, 20]
-            }
-        }).draw();
-    })
-})
+//define(['jquery'], function($){
+//    $(document).ready(function(){
+//        var pie = new RGraph.Pie({
+//            id: 'cvs',
+//            data: [7, 1, 254],
+//            options: {
+//                gutter: {
+//                    left: 50,
+//                    right: 50
+//                },
+//                shadow: {
+//                    offsetx: 0,
+//                    offsety: 0,
+//                    blur: 15
+//                },
+//                linewidth: 0,
+//                strokestyle: 'transparent',
+//                labels: ['Backwards', 'Remained Same', 'Moved Forward'],
+//                tooltips: ['7', '1', '254'],
+//                explode: [0, 0, 20],
+//                color:
+//            }
+//        }).draw();
+//    })
+//})

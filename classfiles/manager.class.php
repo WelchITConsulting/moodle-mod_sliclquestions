@@ -866,20 +866,44 @@ class mod_sliclquestions_management_console
     {
         global $PAGE;
 
-        $PAGE->requires->js('/mod/sliclquestions/javascript/RGraph/RGraph.common.core.js');
-        $PAGE->requires->js('/mod/sliclquestions/javascript/RGraph/RGraph.common.dynamic.js');
-        $PAGE->requires->js('/mod/sliclquestions/javascript/RGraph/RGraph.common.tooltips.js');
-        $PAGE->requires->js('/mod/sliclquestions/javascript/RGraph/RGraph.pie.js');
-        $data = $this->get_behavioural_graph_data($params);
-        return '<canvas id="cvs" width="350" height="250">[No canvas support]</canvas>'
-             . "<script>\nwindow.onload = function(){\nvar chart = new RGraph.Pie({\nid:'cvs',\ndata:["
-             . $data
-            . "],\noptions:{\nlabels:['Moved backwards', 'No change', 'Forward one point',"
-            . " 'Forward more than one point'],\nshadow:{\noffsetx:0,\noffsety:0,\nblur:15\n},\n"
-            . "strokestyle:'transparent',\nexploded:[0,0,10,15],\ntooltips:['"
-             . str_replace(',', "','", $data)
-//            . "'],\ntooltips.event:'onmousemove'\n}\n});\n}\n</script>";
-            . "'],\n}\n});\n}\n</script>";
+        $PAGE->requires->js('https://www.google.com/jsapi/');
+        return '<div id="chart_div"></div>'
+. "<script>
+    google.load('visualization', '1.0', {'packages':['corechart']});
+    google.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = new Google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([['Mushrooms', 3],
+                      ['Onions', 1],
+                      ['Olives', 1],
+                      ['Zucchini', 1],
+                      ['Pepperoni', 2]]);
+        var options = {'title': 'How much Pizza I ate last night',
+                       'width': 400,
+                       'height': 300};
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+    }
+</script>
+";
+
+
+//        $PAGE->requires->js('/mod/sliclquestions/javascript/RGraph/RGraph.common.core.js');
+//        $PAGE->requires->js('/mod/sliclquestions/javascript/RGraph/RGraph.common.dynamic.js');
+//        $PAGE->requires->js('/mod/sliclquestions/javascript/RGraph/RGraph.common.tooltips.js');
+//        $PAGE->requires->js('/mod/sliclquestions/javascript/RGraph/RGraph.pie.js');
+//        $data = $this->get_behavioural_graph_data($params);
+//        return '<canvas id="cvs" width="350" height="250">[No canvas support]</canvas>'
+//             . "<script>\nwindow.onload = function(){\nvar chart = new RGraph.Pie({\nid:'cvs',\ndata:["
+//             . $data
+//            . "],\noptions:{\nlabels:['Moved backwards', 'No change', 'Forward one point',"
+//            . " 'Forward more than one point'],\nshadow:{\noffsetx:0,\noffsety:0,\nblur:15\n},\n"
+//            . "strokestyle:'transparent',\nexploded:[0,0,10,15],\ntooltips:['"
+//             . str_replace(',', "','", $data)
+////            . "'],\ntooltips.event:'onmousemove'\n}\n});\n}\n</script>";
+//            . "'],\n}\n});\n}\n</script>";
     }
 
     private function get_behavioural_graph_data(&$params)
