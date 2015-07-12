@@ -702,6 +702,7 @@ class mod_sliclquestions_management_console
              . html_writer::tag('p', 'The following table displays the nunber of pupils at the various KPI levels:<br>(<strong>Final assessment values</strong> / Initial assessment values):')
              . html_writer::table($this->get_kpi_totals($survey->id, $url, $params))
              . html_writer::tag('h3', 'Social and Emotional Development')
+             . $this->display_rgraph($params)
              . html_writer::tag('p', '<strong>Final assessment values</strong> / Initial assessment values')
              . html_writer::start_div('slicl-behaviour')
              . html_writer::table($this->display_behaviour_results($params))
@@ -850,5 +851,56 @@ class mod_sliclquestions_management_console
             $params[] = $sex;
         }
         return $DB->count_records_sql($sql, $params);
+    }
+
+    private function display_rgraph(&$params)
+    {
+        $data = $this->get_behavioural_graph_data($params);
+        echo '<canvas id="cvs" width="350" height="250">[No canvas support]</canvas>'
+           . '<script>${document).ready(function(){ var pie=new RGraph.Pie({'
+           . 'id:\'cvs\',data:['
+           . $data
+           . '],options:{labels:[\'Moved backwards\',\'Remained the same\','
+           . '\'Moved forward one place\',\'Moved forward more than one place\'],'
+           . 'shadow:{offsetx:0,offsety:0,blur:15},strokestyle:\'transparent\','
+           . 'exploded:[15,15],tooltips:['
+           . $data
+           . ']}}).draw();});</script>';
+    }
+
+    private function get_behavioural_graph_data(&$params)
+    {
+        global $DB;
+
+        $results = array(0, 0, 0, 0);
+
+        $sql = 'SELECT id, year_id, sex FROM {sliclquestions_students} WHERE deleteflag=0'
+             . $this->get_pupilids()
+             . ($params['x'] != 'b' ? ' AND sex=\'' . $params['x'] . '\'' : '')
+             . ($params['y'] != 0 ? ' AND year_id=' . $params['y'] : '');
+        $pupils = $DB->get_records_sql($sql);
+        if ($pupils) {
+            $sql = 'SELECT rr.response, rr.rank'
+                 . ' FROM {sliclquestions_resp_rank} rr, {sliclquestions_response} r'
+                 . ' WHERE rr.responseid=r.id AND r.survey_id=? AND r.pupilid=?'
+                 . ' AND rr.questionid=?';
+            foreach($pupils as $pupil) {
+                $oldresult  = $DB->get_records_sql($sql, array(2, $pupil->id, 10));
+                $newresults = $DB->get_records_sql($sql, array(3, $pupil->id, 22));
+                for($i = 0; $i < 5; $i++) {
+                    $result = $newresults[$i]->rank - $oldresult[$i]->rank;
+                    if ($result == 0) {
+                        $results[1]++;
+                    } elseif ($result == -1) {
+                        $results[0]++;
+                    } elseif ($result == 1) {
+                        $results[2]++;
+                    } else {
+                        $results[3]++;
+                    }
+                }
+            }
+        }
+        return implode(',', $results);
     }
 }
