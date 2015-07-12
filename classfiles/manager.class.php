@@ -701,7 +701,7 @@ class mod_sliclquestions_management_console
              . html_writer::tag('h3', 'KPI Levels')
              . html_writer::tag('p', 'The following table displays the nunber of pupils at the various KPI levels:<br>(<strong>Final assessment values</strong> / Initial assessment values):')
              . html_writer::table($this->get_kpi_totals($survey->id, $url, $params))
-             . html_writer::tag('h3', 'Pupils Behaviour')
+             . html_writer::tag('h3', 'Social and Development')
              . html_writer::tag('p', '<strong>Final assessment values</strong> / Initial assessment values')
              . html_writer::start_div('slicl-behaviour')
              . html_writer::table($this->display_behaviour_results())
@@ -771,7 +771,7 @@ class mod_sliclquestions_management_console
         return $table;
     }
 
-    private function display_behaviour_results()
+    private function display_behaviour_results($params)
     {
         global $DB;
 
@@ -800,11 +800,11 @@ class mod_sliclquestions_management_console
         $table->data[] = $row;
         foreach($choices as $choice) {
             $table->data[] = array($choice->content,
-                                   '<strong>' . $this->get_behaviour_result_count(3, 1) . '</strong> / ' . $this->get_behaviour_result_count(2, 1),
-                                   '<strong>' . $this->get_behaviour_result_count(3, 2) . '</strong> / ' . $this->get_behaviour_result_count(2, 2),
-                                   '<strong>' . $this->get_behaviour_result_count(3, 3) . '</strong> / ' . $this->get_behaviour_result_count(2, 3),
-                                   '<strong>' . $this->get_behaviour_result_count(3, 4) . '</strong> / ' . $this->get_behaviour_result_count(2, 4),
-                                   '<strong>' . $this->get_behaviour_result_count(3, 5) . '</strong> / ' . $this->get_behaviour_result_count(2, 5));
+                                   '<strong>' . $this->get_behaviour_result_count(3, 22, 1, $params['x']) . '</strong> / ' . $this->get_behaviour_result_count(2, 10, 1, $params['x']),
+                                   '<strong>' . $this->get_behaviour_result_count(3, 22, 2, $params['x']) . '</strong> / ' . $this->get_behaviour_result_count(2, 10, 2, $params['x']),
+                                   '<strong>' . $this->get_behaviour_result_count(3, 22, 3, $params['x']) . '</strong> / ' . $this->get_behaviour_result_count(2, 10, 3, $params['x']),
+                                   '<strong>' . $this->get_behaviour_result_count(3, 22, 4, $params['x']) . '</strong> / ' . $this->get_behaviour_result_count(2, 10, 4, $params['x']),
+                                   '<strong>' . $this->get_behaviour_result_count(3, 22, 5, $params['x']) . '</strong> / ' . $this->get_behaviour_result_count(2, 10, 5, $params['x']));
         }
         return $table;
     }
@@ -827,15 +827,18 @@ class mod_sliclquestions_management_console
         return $ret;
     }
 
-    private function get_behaviour_result_count($surveyid, $responseid)
+    private function get_behaviour_result_count($surveyid, $questionid, $responseid, $sex)
     {
         global $DB;
 
         $sql = 'SELECT COUNT(r.id) AS numrec'
-             . ' FROM {sliclquestions_response} r, {sliclquestions_resp_rank} rr'
-             . ' WHERE r.id=rr.responseid AND r.survey_id=?'
-             . ' AND rr.response=?'
+             . ' FROM {sliclquestions_response} r, {sliclquestions_resp_rank} rr, {sliclquestions_students} s'
+             . ' WHERE r.id=rr.responseid AND r.pupilid=s.id AND r.survey_id=?'
+             . ' AND rr.questionid=? AND rr.response=?'
              . $this->get_pupilids();
-        return $DB->count_records_sql($sql, array($surveyid, $responseid));
+        if ($sex != 'b') {
+            $sql .= ' AND s.sex=\'' . $sex . '\'';
+        }
+        return $DB->count_records_sql($sql, array($surveyid, $questionid, $responseid));
     }
 }
