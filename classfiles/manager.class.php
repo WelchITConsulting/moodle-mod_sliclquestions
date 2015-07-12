@@ -900,13 +900,13 @@ class mod_sliclquestions_management_console
                  . ' FROM {sliclquestions_resp_rank} rr, {sliclquestions_response} r'
                  . ' WHERE rr.responseid=r.id AND r.survey_id=? AND r.pupilid=?'
                  . ' AND rr.questionid=?';
+            $oldchoices = array(33, 34, 35, 36, 37);
+            $newchoices = array(70, 71, 72, 73, 74);
             foreach($pupils as $pupil) {
-                $oldresult  = $DB->get_records_sql($sql, array(2, $pupil->id, 10));
-                $newresults = $DB->get_records_sql($sql, array(3, $pupil->id, 22));
-echo '<pre>' . print_r($oldresult, true) . '</pre>';
-echo '<pre>' . print_r($newresult, true) . '</pre>';
+                $oldresult = $DB->get_records_sql($sql, array(2, $pupil->id, 10));
+                $newresult = $DB->get_records_sql($sql, array(3, $pupil->id, 22));
                 for($i = 0; $i < 5; $i++) {
-                    $result = $newresults[$i]->rank - $oldresult[$i]->rank;
+                    $result = $newresults[$newchoices[$i]]->rank - $oldresult[$oldchoices[$i]]->rank;
                     if ($result == 0) {
                         $results[1]++;
                     } elseif ($result == -1) {
