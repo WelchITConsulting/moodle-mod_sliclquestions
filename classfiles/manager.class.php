@@ -886,7 +886,7 @@ class mod_sliclquestions_management_console
              . ($params['x'] == 'm' ? 'Male pupils only : ' : '')
              . ($params['x'] == 'f' ? 'Female pupils only : ' : '')
              . ($params['y'] == 0 ? get_string('yearboth', 'sliclquestions') : get_string('year' . $params['y'], 'sliclquestions'))
-             . 'width: 600, height: 450,is3D:true};'
+             . '\',width: 600, height: 450,is3D:true};'
              . "\nvar chart = new google.visualization.PieChart(document.getElementById('chart_div'));\n"
              . 'chart.draw(data, options);}</script>';
     }
