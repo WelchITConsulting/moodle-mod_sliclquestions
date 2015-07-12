@@ -869,10 +869,10 @@ class mod_sliclquestions_management_console
         $data = $this->get_behavioural_graph_data($params);
 
         return '<div id="chart_div"></div><script src="https://www.google.com/jsapi"></script>'
-             . "<script>google.load('visualization', '1.0', {'packages':['corechart']});"
+             . "<script>google.load('visualization', '1.0', {'packages':['corechart']});\n"
              . 'google.setOnLoadCallback(drawChart);function drawChart() {'
              . 'var data = new google.visualization.DataTable();'
-             . "data.addColumn('string', 'Movement');data.addColumn('number', 'Quantity');"
+             . "\ndata.addColumn('string', 'Movement');data.addColumn('number', 'Quantity');\n"
              . "data.addRows([['Moved backwards', "
              . $data[0]
              . "],['Remained the same', "
@@ -887,7 +887,7 @@ class mod_sliclquestions_management_console
              . ($params['x'] == 'f' ? 'Female pupils only : ' : '')
              . ($params['y'] == 0 ? get_string('yearboth', 'sliclquestions') : get_string('year' . $params['y'], 'sliclquestions'))
              . 'width: 600, height: 450,is3D:true};'
-             . "var chart = new google.visualization.PieChart(document.getElementById('chart_div'));"
+             . "\nvar chart = new google.visualization.PieChart(document.getElementById('chart_div'));\n"
              . 'chart.draw(data, options);}</script>';
     }
 
