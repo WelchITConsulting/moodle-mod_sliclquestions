@@ -855,6 +855,13 @@ class mod_sliclquestions_management_console
 
     private function display_rgraph(&$params)
     {
+        global $PAGE;
+
+        $PAGE->required->jquery();
+        $PAGE->requires->js('/mod/sliclquestions/javascript/RGraph/RGraph.common.core.js');
+        $PAGE->requires->js('/mod/sliclquestions/javascript/RGraph/RGraph.common.dynamic.js');
+        $PAGE->requires->js('/mod/sliclquestions/javascript/RGraph/RGraph.common.tooltips.js');
+        $PAGE->requires->js('/mod/sliclquestions/javascript/RGraph/RGraph.pie.js');
         $data = $this->get_behavioural_graph_data($params);
         return '<canvas id="cvs" width="350" height="250">[No canvas support]</canvas>'
              . '<script>${document).ready(function(){ var pie=new RGraph.Pie({'
@@ -863,9 +870,9 @@ class mod_sliclquestions_management_console
              . '],options:{labels:[\'Moved backwards\',\'Remained the same\','
              . '\'Moved forward one place\',\'Moved forward more than one place\'],'
              . 'shadow:{offsetx:0,offsety:0,blur:15},strokestyle:\'transparent\','
-             . 'exploded:[15,15],tooltips:['
+             . 'exploded:[0,0,10,15],tooltips:['
              . $data
-             . ']}}).draw();});</script>';
+             . '],tooltips.event:onmousemove}}).draw();});</script>';
     }
 
     private function get_behavioural_graph_data(&$params)
