@@ -800,11 +800,11 @@ class mod_sliclquestions_management_console
         $table->data[] = $row;
         foreach($choices as $choice) {
             $table->data[] = array($choice->content,
-                                   '<strong>' . $this->get_behaviour_result_count(3, 22, 70, 1, $params['x']) . '</strong> / ' . $this->get_behaviour_result_count(2, 10, $choice['id'], 1, $params['x']),
-                                   '<strong>' . $this->get_behaviour_result_count(3, 22, 71, 2, $params['x']) . '</strong> / ' . $this->get_behaviour_result_count(2, 10, $choice['id'], 2, $params['x']),
-                                   '<strong>' . $this->get_behaviour_result_count(3, 22, 72, 3, $params['x']) . '</strong> / ' . $this->get_behaviour_result_count(2, 10, $choice['id'], 3, $params['x']),
-                                   '<strong>' . $this->get_behaviour_result_count(3, 22, 73, 4, $params['x']) . '</strong> / ' . $this->get_behaviour_result_count(2, 10, $choice['id'], 4, $params['x']),
-                                   '<strong>' . $this->get_behaviour_result_count(3, 22, 74, 5, $params['x']) . '</strong> / ' . $this->get_behaviour_result_count(2, 10, $choice['id'], 5, $params['x']));
+                                   '<strong>' . $this->get_behaviour_result_count(3, 22, 70, 1, $params['x']) . '</strong> / ' . $this->get_behaviour_result_count(2, 10, $choice->id, 1, $params['x']),
+                                   '<strong>' . $this->get_behaviour_result_count(3, 22, 71, 2, $params['x']) . '</strong> / ' . $this->get_behaviour_result_count(2, 10, $choice->id, 2, $params['x']),
+                                   '<strong>' . $this->get_behaviour_result_count(3, 22, 72, 3, $params['x']) . '</strong> / ' . $this->get_behaviour_result_count(2, 10, $choice->id, 3, $params['x']),
+                                   '<strong>' . $this->get_behaviour_result_count(3, 22, 73, 4, $params['x']) . '</strong> / ' . $this->get_behaviour_result_count(2, 10, $choice->id, 4, $params['x']),
+                                   '<strong>' . $this->get_behaviour_result_count(3, 22, 74, 5, $params['x']) . '</strong> / ' . $this->get_behaviour_result_count(2, 10, $choice->id, 5, $params['x']));
         }
         return $table;
     }
