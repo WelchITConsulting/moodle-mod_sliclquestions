@@ -839,6 +839,6 @@ class mod_sliclquestions_management_console
         if ($sex != 'b') {
             $sql .= ' AND s.sex=\'' . $sex . '\'';
         }
-        return $DB->count_records_sql($sql, array($surveyid, $questionid, $responseid));
+        return $DB->count_records_sql($sql, array($surveyid, $questionid, $choiceid, $responseid));
     }
 }
