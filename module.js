@@ -100,8 +100,8 @@ M.mod_sliclquestions.init_sendmessage = function(Y) {
 M.mod_sliclquestions.init_reportfilters = function(Y) {
     Y.one('.pupil-sex').delegate('click', function(e){
         alert(e.target.get('value'));
-    });
+    }, 'input[type=radio]');
     Y.one('.school-year').delegate('click', function(e){
         alert(e.target.get('value'));
-    });
+    }, 'input[type=radio]');
 }
