@@ -230,8 +230,9 @@ h3.slicl-legend {
 .slicl-behaviour table {
     border: 1px dotted #000;
 }
-.slicl-filters {
+.slicl-filters label {
     width: 150px;
+    text-align: left;
 }
 #page-mod-sliclquestions-view tbody strong {
     color: #2fa4e7;
