@@ -721,12 +721,8 @@ class mod_sliclquestions_management_console
              . ' FROM {sliclquestions_students} s, {sliclquestions_response} r,'
              . '      {sliclquestions_resp_single} rs'
              . ' WHERE s.id = r.pupilid AND r.id=rs.responseid AND rs.questionid=?'
-             . '       AND r.survey_id=? AND rs.response=?';
-        if ($pupilids = $this->get_pupilids()) {
-            $sql .= ' AND r.pupilid IN ('
-                  . implode(',', $pupilids)
-                  . ')';
-        }
+             . '       AND r.survey_id=? AND rs.response=?'
+             . $this->get_pupilids();
         if ($params['x'] != 'b') {
             $sql .= ' AND s.sex=\'' . $params['x'] . '\'';
         }
@@ -804,11 +800,11 @@ class mod_sliclquestions_management_console
         $table->data[] = $row;
         foreach($choices as $choice) {
             $table->data[] = array($choice->content,
-                                   '<strong>0%</strong> / 0%',
-                                   '<strong>0%</strong> / 0%',
-                                   '<strong>0%</strong> / 0%',
-                                   '<strong>0%</strong> / 0%',
-                                   '<strong>0%</strong> / 0%');
+                                   '<strong>' . $this->get_behaviour_result_count(3, 1) . '</strong> / ' . $this->get_behaviour_result_count(2, 1),
+                                   '<strong>' . $this->get_behaviour_result_count(3, 2) . '</strong> / ' . $this->get_behaviour_result_count(2, 2),
+                                   '<strong>' . $this->get_behaviour_result_count(3, 3) . '</strong> / ' . $this->get_behaviour_result_count(2, 3),
+                                   '<strong>' . $this->get_behaviour_result_count(3, 4) . '</strong> / ' . $this->get_behaviour_result_count(2, 4),
+                                   '<strong>' . $this->get_behaviour_result_count(3, 5) . '</strong> / ' . $this->get_behaviour_result_count(2, 5));
         }
         return $table;
     }
@@ -816,31 +812,30 @@ class mod_sliclquestions_management_console
     private function get_pupilids()
     {
         global $DB;
-        static $pupilids = null;
+        static $ret = '';
 
-        if (empty($pupilids)) {
+        if (empty($ret)) {
             $pupilids = $DB->get_fieldset_select('sliclquestions_response',
                                                  'pupilid',
                                                  'survey_id=3');
+            if ($pupilids) {
+                $ret = ' AND r.pupilid IN ('
+                     . implode(',', $pupilids)
+                     . ')';
+            }
         }
-        return $pupilids;
+        return $ret;
     }
 
-    private function get_behaviour_results()
+    private function get_behaviour_result_count($surveyid, $responseid)
     {
         global $DB;
 
-//        $sql = 'SELECT *'
-//             . ' FROM {sliclquestions_response} r'
-//             . ' WHERE '
-//             . ' AND ';
-//        if ($pupilids = $this->get_pupilids()) {
-//            $sql .= ' AND r.pupilid IN ('
-//                  . implode(',', $pupilids)
-//                  . ')';
-//        }
-//        $initialresponses = $DB->get_records_sql($sql, array('survey_id' => 2));
-//        $currentresponses = $DB->get_records_sql($sql, array('survey_id' => 3,
-//                                                             ''));
+        $sql = 'SELECT COUNT(id) AS numrec'
+             . ' FROM {sliclquestions_response} r, {sliclquestions_resp_rate} rr'
+             . ' WHERE r.id=rr.responseid AND r.survey_id=?'
+             . ' AND rr.response=?'
+             . $this->get_pupilids();
+        return $DB->count_records_sql($sql, array($surveyid, $responseid));
     }
 }
