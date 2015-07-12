@@ -868,13 +868,13 @@ class mod_sliclquestions_management_console
         $PAGE->requires->js('/mod/sliclquestions/javascript/RGraph/RGraph.pie.js');
         $data = $this->get_behavioural_graph_data($params);
         return '<canvas id="cvs" width="350" height="250">[No canvas support]</canvas>'
-             . '<script>window.onload = function(){var chart = new RGraph.Pie({id:\'cvs\',data:['
+             . "<script>\nwindow.onload = function(){\nvar chart = new RGraph.Pie({\nid:'cvs',\ndata:["
              . $data
-            . '],options:{labels:[\'Moved backwards\', \'No change\', \'Forward one point\','
-            . ' \'Forward more than one point\'],shadow:{offsetx:0,offsety:0,blur:15},'
-            . 'strokestyle:\'transparent\',exploded:[0,0,10,15],tooltips:[\''
-             . str_replace(',', '\',\'', $data)
-            . '\'],tooltips.event:\'onmousemove\'}});}</script>';
+            . "],\noptions:{\nlabels:['Moved backwards', 'No change', 'Forward one point',"
+            . " \'Forward more than one point\'],shadow:{offsetx:0,offsety:0,blur:15},"
+            . "strokestyle:\'transparent\',exploded:[0,0,10,15],tooltips:[\'"
+             . str_replace(',', "','", $data)
+            . "\'],\ntooltips.event:\'onmousemove\'\n}\n});\n}\n</script>";
     }
 
     private function get_behavioural_graph_data(&$params)
