@@ -112,15 +112,14 @@ function processUrl()
     var match = location.href.match(/^(https?\:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)(\/[^?#]*)(\?[^#]*|)(#.*|)$/);
     if (match[6] != '') {
         params = match[6].substr(1).split('&');
+        qrystr = '?';
         for(i=0;i<params.length;++i) {
-            if (params[i].substr(0,2) == 'x=') {
-                params[i] = 'x=' + document.getElementByName('x').valueOf();
+            if ((params[i].substr(0,2) != 'x=') && (params[i].substr(0,2) == 'y=')) {
+                qrystr += params[i] + '&';
             }
-            if (params[i].substr(0,2) == 'y=') {
-                $params[i] = 'y=' + document.getElementByName('y').valueOf();
-            }
+            qrystr += 'x=' + document.getElementByName('x').valueOf() + '&' +
+                      'y=' + document.getElementByName('y').valueOf();
         }
-        match[6] = '?' + params.join('&');
     }
-    return match[1] + '//' + match[2] + '/' + match[5] + match[6] + match[7];
+    return match[1] + '//' + match[2] + '/' + match[5] + qrystr + match[7];
 }
