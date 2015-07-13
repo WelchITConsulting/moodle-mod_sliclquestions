@@ -112,7 +112,7 @@ function processUrl()
     var match = location.href.match(/^(https?\:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)(\/[^?#]*)(\?[^#]*|)(#.*|)$/);
     if (match[6] != '') {
         params = match[6].substr(1).split('&');
-        for(i=0;i<params.length;+i) {
+        for(i=0;i<params.length;++i) {
 alert(params[i]);
 //            if (params[i].substr(0,2) == 'x=') {
 //                params[i] = 'x=' + document.getElementByName('x').valueOf();
