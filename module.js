@@ -113,12 +113,24 @@ function processUrl()
     if (match[6] != '') {
         params = match[6].substr(1).split('&');
         qrystr = '?';
-        for(i=0;i<params.length;++i) {
+        for(var i=0;i<params.length;++i) {
             if ((params[i].substr(0,2) != 'x=') && (params[i].substr(0,2) == 'y=')) {
                 qrystr += params[i] + '&';
             }
-            qrystr += 'x=' + document.getElementByName('x').valueOf() + '&' +
-                      'y=' + document.getElementByName('y').valueOf();
+        }
+        sex = document.getElementsByName('x');
+        for(var x = 0;x < sex.length; ++x) {
+            if (sex[x].checked) {
+                qrystr += 'x=' + sex[x].value;
+                break;
+            }
+        }
+        year = document.getElementsByName('y');
+        for(var x = 0;x < year.length; ++x) {
+            if (year[x].checked) {
+                qrystr += '&y=' + year[x].value;
+                break;
+            }
         }
     }
     return match[1] + '//' + match[2] + '/' + match[5] + qrystr + match[7];
