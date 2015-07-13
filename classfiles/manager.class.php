@@ -950,7 +950,7 @@ class mod_sliclquestions_management_console
                 }
             }
         }
-        return /*implode(',',*/ $results/*)*/;
+        return $results;
 */
     }
 }
