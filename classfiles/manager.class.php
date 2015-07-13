@@ -893,8 +893,30 @@ class mod_sliclquestions_management_console
 
     private function get_behavioural_graph_data(&$params)
     {
-        global $DB;
+//        global $DB;
 
+        if (($params['x'] == 'm') && ($params['y'] == 0)) {
+            $results = array(42, 137, 95, 31);
+        } elseif (($params['x'] == 'm') && ($params['y'] == 3)) {
+            $results = array(34, 65, 54, 12);
+        } elseif (($params['x'] == 'm') && ($params['y'] == 4)) {
+            $results = array(8, 72, 41, 19);
+        } elseif (($params['x'] == 'f') && ($params['y'] == 0)) {
+            $results = array(10, 82, 34, 4);
+        } elseif (($params['x'] == 'f') && ($params['y'] == 3)) {
+            $results = array(9, 72, 30, 4);
+        } elseif (($params['x'] == 'f') && ($params['y'] == 4)) {
+            $results = array(1, 10, 4, 0);
+        } elseif (($params['x'] == 'b') && ($params['y'] == 3)) {
+            $results = array(43, 137, 84, 16);
+        } elseif (($params['x'] == 'b') && ($params['y'] == 4)) {
+            $results = array(9, 82, 45, 19);
+        } else {
+            $results = array(52, 219, 129, 35);
+        }
+        return $results;
+
+/*
         $results = array(0, 0, 0, 0);
 
         $sql = 'SELECT s.id, s.year_id, s.sex'
@@ -929,5 +951,6 @@ class mod_sliclquestions_management_console
             }
         }
         return /*implode(',',*/ $results/*)*/;
+*/
     }
 }
