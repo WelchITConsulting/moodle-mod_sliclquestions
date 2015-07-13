@@ -114,7 +114,7 @@ function processUrl()
         params = match[6].substr(1).split('&');
         qrystr = '?';
         for(var i=0;i<params.length;++i) {
-            if ((params[i].substr(0,2) != 'x=') && (params[i].substr(0,2) == 'y=')) {
+            if ((params[i].substr(0,2) != 'x=') && (params[i].substr(0,2) != 'y=')) {
                 qrystr += params[i] + '&';
             }
         }
