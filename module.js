@@ -100,11 +100,11 @@ M.mod_sliclquestions.init_sendmessage = function(Y) {
 M.mod_sliclquestions.init_reportfilters = function(Y) {
     Y.one('.pupil-sex').delegate('click', function(e){
         url = processUrl();
-        alert(url);
+        location.replace();
     }, 'input[type=radio]');
     Y.one('.school-year').delegate('click', function(e){
         url = processUrl();
-        alert(url);
+        location.replace(url);
     }, 'input[type=radio]');
 }
 function processUrl()
@@ -133,5 +133,5 @@ function processUrl()
             }
         }
     }
-    return match[1] + '//' + match[2] + '/' + match[5] + qrystr + match[7];
+    return match[1] + '//' + match[2] + match[5] + qrystr + match[7];
 }
