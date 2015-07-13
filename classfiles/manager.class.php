@@ -776,7 +776,7 @@ class mod_sliclquestions_management_console
         if ($params['y'] == 0) {
             $table->data = $data;
         } else {
-            $table->data = $data[$params['y'] = 3];
+            $table->data = $data[$params['y'] - 3];
         }
         return $table;
     }
@@ -812,16 +812,16 @@ class mod_sliclquestions_management_console
         foreach($choices as $choice) {
 
             $table->data[] = array($choice->content,
-                                   $this->get_behaviour_result_count(2, 10, $choice->id, 1, $params['x'])
-                                 . ' / <strong>' . $this->get_behaviour_result_count(3, 22, $newchoice, 1, $params['x']) . '</strong>',
-                                   $this->get_behaviour_result_count(2, 10, $choice->id, 2, $params['x'])
-                                 . ' / <strong>' . $this->get_behaviour_result_count(3, 22, $newchoice, 2, $params['x']) . '</strong>',
-                                   $this->get_behaviour_result_count(2, 10, $choice->id, 3, $params['x'])
-                                 . ' / <strong>' . $this->get_behaviour_result_count(3, 22, $newchoice, 3, $params['x']) . '</strong>',
-                                   $this->get_behaviour_result_count(2, 10, $choice->id, 4, $params['x'])
-                                 . ' / <strong>' . $this->get_behaviour_result_count(3, 22, $newchoice, 4, $params['x']) . '</strong>',
-                                   $this->get_behaviour_result_count(2, 10, $choice->id, 5, $params['x'])
-                                 . ' / <strong>' . $this->get_behaviour_result_count(3, 22, $newchoice, 5, $params['x']) . '</strong>');
+                                   $this->get_behaviour_result_count(2, 10, $choice->id, 1, $params)
+                                 . ' / <strong>' . $this->get_behaviour_result_count(3, 22, $newchoice, 1, $params) . '</strong>',
+                                   $this->get_behaviour_result_count(2, 10, $choice->id, 2, $params)
+                                 . ' / <strong>' . $this->get_behaviour_result_count(3, 22, $newchoice, 2, $params) . '</strong>',
+                                   $this->get_behaviour_result_count(2, 10, $choice->id, 3, $params)
+                                 . ' / <strong>' . $this->get_behaviour_result_count(3, 22, $newchoice, 3, $params) . '</strong>',
+                                   $this->get_behaviour_result_count(2, 10, $choice->id, 4, $params)
+                                 . ' / <strong>' . $this->get_behaviour_result_count(3, 22, $newchoice, 4, $params) . '</strong>',
+                                   $this->get_behaviour_result_count(2, 10, $choice->id, 5, $params)
+                                 . ' / <strong>' . $this->get_behaviour_result_count(3, 22, $newchoice, 5, $params) . '</strong>');
             $newchoice++;
         }
         return $table;
@@ -845,7 +845,7 @@ class mod_sliclquestions_management_console
         return $ret;
     }
 
-    private function get_behaviour_result_count($surveyid, $questionid, $choiceid, $responseid, $sex)
+    private function get_behaviour_result_count($surveyid, $questionid, $choiceid, $responseid, $params)
     {
         global $DB;
 
@@ -854,12 +854,16 @@ class mod_sliclquestions_management_console
              . ' WHERE r.id=rr.responseid AND r.pupilid=s.id AND r.survey_id=?'
              . ' AND rr.questionid=? AND rr.response=? AND rr.rank=?'
              . $this->get_pupilids();
-        $params = array($surveyid, $questionid, $choiceid, $responseid);
-        if ($sex != 'b') {
+        $sqlparams = array($surveyid, $questionid, $choiceid, $responseid);
+        if ($params['x'] != 'b') {
             $sql .= ' AND s.sex=?';
-            $params[] = $sex;
+            $sqlparams[] = $params['x'];
         }
-        return $DB->count_records_sql($sql, $params);
+        if ($params['y'] != 0) {
+            $sql .= ' AND s.year_id=?';
+            $sqlparams[] = $params['y'];
+        }
+        return $DB->count_records_sql($sql, $sqlparams);
     }
 
     private function display_rgraph(&$params)
