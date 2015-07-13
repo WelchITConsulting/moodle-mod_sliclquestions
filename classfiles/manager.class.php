@@ -776,8 +776,7 @@ class mod_sliclquestions_management_console
         if ($params['y'] == 0) {
             $table->data = $data;
         } else {
-            echo '<pre>' . print_r($data, true) . '</pre>';
-            $table->data = $data[$params['y'] - 3];
+            $table->data[] = $data[$params['y'] - 3];
         }
         return $table;
     }
