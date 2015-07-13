@@ -99,12 +99,12 @@ M.mod_sliclquestions.init_sendmessage = function(Y) {
 }
 M.mod_sliclquestions.init_reportfilters = function(Y) {
     Y.one('.pupil-sex').delegate('click', function(e){
-        url = processUrl();
-        alert(url);
+//        url = processUrl();
+//        alert(url);
     }, 'input[type=radio]');
     Y.one('.school-year').delegate('click', function(e){
-        url = processUrl();
-        alert(url);
+//        url = processUrl();
+//        alert(url);
     }, 'input[type=radio]');
 }
 function processUrl()
@@ -124,28 +124,3 @@ function processUrl()
     }
     return match[1] + '//' + match[2] + '/' + match[5] + match[6] + match[7];
 }
-//define(['jquery'], function($){
-//    $(document).ready(function(){
-//        var pie = new RGraph.Pie({
-//            id: 'cvs',
-//            data: [7, 1, 254],
-//            options: {
-//                gutter: {
-//                    left: 50,
-//                    right: 50
-//                },
-//                shadow: {
-//                    offsetx: 0,
-//                    offsety: 0,
-//                    blur: 15
-//                },
-//                linewidth: 0,
-//                strokestyle: 'transparent',
-//                labels: ['Backwards', 'Remained Same', 'Moved Forward'],
-//                tooltips: ['7', '1', '254'],
-//                explode: [0, 0, 20],
-//                color:
-//            }
-//        }).draw();
-//    })
-//})
