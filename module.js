@@ -99,12 +99,30 @@ M.mod_sliclquestions.init_sendmessage = function(Y) {
 }
 M.mod_sliclquestions.init_reportfilters = function(Y) {
     Y.one('.pupil-sex').delegate('click', function(e){
-        url = getUrl();
+        url = processUrl();
         alert(url);
     }, 'input[type=radio]');
     Y.one('.school-year').delegate('click', function(e){
-        alert(e.target.get('value'));
+        url = processUrl();
+        alert(url);
     }, 'input[type=radio]');
+}
+function processUrl()
+{
+    var match = location.href.match(/^(https?\:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)(\/[^?#]*)(\?[^#]*|)(#.*|)$/);
+    if (match[6] != '') {
+        params = match[6].substr(1).split('&');
+        for(i=0;i<params.length;+i) {
+            if (params[i].substr(0,2) == 'x=') {
+                params[i] = 'x=' + document.getElementByName('x').valueOf();
+            }
+            if (params[i].substr(0,2) == 'y=') {
+                $params[i] = 'y=' + document.getElementByName('y').valueOf();
+            }
+        }
+        match[6] = '?' + params.join('&');
+    }
+    return match[1] + '//' + match[2] + '/' + match[5] + match[6] + match[7];
 }
 //define(['jquery'], function($){
 //    $(document).ready(function(){
