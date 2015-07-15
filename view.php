@@ -101,8 +101,6 @@ if ( has_capability('mod/sliclquestions:manage', $context)) {
     mod_sliclquestions_management_console::get_instance($course, $context, $sliclquestions, $url, $params);
 }
 
-//echo $OUTPUT->box_start('generalbox sliclquestions boxwidthwide');
-
 // Check the type of the page to show
 switch($sliclquestions->questype) {
 
@@ -132,8 +130,10 @@ switch($sliclquestions->questype) {
 
         } else {
 
-            // Display the no view permisson message
-            notice(get_string('noviewpermission', 'sliclquestions'), $url);
+            echo $sliclquestions->render_page_header()
+               . html_writer::link(new moodle_url('/mod/sliclquestions/report.php', $params),
+                                   get_string('viewreport', sliclquestions))
+               . $OUTPUT->footer();
 
         }
         break;
@@ -155,6 +155,5 @@ switch($sliclquestions->questype) {
         break;
 
     default:
-        echo "View permissions only";
         break;
 }

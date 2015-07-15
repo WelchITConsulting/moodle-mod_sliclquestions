@@ -46,7 +46,9 @@ class sliclquestions_pupil_assessment
         } elseif ($survey->is_closed()) {
             $survey->render_page_header();
             notify(get_string('closed', 'sliclquestions', userdate($survey->closedate)));
-            echo $OUTPUT->footer();
+        echo html_writer::link(new moodle_url('/mod/sliclquestions/report.php', $params),
+                               get_string('viewreport', sliclquestions))
+           . $OUTPUT->footer();
             exit();
         }
 

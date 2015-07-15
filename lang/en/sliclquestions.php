@@ -164,6 +164,8 @@ $string['tblyear']                                  = 'School Year';
 $string['thankbody']                                = '';
 $string['thankhead']                                = 'Thank you for completing this SLiCL Questions questionnaire.';
 
+$string['viewreport']                               = 'View the results';
+
 $string['wrongformat']                              = 'There is something wrong with your answer to question:&nbsp;';
 $string['wrongformats']                             = 'There is something wrong with your answer to questions:&nbsp;';
 
