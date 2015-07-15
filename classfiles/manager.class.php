@@ -57,7 +57,6 @@ class mod_sliclquestions_management_console
 
 
 
-
     private function pupil_assessment(&$course, &$context, &$survey, &$url, &$params)
     {
         global $OUTPUT, $PAGE;
